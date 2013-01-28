@@ -10,7 +10,7 @@ public class Time implements Comparable<Time> {
 	 * @return Time
 	 */
 	public static Time fromCurrentTime() {
-		return new Time((System.currentTimeMillis() / 1000) % ONE_DAY);
+		return new Time((System.currentTimeMillis() / 1000) % ONE_DAY + 3600);
 	}
 
 	private static final String SEPARATOR = ".";

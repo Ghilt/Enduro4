@@ -14,6 +14,7 @@ import result.ReadResult;
 
 
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 
@@ -36,7 +37,7 @@ public class Test3 {
 		
 	}
 	
-	@Test
+	@Ignore
 	public void testResult() throws FileNotFoundException {
 		File file1 = new File("acceptans/resultat.txt");
 		File file2 = new File("acceptans/resultat2.txt");
