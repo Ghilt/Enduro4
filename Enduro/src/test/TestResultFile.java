@@ -131,8 +131,12 @@ public class TestResultFile {
 	public void testMultipleStartTimes() throws IOException {
 		Competitor competitor = new Competitor(2);
 		competitor.addStartTime(start);
-		competitor.addStartTime(new Time(23456));
-		competitor.addStartTime(new Time(45678));
+		Time time1 = new Time(23456);
+		Time time2 = new Time(45678);
+		competitor.addStartTime(time1);
+		competitor.addStartTime(time2);
+		
+		
 		competitor.addFinishTime(finish);
 
 		competitors.add(competitor);
@@ -150,7 +154,7 @@ public class TestResultFile {
 		assertEquals(scan.nextLine(), competitors.get(0).toString());
 
 		assertTrue(scan.hasNext());
-		assertEquals(scan.nextLine(), competitor.toString());
+		assertEquals(scan.nextLine(), "2; " + start.difference(finish) + "; " + start + "; " + finish + "; Flera starttider? " + time1 + ", " + time2);
 	}
 
 }
