@@ -3,20 +3,21 @@ package sort;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.List;
 
 public class Sorter {
 
 	
 	private File result;
-	private Competitor competitor;
+	private List<Competitor> competitors;
 
 	
 	/**
 	 * Create Sorter   
 	 */
-	public Sorter(Competitor competitor) {
+	public Sorter(List<Competitor> competitors) {
 		result = new File("sorted_result.txt");
-		this.competitor = competitor;
+		this.competitors = competitors;
 	}
 	
 	
@@ -26,7 +27,7 @@ public class Sorter {
 	 *    @param files the files containing times
 	 */
 	public void merge(File ...files ){
-		
+		// TODO
 	}
 	
 	/**
@@ -37,7 +38,9 @@ public class Sorter {
 		try {
 			FileWriter fileWriter = new FileWriter(result);
 			fileWriter.append("StartNr; TotalTid; StartTid; Måltid\n");
-			fileWriter.append("1; 1.23.45; 12.00.00; 13.23.34");
+			for(Competitor comp : competitors) {
+				fileWriter.append("" + comp + "\n");
+			}
 			fileWriter.close();
 			
 		} catch (IOException e) {
