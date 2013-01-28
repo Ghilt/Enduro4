@@ -20,6 +20,7 @@ public class ReadResult {
 
 		try {
 			reg = new Scanner(fileReg);
+			//reg.useDelimiter(";");
 			start = new Scanner(fileStart);
 			end = new Scanner(fileEnd);
 		} catch (FileNotFoundException e1) {
@@ -30,8 +31,16 @@ public class ReadResult {
 	
 	public HashMap<Integer, Competitor> openResultFile(){
 		HashMap<Integer,Competitor> list = new HashMap<Integer, Competitor>();
+		String s = reg.nextLine();
+//		boolean hasNames = false;
+//		if(s.split("; ").length>1){
+//			hasNames = true;
+//		}
 		while(reg.hasNext()){
 			String index = reg.next();
+//			if(hasNames){
+//				reg.next();
+//			}
 			index = index.substring(0, index.length()-1);
 			int i=Integer.parseInt(index);
 			list.put(i, new Competitor(i));
