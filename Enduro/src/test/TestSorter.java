@@ -31,7 +31,7 @@ public class TestSorter {
 		comp.addFinishTime(finish);
 		
 		competitors.add(comp);
-		s = new Sorter(competitors);
+		s = new Sorter(competitors, "sorted_result.txt", "register_simple.txt");
 		
 	}
 	
@@ -78,7 +78,7 @@ public class TestSorter {
 		competitor.addFinishTime(finish);
 		competitors.add(competitor);
 		
-		s = new Sorter(competitors);
+		s = new Sorter(competitors, "sorted_result.txt", "register_simple.txt");
 		s.printResult();
 		
 		
@@ -104,7 +104,7 @@ public class TestSorter {
 		competitor.addStartTime(start);
 		competitors.add(competitor);
 		
-		s = new Sorter(competitors);
+		s = new Sorter(competitors, "sorted_result.txt", "register_simple.txt");
 		s.printResult();
 		
 		
@@ -134,7 +134,7 @@ public class TestSorter {
 		
 		competitors.add(competitor);
 		
-		s = new Sorter(competitors);
+		s = new Sorter(competitors, "sorted_result.txt", "register_simple.txt");
 		s.printResult();
 		
 		
