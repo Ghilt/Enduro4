@@ -12,7 +12,6 @@ import java.util.Scanner;
 import org.junit.*;
 
 import sort.Competitor;
-import sort.Sorter;
 import sort.SorterMain;
 import sort.Time;
 import static org.junit.Assert.*;
@@ -49,11 +48,11 @@ public class TestResultFile {
 	}
 
 	@Test
-	public void testSorterCreatesFile() {
+	public void testSorterMainCreatesFile() {
 		File file = new File("sorted_result.txt");
 		Collections.sort(competitors);
 		
-		SorterMain.printResults(competitors);
+		SorterMain.printResults(competitors, "sorted_result.txt");
 		assertTrue(file.exists());
 	}
 
@@ -61,7 +60,7 @@ public class TestResultFile {
 	public void testResultFile() throws IOException {
 		Collections.sort(competitors);
 		
-		SorterMain.printResults(competitors);
+		SorterMain.printResults(competitors, "sorted_result.txt");
 
 		File file = new File("sorted_result.txt");
 
@@ -82,9 +81,8 @@ public class TestResultFile {
 		competitor.addFinishTime(finish);
 		competitors.add(competitor);
 
-		Collections.sort(competitors);
 		
-		SorterMain.printResults(competitors);
+		SorterMain.printResults(competitors, "sorted_result.txt");
 
 		File file = new File("sorted_result.txt");
 
@@ -109,9 +107,8 @@ public class TestResultFile {
 		Competitor competitor = new Competitor(2);
 		competitor.addStartTime(start);
 		competitors.add(competitor);
-		Collections.sort(competitors);
 		
-		SorterMain.printResults(competitors);
+		SorterMain.printResults(competitors, "sorted_result.txt");
 
 		File file = new File("sorted_result.txt");
 
@@ -145,7 +142,7 @@ public class TestResultFile {
 		competitors.add(competitor);
 		Collections.sort(competitors);
 		
-		SorterMain.printResults(competitors);
+		SorterMain.printResults(competitors, "sorted_result.txt");
 
 		File file = new File("sorted_result.txt");
 

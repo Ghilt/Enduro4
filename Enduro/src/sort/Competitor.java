@@ -92,26 +92,34 @@ public class Competitor implements Comparable {
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
 		
-		sb.append(Sorter.formatColumns(index, 
+		sb.append(SorterMain.formatColumns(index, 
 				totalTimeToString(), 
 				(startTimes.isEmpty() ? NO_START : startTimes.get(0).toString()),
 				(finishTimes.isEmpty() ? NO_END : finishTimes.get(0).toString())));
 		
-		if(startTimes.size() > 1) {
+		if (startTimes.size() > 1) {
 			sb.append(addTimes("Flera starttider? ", startTimes));
 		}
 		
-		if(finishTimes.size() > 1) {
+		if (finishTimes.size() > 1) {
 			sb.append(addTimes("Flera måltider? ", finishTimes));	
 		}
 		
 		return sb.toString();
 	}
-
+	
 	@Override
-	public int compareTo(Object arg0) {
-		// TODO Auto-generated method stub
-		return 0;
+	public int compareTo(Object o) {
+		Competitor comp = (Competitor) o;
+		if(comp.getStartTimes().isEmpty() || comp.getFinishTimes().isEmpty()) {
+			return 1;
+		} else if (startTimes.isEmpty() || finishTimes.isEmpty()) {
+			return -1;
+		}
+		Time totalTime = startTimes.get(0).difference(finishTimes.get(0));
+		Time totalTime2 = comp.getStartTimes().get(0).difference(comp.getFinishTimes().get(0));
+		
+		return totalTime.compareTo(totalTime2);
 	}
 
 }
