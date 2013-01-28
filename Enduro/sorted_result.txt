@@ -1,2 +1,2 @@
 StartNr; TotalTid; StartTid; Måltid
-1; 1.23.45; 12.00.00; 13.23.34
+
