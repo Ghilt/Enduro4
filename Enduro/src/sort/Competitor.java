@@ -68,7 +68,7 @@ public class Competitor {
 	}
 	
 	public String toString() {
-		return null;
+		return "";
 	}
 
 }

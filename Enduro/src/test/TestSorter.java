@@ -4,22 +4,34 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
 
 import org.junit.*;
 
 import sort.Competitor;
 import sort.Sorter;
+import sort.Time;
 import static org.junit.Assert.*;
 
 public class TestSorter {
 	Sorter s;
-	Competitor comp;
+	List<Competitor> competitors;
+	Time start;
+	Time finish;
 	
 	@Before
 	public void Initialize() {
-		comp = new Competitor(1);
+		competitors = new ArrayList<Competitor>();
+		start = new Time(123456);
+		finish = new Time(654321);
+		Competitor comp = new Competitor(1);
+		comp.addStartTime(start);
+		comp.addFinishTime(finish);
 		
-		s = new Sorter(comp);
+		competitors.add(comp);
+		s = new Sorter(competitors);
 		
 	}
 
@@ -33,14 +45,17 @@ public class TestSorter {
 	@Test
 	public void testResultFile() throws IOException {
 		s.printResult();
-		String test = "StartNr; TotalTid; StartTid; Måltid\n1; 1.23.45; 12.00.00; 13.23.34";
-		try {
-			FileReader reader = new FileReader("sorted_result.txt");
-			for(int i = 0; i < test.length(); i++) {
-				assertEquals(test.charAt(i), reader.read());
-			}
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
+		String firstLine = "StartNr; TotalTid; StartTid; Måltid";
+		File file = new File("sorted_result.txt");
+		
+		Scanner scan = new Scanner(file);
+		assertTrue(scan.hasNext());
+		assertEquals("First line is missing, empty result list", scan.nextLine(), firstLine);
+		
+		for(Competitor comp : competitors) {
+			// Need implementation in competitor to work (toString()).
+//			assertTrue(scan.hasNext());
+//			assertEquals(scan.hasNext(), comp.toString());
 		}
 	}
 	
