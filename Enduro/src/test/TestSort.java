@@ -70,7 +70,7 @@ public class TestSort {
 		
 		Collections.sort(competitors);
 		
-		SorterMain.printResults(competitors);
+		SorterMain.printResults(competitors, "sorted_result.txt");
 		
 		testFirstLineInResult(scan);
 		
