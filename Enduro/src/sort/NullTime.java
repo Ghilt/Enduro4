@@ -24,6 +24,6 @@ public class NullTime extends Time {
 
 	@Override
 	public Time difference(Time t) {
-		return this;
+		return t;
 	}
 }
