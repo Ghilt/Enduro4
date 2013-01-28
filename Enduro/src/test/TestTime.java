@@ -55,5 +55,10 @@ public class TestTime {
 	public void testPrintComplicatedTime() {
 		assertEquals(new Time(19381).toString(), "05.23.01");
 	}
+	
+	@Test
+	public void testTimeCompareTo() {
+		assertEquals(-1, new Time(100).compareTo(new Time(200)));
+	}
 
 }

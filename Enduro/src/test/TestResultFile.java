@@ -50,7 +50,7 @@ public class TestResultFile {
 	@Test
 	public void testSorterMainCreatesFile() {
 		File file = new File("sorted_result.txt");
-		Collections.sort(competitors);
+		//Collections.sort(competitors);
 		
 		SorterMain.printResults(competitors, "sorted_result.txt");
 		assertTrue(file.exists());
@@ -58,7 +58,7 @@ public class TestResultFile {
 
 	@Test
 	public void testResultFile() throws IOException {
-		Collections.sort(competitors);
+		//Collections.sort(competitors);
 		
 		SorterMain.printResults(competitors, "sorted_result.txt");
 
@@ -98,8 +98,8 @@ public class TestResultFile {
 		assertTrue("Competitor should not contain start time!", comp
 				.getStartTimes().size() == 0);
 
-		assertEquals(scan.nextLine(), "2; " + Time.NULL_TIME + "; Start?; "
-				+ comp.getFinishTimes().get(0) + "; ");
+		assertEquals("2; " + Time.NULL_TIME + "; Start?; "
+				+ comp.getFinishTimes().get(0) + ";", scan.nextLine());
 	}
 
 	@Test
@@ -124,8 +124,8 @@ public class TestResultFile {
 		assertTrue("Competitor should not contain finish time!", comp
 				.getFinishTimes().size() == 0);
 
-		assertEquals(scan.nextLine(), "2; " + Time.NULL_TIME + "; "
-				+ comp.getStartTimes().get(0) + "; Slut?; ");
+		assertEquals("2; " + Time.NULL_TIME + "; "
+				+ comp.getStartTimes().get(0) + "; Slut?;", scan.nextLine());
 	}
 
 	@Test
@@ -140,7 +140,7 @@ public class TestResultFile {
 		
 		competitor.addFinishTime(finish);
 		competitors.add(competitor);
-		Collections.sort(competitors);
+		//Collections.sort(competitors);
 		
 		SorterMain.printResults(competitors, "sorted_result.txt");
 
@@ -154,7 +154,7 @@ public class TestResultFile {
 		assertEquals(scan.nextLine(), competitors.get(0).toString());
 
 		assertTrue(scan.hasNext());
-		assertEquals(scan.nextLine(), "2; " + start.difference(finish) + "; " + start + "; " + finish + "; Flera starttider? " + time1 + ", " + time2);
+		assertEquals("2; " + start.difference(finish) + "; " + start + "; " + finish + "; Flera starttider? " + time1 + ", " + time2, scan.nextLine());
 	}
 
 }

@@ -24,7 +24,9 @@ public class SorterMain {
 		
 		List<Competitor> competitors = new ArrayList<Competitor>(readResult.openResultFile().values());
 		//Collections.sort(competitors); 
+
 		printResults(competitors, args[4]);
+
 	}
 	
 	public static void printResults(List<Competitor> competitors, String output) {
@@ -58,7 +60,8 @@ public class SorterMain {
 			sb.append(formatColumn(o));
 		}
 		
-		return sb.toString();
+		String s = sb.toString();
+		return s.substring(0, s.length() - 2);
 	}
 
 

@@ -40,7 +40,8 @@ public class TestReadResult {
 		assertEquals(result.openResultFile().get(1).getStartTimes().get(0).toString(), "00.00.00");
 	}
 	
-	@Ignore
+
+	@Ignore	
 	public void testFinishTimeAdded(){
 		assertEquals(result.openResultFile().get(1).getFinishTimes().get(0).toString(), "01.40.40");
 	}

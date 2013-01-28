@@ -1,15 +1,16 @@
 package sort;
 
-public class Time {
+public class Time implements Comparable<Time> {
 	private final static long ONE_DAY = 86400;
 	private final long HOUR = 3600;
+
 	/**
 	 * Create time from current system time.
 	 * 
 	 * @return Time
 	 */
 	public static Time fromCurrentTime() {
-		return new Time((System.currentTimeMillis() / 1000) % ONE_DAY);
+		return new Time((System.currentTimeMillis() / 1000) % ONE_DAY + 3600);
 	}
 
 	private static final String SEPARATOR = ".";
@@ -17,11 +18,12 @@ public class Time {
 	private long seconds;
 
 	/**
-	 * Calculates the difference this time and t.
+	 * Calculates t - this and returns the difference as a new Time object.
 	 * 
 	 * @param t
-	 *            End
-	 * @return Difference
+	 *            The later time
+	 * @return Difference. A new Time object.
+	 * 
 	 */
 	public Time difference(Time t) {
 		Time ret = new Time(t.seconds - seconds);
@@ -46,7 +48,8 @@ public class Time {
 		if (secString.length() < 2) {
 			secString = "0" + secString;
 		}
-		return ((hours >= 10) ? hours : "0" + hours) + SEPARATOR + minString + SEPARATOR + secString;
+		return ((hours >= 10) ? hours : "0" + hours) + SEPARATOR + minString
+				+ SEPARATOR + secString;
 	}
 
 	@Override
@@ -79,16 +82,21 @@ public class Time {
 		this.seconds = seconds;
 	}
 
+	/**
+	 * Generates a new time from the format hh.mm.ss
+	 * 
+	 * @param stringTime
+	 *            The String object to convert from.
+	 */
 	public Time(String stringTime) {
 		this.seconds = convertToTime(stringTime);
 	}
 
 	private long convertToTime(String stringTime) {
-		
+
 		long i;
 		try {
 			String[] stamps = stringTime.split("\\" + SEPARATOR);
-//			 System.out.println(stamps.length+" "+stamps[0]+" "+stamps[1]+" "+stamps[2]);
 			Long hours = Long.parseLong(stamps[0]);
 			Long minutes = Long.parseLong(stamps[1]);
 			Long seconds = Long.parseLong(stamps[2]);
@@ -103,9 +111,10 @@ public class Time {
 		return i;
 	}
 
+	@Override
 	public int compareTo(Time time) {
-		long diff = seconds - time.seconds; 
-		if(diff < 0) {
+		long diff = seconds - time.seconds;
+		if (diff < 0) {
 			return -1;
 		} else if (diff == 0) {
 			return 0;
@@ -113,6 +122,5 @@ public class Time {
 			return 1;
 		}
 	}
-	
-	
+
 }

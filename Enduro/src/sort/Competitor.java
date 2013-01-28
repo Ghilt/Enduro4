@@ -16,11 +16,16 @@ public class Competitor implements Comparable {
 	
 	public static final String NO_START = "Start?";
 	public static final String NO_END = "Slut?";
-
+	public static final String MULTIPLE_STARTS = "Flera starttider?";
+	public static final String MULTIPLE_ENDS = "Flera sluttider?";
+	public static final String IMPOSSIBLE_TOTAL_TIME = "Omöjlig tid?";
+	public static final Time MINIMUM_TOTAL_TIME = new Time("00.15.00");
+	
 	/**
 	 * @param index		index of the competitor
 	 */
 	public Competitor(int index) {
+		name= null;
 		this.index = index;
 		startTimes = new ArrayList<Time>();
 		finishTimes = new ArrayList<Time>();
@@ -86,10 +91,11 @@ public class Competitor implements Comparable {
 	/**
 	 * @return Total time elapsed, or Null time string
 	 */
-	private String totalTimeToString() {
-		return (startTimes.isEmpty() || finishTimes.isEmpty()) ? Time.NULL_TIME : 
-			startTimes.get(0).difference(finishTimes.get(0)).toString();
+	private Time totalTime() {
+		return (startTimes.isEmpty() || finishTimes.isEmpty()) ? new NullTime() : 
+			startTimes.get(0).difference(finishTimes.get(0));
 	}
+	
 	
 	/**	
 	 * Is called when a competitor has multiple start/finishtimes
@@ -97,11 +103,11 @@ public class Competitor implements Comparable {
 	 * @param list	The list of times	
 	 * @return	The errormessage followed by the times seperated by a colon
 	 */
-	private String addTimes(String msg, List<Time> list) {
+	private String addTimes(String msg, Object... list) {
 		StringBuilder sb = new StringBuilder();
-		sb.append(msg);
-		for(int i = 1; i < list.size(); i++) {
-			sb.append(list.get(i));
+		sb.append(msg + (list.length == 0 ? "" : " "));
+		for (int i = 1; i < list.length; i++) {
+			sb.append(list[i]);
 			sb.append(", ");
 		}
 		String res = sb.toString();
@@ -115,17 +121,24 @@ public class Competitor implements Comparable {
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
 		
-		sb.append(SorterMain.formatColumns(index, name , 
-				totalTimeToString(), 
-				(startTimes.isEmpty() ? NO_START : startTimes.get(0).toString()),
+
+		sb.append(SorterMain.formatColumns(index, name, 
+				totalTime(), (startTimes.isEmpty() ? NO_START : startTimes.get(0).toString()),
 				(finishTimes.isEmpty() ? NO_END : finishTimes.get(0).toString())));
-		
+		sb.append(";");
 		if (startTimes.size() > 1) {
-			sb.append(addTimes("Flera starttider? ", startTimes));
+			sb.append(" ");
+			sb.append(addTimes(MULTIPLE_STARTS, startTimes.toArray()));
 		}
 		
 		if (finishTimes.size() > 1) {
-			sb.append(addTimes("Flera måltider? ", finishTimes));	
+			sb.append(" ");
+			sb.append(addTimes(MULTIPLE_ENDS, finishTimes.toArray()));	
+		}
+		
+		if (totalTime().compareTo(MINIMUM_TOTAL_TIME) <= 0) {
+			sb.append(" ");
+			sb.append(IMPOSSIBLE_TOTAL_TIME);
 		}
 		
 		return sb.toString();
@@ -146,6 +159,7 @@ public class Competitor implements Comparable {
 		} else if (startTimes.isEmpty() || finishTimes.isEmpty()) {
 			return -1;
 		}
+		
 		Time totalTime = startTimes.get(0).difference(finishTimes.get(0));
 		Time totalTime2 = comp.getStartTimes().get(0).difference(comp.getFinishTimes().get(0));
 		
