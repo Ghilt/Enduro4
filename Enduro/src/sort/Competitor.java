@@ -78,11 +78,33 @@ public class Competitor {
 			startTimes.get(0).difference(finishTimes.get(0)).toString();
 	}
 	
+	private String startTimes() {
+		StringBuilder sb = new StringBuilder();
+		
+		for(Time time : startTimes) {
+			sb.append(time);
+			sb.append(", ");
+		}
+		String res = sb.toString();
+		return res.substring(0, res.length() - 2);
+	}
+	
+	private String finishTimes() {
+		StringBuilder sb = new StringBuilder();
+		
+		for(Time time : finishTimes) {
+			sb.append(time);
+			sb.append(", ");
+		}
+		String res = sb.toString();
+		return res.substring(0, res.length() - 2);
+	}
+	
 	public String toString() {
 		return Sorter.formatColumns(String.valueOf(index), 
 				totalTimeToString(), 
-				(startTimes.isEmpty() ? NO_START : startTimes.get(0)).toString(),
-				(finishTimes.isEmpty() ? NO_END : finishTimes.get(0)).toString());
+				(startTimes.isEmpty() ? NO_START : startTimes()),
+				(finishTimes.isEmpty() ? NO_END : finishTimes()));
 	}
 
 }

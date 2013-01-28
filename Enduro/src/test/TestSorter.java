@@ -95,9 +95,62 @@ public class TestSorter {
 		Competitor comp = competitors.get(1);
 		assertTrue("Competitor should not contain start time!", comp.getStartTimes().size() == 0);
 		
-		
-		//assertEquals(scan.hasNext(), "2; " + Time.NULL_TIME + "; Start?; " + comp.getFinishTimes().get(0));
+		assertEquals(scan.nextLine(), "2; " + Time.NULL_TIME + "; Start?; " + comp.getFinishTimes().get(0) + "; ");
 	}
+	
+	@Test
+	public void testMissingFinishTime() throws IOException {
+		Competitor competitor = new Competitor(2);
+		competitor.addStartTime(start);
+		competitors.add(competitor);
+		
+		s = new Sorter(competitors);
+		s.printResult();
+		
+		
+		File file = new File("sorted_result.txt");
+		
+		Scanner scan = new Scanner(file);
+		
+		testFirstLineInResult(scan);
+		
+		assertTrue(scan.hasNext());
+		assertEquals(scan.nextLine(), competitors.get(0).toString());
+		
+		assertTrue(scan.hasNext());
+		Competitor comp = competitors.get(1);
+		assertTrue("Competitor should not contain finish time!", comp.getFinishTimes().size() == 0);
+		
+		assertEquals(scan.nextLine(), "2; " + Time.NULL_TIME + "; " + comp.getStartTimes().get(0) + "; Slut?; ");
+	}
+	
+	@Test
+	public void testMultipleFinishTimes() throws IOException {
+		Competitor competitor = new Competitor(2);
+		competitor.addStartTime(start);
+		competitor.addStartTime(new Time(23456));
+		competitor.addStartTime(new Time(45678));
+		competitor.addFinishTime(finish);
+		
+		competitors.add(competitor);
+		
+		s = new Sorter(competitors);
+		s.printResult();
+		
+		
+		File file = new File("sorted_result.txt");
+		
+		Scanner scan = new Scanner(file);
+		
+		testFirstLineInResult(scan);
+		
+		assertTrue(scan.hasNext());
+		assertEquals(scan.nextLine(), competitors.get(0).toString());
+		
+		assertTrue(scan.hasNext());
+		assertEquals(scan.nextLine(), competitor.toString());
+	}
+	
 	
 	
 	
