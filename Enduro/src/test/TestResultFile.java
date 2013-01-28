@@ -5,6 +5,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Scanner;
 
@@ -12,11 +13,11 @@ import org.junit.*;
 
 import sort.Competitor;
 import sort.Sorter;
+import sort.SorterMain;
 import sort.Time;
 import static org.junit.Assert.*;
 
 public class TestResultFile {
-	Sorter s;
 	List<Competitor> competitors;
 	Time start;
 	Time finish;
@@ -31,8 +32,6 @@ public class TestResultFile {
 		comp.addFinishTime(finish);
 
 		competitors.add(comp);
-		s = new Sorter(competitors);
-
 	}
 
 	/**
@@ -52,13 +51,17 @@ public class TestResultFile {
 	@Test
 	public void testSorterCreatesFile() {
 		File file = new File("sorted_result.txt");
-		s.printResult();
+		Collections.sort(competitors);
+		
+		SorterMain.printResults(competitors);
 		assertTrue(file.exists());
 	}
 
 	@Test
 	public void testResultFile() throws IOException {
-		s.printResult();
+		Collections.sort(competitors);
+		
+		SorterMain.printResults(competitors);
 
 		File file = new File("sorted_result.txt");
 
@@ -79,8 +82,9 @@ public class TestResultFile {
 		competitor.addFinishTime(finish);
 		competitors.add(competitor);
 
-		s = new Sorter(competitors);
-		s.printResult();
+		Collections.sort(competitors);
+		
+		SorterMain.printResults(competitors);
 
 		File file = new File("sorted_result.txt");
 
@@ -106,8 +110,9 @@ public class TestResultFile {
 		competitor.addStartTime(start);
 		competitors.add(competitor);
 
-		s = new Sorter(competitors);
-		s.printResult();
+		Collections.sort(competitors);
+		
+		SorterMain.printResults(competitors);
 
 		File file = new File("sorted_result.txt");
 
@@ -141,8 +146,9 @@ public class TestResultFile {
 
 		competitors.add(competitor);
 
-		s = new Sorter(competitors);
-		s.printResult();
+		Collections.sort(competitors);
+		
+		SorterMain.printResults(competitors);
 
 		File file = new File("sorted_result.txt");
 

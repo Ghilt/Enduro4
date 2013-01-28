@@ -7,7 +7,7 @@ import java.util.List;
  * @author Philip & Andrée
  * 
  */
-public class Competitor {
+public class Competitor implements Comparable {
 
 	private int index;
 	private List<Time> startTimes;
@@ -106,6 +106,12 @@ public class Competitor {
 		}
 		
 		return sb.toString();
+	}
+
+	@Override
+	public int compareTo(Object arg0) {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 
 }
