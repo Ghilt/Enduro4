@@ -10,6 +10,8 @@ public class Time {
 		return new Time(System.currentTimeMillis() / 1000);
 	}
 	
+	public static final String NULL_TIME = "--.--.--";
+	
 	private long seconds;
 	
 	/**
