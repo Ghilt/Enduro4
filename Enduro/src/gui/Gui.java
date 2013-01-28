@@ -25,14 +25,15 @@ public class Gui extends JFrame {
 	private JTextField textField;
 
 	private Font bigFont = new Font("Times New Roman", Font.BOLD, 60);
-	
-	private String outputStr;
+	private GuiPrinter printer;
 
 	public Gui(String output) {
 		setTitle("ENDURO");
 		setLayout(new BorderLayout());
 		controlNorthPanelSetUp();
 		textCentralPanelSetUp();
+		
+		printer = new GuiPrinter(output);
 
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setResizable(false);
@@ -41,8 +42,6 @@ public class Gui extends JFrame {
 
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 		setSize(screenSize);
-
-		outputStr = output;
 	}
 
 	private void controlNorthPanelSetUp() {
@@ -99,6 +98,9 @@ public class Gui extends JFrame {
 		
 		Time t = Time.fromCurrentTime();
 		String temp = comNr + "; " + t;
+		
+		printer.writeLine(temp);
+		
 		String[] temprows = textArea.getText().split("\\n");
 		for (int i = 0; i < temprows.length && i < maxNrOfEntriesShown; i++) {
 			temp = temp + "\n" + temprows[i];
