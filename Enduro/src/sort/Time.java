@@ -44,7 +44,7 @@ public class Time {
 		if (secString.length() < 2) {
 			secString = "0" + secString;
 		}
-		return hours + ";" + minString + ";" + secString;
+		return ((hours >= 10) ? hours : "0" + hours) + ";" + minString + ";" + secString;
 	}
 
 	@Override
