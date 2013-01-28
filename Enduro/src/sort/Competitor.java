@@ -7,7 +7,7 @@ import java.util.List;
  * @author Philip & Andrée
  * 
  */
-public class Competitor implements Comparable {
+public class Competitor implements Comparable<Competitor> {
 
 	private int index;
 	private List<Time> startTimes;
@@ -138,8 +138,7 @@ public class Competitor implements Comparable {
 	 * 				-1 if this competitors total time is larger than o's
 	 */
 	@Override
-	public int compareTo(Object o) {
-		Competitor comp = (Competitor) o;
+	public int compareTo(Competitor comp) {
 		if(comp.getStartTimes().isEmpty() || comp.getFinishTimes().isEmpty()) {
 			return 1;
 		} else if (startTimes.isEmpty() || finishTimes.isEmpty()) {
