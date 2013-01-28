@@ -19,9 +19,9 @@ public class TestCompetitor {
 	
 	@Test
 	public void testGoodTimes() {
-		c.addStartTime(new Time(10));
-		c.addFinishTime(new Time(45));
-		assertEquals(SorterMain.formatColumns(1, new Time(35), new Time(10), new Time(45) + ";"), c.toString());
+		c.addStartTime(new Time("00.00.15"));
+		c.addFinishTime(new Time("00.45.00"));
+		assertEquals(SorterMain.formatColumns(1, new Time("00.00.15").difference(new Time("00.45.00")), new Time("00.00.15"), new Time("00.45.00") + ";"), c.toString());
 	}
 	
 	@Test
@@ -45,20 +45,26 @@ public class TestCompetitor {
 
 	@Test
 	public void testMultipleEndTimes() {
-		c.addStartTime(new Time(5));
-		c.addFinishTime(new Time(25));
-		c.addFinishTime(new Time(26));
+		Time s1 = new Time("00.00.05");
+		c.addStartTime(s1);
+		Time f1 = new Time("00.25.00");
+		c.addFinishTime(f1);
+		Time f2 = new Time("00.26.00");
+		c.addFinishTime(f2);
 		
-		assertEquals(SorterMain.formatColumns(1, new Time(20), new Time(5), new Time(25), Competitor.MULTIPLE_ENDS + " " + new Time(26)), c.toString());
+		assertEquals(SorterMain.formatColumns(1, s1.difference(f1), s1, f1, Competitor.MULTIPLE_ENDS + " " + f2), c.toString());
 	}
 	
 	@Test
 	public void testMultipleStartTimes() {
-		c.addStartTime(new Time(5));
-		c.addStartTime(new Time(6));
-		c.addFinishTime(new Time(26));
+		Time s1 = new Time("00.00.05");
+		c.addStartTime(s1);
+		Time s2 = new Time("00.00.06");
+		c.addStartTime(s2);
+		Time f1 = new Time("00.20.06");
+		c.addFinishTime(f1);
 		
-		assertEquals(SorterMain.formatColumns(1, new Time(21), new Time(5), new Time(26), Competitor.MULTIPLE_STARTS + " " + new Time(6)), c.toString());
+		assertEquals(SorterMain.formatColumns(1, s1.difference(f1), s1, f1, Competitor.MULTIPLE_STARTS + " " + s2), c.toString());
 	}
 	
 	@Test
