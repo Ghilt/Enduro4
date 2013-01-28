@@ -17,8 +17,9 @@ public class GuiPrinter {
 	public void writeLine(String line) {
 		BufferedWriter writer = null;
 		try {
-			writer = new BufferedWriter(new FileWriter(file));
+			writer = new BufferedWriter(new FileWriter(file, true));
 			writer.write(line);
+			writer.newLine();
 		} catch (IOException e) {
 		} finally {
 			try {
