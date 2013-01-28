@@ -79,6 +79,10 @@ public class Competitor implements Comparable {
 		return index;
 	}
 	
+	public String getName() {
+		return name;
+	}
+	
 	/**
 	 * @return Total time elapsed, or Null time string
 	 */
@@ -111,7 +115,7 @@ public class Competitor implements Comparable {
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
 		
-		sb.append(SorterMain.formatColumns(index, 
+		sb.append(SorterMain.formatColumns(index, name , 
 				totalTimeToString(), 
 				(startTimes.isEmpty() ? NO_START : startTimes.get(0).toString()),
 				(finishTimes.isEmpty() ? NO_END : finishTimes.get(0).toString())));

@@ -14,14 +14,16 @@ public class ReadResult {
 	private Scanner reg;
 	private Scanner start;
 	private Scanner end;
+	private Scanner sName;
 	
 	
-	public ReadResult(File fileReg, File fileStart, File fileEnd){
+	public ReadResult(File fileReg, File fileStart, File fileEnd, File names){
 
 		try {
 			reg = new Scanner(fileReg);
 			start = new Scanner(fileStart);
 			end = new Scanner(fileEnd);
+			sName = new Scanner(names);
 		} catch (FileNotFoundException e1) {
 			e1.printStackTrace();
 		}
@@ -50,8 +52,24 @@ public class ReadResult {
 			String finishtime = end.next();
 			list.get(i).addFinishTime(new Time(finishtime));
 		}
+		
+		while(sName.hasNext()){
+			String index = sName.next();
+			index = index.substring(0, index.length()-1);
+			int i= Integer.parseInt(index);
+			System.out.println(i);
+			String name = sName.next();
+			name = name + " " + sName.next();
+			//while(!sName.hasNextLine()){
+			//System.out.println(name);
+			//name = name + " " + sName.next();
+			//}
+			list.get(i).addName(name);
+			System.out.println(list.get(i).getName());
+		}
 		return list;
 	}
+	
 	
 
 }
