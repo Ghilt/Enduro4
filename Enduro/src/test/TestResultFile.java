@@ -99,7 +99,7 @@ public class TestResultFile {
 				.getStartTimes().size() == 0);
 
 		assertEquals("2; " + Time.NULL_TIME + "; Start?; "
-				+ comp.getFinishTimes().get(0), scan.nextLine());
+				+ comp.getFinishTimes().get(0) + ";", scan.nextLine());
 	}
 
 	@Test
@@ -124,8 +124,8 @@ public class TestResultFile {
 		assertTrue("Competitor should not contain finish time!", comp
 				.getFinishTimes().size() == 0);
 
-		assertEquals(scan.nextLine(), "2; " + Time.NULL_TIME + "; "
-				+ comp.getStartTimes().get(0) + "; Slut?");
+		assertEquals("2; " + Time.NULL_TIME + "; "
+				+ comp.getStartTimes().get(0) + "; Slut?;", scan.nextLine());
 	}
 
 	@Test

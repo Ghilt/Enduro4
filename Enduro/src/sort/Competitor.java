@@ -111,16 +111,19 @@ public class Competitor implements Comparable {
 				totalTime(), 
 				(startTimes.isEmpty() ? NO_START : startTimes.get(0).toString()),
 				(finishTimes.isEmpty() ? NO_END : finishTimes.get(0).toString())));
-		
+		sb.append(";");
 		if (startTimes.size() > 1) {
+			sb.append(" ");
 			sb.append(addTimes(MULTIPLE_STARTS, startTimes.toArray()));
 		}
 		
 		if (finishTimes.size() > 1) {
+			sb.append(" ");
 			sb.append(addTimes(MULTIPLE_ENDS, finishTimes.toArray()));	
 		}
 		
 		if (totalTime().compareTo(MINIMUM_TOTAL_TIME) <= 0) {
+			sb.append(" ");
 			sb.append(IMPOSSIBLE_TOTAL_TIME);
 		}
 		
