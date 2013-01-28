@@ -54,14 +54,14 @@ public class Sorter {
 	 * @param s String
 	 * @return String as column
 	 */
-	public static String formatColumn(String s) {
-		return s + "; ";
+	public static String formatColumn(Object o) {
+		return o + "; ";
 	}
 	
-	public static String formatColumns(String... strings) {
+	public static String formatColumns(Object... objs) {
 		StringBuilder sb = new StringBuilder();
-		for (String s : strings) {
-			sb.append(formatColumn(s));
+		for (Object o : objs) {
+			sb.append(formatColumn(o));
 		}
 		
 		return sb.toString();

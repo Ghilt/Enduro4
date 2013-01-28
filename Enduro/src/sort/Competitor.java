@@ -79,10 +79,10 @@ public class Competitor {
 	}
 	
 	public String toString() {
-		return Sorter.formatColumns(String.valueOf(index), 
+		return Sorter.formatColumns(index, 
 				totalTimeToString(), 
-				(startTimes.isEmpty() ? NO_START : startTimes.get(0)).toString(),
-				(finishTimes.isEmpty() ? NO_END : finishTimes.get(0)).toString());
+				(startTimes.isEmpty() ? NO_START : startTimes.get(0)),
+				(finishTimes.isEmpty() ? NO_END : finishTimes.get(0)));
 	}
 
 }
