@@ -25,8 +25,10 @@ public class Gui extends JFrame {
 	private JTextField textField;
 
 	private Font bigFont = new Font("Times New Roman", Font.BOLD, 60);
+	
+	private String outputStr;
 
-	public Gui() {
+	public Gui(String output) {
 		setTitle("ENDURO");
 		setLayout(new BorderLayout());
 		controlNorthPanelSetUp();
@@ -40,6 +42,7 @@ public class Gui extends JFrame {
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 		setSize(screenSize);
 
+		outputStr = output;
 	}
 
 	private void controlNorthPanelSetUp() {
