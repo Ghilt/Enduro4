@@ -16,6 +16,15 @@ public class TestTime {
 		
 		assertEquals(t1.difference(t2), df);
 	}
+	
+	@Test
+	public void testTimeDifferenceOverMidnight() {
+		Time t1 = new Time(86000);
+		Time t2 = new Time(400);
+		Time df = new Time(800);
+		
+		assertEquals(t1.difference(t2), df);
+	}
 
 	@Test
 	public void testCreateObject() {
