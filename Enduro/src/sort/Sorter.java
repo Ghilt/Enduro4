@@ -45,4 +45,22 @@ public class Sorter {
 		}
 		
 	}
+	
+	/**
+	 * Return a string formated for a column
+	 * @param s String
+	 * @return String as column
+	 */
+	public static String formatColumn(String s) {
+		return s + "; ";
+	}
+	
+	public static String formatColumns(String... strings) {
+		StringBuilder sb = new StringBuilder();
+		for (String s : strings) {
+			sb.append(formatColumn(s));
+		}
+		
+		return sb.toString();
+	}
 }
