@@ -25,7 +25,7 @@ public class TimeGenerator {
 		}
 	}
 	/**
-	 * Print the registered driver and it's time to file  
+	 * Print the registered driver and its time to file  
 	 * 
 	 *@param driverNumber The number of the driver that is registered
 	 *
