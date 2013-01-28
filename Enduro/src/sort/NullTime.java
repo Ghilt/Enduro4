@@ -26,8 +26,8 @@ public class NullTime extends Time {
 	}
 	
 	/**
-	 * Returns a number greater than 0, to make the comparisation with an
-	 * ordinary time object work (needen when checking for ie impossible time)
+	 * Returns a number greater than 0, to make the comparison with an
+	 * ordinary time object work (needed when checking for i.e. impossible time)
 	 */
 	@Override
 	public int compareTo(Time time){
