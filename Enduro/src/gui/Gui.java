@@ -103,6 +103,7 @@ public class Gui extends JFrame {
 		// Format and create text area.
 		this.textArea = new JTextArea(6, 12);
 		textArea.setFont(bigFont);
+		textArea.setFocusable(false);
 		textArea.setEditable(false);
 
 		// Add the panel

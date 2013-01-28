@@ -18,7 +18,7 @@ public class Competitor implements Comparable {
 	public static final String MULTIPLE_STARTS = "Flera starttider?";
 	public static final String MULTIPLE_ENDS = "Flera sluttider?";
 	public static final String IMPOSSIBLE_TOTAL_TIME = "Omöjlig tid?";
-	public static final Time MINIMUM_TOTAL_TIME = new Time("00.15.00");
+	public static final Time MINIMUM_TOTAL_TIME = new Time("00.00.15");
 	
 	/**
 	 * @param index		index of the competitor
