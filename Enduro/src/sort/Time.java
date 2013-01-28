@@ -1,6 +1,25 @@
 package sort;
 
 public class Time {
+	
+	/**
+	 * Create time from current system time.
+	 * @return Time
+	 */
+	public static Time fromCurrentTime() {
+		return new Time(System.currentTimeMillis() / 1000);
+	}
+	
+	private long seconds;
+	
+	/**
+	 * Calculates the difference this time and t.
+	 * @param t End
+	 * @return Difference
+	 */
+	public Time difference(Time t) {
+		return new Time(t.seconds - seconds);
+	}
 
 	@Override
 	public String toString() {
@@ -72,7 +91,5 @@ public class Time {
 		}
 		return i;
 	}
-
-	private long seconds;
 
 }

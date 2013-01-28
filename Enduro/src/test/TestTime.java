@@ -7,6 +7,15 @@ import org.junit.Test;
 import sort.Time;
 
 public class TestTime {
+	
+	@Test
+	public void testTimeDifference() {
+		Time t1 = new Time(10);
+		Time t2 = new Time(15);
+		Time df = new Time(5);
+		
+		assertEquals(t1.difference(t2), df);
+	}
 
 	@Test
 	public void testCreateObject() {
