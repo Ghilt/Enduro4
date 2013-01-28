@@ -18,16 +18,21 @@ import sort.Time;
 @SuppressWarnings("serial")
 public class Gui extends JFrame {
 
-	private static final int maxNrOfEntriesShown = 5;
+	private static final int maxNrOfEntriesShown = 3;
 	private JPanel controlNorthPanel;
 	private JScrollPane textCenterPanel;
 	private JTextArea textArea;
 	private JTextField textField;
 
-	private Font bigFont = new Font("Times New Roman", Font.BOLD, 90);
+	private Font bigFont;
 	private GuiPrinter printer;
+	private Dimension screenSize;
 
 	public Gui(String output) {
+		
+		screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+		bigFont = new Font("Times New Roman", Font.BOLD, screenSize.height/7);
+		 
 		setTitle("ENDURO");
 		setLayout(new BorderLayout());
 		controlNorthPanelSetUp();
@@ -40,7 +45,6 @@ public class Gui extends JFrame {
 		setVisible(true);
 		pack();
 
-		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 		setSize(screenSize);
 	}
 
@@ -49,13 +53,15 @@ public class Gui extends JFrame {
 		controlNorthPanel = new JPanel();
 		add(controlNorthPanel, BorderLayout.NORTH);
 		
-		textField = new JTextField(10);
+		int textFieldLength = (screenSize.width/3)/bigFont.getSize();
+		textField = new JTextField(textFieldLength);
 		textField.setFont(bigFont);
-		textField.setPreferredSize(new Dimension(400, 110));
+		//textField.setPreferredSize(textFieldDimension);
 		addRespondToKey();
 		
 		controlNorthPanel.add(textField, BorderLayout.WEST);
-		controlNorthPanel.add(new RegisterButton(this), BorderLayout.EAST);
+		Dimension buttonDimension = new Dimension(screenSize.width/3, screenSize.height/7);
+		controlNorthPanel.add(new RegisterButton(this, buttonDimension ), BorderLayout.EAST);
 	}
 
 	/**
@@ -74,10 +80,10 @@ public class Gui extends JFrame {
 
 	private void textCentralPanelSetUp() {
 		
-		this.textArea = new JTextArea(42, 30);
+		this.textArea = new JTextArea(6, 12);
 		textArea.setFont(bigFont);
 		textArea.setEditable(false);
-		textArea.setMinimumSize(new Dimension(400, 400));
+		//textArea.setMinimumSize(textAreaDimension);
 		
 		textCenterPanel = new JScrollPane(textArea);
 		add(textCenterPanel, BorderLayout.CENTER);
