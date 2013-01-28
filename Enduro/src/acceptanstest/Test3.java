@@ -26,21 +26,21 @@ public class Test3 {
 	@Before
 	public void initialize(){
 		ReadResult readResult = new ReadResult(
-				new File("TEST3register.txt"),
-				new File("TEST3starttider.txt"),
-				new File("TEST3maltider.txt"));
+				new File("src/acceptanstest/TEST3register.txt"),
+				new File("src/acceptanstest/TEST3starttider.txt"),
+				new File("src/acceptanstest/TEST3maltider.txt"));
 		
 		List<Competitor> competitors = new ArrayList<Competitor>(readResult.openResultFile().values());
 		
-		sorter.printResults(competitors, "TEST3resultat2.txt");
+		sorter.printResults(competitors, "src/acceptanstest/TEST3resultat2.txt");
 		
 		
 	}
 	
-	@Ignore
+	@Test
 	public void testResult() throws FileNotFoundException {
-		File file1 = new File("TEST3resultat.txt");
-		File file2 = new File("TEST3resultat2.txt");
+		File file1 = new File("src/acceptanstest/TEST3resultat.txt");
+		File file2 = new File("src/acceptanstest/TEST3resultat2.txt");
 		scan1 = new Scanner(file1);
 		scan2 = new Scanner(file2);
 		String line1, line2;

@@ -6,6 +6,9 @@ public class NullTime extends Time {
 		super(0);
 	}
 	
+	/**
+	 * Pretty straight forward...
+	 */
 	@Override
 	public String toString() {
 		return "--.--.--";
@@ -22,11 +25,18 @@ public class NullTime extends Time {
 		return true;
 	}
 	
+	/**
+	 * Returns a number greater than 0, to make the comparisation with an
+	 * ordinary time object work (needen when checking for ie impossible time)
+	 */
 	@Override
 	public int compareTo(Time time){
 		return 1;
 	}
 	
+	/**
+	 * The null time is considered as 0.
+	 */
 	@Override
 	public Time difference(Time t) {
 		return t;
