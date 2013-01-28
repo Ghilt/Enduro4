@@ -27,13 +27,13 @@ public class Gui extends JFrame {
 	private Font bigFont = new Font("Times New Roman", Font.BOLD, 60);
 	private GuiPrinter printer;
 
-	public Gui() {
+	public Gui(String output) {
 		setTitle("ENDURO");
 		setLayout(new BorderLayout());
 		controlNorthPanelSetUp();
 		textCentralPanelSetUp();
 		
-		printer = new GuiPrinter("");
+		printer = new GuiPrinter(output);
 
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setResizable(false);
@@ -42,7 +42,6 @@ public class Gui extends JFrame {
 
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 		setSize(screenSize);
-
 	}
 
 	private void controlNorthPanelSetUp() {

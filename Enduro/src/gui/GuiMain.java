@@ -3,11 +3,10 @@ package gui;
 public class GuiMain {
 
 	/**
-	 * @param args Arg0 = Output Start Times, Arg1 = Output End Times
+	 * @param args Argo = Output file
 	 */
 	public static void main(String[] args) {
-		new Gui();
-
+		new Gui(args[0]);
 	}
 
 }
