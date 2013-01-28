@@ -24,7 +24,7 @@ public class Gui extends JFrame {
 	private JTextArea textArea;
 	private JTextField textField;
 
-	private Font bigFont = new Font("Times New Roman", Font.BOLD, 60);
+	private Font bigFont = new Font("Times New Roman", Font.BOLD, 90);
 	private GuiPrinter printer;
 
 	public Gui(String output) {
@@ -51,7 +51,7 @@ public class Gui extends JFrame {
 		
 		textField = new JTextField(10);
 		textField.setFont(bigFont);
-		textField.setPreferredSize(new Dimension(400, 90));
+		textField.setPreferredSize(new Dimension(400, 110));
 		addRespondToKey();
 		
 		controlNorthPanel.add(textField, BorderLayout.WEST);

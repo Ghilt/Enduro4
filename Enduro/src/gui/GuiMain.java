@@ -3,10 +3,15 @@ package gui;
 public class GuiMain {
 
 	/**
-	 * @param args Argo = Output file
+	 * @param args
+	 *            Argo = Output file
 	 */
 	public static void main(String[] args) {
-		new Gui(args[0]);
+		String str = "default_race_file.txt";
+		// if(args.length>0){
+		// str = args[0];
+		// }
+		new Gui(str);
 	}
 
 }
