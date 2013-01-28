@@ -34,6 +34,18 @@ public class TestSorter {
 		s = new Sorter(competitors);
 		
 	}
+	
+	/**
+	 * Private helpmethod for testing the first line in the resultfile.
+	 * 
+	 * @param scan The scanner reading the resultfile.
+	 */
+	private void testFirstLineInResult(Scanner scan) {
+		String firstLine = "StartNr; TotalTid; StartTid; Måltid";
+		
+		assertTrue(scan.hasNext());
+		assertEquals("First line is missing, empty result list", scan.nextLine(), firstLine);
+	}
 
 	@Test
 	public void testSorterCreatesFile() {
@@ -45,12 +57,12 @@ public class TestSorter {
 	@Test
 	public void testResultFile() throws IOException {
 		s.printResult();
-		String firstLine = "StartNr; TotalTid; StartTid; Måltid";
+		
 		File file = new File("sorted_result.txt");
 		
 		Scanner scan = new Scanner(file);
-		assertTrue(scan.hasNext());
-		assertEquals("First line is missing, empty result list", scan.nextLine(), firstLine);
+		
+		testFirstLineInResult(scan);
 		
 		for(Competitor comp : competitors) {
 			// Need implementation in competitor to work (toString()).
@@ -58,6 +70,36 @@ public class TestSorter {
 //			assertEquals(scan.hasNext(), comp.toString());
 		}
 	}
+	
+	
+	@Test
+	public void testMissingStartTime() throws IOException {
+		Competitor competitor = new Competitor(2);
+		competitor.addFinishTime(finish);
+		competitors.add(competitor);
+		
+		s = new Sorter(competitors);
+		s.printResult();
+		
+		
+		File file = new File("sorted_result.txt");
+		
+		Scanner scan = new Scanner(file);
+		
+		testFirstLineInResult(scan);
+		
+		assertTrue(scan.hasNext());
+		assertEquals(scan.nextLine(), competitors.get(0).toString());
+		
+		assertTrue(scan.hasNext());
+		Competitor comp = competitors.get(1);
+		assertTrue("Competitor should not contain start time!", comp.getStartTimes().size() == 0);
+		
+		
+		//assertEquals(scan.hasNext(), "2; " + Time.NULL_TIME + "; Start?; " + comp.getFinishTimes().get(0));
+	}
+	
+	
 	
 	
 	
