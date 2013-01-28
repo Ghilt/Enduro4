@@ -1,6 +1,6 @@
 package sort;
 
-public class Time {
+public class Time implements Comparable {
 
 	/**
 	 * Create time from current system time.
@@ -102,7 +102,8 @@ public class Time {
 		return i;
 	}
 
-	public int compareTo(Time time) {
+	public int compareTo(Object t) {
+		Time time = (Time)t;
 		long diff = seconds - time.seconds; 
 		if(diff < 0) {
 			return -1;
@@ -112,6 +113,5 @@ public class Time {
 			return 1;
 		}
 	}
-	
-	
+
 }

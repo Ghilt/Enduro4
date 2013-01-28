@@ -35,5 +35,43 @@ public class TestCompetitor {
 		c.addStartTime(new Time(10));		
 		assertEquals(Sorter.formatColumns(1, Time.NULL_TIME, new Time(10), Competitor.NO_END), c.toString());
 	}
+	
+	@Test
+	public void testImpossibleTotalTime() {
+		c.addStartTime(new Time(5));
+		c.addFinishTime(new Time(10));
+		assertEquals(Sorter.formatColumns(1, new Time(5), new Time(5), new Time(10), Competitor.IMPOSSIBLE_TOTAL_TIME), c.toString());
+	}
 
+	@Test
+	public void testMultipleEndTimes() {
+		c.addStartTime(new Time(5));
+		c.addFinishTime(new Time(25));
+		c.addFinishTime(new Time(26));
+		
+		assertEquals(Sorter.formatColumns(1, new Time(20), new Time(5), new Time(25), Competitor.MULTIPLE_ENDS + " " + new Time(26)), c.toString());
+	}
+	
+	@Test
+	public void testMultipleStartTimes() {
+		c.addStartTime(new Time(5));
+		c.addStartTime(new Time(6));
+		c.addFinishTime(new Time(26));
+		
+		assertEquals(Sorter.formatColumns(1, new Time(21), new Time(5), new Time(26), Competitor.MULTIPLE_STARTS + " " + new Time(6)), c.toString());
+	}
+	
+	@Test
+	public void allPossibleImpossibles() {
+		c.addStartTime(new Time(5));
+		c.addStartTime(new Time(6));
+		c.addFinishTime(new Time(15));
+		c.addFinishTime(new Time(16));
+		
+		assertEquals(Sorter.formatColumns(1, new Time(10), new Time(5), new Time(15), Competitor.MULTIPLE_STARTS + " " + new Time(6),
+				Competitor.MULTIPLE_ENDS + " " + new Time(16),
+				Competitor.IMPOSSIBLE_TOTAL_TIME), c.toString());
+	}
+	
+	
 }

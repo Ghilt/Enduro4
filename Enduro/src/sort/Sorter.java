@@ -47,7 +47,8 @@ public class Sorter {
 			sb.append(formatColumn(o));
 		}
 		
-		return sb.toString();
+		String s = sb.toString();
+		return s.substring(0, s.length() - 2);
 	}
 
 

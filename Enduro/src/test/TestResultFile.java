@@ -99,8 +99,8 @@ public class TestResultFile {
 		assertTrue("Competitor should not contain start time!", comp
 				.getStartTimes().size() == 0);
 
-		assertEquals(scan.nextLine(), "2; " + Time.NULL_TIME + "; Start?; "
-				+ comp.getFinishTimes().get(0) + "; ");
+		assertEquals("2; " + Time.NULL_TIME + "; Start?; "
+				+ comp.getFinishTimes().get(0), scan.nextLine());
 	}
 
 	@Test
@@ -126,7 +126,7 @@ public class TestResultFile {
 				.getFinishTimes().size() == 0);
 
 		assertEquals(scan.nextLine(), "2; " + Time.NULL_TIME + "; "
-				+ comp.getStartTimes().get(0) + "; Slut?; ");
+				+ comp.getStartTimes().get(0) + "; Slut?");
 	}
 
 	@Test
@@ -155,7 +155,7 @@ public class TestResultFile {
 		assertEquals(scan.nextLine(), competitors.get(0).toString());
 
 		assertTrue(scan.hasNext());
-		assertEquals(scan.nextLine(), "2; " + start.difference(finish) + "; " + start + "; " + finish + "; Flera starttider? " + time1 + ", " + time2);
+		assertEquals("2; " + start.difference(finish) + "; " + start + "; " + finish + "; Flera starttider? " + time1 + ", " + time2, scan.nextLine());
 	}
 
 }
