@@ -1,6 +1,16 @@
 package sort;
 
 public class Time {
+	
+	/**
+	 * Calculates the difference between two times.
+	 * @param t1 Start
+	 * @param t2 End
+	 * @return Difference
+	 */
+	public Time difference(Time t1, Time t2) {
+		return new Time(t1.seconds - t2.seconds);
+	}
 
 	@Override
 	public String toString() {
