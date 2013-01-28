@@ -3,6 +3,24 @@ package sort;
 public class Time {
 
 	@Override
+	public String toString() {
+		long temp = seconds;
+		long hours = temp/3600;
+		temp -= hours * 3600;
+		long minutes = temp/60;
+		temp -= minutes * 60;
+		String minString = minutes +"";
+		if(minString.length()<2){
+			minString = "0"+minString;
+		}
+		String secString = temp +"";
+		if(secString.length()<2){
+			secString = "0"+secString;
+		}
+		return hours+";"+minString+";"+secString;
+	}
+
+	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
 			return true;
