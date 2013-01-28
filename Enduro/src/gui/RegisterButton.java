@@ -11,9 +11,9 @@ public class RegisterButton extends JButton implements ActionListener {
 
 	private Gui frame;
 
-	public RegisterButton(Gui frame) {
+	public RegisterButton(Gui frame, Dimension dim) {
 		super("REGISTER");
-		setPreferredSize(new Dimension(600, 110));
+		setPreferredSize(dim);
 		this.frame = frame;
 		addActionListener(this);
 	}
