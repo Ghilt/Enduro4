@@ -102,4 +102,16 @@ public class Time {
 		return i;
 	}
 
+	public int compareTo(Time time) {
+		long diff = seconds - time.seconds; 
+		if(diff < 0) {
+			return -1;
+		} else if (diff == 0) {
+			return 0;
+		} else {
+			return 1;
+		}
+	}
+	
+	
 }
