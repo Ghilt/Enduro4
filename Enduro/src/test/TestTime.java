@@ -27,5 +27,15 @@ public class TestTime {
 	public void testConvertFromInvalidStringGives0() {
 		assertEquals(new Time("bajs"), new Time(0));
 	}
+	
+	@Test
+	public void testPrintSimpleTime() {
+		assertEquals(new Time(3600).toString(), "1;00;00");
+	}
+	
+	@Test
+	public void testPrintComplicatedTime() {
+		assertEquals(new Time(19381).toString(), "5;23;01");
+	}
 
 }
