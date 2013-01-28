@@ -8,13 +8,15 @@ public class Sorter {
 
 	
 	private File result;
+	private Competitor competitor;
 
 	
 	/**
 	 * Create Sorter   
 	 */
-	public Sorter() {
+	public Sorter(Competitor competitor) {
 		result = new File("sorted_result.txt");
+		this.competitor = competitor;
 	}
 	
 	
