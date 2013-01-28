@@ -37,7 +37,7 @@ public class Test3 {
 		
 	}
 	
-	@Ignore
+	@Test
 	public void testResult() throws FileNotFoundException {
 		File file1 = new File("src/acceptanstest/TEST3resultat.txt");
 		File file2 = new File("src/acceptanstest/TEST3resultat2.txt");
