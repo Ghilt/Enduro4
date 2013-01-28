@@ -25,22 +25,24 @@ public class Test3 {
 	@Before
 	public void initialize(){
 		ReadResult readResult = new ReadResult(
-				new File("acceptanstest/register.txt"),
-				new File("acceptanstest/starttider.txt"),
-				new File("acceptanstest/maltider.txt"));
+				new File("acceptans/register.txt"),
+				new File("acceptans/starttider.txt"),
+				new File("acceptans/maltider.txt"));
 		
 		List<Competitor> competitors = new ArrayList<Competitor>(readResult.openResultFile().values());
 		
-		sorter.printResults(competitors, "acceptanstest/resultat2.txt");
+		sorter.printResults(competitors, "acceptans/resultat2.txt");
 		
 		
 	}
 	
 	@Test
 	public void testResult() throws FileNotFoundException {
-		File file1 = new File("acceptanstest/resultat.txt");
-		File file2 = new File("acceptanstest/resultat2.txt");
+		File file1 = new File("acceptans/resultat.txt");
+		File file2 = new File("acceptans/resultat2.txt");
 		scan1 = new Scanner(file1);
+		//System.out.println(scan1.nextLine());
+		//System.out.println(scan1.next());
 		scan2 = new Scanner(file2);
 		String line1, line2;
 		assertTrue(scan1.hasNext());
