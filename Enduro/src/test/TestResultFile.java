@@ -82,7 +82,6 @@ public class TestResultFile {
 		competitor.addFinishTime(finish);
 		competitors.add(competitor);
 
-		Collections.sort(competitors);
 		
 		SorterMain.printResults(competitors);
 
@@ -109,7 +108,6 @@ public class TestResultFile {
 		Competitor competitor = new Competitor(2);
 		competitor.addStartTime(start);
 		competitors.add(competitor);
-		Collections.sort(competitors);
 		
 		SorterMain.printResults(competitors);
 
