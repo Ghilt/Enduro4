@@ -97,11 +97,11 @@ public class Competitor implements Comparable {
 				(startTimes.isEmpty() ? NO_START : startTimes.get(0).toString()),
 				(finishTimes.isEmpty() ? NO_END : finishTimes.get(0).toString())));
 		
-		if(startTimes.size() > 1) {
+		if (startTimes.size() > 1) {
 			sb.append(addTimes("Flera starttider? ", startTimes));
 		}
 		
-		if(finishTimes.size() > 1) {
+		if (finishTimes.size() > 1) {
 			sb.append(addTimes("Flera måltider? ", finishTimes));	
 		}
 		
