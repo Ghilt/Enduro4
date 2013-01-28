@@ -2,83 +2,112 @@ package gui;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.Toolkit;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
-import javax.swing.ScrollPaneConstants;
 
 import sort.Time;
 
 @SuppressWarnings("serial")
 public class Gui extends JFrame {
 
-	private JPanel northPanel;
-	private JScrollPane southPanel;
+	private static final int maxNrOfEntriesShown = 5;
+	private JPanel controlNorthPanel;
+	private JScrollPane textCenterPanel;
 	private JTextArea textArea;
 	private JTextField textField;
 
-	public Gui() {
+	private Font bigFont = new Font("Times New Roman", Font.BOLD, 60);
+	
+	private String outputStr;
+
+	public Gui(String output) {
 		setTitle("ENDURO");
 		setLayout(new BorderLayout());
-		northPanelSetUp();
-		southPanelSetUp();
+		controlNorthPanelSetUp();
+		textCentralPanelSetUp();
 
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
-
 		setResizable(false);
 		setVisible(true);
 		pack();
 
+		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+		setSize(screenSize);
+
+		outputStr = output;
 	}
 
-	private void northPanelSetUp() {
-		northPanel = new JPanel();
-		add(northPanel, BorderLayout.NORTH);
-		textField = new JTextField(25);
-		addRespondToKey();			
-		northPanel.add(textField, BorderLayout.WEST);
-		northPanel.add(new RegisterButton(this), BorderLayout.EAST);
-		southPanel = new JScrollPane();
-		add(southPanel, BorderLayout.SOUTH);
-
+	private void controlNorthPanelSetUp() {
+		
+		controlNorthPanel = new JPanel();
+		add(controlNorthPanel, BorderLayout.NORTH);
+		
+		textField = new JTextField(10);
+		textField.setFont(bigFont);
+		textField.setPreferredSize(new Dimension(400, 90));
+		addRespondToKey();
+		
+		controlNorthPanel.add(textField, BorderLayout.WEST);
+		controlNorthPanel.add(new RegisterButton(this), BorderLayout.EAST);
 	}
 
+	/**
+	 * Makes the enter key have the same function as the button.
+	 */
 	private void addRespondToKey() {
-		textField.addKeyListener(new KeyAdapter(){
+		textField.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyPressed(KeyEvent evt) {
-				if(evt.getKeyCode() == KeyEvent.VK_ENTER){
+				if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
 					register();
-				}			
-			}});
+				}
+			}
+		});
 	}
 
-	private void southPanelSetUp() {
-		this.textArea = new JTextArea(42,30);
-		southPanel = new JScrollPane(textArea);
-		add(southPanel, BorderLayout.CENTER);
-		//southPanel.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-		//southPanel.add(textArea);
+	private void textCentralPanelSetUp() {
+		
+		this.textArea = new JTextArea(42, 30);
+		textArea.setFont(bigFont);
 		textArea.setEditable(false);
-		//southPanel.setMinimumSize(new Dimension(400,400));
-		textArea.setMinimumSize(new Dimension(400,400));
-		//textArea.setPreferredSize(new Dimension(600, 500));
+		textArea.setMinimumSize(new Dimension(400, 400));
+		
+		textCenterPanel = new JScrollPane(textArea);
+		add(textCenterPanel, BorderLayout.CENTER);
+		
+		// southPanel.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+		// southPanel.add(textArea);
+		// southPanel.setMinimumSize(new Dimension(400,400));
+		// textArea.setPreferredSize(new Dimension(600, 500));
 		// textArea.setMaximumSize(new Dimension(1400,1400));
 	}
 
+	/**
+	 * Tells the program to read the textField and write to file etc.
+	 */
 	public void register() {
 		String comNr = textField.getText();
 		textField.setText("");
+		
 		Time t = Time.fromCurrentTime();
+		String temp = comNr + "; " + t;
+		String[] temprows = textArea.getText().split("\\n");
+		for (int i = 0; i < temprows.length && i < maxNrOfEntriesShown; i++) {
+			temp = temp + "\n" + temprows[i];
+		}
+		textArea.setText(temp);
+		textField.requestFocus();
+		
 		textArea.invalidate();
 		repaint();
-		textArea.setText(textArea.getText()+"\n"+comNr+"; "+t+"; ");
 	}
 
 }

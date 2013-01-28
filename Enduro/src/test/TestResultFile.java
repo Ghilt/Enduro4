@@ -53,7 +53,7 @@ public class TestResultFile {
 		File file = new File("sorted_result.txt");
 		Collections.sort(competitors);
 		
-		SorterMain.printResults(competitors);
+		SorterMain.printResults(competitors, "sorted_result.txt");
 		assertTrue(file.exists());
 	}
 
@@ -61,7 +61,7 @@ public class TestResultFile {
 	public void testResultFile() throws IOException {
 		Collections.sort(competitors);
 		
-		SorterMain.printResults(competitors);
+		SorterMain.printResults(competitors, "sorted_result.txt");
 
 		File file = new File("sorted_result.txt");
 
@@ -83,7 +83,7 @@ public class TestResultFile {
 		competitors.add(competitor);
 
 		
-		SorterMain.printResults(competitors);
+		SorterMain.printResults(competitors, "sorted_result.txt");
 
 		File file = new File("sorted_result.txt");
 
@@ -109,7 +109,7 @@ public class TestResultFile {
 		competitor.addStartTime(start);
 		competitors.add(competitor);
 		
-		SorterMain.printResults(competitors);
+		SorterMain.printResults(competitors, "sorted_result.txt");
 
 		File file = new File("sorted_result.txt");
 
@@ -143,7 +143,7 @@ public class TestResultFile {
 		competitors.add(competitor);
 		Collections.sort(competitors);
 		
-		SorterMain.printResults(competitors);
+		SorterMain.printResults(competitors, "sorted_result.txt");
 
 		File file = new File("sorted_result.txt");
 
