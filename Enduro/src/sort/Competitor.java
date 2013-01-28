@@ -12,6 +12,9 @@ public class Competitor {
 	private int index;
 	private List<Time> startTimes;
 	private List<Time> finishTimes;
+	
+	public static final String NO_START = "Start?";
+	public static final String NO_END = "Slut?";
 
 	/**
 	 * @param index
@@ -67,8 +70,41 @@ public class Competitor {
 		return index;
 	}
 	
+	/**
+	 * @return Total time elapsed, or Null time string
+	 */
+	private String totalTimeToString() {
+		return (startTimes.isEmpty() || finishTimes.isEmpty()) ? Time.NULL_TIME : 
+			startTimes.get(0).difference(finishTimes.get(0)).toString();
+	}
+	
+	private String startTimes() {
+		StringBuilder sb = new StringBuilder();
+		
+		for(Time time : startTimes) {
+			sb.append(time);
+			sb.append(", ");
+		}
+		String res = sb.toString();
+		return res.substring(0, res.length() - 2);
+	}
+	
+	private String finishTimes() {
+		StringBuilder sb = new StringBuilder();
+		
+		for(Time time : finishTimes) {
+			sb.append(time);
+			sb.append(", ");
+		}
+		String res = sb.toString();
+		return res.substring(0, res.length() - 2);
+	}
+	
 	public String toString() {
-		return "";
+		return Sorter.formatColumns(index, 
+				totalTimeToString(), 
+				(startTimes.isEmpty() ? NO_START : startTimes()),
+				(finishTimes.isEmpty() ? NO_END : finishTimes()));
 	}
 
 }
