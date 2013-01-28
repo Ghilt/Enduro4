@@ -7,6 +7,12 @@ import java.io.IOException;
 
 public class GuiPrinter {
 
+	/**
+	 * Starts a new GuiPrinter surrounding target file.
+	 * 
+	 * @param filelink
+	 *            The location of the file, including name, to write to.
+	 */
 	public GuiPrinter(String filelink) {
 		super();
 		this.file = new File(filelink);
@@ -14,6 +20,12 @@ public class GuiPrinter {
 
 	private File file;
 
+	/**
+	 * Appends the string to the end of the file
+	 * 
+	 * @param line
+	 *            The data to print
+	 */
 	public void writeLine(String line) {
 		BufferedWriter writer = null;
 		try {

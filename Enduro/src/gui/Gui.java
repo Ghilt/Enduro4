@@ -18,7 +18,9 @@ import sort.Time;
 @SuppressWarnings("serial")
 public class Gui extends JFrame {
 
+	// This number +1 is the number of lines of text kept in memory.
 	private static final int maxNrOfEntriesShown = 3;
+
 	private JPanel controlNorthPanel;
 	private JScrollPane textCenterPanel;
 	private JTextArea textArea;
@@ -28,16 +30,22 @@ public class Gui extends JFrame {
 	private GuiPrinter printer;
 	private Dimension screenSize;
 
+	/**
+	 * A simple frame for entering times of racers.
+	 * 
+	 * @param output
+	 *            The file to write the entries to.
+	 */
 	public Gui(String output) {
-		
+
 		screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-		bigFont = new Font("Times New Roman", Font.BOLD, screenSize.height/7);
-		 
+		bigFont = new Font("Times New Roman", Font.BOLD, screenSize.height / 7);
+
 		setTitle("ENDURO");
 		setLayout(new BorderLayout());
 		controlNorthPanelSetUp();
 		textCentralPanelSetUp();
-		
+
 		printer = new GuiPrinter(output);
 
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -48,20 +56,29 @@ public class Gui extends JFrame {
 		setSize(screenSize);
 	}
 
+	/**
+	 * Sets up the upper bar and its formatting.
+	 */
 	private void controlNorthPanelSetUp() {
-		
+
+		// Format dimensions
+		int textFieldLength = (screenSize.width / 3) / bigFont.getSize();
+		Dimension buttonDimension = new Dimension(screenSize.width / 3,
+				screenSize.height / 7);
+
+		// Add the Panel
 		controlNorthPanel = new JPanel();
 		add(controlNorthPanel, BorderLayout.NORTH);
-		
-		int textFieldLength = (screenSize.width/3)/bigFont.getSize();
+
+		// Create text field
 		textField = new JTextField(textFieldLength);
 		textField.setFont(bigFont);
-		//textField.setPreferredSize(textFieldDimension);
 		addRespondToKey();
-		
 		controlNorthPanel.add(textField, BorderLayout.WEST);
-		Dimension buttonDimension = new Dimension(screenSize.width/3, screenSize.height/7);
-		controlNorthPanel.add(new RegisterButton(this, buttonDimension ), BorderLayout.EAST);
+
+		// Create the button (separate class)
+		controlNorthPanel.add(new RegisterButton(this, buttonDimension),
+				BorderLayout.EAST);
 	}
 
 	/**
@@ -78,42 +95,46 @@ public class Gui extends JFrame {
 		});
 	}
 
+	/**
+	 * Sets up the central text field showing recent entries.
+	 */
 	private void textCentralPanelSetUp() {
-		
+
+		// Format and create text area.
 		this.textArea = new JTextArea(6, 12);
 		textArea.setFont(bigFont);
 		textArea.setEditable(false);
-		//textArea.setMinimumSize(textAreaDimension);
-		
+
+		// Add the panel
 		textCenterPanel = new JScrollPane(textArea);
 		add(textCenterPanel, BorderLayout.CENTER);
-		
-		// southPanel.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-		// southPanel.add(textArea);
-		// southPanel.setMinimumSize(new Dimension(400,400));
-		// textArea.setPreferredSize(new Dimension(600, 500));
-		// textArea.setMaximumSize(new Dimension(1400,1400));
+
 	}
 
 	/**
 	 * Tells the program to read the textField and write to file etc.
 	 */
 	public void register() {
+		// Read and then flush the textField
 		String comNr = textField.getText();
 		textField.setText("");
-		
+
+		// Format the new entry.
 		Time t = Time.fromCurrentTime();
 		String temp = comNr + "; " + t;
-		
+
+		// Print to file
 		printer.writeLine(temp);
-		
+
+		// Add the entry to the top of the recent list.
 		String[] temprows = textArea.getText().split("\\n");
 		for (int i = 0; i < temprows.length && i < maxNrOfEntriesShown; i++) {
 			temp = temp + "\n" + temprows[i];
 		}
 		textArea.setText(temp);
+
+		// Finishing updates
 		textField.requestFocus();
-		
 		textArea.invalidate();
 		repaint();
 	}
