@@ -33,12 +33,12 @@ public class TestTime {
 	
 	@Test
 	public void testConvertFromStringSimple() {
-		assertEquals(new Time(new String("1;00;00")), new Time(3600));
+		assertEquals(new Time(new String("01;00;00")), new Time(3600));
 	}
 	
 	@Test
 	public void testConvertFromStringComplicated() {
-		assertEquals(new Time("5;23;01"), new Time(19381));
+		assertEquals(new Time("05;23;01"), new Time(19381));
 	}
 	
 	@Test
@@ -48,12 +48,12 @@ public class TestTime {
 	
 	@Test
 	public void testPrintSimpleTime() {
-		assertEquals(new Time(3600).toString(), "1;00;00");
+		assertEquals(new Time(3600).toString(), "01;00;00");
 	}
 	
 	@Test
 	public void testPrintComplicatedTime() {
-		assertEquals(new Time(19381).toString(), "5;23;01");
+		assertEquals(new Time(19381).toString(), "05;23;01");
 	}
 
 }

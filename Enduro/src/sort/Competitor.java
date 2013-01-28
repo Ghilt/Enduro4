@@ -101,7 +101,7 @@ public class Competitor {
 	}
 	
 	public String toString() {
-		return Sorter.formatColumns(String.valueOf(index), 
+		return Sorter.formatColumns(index, 
 				totalTimeToString(), 
 				(startTimes.isEmpty() ? NO_START : startTimes()),
 				(finishTimes.isEmpty() ? NO_END : finishTimes()));

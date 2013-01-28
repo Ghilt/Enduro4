@@ -11,6 +11,7 @@ public class Time {
 		return new Time((System.currentTimeMillis() / 1000) % 86400);
 	}
 
+	private static final String SEPARATOR = ".";
 	public static final String NULL_TIME = "--.--.--";
 	private long seconds;
 
@@ -44,7 +45,7 @@ public class Time {
 		if (secString.length() < 2) {
 			secString = "0" + secString;
 		}
-		return hours + ";" + minString + ";" + secString;
+		return ((hours >= 10) ? hours : "0" + hours) + SEPARATOR + minString + SEPARATOR + secString;
 	}
 
 	@Override
