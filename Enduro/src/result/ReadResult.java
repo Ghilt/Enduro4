@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.Scanner;
 
 import sort.Competitor;
+import sort.Time;
 
 public class ReadResult {
 	
@@ -20,9 +21,8 @@ public class ReadResult {
 		try {
 			reg = new Scanner(fileReg);
 			start = new Scanner(fileStart);
-			//end = new Scanner(fileEnd);
+			end = new Scanner(fileEnd);
 		} catch (FileNotFoundException e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
 
@@ -36,10 +36,24 @@ public class ReadResult {
 			int i=Integer.parseInt(index);
 			list.put(i, new Competitor(i));
 		}
-		
-		
+		while(start.hasNext()){
+			String index = start.next();
+			index = index.substring(0, index.length()-1);
+			int i=Integer.parseInt(index);
+			String starttime = start.next();
+			list.get(i).addStartTime(new Time(starttime));
+		}
+		while(end.hasNext()){
+			String index = end.next();
+			index = index.substring(0, index.length()-1);
+			int i=Integer.parseInt(index);
+			String finishtime = end.next();
+			list.get(i).addFinishTime(new Time(finishtime));
+		}
 		return list;
 	}
 	
-	
+
 }
+
+		

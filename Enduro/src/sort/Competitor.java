@@ -21,7 +21,7 @@ public class Competitor implements Comparable {
 	public static final Time MINIMUM_TOTAL_TIME = new Time(15);
 	
 	/**
-	 * @param index
+	 * @param index		index of the competitor
 	 */
 	public Competitor(int index) {
 		this.index = index;
@@ -82,6 +82,13 @@ public class Competitor implements Comparable {
 			startTimes.get(0).difference(finishTimes.get(0));
 	}
 	
+	
+	/**	
+	 * Is called when a competitor has multiple start/finishtimes
+	 * @param msg	The errormessage
+	 * @param list	The list of times	
+	 * @return	The errormessage followed by the times seperated by a colon
+	 */
 	private String addTimes(String msg, Object... list) {
 		StringBuilder sb = new StringBuilder();
 		sb.append(msg + (list.length == 0 ? "" : " "));
@@ -93,29 +100,40 @@ public class Competitor implements Comparable {
 		return res.substring(0, res.length() - 2);
 	}
 	
+	/**
+	 * Prints times for the competitor in the following format:
+	 * Index; Totaltime; Starttime; Finishtime; Errormessage (if any)
+	 */
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
 		
-		sb.append(Sorter.formatColumns(index, 
+		sb.append(SorterMain.formatColumns(index, 
 				totalTime(), 
 				(startTimes.isEmpty() ? NO_START : startTimes.get(0).toString()),
 				(finishTimes.isEmpty() ? NO_END : finishTimes.get(0).toString())));
 		
 		if (startTimes.size() > 1) {
-			sb.append(addTimes("; " + MULTIPLE_STARTS, startTimes.toArray()));
+			sb.append(addTimes(MULTIPLE_STARTS, startTimes.toArray()));
 		}
 		
 		if (finishTimes.size() > 1) {
-			sb.append(addTimes("; " + MULTIPLE_ENDS, finishTimes.toArray()));	
+			sb.append(addTimes(MULTIPLE_ENDS, finishTimes.toArray()));	
 		}
 		
 		if (totalTime().compareTo(MINIMUM_TOTAL_TIME) <= 0) {
-			sb.append("; " + IMPOSSIBLE_TOTAL_TIME);
+			sb.append(IMPOSSIBLE_TOTAL_TIME);
 		}
 		
 		return sb.toString();
 	}
 	
+	/**
+	 * Compares the total time of this competitor with the competitor o
+	 * @param o		The competitor to compare with.
+	 * @return 		1 if this competitors total time is less than o's
+	 * 				0 if the total times are equal
+	 * 				-1 if this competitors total time is larger than o's
+	 */
 	@Override
 	public int compareTo(Object o) {
 		Competitor comp = (Competitor) o;
