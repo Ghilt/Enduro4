@@ -22,7 +22,7 @@ public class SorterMain {
 				new File(args[2]));
 		
 		List<Competitor> competitors = new ArrayList<Competitor>(readResult.openResultFile().values());
-		Collections.sort(competitors); 
+		//Collections.sort(competitors); 
 		printResults(competitors, args[3]);
 	}
 	
