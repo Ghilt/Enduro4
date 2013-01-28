@@ -12,7 +12,6 @@ import java.util.Scanner;
 import org.junit.*;
 
 import sort.Competitor;
-import sort.Sorter;
 import sort.SorterMain;
 import sort.Time;
 import static org.junit.Assert.*;

@@ -12,7 +12,6 @@ import java.util.Scanner;
 import org.junit.*;
 
 import sort.Competitor;
-import sort.Sorter;
 import sort.SorterMain;
 import sort.Time;
 import static org.junit.Assert.*;
@@ -49,7 +48,7 @@ public class TestResultFile {
 	}
 
 	@Test
-	public void testSorterCreatesFile() {
+	public void testSorterMainCreatesFile() {
 		File file = new File("sorted_result.txt");
 		Collections.sort(competitors);
 		
