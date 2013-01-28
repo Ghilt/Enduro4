@@ -12,6 +12,7 @@ public class Competitor implements Comparable {
 	private int index;
 	private List<Time> startTimes;
 	private List<Time> finishTimes;
+	private String name;
 	
 	public static final String NO_START = "Start?";
 	public static final String NO_END = "Slut?";
@@ -50,6 +51,14 @@ public class Competitor implements Comparable {
 	 */
 	public void addFinishTime(Time t) {
 		finishTimes.add(t);
+	}
+	
+	/**
+	 * Adds a name to the competitor
+	 * @param name
+	 */
+	public void addName(String name) {
+		this.name=name;
 	}
 
 	/**
