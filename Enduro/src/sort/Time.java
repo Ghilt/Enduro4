@@ -97,7 +97,6 @@ public class Time implements Comparable<Time> {
 		long i;
 		try {
 			String[] stamps = stringTime.split("\\" + SEPARATOR);
-			// System.out.println(stamps.length+" "+stamps[0]+" "+stamps[1]+" "+stamps[2]);
 			Long hours = Long.parseLong(stamps[0]);
 			Long minutes = Long.parseLong(stamps[1]);
 			Long seconds = Long.parseLong(stamps[2]);
