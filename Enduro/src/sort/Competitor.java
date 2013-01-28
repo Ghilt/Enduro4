@@ -78,22 +78,11 @@ public class Competitor {
 			startTimes.get(0).difference(finishTimes.get(0)).toString();
 	}
 	
-	private String startTimes() {
+	private String addTimes(String msg, List<Time> list) {
 		StringBuilder sb = new StringBuilder();
-		
-		for(Time time : startTimes) {
-			sb.append(time);
-			sb.append(", ");
-		}
-		String res = sb.toString();
-		return res.substring(0, res.length() - 2);
-	}
-	
-	private String finishTimes() {
-		StringBuilder sb = new StringBuilder();
-		
-		for(Time time : finishTimes) {
-			sb.append(time);
+		sb.append(msg);
+		for(int i = 1; i < list.size(); i++) {
+			sb.append(list.get(i));
 			sb.append(", ");
 		}
 		String res = sb.toString();
@@ -101,10 +90,22 @@ public class Competitor {
 	}
 	
 	public String toString() {
-		return Sorter.formatColumns(index, 
+		StringBuilder sb = new StringBuilder();
+		
+		sb.append(Sorter.formatColumns(index, 
 				totalTimeToString(), 
-				(startTimes.isEmpty() ? NO_START : startTimes()),
-				(finishTimes.isEmpty() ? NO_END : finishTimes()));
+				(startTimes.isEmpty() ? NO_START : startTimes.get(0).toString()),
+				(finishTimes.isEmpty() ? NO_END : finishTimes.get(0).toString())));
+		
+		if(startTimes.size() > 1) {
+			sb.append(addTimes("Flera starttider? ", startTimes));
+		}
+		
+		if(finishTimes.size() > 1) {
+			sb.append(addTimes("Flera måltider? ", finishTimes));	
+		}
+		
+		return sb.toString();
 	}
 
 }
