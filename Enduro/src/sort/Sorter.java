@@ -15,8 +15,8 @@ public class Sorter {
 	/**
 	 * Create Sorter   
 	 */
-	public Sorter(List<Competitor> competitors) {
-		result = new File("sorted_result.txt");
+	public Sorter(List<Competitor> competitors, String resultPath, String registerPath) {
+		result = new File(resultPath);
 		this.competitors = competitors;
 	}
 	
@@ -30,24 +30,7 @@ public class Sorter {
 		// TODO
 	}
 	
-	/**
-	 * Print the result list   
-	 */
-	public void printResult(){
-
-		try {
-			FileWriter fileWriter = new FileWriter(result);
-			fileWriter.append("StartNr; TotalTid; StartTid; Måltid\n");
-			for(Competitor comp : competitors) {
-				fileWriter.append("" + comp + "\n");
-			}
-			fileWriter.close();
-			
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		
-	}
+	
 	
 	/**
 	 * Return a string formated for a column
@@ -65,5 +48,11 @@ public class Sorter {
 		}
 		
 		return sb.toString();
+	}
+
+
+	public List<Competitor> sort() {
+		// TODO Auto-generated method stub
+		return competitors;
 	}
 }
