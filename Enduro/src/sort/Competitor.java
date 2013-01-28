@@ -84,7 +84,8 @@ public class Competitor implements Comparable {
 	
 	
 	/**	
-	 * Is called when a competitor has multiple start/finishtimes
+	 * Is called when a competitor has multiple start/finish times
+	 * 
 	 * @param msg	The errormessage
 	 * @param list	The list of times	
 	 * @return	The errormessage followed by the times seperated by a colon
