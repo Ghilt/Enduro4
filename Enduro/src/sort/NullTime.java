@@ -21,7 +21,12 @@ public class NullTime extends Time {
 			return false;
 		return true;
 	}
-
+	
+	@Override
+	public int compareTo(Time time){
+		return 1;
+	}
+	
 	@Override
 	public Time difference(Time t) {
 		return t;
