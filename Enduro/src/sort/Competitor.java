@@ -44,6 +44,7 @@ public class Competitor implements Comparable<Competitor> {
 		this.index = index;
 		startTimes = new ArrayList<Time>();
 		finishTimes = new ArrayList<Time>();
+		lapMoments = new ArrayList<Time>();
 	}
 
 	/**
@@ -70,6 +71,10 @@ public class Competitor implements Comparable<Competitor> {
 	
 	public void addLapMoment(Time t) {
 		lapMoments.add(t);
+	}
+	
+	public int numberOfLaps(){
+		return lapMoments.size();
 	}
 
 	/**
