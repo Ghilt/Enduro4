@@ -141,4 +141,8 @@ public class Competitor implements Comparable<Competitor> {
 		return totalTime.compareTo(totalTime2);
 	}
 
+	public int getNumberOfLaps() {
+		return numberOfLaps();
+	}
+
 }
