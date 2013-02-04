@@ -126,5 +126,28 @@ public class TestCompetitor {
 		assertEquals(new Time("01.00.00"), laps.get(2).getTotal());
 	}
 	
+	@Test
+	public void testEmptyLaps() {
+		assertEquals(c.getLaps().size(), 0);
+	}
+	
+	@Test
+	public void testFinishTimesSorted() {
+		
+		c.addStartTime(new Time("00.01.00"));
+		
+		c.addFinishTime(new Time("03.00.00"));
+		c.addFinishTime(new Time("05.00.00"));
+		c.addFinishTime(new Time("10.00.00"));
+		c.addFinishTime(new Time("01.00.00"));
+		
+		List<Lap> laps = c.getLaps();
+		
+		assertEquals(new Time("00.59.00"), laps.get(0).getTotal());
+		assertEquals(new Time("02.00.00"), laps.get(1).getTotal());
+		assertEquals(new Time("02.00.00"), laps.get(2).getTotal());
+		assertEquals(new Time("05.00.00"), laps.get(3).getTotal());
+	}
+	
 	
 }
