@@ -6,8 +6,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;
 
-import sort.Competitor;
-import sort.Time;
+import members.Competitor;
+import members.Time;
+
 
 public class Parser {
 	private final static String START_NO = "StartNr";

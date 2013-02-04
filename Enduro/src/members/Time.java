@@ -1,4 +1,4 @@
-package sort;
+package members;
 
 public class Time implements Comparable<Time> {
 	private final static long ONE_DAY = 86400;

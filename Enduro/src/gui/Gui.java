@@ -13,7 +13,8 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
-import sort.Time;
+import members.Time;
+
 
 @SuppressWarnings("serial")
 public class Gui extends JFrame {

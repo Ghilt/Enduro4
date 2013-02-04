@@ -1,22 +1,23 @@
 package test;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Scanner;
 
-import org.junit.*;
+import members.Competitor;
+import members.Time;
 
-import sort.Competitor;
+import org.junit.Before;
+import org.junit.Ignore;
+
 import sort.CompetitorPrinter;
-import sort.SorterMain;
 import sort.StdCompetitorPrinter;
-import sort.Time;
-import static org.junit.Assert.*;
 
 public class TestSort {
 	private List<Competitor> competitors;
@@ -73,7 +74,7 @@ public class TestSort {
 		
 		Collections.sort(competitors);
 		
-		SorterMain.printResults(competitors, "src/test/tmp/sorted_result.txt", cp);
+		cp.printResults(competitors, "src/test/tmp/sorted_result.txt");
 		
 		testFirstLineInResult(scan);
 		
