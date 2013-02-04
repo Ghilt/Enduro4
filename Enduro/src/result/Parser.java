@@ -6,16 +6,13 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;
 
+import sort.Formater;
+
 import members.Competitor;
 import members.Time;
 
 
 public class Parser {
-	private final static String START_NO = "StartNr";
-	private final static String START_TIME = "Starttid";
-	private final static String FINISH_TIME = "Måltid";
-	private final static String NAME = "Namn";
-	
 	
 	
 	public Parser(){
@@ -35,13 +32,13 @@ public class Parser {
 	public HashMap<Integer, Competitor> parse(ArrayList<ArrayList<String>> input, HashMap<Integer, Competitor> competitors) throws ParserException {
 		ArrayList<Identifier> types = new ArrayList<Identifier>();
 		
-		if(input.size() <= 1) {
+		if(input.size() < 2) {
 			throw new ParserException("Invalid input.");
 		}
 		ArrayList<String> firstLine = input.get(0);
 		types = parseIdentifier(firstLine);
 		
-		if(types.size() <= 1 || types.get(0) != Identifier.start_nr) {
+		if(types.size() < 1 || types.get(0) != Identifier.start_nr) {
 			throw new ParserException("Missing start number.");
 		}
 		
@@ -110,13 +107,13 @@ public class Parser {
 		ArrayList<Identifier> types = new ArrayList<Identifier>();
 		
 		for(String s : firstLine) {
-			if(s.equalsIgnoreCase(START_NO)) {
+			if(s.equalsIgnoreCase(Formater.START_NR)) {
 				types.add(Identifier.start_nr);
-			} else if(s.equalsIgnoreCase(START_TIME)) {
+			} else if(s.equalsIgnoreCase(Formater.START_TIME)) {
 				types.add(Identifier.start_time);
-			} else if(s.equalsIgnoreCase(FINISH_TIME)) {
+			} else if(s.equalsIgnoreCase(Formater.FINISH_TIME)) {
 				types.add(Identifier.finish_time);
-			} else if(s.equalsIgnoreCase(NAME)) {
+			} else if(s.equalsIgnoreCase(Formater.NAME)) {
 				types.add(Identifier.name);
 			}
 		}
