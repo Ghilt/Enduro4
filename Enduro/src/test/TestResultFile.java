@@ -40,7 +40,7 @@ public class TestResultFile {
 	 *            The scanner reading the resultfile.
 	 */
 	private void testFirstLineInResult(Scanner scan) {
-		String firstLine = "StartNr; TotalTid; StartTid; Måltid";
+		String firstLine = "StartNr; Namn; TotalTid; StartTid; Måltid";
 
 		assertTrue(scan.hasNext());
 		assertEquals("First line is missing, empty result list",
@@ -79,6 +79,7 @@ public class TestResultFile {
 	public void testMissingStartTime() throws IOException {
 		Competitor competitor = new Competitor(2);
 		competitor.addFinishTime(finish);
+		competitor.addName("Niklas Svensson");
 		competitors.add(competitor);
 
 		
@@ -98,7 +99,7 @@ public class TestResultFile {
 		assertTrue("Competitor should not contain start time!", comp
 				.getStartTimes().size() == 0);
 
-		assertEquals("2; " + Time.NULL_TIME + "; Start?; "
+		assertEquals("2; " + "Niklas Svensson" +"; " + Time.NULL_TIME + "; Start?; "
 				+ comp.getFinishTimes().get(0) + ";", scan.nextLine());
 	}
 
@@ -106,6 +107,7 @@ public class TestResultFile {
 	public void testMissingFinishTime() throws IOException {
 		Competitor competitor = new Competitor(2);
 		competitor.addStartTime(start);
+		competitor.addName("Niklas Svensson");
 		competitors.add(competitor);
 		
 		SorterMain.printResults(competitors, "sorted_result.txt");
@@ -124,7 +126,7 @@ public class TestResultFile {
 		assertTrue("Competitor should not contain finish time!", comp
 				.getFinishTimes().size() == 0);
 
-		assertEquals("2; " + Time.NULL_TIME + "; "
+		assertEquals("2; " + "Niklas Svensson" +"; " + Time.NULL_TIME + "; "
 				+ comp.getStartTimes().get(0) + "; Slut?;", scan.nextLine());
 	}
 
@@ -132,6 +134,7 @@ public class TestResultFile {
 	public void testMultipleStartTimes() throws IOException {
 		Competitor competitor = new Competitor(2);
 		competitor.addStartTime(start);
+		competitor.addName("Niklas Svensson");
 		Time time1 = new Time(23456);
 		Time time2 = new Time(45678);
 		competitor.addStartTime(time1);
@@ -154,7 +157,7 @@ public class TestResultFile {
 		assertEquals(scan.nextLine(), competitors.get(0).toString());
 
 		assertTrue(scan.hasNext());
-		assertEquals("2; " + start.difference(finish) + "; " + start + "; " + finish + "; Flera starttider? " + time1 + ", " + time2, scan.nextLine());
+		assertEquals("2; " + "Niklas Svensson" +"; " + start.difference(finish) + "; " + start + "; " + finish + "; Flera starttider? " + time1 + ", " + time2, scan.nextLine());
 	}
 
 }

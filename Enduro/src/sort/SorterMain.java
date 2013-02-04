@@ -33,7 +33,7 @@ public class SorterMain {
 		try {
 			File outputFile = new File(output);
 			FileWriter fileWriter = new FileWriter(outputFile);
-			fileWriter.append("StartNr; Namn; TotalTid; StartTider; Måltider\n");
+			fileWriter.append("StartNr; Namn; TotalTid; StartTid; Måltid\n");
 			for(Competitor comp : competitors) {
 				fileWriter.append("" + comp + "\n");
 			}

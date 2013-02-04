@@ -60,10 +60,7 @@ public class ReadResult {
 			System.out.println(i);
 			String name = sName.next();
 			name = name + " " + sName.next();
-			//while(!sName.hasNextLine()){
-			//System.out.println(name);
-			//name = name + " " + sName.next();
-			//}
+			
 			list.get(i).addName(name);
 			System.out.println(list.get(i).getName());
 		}
