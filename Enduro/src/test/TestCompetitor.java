@@ -127,6 +127,11 @@ public class TestCompetitor {
 	}
 	
 	@Test
+	public void testEmptyLaps() {
+		assertEquals(c.getLaps().size(), 0);
+	}
+	
+	@Test
 	public void testFinishTimesSorted() {
 		
 		c.addStartTime(new Time("00.01.00"));
