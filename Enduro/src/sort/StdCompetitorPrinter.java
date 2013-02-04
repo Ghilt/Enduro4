@@ -14,18 +14,12 @@ import members.Time;
  *
  * Prints according to first iteration race.
  */
-public class StdCompetitorPrinter implements CompetitorPrinter {
-	public static final String NO_START = "Start?";
-	public static final String NO_END = "Slut?";
-	public static final String MULTIPLE_STARTS = "Flera starttider?";
-	public static final String MULTIPLE_ENDS = "Flera måltider?";
-	public static final String IMPOSSIBLE_TOTAL_TIME = "Omöjlig Totaltid?";
-	public static final Time MINIMUM_TOTAL_TIME = new Time("00.15.00");
-
+public class StdCompetitorPrinter extends Printer {
+	
 	/**
 	 * @return Total time elapsed, or Null time string
 	 */
-	private Time totalTime(Competitor c) {
+	protected Time totalTime(Competitor c) {
 		return (c.getStartTimes().isEmpty() || c.getFinishTimes().isEmpty()) ? new NullTime()
 				: c.getStartTimes().get(0)
 						.difference(c.getFinishTimes().get(0));
@@ -68,30 +62,11 @@ public class StdCompetitorPrinter implements CompetitorPrinter {
 
 		return sb.toString();
 	}
-
-	/**
-	 * Prints the result in the list with competitors to the output file.
-	 * 
-	 * @param competitors
-	 *            list of competitors
-	 * @param filepath
-	 *            the file to write to
-	 */
-	public void printResults(List<Competitor> competitors, String filepath) {
-		try {
-			File outputFile = new File(filepath);
-			FileWriter fileWriter = new FileWriter(outputFile);
-			fileWriter.append(Formater.formatColumns(Formater.START_NR,
-					Formater.NAME, Formater.TOTAL_TIME, Formater.START_TIME,
-					Formater.FINISH_TIME));
-			fileWriter.append("\n");
-			for (Competitor comp : competitors) {
-				fileWriter.append("" + row(comp) + "\n");
-			}
-			fileWriter.close();
-
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+	
+	protected void appendRows(FileWriter fileWriter, List<Competitor> competitors) throws IOException {
+		fileWriter.append(Formater.formatColumns(Formater.START_NR,
+				Formater.NAME, Formater.TOTAL_TIME, Formater.START_TIME,
+				Formater.FINISH_TIME));
+		fileWriter.append("\n");
 	}
 }

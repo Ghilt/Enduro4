@@ -109,6 +109,33 @@ public class TestCompetitor {
 	}
 	
 	@Test
+	public void testCompareToWithoutStarttime() {
+		Competitor c2 = new Competitor(2);
+		
+		c.addFinishTime(new Time("01.00.10"));
+		
+		c2.addStartTime(new Time("00.01.00"));
+		c2.addFinishTime(new Time("02.00.10"));
+		
+		assertEquals(c.compareTo(c2), 1);
+		assertEquals(c2.compareTo(c), -1);
+	}
+	
+	@Test
+	public void testCompareToWithoutFinishtime() {
+		Competitor c2 = new Competitor(2);
+		
+		c.addStartTime(new Time("00.00.10"));
+		
+		c2.addStartTime(new Time("00.01.00"));
+		c2.addFinishTime(new Time("02.00.10"));
+		
+		assertEquals(c.compareTo(c2), 1);
+		assertEquals(c2.compareTo(c), -1);
+	}
+	
+	
+	@Test
 	public void testGetLaps() {
 		List<Lap> laps;
 		
