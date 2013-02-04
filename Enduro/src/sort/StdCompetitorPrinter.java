@@ -13,8 +13,8 @@ public class StdCompetitorPrinter implements CompetitorPrinter {
 	public static final String NO_START = "Start?";
 	public static final String NO_END = "Slut?";
 	public static final String MULTIPLE_STARTS = "Flera starttider?";
-	public static final String MULTIPLE_ENDS = "Flera sluttider?";
-	public static final String IMPOSSIBLE_TOTAL_TIME = "Omöjlig tid?";
+	public static final String MULTIPLE_ENDS = "Flera måltider?";
+	public static final String IMPOSSIBLE_TOTAL_TIME = "Omöjlig Totaltid?";
 	public static final Time MINIMUM_TOTAL_TIME = new Time("00.15.00");
 	
 	/**
@@ -54,16 +54,19 @@ public class StdCompetitorPrinter implements CompetitorPrinter {
 		if (c.getStartTimes().size() > 1) {
 			sb.append(" ");
 			sb.append(addTimes(MULTIPLE_STARTS, c.getStartTimes().toArray()));
+			sb.append(";");
 		}
 		
 		if (c.getFinishTimes().size() > 1) {
 			sb.append(" ");
 			sb.append(addTimes(MULTIPLE_ENDS, c.getFinishTimes().toArray()));	
+			sb.append(";");
 		}
 		
 		if (totalTime(c).compareTo(MINIMUM_TOTAL_TIME) <= 0) {
 			sb.append(" ");
 			sb.append(IMPOSSIBLE_TOTAL_TIME);
+			sb.append(";");
 		}
 		
 		return sb.toString();

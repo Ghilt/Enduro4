@@ -1,4 +1,4 @@
-package acceptanstest;
+package acceptanstest5;
 
 import static org.junit.Assert.*;
 
@@ -46,26 +46,26 @@ public class Test5 {
 	public void testResult() throws FileNotFoundException, ParserException {
 		HashMap<Integer, Competitor> competitors;
 		
-		reader = new CvsReader("src/acceptanstest/maltider.txt");
+		reader = new CvsReader("src/acceptanstest5/maltider.txt");
 		ArrayList<ArrayList<String>> input = reader.readAll();
 		competitors = parser.parse(input);
 		
-		reader = new CvsReader("src/acceptanstest/namnfil.txt");
+		reader = new CvsReader("src/acceptanstest5/namnfil.txt");
 		input = reader.readAll();
 		competitors = parser.parse(input, competitors);
 		
-		reader = new CvsReader("src/acceptanstest/starttider.txt");
+		reader = new CvsReader("src/acceptanstest5/starttider.txt");
 		input = reader.readAll();
 		competitors = parser.parse(input, competitors);
 		
 		StdCompetitorPrinter printer = new StdCompetitorPrinter();
-		printer.printResults(new ArrayList<Competitor>(competitors.values()), "src/acceptanstest/resultat_2.txt");
+		printer.printResults(new ArrayList<Competitor>(competitors.values()), "src/acceptanstest5/resultat_2.txt");
 		testResultFiles();
 	}
 	
 	private void testResultFiles() throws FileNotFoundException {
-		File file1 = new File("src/acceptanstest/resultat.txt");
-		File file2 = new File("src/acceptanstest/resultat_2.txt");
+		File file1 = new File("src/acceptanstest5/resultat.txt");
+		File file2 = new File("src/acceptanstest5/resultat_2.txt");
 		Scanner scan1 = new Scanner(file1);
 		Scanner scan2 = new Scanner(file2);
 		String line1, line2;
