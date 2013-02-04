@@ -26,7 +26,7 @@ public class SorterMain {
 		
 		List<Competitor> competitors = new ArrayList<Competitor>(readResult.openResultFile().values());
 		//Collections.sort(competitors); 
-		printResults(competitors, args[3]);
+		printResults(competitors, args[3], new StdCompetitorPrinter());
 	}
 	
 	/**
@@ -35,13 +35,13 @@ public class SorterMain {
 	 * @param competitors	list of competitors
 	 * @param output		the file to write to
 	 */
-	public static void printResults(List<Competitor> competitors, String output) {
+	public static void printResults(List<Competitor> competitors, String output, CompetitorPrinter cp) {
 		try {
 			File outputFile = new File(output);
 			FileWriter fileWriter = new FileWriter(outputFile);
 			fileWriter.append("StartNr; TotalTid; StartTid; Måltid\n");
 			for(Competitor comp : competitors) {
-				fileWriter.append("" + comp + "\n");
+				fileWriter.append("" + cp.row(comp) + "\n");
 			}
 			fileWriter.close();
 			

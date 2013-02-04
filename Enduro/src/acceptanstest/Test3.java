@@ -32,7 +32,7 @@ public class Test3 {
 		
 		List<Competitor> competitors = new ArrayList<Competitor>(readResult.openResultFile().values());
 		
-		sorter.printResults(competitors, "src/acceptanstest/TEST3resultat2.txt");
+		SorterMain.printResults(competitors, "src/acceptanstest/TEST3resultat2.txt", new StdCompetitorPrinter());
 		
 		
 	}

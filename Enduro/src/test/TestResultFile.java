@@ -12,17 +12,22 @@ import java.util.Scanner;
 import org.junit.*;
 
 import sort.Competitor;
+import sort.CompetitorPrinter;
 import sort.SorterMain;
+import sort.StdCompetitorPrinter;
 import sort.Time;
 import static org.junit.Assert.*;
 
 public class TestResultFile {
-	List<Competitor> competitors;
-	Time start;
-	Time finish;
-
+	
+	private List<Competitor> competitors;
+	private Time start;
+	private Time finish;
+	private CompetitorPrinter cp;
+	
 	@Before
 	public void Initialize() {
+		cp = new StdCompetitorPrinter();
 		competitors = new ArrayList<Competitor>();
 		start = new Time(123456);
 		finish = new Time(654321);
@@ -52,7 +57,7 @@ public class TestResultFile {
 		File file = new File("sorted_result.txt");
 		//Collections.sort(competitors);
 		
-		SorterMain.printResults(competitors, "sorted_result.txt");
+		SorterMain.printResults(competitors, "sorted_result.txt", cp);
 		assertTrue(file.exists());
 	}
 
@@ -60,7 +65,7 @@ public class TestResultFile {
 	public void testResultFile() throws IOException {
 		//Collections.sort(competitors);
 		
-		SorterMain.printResults(competitors, "sorted_result.txt");
+		SorterMain.printResults(competitors, "sorted_result.txt", cp);
 
 		File file = new File("sorted_result.txt");
 
@@ -71,7 +76,7 @@ public class TestResultFile {
 		for (Competitor comp : competitors) {
 			// Need implementation in competitor to work (toString()).
 			assertTrue(scan.hasNext());
-			assertEquals(scan.nextLine(), comp.toString());
+			assertEquals(scan.nextLine(), cp.row(comp));
 		}
 	}
 
@@ -82,7 +87,7 @@ public class TestResultFile {
 		competitors.add(competitor);
 
 		
-		SorterMain.printResults(competitors, "sorted_result.txt");
+		SorterMain.printResults(competitors, "sorted_result.txt", cp);
 
 		File file = new File("sorted_result.txt");
 
@@ -91,7 +96,7 @@ public class TestResultFile {
 		testFirstLineInResult(scan);
 
 		assertTrue(scan.hasNext());
-		assertEquals(scan.nextLine(), competitors.get(0).toString());
+		assertEquals(scan.nextLine(), cp.row(competitors.get(0)));
 
 		assertTrue(scan.hasNext());
 		Competitor comp = competitors.get(1);
@@ -108,7 +113,7 @@ public class TestResultFile {
 		competitor.addStartTime(start);
 		competitors.add(competitor);
 		
-		SorterMain.printResults(competitors, "sorted_result.txt");
+		SorterMain.printResults(competitors, "sorted_result.txt", cp);
 
 		File file = new File("sorted_result.txt");
 
@@ -117,7 +122,7 @@ public class TestResultFile {
 		testFirstLineInResult(scan);
 
 		assertTrue(scan.hasNext());
-		assertEquals(scan.nextLine(), competitors.get(0).toString());
+		assertEquals(scan.nextLine(), cp.row(competitors.get(0)));
 
 		assertTrue(scan.hasNext());
 		Competitor comp = competitors.get(1);
@@ -142,7 +147,7 @@ public class TestResultFile {
 		competitors.add(competitor);
 		//Collections.sort(competitors);
 		
-		SorterMain.printResults(competitors, "sorted_result.txt");
+		SorterMain.printResults(competitors, "sorted_result.txt", cp);
 
 		File file = new File("sorted_result.txt");
 
@@ -151,7 +156,7 @@ public class TestResultFile {
 		testFirstLineInResult(scan);
 
 		assertTrue(scan.hasNext());
-		assertEquals(scan.nextLine(), competitors.get(0).toString());
+		assertEquals(scan.nextLine(), cp.row(competitors.get(0)));
 
 		assertTrue(scan.hasNext());
 		assertEquals("2; " + start.difference(finish) + "; " + start + "; " + finish + "; Flera starttider? " + time1 + ", " + time2, scan.nextLine());
