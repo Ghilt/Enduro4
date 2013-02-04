@@ -25,23 +25,7 @@ public class StdCompetitorPrinter implements CompetitorPrinter {
 			c.getStartTimes().get(0).difference(c.getFinishTimes().get(0));
 	}
 
-	/**	
-	 * Is called when a competitor has multiple start/finish times
-	 * 
-	 * @param msg	The errormessage
-	 * @param list	The list of times	
-	 * @return	The errormessage followed by the times seperated by a colon
-	 */
-	private static String addTimes(String msg, Object... list) {
-		StringBuilder sb = new StringBuilder();
-		sb.append(msg + (list.length == 0 ? "" : " "));
-		for (int i = 1; i < list.length; i++) {
-			sb.append(list[i]);
-			sb.append(", ");
-		}
-		String res = sb.toString();
-		return res.substring(0, res.length() - 2);
-	}
+	
 
 	public String row(Competitor c) {
 		StringBuilder sb = new StringBuilder();
@@ -53,12 +37,12 @@ public class StdCompetitorPrinter implements CompetitorPrinter {
 		sb.append(";");
 		if (c.getStartTimes().size() > 1) {
 			sb.append(" ");
-			sb.append(addTimes(MULTIPLE_STARTS, c.getStartTimes().toArray()));
+			sb.append(Formater.formatList(MULTIPLE_STARTS, c.getStartTimes().toArray()));
 		}
 		
 		if (c.getFinishTimes().size() > 1) {
 			sb.append(" ");
-			sb.append(addTimes(MULTIPLE_ENDS, c.getFinishTimes().toArray()));	
+			sb.append(Formater.formatList(MULTIPLE_ENDS, c.getFinishTimes().toArray()));	
 		}
 		
 		if (totalTime(c).compareTo(MINIMUM_TOTAL_TIME) <= 0) {
@@ -79,7 +63,8 @@ public class StdCompetitorPrinter implements CompetitorPrinter {
 		try {
 			File outputFile = new File(filepath);
 			FileWriter fileWriter = new FileWriter(outputFile);
-			fileWriter.append("StartNr; Namn; TotalTid; StartTid; Måltid\n");
+			fileWriter.append(Formater.formatColumns("StartNr", "Namn", "TotalTid", "StartTid", "MålTid"));
+			fileWriter.append("\n");
 			for(Competitor comp : competitors) {
 				fileWriter.append("" + row(comp) + "\n");
 			}

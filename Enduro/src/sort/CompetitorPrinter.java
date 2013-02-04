@@ -7,5 +7,4 @@ import members.Competitor;
 public interface CompetitorPrinter {
 	public String row(Competitor c);
 	public void printResults(List<Competitor> competitors, String filepath);
-
 }
