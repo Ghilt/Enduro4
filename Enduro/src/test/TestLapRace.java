@@ -47,7 +47,7 @@ public class TestLapRace {
 		c.addFinishTime(t3);
 		c.addFinishTime(t4);
 		c.addFinishTime(t2);
-		assertEquals(c.numberOfLaps(), 2);
+		assertEquals(c.numberOfLaps(), 3);
 	}
 	
 	@Test

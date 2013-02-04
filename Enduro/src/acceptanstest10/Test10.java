@@ -1,4 +1,4 @@
-package acceptanstest6;
+package acceptanstest10;
 
 import static org.junit.Assert.*;
 
@@ -24,7 +24,7 @@ import org.junit.Ignore;
 import org.junit.Test;
 
 
-public class Test6 {
+public class Test10 {
 	private CvsReader reader;
 	private Parser parser;
 	
@@ -47,33 +47,37 @@ public class Test6 {
 	public void testResult() throws FileNotFoundException, ParserException {
 		Map<Integer, Competitor> competitors;
 		
-		reader = new CvsReader("src/acceptanstest6/maltider.txt");
+		reader = new CvsReader("src/acceptanstest10/maltider1.txt");
 		ArrayList<ArrayList<String>> input = reader.readAll();
 		competitors = parser.parse(input);
 		
-		reader = new CvsReader("src/acceptanstest6/namnfil.txt");
+		reader = new CvsReader("src/acceptanstest10/maltider2.txt");
 		input = reader.readAll();
 		competitors = parser.parse(input, competitors);
 		
-		reader = new CvsReader("src/acceptanstest6/starttider.txt");
+		reader = new CvsReader("src/acceptanstest10/namnfil.txt");
 		input = reader.readAll();
 		competitors = parser.parse(input, competitors);
 		
-		StdCompetitorPrinter printer = new StdCompetitorPrinter();
-		printer.printResults(new ArrayList<Competitor>(competitors.values()), "src/acceptanstest6/resultat_2.txt");
+		reader = new CvsReader("src/acceptanstest10/starttider.txt");
+		input = reader.readAll();
+		competitors = parser.parse(input, competitors);
+		
+		LapCompetitorPrinter printer = new LapCompetitorPrinter();
+		printer.printResults(new ArrayList<Competitor>(competitors.values()), "src/acceptanstest10/resultat_2.txt");
 		testResultFiles();
 	}
 	
 	private void testResultFiles() throws FileNotFoundException {
-		File file1 = new File("src/acceptanstest6/resultat.txt");
-		File file2 = new File("src/acceptanstest6/resultat_2.txt");
+		File file1 = new File("src/acceptanstest10/resultat.txt");
+		File file2 = new File("src/acceptanstest10/resultat_2.txt");
 		Scanner scan1 = new Scanner(file1);
 		Scanner scan2 = new Scanner(file2);
 		String line1, line2;
 		while (scan1.hasNext() && scan2.hasNext()) {
 			line1 = scan1.nextLine();
 			line2 = scan2.nextLine();
-			assertEquals("Wrong result.", line1, line2);
+			assertEquals("", line1, line2);
 		}
 	}
 	

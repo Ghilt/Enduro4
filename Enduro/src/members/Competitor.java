@@ -1,6 +1,7 @@
 package members;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -72,7 +73,7 @@ public class Competitor implements Comparable<Competitor> {
 	 * @return number of laps
 	 */
 	public int numberOfLaps(){
-		return finishTimes.size()-1;
+		return finishTimes.size();
 	}
 
 	/**
@@ -82,6 +83,7 @@ public class Competitor implements Comparable<Competitor> {
 	 */
 	public void addFinishTime(Time t) {
 		finishTimes.add(t);
+		Collections.sort(finishTimes);
 	}
 	
 	/**
@@ -137,6 +139,10 @@ public class Competitor implements Comparable<Competitor> {
 		Time totalTime2 = comp.getStartTimes().get(0).difference(comp.getFinishTimes().get(0));
 		
 		return totalTime.compareTo(totalTime2);
+	}
+
+	public int getNumberOfLaps() {
+		return numberOfLaps();
 	}
 
 }
