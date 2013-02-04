@@ -63,7 +63,7 @@ public class Parser {
 					comp.addFinishTime(new Time(row.get(j)));
 					break;
 				case name:
-					//comp.addName(row.get(j));
+					comp.addName(row.get(j));
 					break;
 				case start_time:
 					comp.addStartTime(new Time(row.get(j)));
