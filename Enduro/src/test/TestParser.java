@@ -5,6 +5,7 @@ import static org.junit.Assert.assertEquals;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 import members.Competitor;
 import members.Time;
@@ -30,7 +31,7 @@ public class TestParser {
 	
 	@Test (expected=ParserException.class)
 	public void testEmptyInput() throws ParserException {
-		HashMap<Integer, Competitor> competitors = parser.parse(input);
+		Map<Integer, Competitor> competitors = parser.parse(input);
 	}
 
 	@Test
@@ -51,7 +52,7 @@ public class TestParser {
 		input.add(row2);
 		input.add(row3);
 		
-		HashMap<Integer, Competitor> competitors = parser.parse(input);
+		Map<Integer, Competitor> competitors = parser.parse(input);
 		assertEquals(competitors.get(1).getStartTimes().get(0), new Time("12.11.10"));
 		assertEquals(competitors.get(2).getStartTimes().get(0), new Time("05.11.19"));
 	}
@@ -77,7 +78,7 @@ public class TestParser {
 		input.add(row2);
 		input.add(row3);
 		
-		HashMap<Integer, Competitor> competitors = parser.parse(input);
+		Map<Integer, Competitor> competitors = parser.parse(input);
 		assertEquals(competitors.get(1).getStartTimes().get(0), new Time("12.11.10"));
 		assertEquals(competitors.get(1).getFinishTimes().get(0), new Time("18.11.10"));
 		
@@ -103,7 +104,7 @@ public class TestParser {
 		input.add(row2);
 		input.add(row3);
 		
-		HashMap<Integer, Competitor> competitors = parser.parse(input);
+		Map<Integer, Competitor> competitors = parser.parse(input);
 		
 		
 		input = new ArrayList<ArrayList<String>>();
@@ -168,8 +169,7 @@ public class TestParser {
 		input.add(row5);
 		input.add(row6);
 		
-		HashMap<Integer, Competitor> competitors = parser.parse(input);
-		
+		Map<Integer, Competitor> competitors = parser.parse(input);
 		
 		assertEquals(competitors.get(1).getFinishTimes().size(), 2);
 		assertEquals(competitors.get(1).getFinishTimes().get(0), new Time("12.11.10"));

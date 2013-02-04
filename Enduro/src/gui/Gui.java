@@ -6,15 +6,18 @@ import java.awt.Font;
 import java.awt.Toolkit;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.io.File;
 
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
-import members.Time;
+import sort.Formater;
 
+import members.Time;
 
 @SuppressWarnings("serial")
 public class Gui extends JFrame {
@@ -42,10 +45,10 @@ public class Gui extends JFrame {
 		screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 		bigFont = new Font("Times New Roman", Font.BOLD, screenSize.height / 7);
 
-		setTitle("ENDURO");
 		setLayout(new BorderLayout());
 		controlNorthPanelSetUp();
 		textCentralPanelSetUp();
+		setTitle("ENDURO");
 
 		printer = new GuiPrinter(output);
 
@@ -53,6 +56,17 @@ public class Gui extends JFrame {
 		setResizable(false);
 		setVisible(true);
 		pack();
+		if (!new File(output).exists()) {
+			Object[] options = { "Startstation", "Slutstation" };
+			int choice = JOptionPane.showOptionDialog(this,
+					"Startstation eller slutstation?", "Stationsval",
+					JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE,
+					null, options, options[0]);
+			printer.writeLine(Formater.formatColumns(Formater.START_NR,
+					choice == 0 ? Formater.START_TIME : Formater.FINISH_TIME));
+			// setTitle("ENDURO - " + options[choice]);
+		} else {
+		}
 
 		setSize(screenSize);
 	}
@@ -123,7 +137,7 @@ public class Gui extends JFrame {
 
 		// Format the new entry.
 		Time t = Time.fromCurrentTime();
-		String temp = comNr + "; " + t;
+		String temp = Formater.formatColumns(comNr, t);
 
 		// Print to file
 		printer.writeLine(temp);
