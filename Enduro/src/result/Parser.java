@@ -12,6 +12,11 @@ import members.Competitor;
 import members.Time;
 
 
+/**
+ * @author Henrik & Philip
+ *
+ * Parses files.
+ */
 public class Parser {
 	
 	

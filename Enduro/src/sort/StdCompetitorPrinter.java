@@ -9,6 +9,11 @@ import members.Competitor;
 import members.NullTime;
 import members.Time;
 
+/**
+ * @author Andrée & Victor
+ *
+ * Prints according to first iteration race.
+ */
 public class StdCompetitorPrinter implements CompetitorPrinter {
 	public static final String NO_START = "Start?";
 	public static final String NO_END = "Slut?";

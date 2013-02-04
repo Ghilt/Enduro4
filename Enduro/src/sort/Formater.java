@@ -1,5 +1,10 @@
 package sort;
 
+/**
+ * @author Andrée & Victor
+ *
+ * Statics for formatting.
+ */
 public class Formater {
 	public static final String COLUMN_SEPARATOR = "; ";
 	public static final String LIST_SEPARATOR = ", ";
@@ -19,6 +24,12 @@ public class Formater {
 		return o + COLUMN_SEPARATOR;
 	}
 	
+	/**
+	 * Format multiple objects using formatColumn
+	 * @see #formatColumn
+	 * @param objs
+	 * @return
+	 */
 	public static String formatColumns(Object... objs) {
 		StringBuilder sb = new StringBuilder();
 		for (Object o : objs) {
