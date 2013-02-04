@@ -73,7 +73,7 @@ public class Competitor implements Comparable<Competitor> {
 	 * @return number of laps
 	 */
 	public int numberOfLaps(){
-		return finishTimes.size()-1;
+		return finishTimes.size();
 	}
 
 	/**

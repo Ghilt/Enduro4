@@ -23,7 +23,7 @@ public class LapCompetitorPrinter implements CompetitorPrinter {
 	 */
 	private Time totalTime(Competitor c) {
 		return (c.getStartTimes().isEmpty() || c.getFinishTimes().isEmpty()) ? new NullTime() : 
-			c.getStartTimes().get(0).difference(c.getFinishTimes().get(0));
+			c.getStartTimes().get(0).difference(c.getFinishTimes().get(c.getFinishTimes().size()-1));
 	}
 
 	/**	
@@ -68,16 +68,15 @@ public class LapCompetitorPrinter implements CompetitorPrinter {
 	public void printResults(List<Competitor> competitors, String filepath) {
 		try {
 			maxLaps = getMaxLaps(competitors);
-			System.out.println(maxLaps);
 			File outputFile = new File(filepath);
 			FileWriter fileWriter = new FileWriter(outputFile);
-			fileWriter.append("StartNr; Namn; #Varv ; TotalTid;");
+			fileWriter.append("StartNr; Namn; #Varv; TotalTid; ");
 			for(int i = 1; i <maxLaps+1;i++){
-				fileWriter.append("Varv"+i);
+				fileWriter.append("Varv"+i+"; ");
 			}
-			fileWriter.append("StartTid;");
+			fileWriter.append("StartTid; ");
 			for(int i = 1; i <maxLaps;i++){
-				fileWriter.append("Varvning"+i);
+				fileWriter.append("Varvning"+i+"; ");
 			}
 			fileWriter.append("Måltid\n");
 			for(Competitor comp : competitors) {

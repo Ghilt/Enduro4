@@ -63,7 +63,7 @@ public class Test10 {
 		input = reader.readAll();
 		competitors = parser.parse(input, competitors);
 		
-		StdCompetitorPrinter printer = new StdCompetitorPrinter();
+		LapCompetitorPrinter printer = new LapCompetitorPrinter();
 		printer.printResults(new ArrayList<Competitor>(competitors.values()), "src/acceptanstest10/resultat_2.txt");
 		testResultFiles();
 	}
