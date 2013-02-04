@@ -132,5 +132,57 @@ public class TestParser {
 		assertEquals(competitors.get(2).getStartTimes().get(0), new Time("05.11.19"));
 		assertEquals(competitors.get(2).getFinishTimes().get(0), new Time("22.11.19"));
 	}
+	
+	
+	@Test
+	public void testMultipleFinishTimes() throws ParserException {
+		ArrayList<String> row1 = new ArrayList<String>();
+		row1.add("StartNr");
+		row1.add("Måltid");
+		
+		ArrayList<String> row2 = new ArrayList<String>();
+		row2.add("1");
+		row2.add(new Time("12.11.10").toString());
+		
+		ArrayList<String> row3 = new ArrayList<String>();
+		row3.add("2");
+		row3.add(new Time("05.11.19").toString());
+		
+		ArrayList<String> row4 = new ArrayList<String>();
+		row4.add("1");
+		row4.add(new Time("13.21.10").toString());
+		
+		
+		ArrayList<String> row5 = new ArrayList<String>();
+		row5.add("3");
+		row5.add(new Time("14.11.10").toString());
+		
+		
+		ArrayList<String> row6 = new ArrayList<String>();
+		row6.add("2");
+		row6.add(new Time("14.33.10").toString());
+		
+		input.add(row1);
+		input.add(row2);
+		input.add(row3);
+		input.add(row4);
+		input.add(row5);
+		input.add(row6);
+		
+		HashMap<Integer, Competitor> competitors = parser.parse(input);
+		
+		
+		assertEquals(competitors.get(1).getFinishTimes().size(), 2);
+		assertEquals(competitors.get(1).getFinishTimes().get(0), new Time("12.11.10"));
+		assertEquals(competitors.get(1).getFinishTimes().get(1), new Time("13.21.10"));
+		
+		assertEquals(competitors.get(2).getFinishTimes().size(), 2);
+		assertEquals(competitors.get(2).getFinishTimes().get(0), new Time("05.11.19"));
+		assertEquals(competitors.get(2).getFinishTimes().get(1), new Time("14.33.10"));
+		
+		assertEquals(competitors.get(3).getFinishTimes().size(),1);
+		assertEquals(competitors.get(3).getFinishTimes().get(0), new Time("14.11.10"));
+		
+	}
 
 }
