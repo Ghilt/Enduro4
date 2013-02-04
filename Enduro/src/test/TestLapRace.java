@@ -4,8 +4,8 @@ import static org.junit.Assert.*;
 
 import org.junit.*;
 
-import sort.Competitor;
-import sort.Time;
+import members.Competitor;
+import members.Time;
 
 public class TestLapRace {
 	private Competitor c;
