@@ -12,15 +12,19 @@ import java.util.Scanner;
 import org.junit.*;
 
 import sort.Competitor;
+import sort.CompetitorPrinter;
 import sort.SorterMain;
+import sort.StdCompetitorPrinter;
 import sort.Time;
 import static org.junit.Assert.*;
 
 public class TestSort {
-	List<Competitor> competitors;
+	private List<Competitor> competitors;
+	private CompetitorPrinter cp;
 
 	@Before
 	public void Initialize() {
+		cp = new StdCompetitorPrinter();
 		competitors = new ArrayList<Competitor>();
 	}
 
@@ -69,7 +73,7 @@ public class TestSort {
 		
 		Collections.sort(competitors);
 		
-		SorterMain.printResults(competitors, "sorted_result.txt");
+		SorterMain.printResults(competitors, "sorted_result.txt", cp);
 		
 		testFirstLineInResult(scan);
 		
