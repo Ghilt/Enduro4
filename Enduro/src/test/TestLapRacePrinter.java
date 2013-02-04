@@ -26,11 +26,11 @@ public class TestLapRacePrinter {
 		cp = new LapCompetitorPrinter();
 	}
 	
-	@Ignore
+	@Test
 	public void testOneLap() {
 		c.addStartTime(new Time("00.00.15"));
 		c.addFinishTime(new Time("00.45.00"));
-		assertEquals(Formater.formatColumns(1, c.getName(), 1 , new Time("00.00.15").difference(new Time("00.45.00")),  new Time("00.44.45"), new Time("00.00.15"), new Time("00.45.00") + ";"), cp.row(c));
+		assertEquals(Formater.formatColumns(1, c.getName(), 1 , new Time("00.00.15").difference(new Time("00.45.00")), new Time("00.00.15"), new Time("00.45.00")), cp.row(c));
 	}
 	
 	@Ignore
