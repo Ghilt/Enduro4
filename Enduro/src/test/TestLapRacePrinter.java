@@ -10,6 +10,7 @@ import org.junit.*;
 
 import sort.CompetitorPrinter;
 import sort.Formater;
+import sort.Printer;
 import sort.LapCompetitorPrinter;
 import sort.StdCompetitorPrinter;
 import static org.junit.Assert.*;
@@ -26,11 +27,11 @@ public class TestLapRacePrinter {
 		cp = new LapCompetitorPrinter();
 	}
 	
-	@Ignore
+	@Test
 	public void testOneLap() {
 		c.addStartTime(new Time("00.00.15"));
 		c.addFinishTime(new Time("00.45.00"));
-		assertEquals(Formater.formatColumns(1, c.getName(), 1 , new Time("00.00.15").difference(new Time("00.45.00")),  new Time("00.44.45"), new Time("00.00.15"), new Time("00.45.00") + ";"), cp.row(c));
+		assertEquals(Formater.formatColumns(1, c.getName(), 1 , new Time("00.00.15").difference(new Time("00.45.00")), new Time("00.00.15"), new Time("00.45.00")), cp.row(c));
 	}
 	
 	@Ignore
@@ -45,20 +46,20 @@ public class TestLapRacePrinter {
 	@Ignore
 	public void testBadStart() {
 		c.addFinishTime(new Time(45));
-		assertEquals(Formater.formatColumns(1, c.getName(),c.getNumberOfLaps(), Time.NULL_TIME,  c.getLaps().get(0).getTotal(), LapCompetitorPrinter.NO_START, new Time(45)), cp.row(c));
+		assertEquals(Formater.formatColumns(1, c.getName(),c.getNumberOfLaps(), Time.NULL_TIME,  c.getLaps().get(0).getTotal(), Printer.NO_START, new Time(45)), cp.row(c));
 	}
 	
 	@Ignore
 	public void testBadEnd() {
 		c.addStartTime(new Time(10));		
-		assertEquals(Formater.formatColumns(1,c.getName(), c.getNumberOfLaps(),  Time.NULL_TIME, new Time(10), LapCompetitorPrinter.NO_END + ";"), cp.row(c));
+		assertEquals(Formater.formatColumns(1,c.getName(), c.getNumberOfLaps(),  Time.NULL_TIME, new Time(10), Printer.NO_END + ";"), cp.row(c));
 	}
 	
 	@Ignore
 	public void testImpossibleTotalTime() {
 		c.addStartTime(new Time(5));
 		c.addFinishTime(new Time(10));
-		assertEquals(Formater.formatColumns(1, c.getName(),c.getNumberOfLaps(),  new Time(5), new Time(5), new Time(5), new Time(10), LapCompetitorPrinter.IMPOSSIBLE_TOTAL_TIME), cp.row(c));
+		assertEquals(Formater.formatColumns(1, c.getName(),c.getNumberOfLaps(),  new Time(5), new Time(5), new Time(5), new Time(10), Printer.IMPOSSIBLE_TOTAL_TIME), cp.row(c));
 	}
 
 	@Ignore
@@ -70,7 +71,7 @@ public class TestLapRacePrinter {
 		Time f2 = new Time("00.26.00");
 		c.addFinishTime(f2);
 		
-		assertEquals(Formater.formatColumns(1, c.getName(), c.getNumberOfLaps(), s1.difference(f2),  s1.difference(f1), f1.difference(f2), s1, f1, f2, LapCompetitorPrinter.IMPOSSIBLE_LAP_TIME), cp.row(c));
+		assertEquals(Formater.formatColumns(1, c.getName(), c.getNumberOfLaps(), s1.difference(f2),  s1.difference(f1), f1.difference(f2), s1, f1, f2, Printer.IMPOSSIBLE_LAP_TIME), cp.row(c));
 	}
 	
 	@Ignore
@@ -84,7 +85,7 @@ public class TestLapRacePrinter {
 		Time f2 = new Time("00.55.06");
 		c.addFinishTime(f2);
 		
-		assertEquals(Formater.formatColumns(1, c.getName(), c.getNumberOfLaps(), s1.difference(f2), s1.difference(f1), s1, f1, f2, LapCompetitorPrinter.MULTIPLE_STARTS + " " + s2), cp.row(c));
+		assertEquals(Formater.formatColumns(1, c.getName(), c.getNumberOfLaps(), s1.difference(f2), s1.difference(f1), s1, f1, f2, Printer.MULTIPLE_STARTS + " " + s2), cp.row(c));
 	}
 	
 	@Ignore
@@ -100,7 +101,7 @@ public class TestLapRacePrinter {
 		Time f3 = new Time("00.57.00");
 		c.addFinishTime(f3);
 		
-		assertEquals(Formater.formatColumns(1, c.getName(), c.getNumberOfLaps(), s1.difference(f3), s1.difference(f1), f2.difference(f3), s1, f1, f2, f3, LapCompetitorPrinter.MULTIPLE_STARTS + " " + s2, LapCompetitorPrinter.IMPOSSIBLE_LAP_TIME), cp.row(c));
+		assertEquals(Formater.formatColumns(1, c.getName(), c.getNumberOfLaps(), s1.difference(f3), s1.difference(f1), f2.difference(f3), s1, f1, f2, f3, Printer.MULTIPLE_STARTS + " " + s2, Printer.IMPOSSIBLE_LAP_TIME), cp.row(c));
 		
 		
 	}

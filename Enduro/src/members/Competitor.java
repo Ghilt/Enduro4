@@ -130,9 +130,9 @@ public class Competitor implements Comparable<Competitor> {
 	@Override
 	public int compareTo(Competitor comp) {
 		if(comp.getStartTimes().isEmpty() || comp.getFinishTimes().isEmpty()) {
-			return 1;
-		} else if (startTimes.isEmpty() || finishTimes.isEmpty()) {
 			return -1;
+		} else if (startTimes.isEmpty() || finishTimes.isEmpty()) {
+			return 1;
 		}
 		
 		Time totalTime = startTimes.get(0).difference(finishTimes.get(0));
