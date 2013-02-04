@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Scanner;
 
 import sort.*;
-import result.ReadResult;
+import result.Parser;
 
 
 
@@ -25,16 +25,6 @@ public class Test3_5 {
 	
 	@Before
 	public void initialize(){
-//		ReadResult readResult = new ReadResult(
-//				new File("src/acceptanstest/TEST3_5namnfil.txt"),
-//				new File("src/acceptanstest/TEST3starttider.txt"),
-//				new File("src/acceptanstest/TEST3maltider.txt"));
-//		
-//		List<Competitor> competitors = new ArrayList<Competitor>(readResult.openResultFile().values());
-//		
-//		sorter.printResults(competitors, "src/acceptanstest/TEST3resultat2.txt");
-		
-		
 	}
 	
 	
