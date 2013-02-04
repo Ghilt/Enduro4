@@ -11,7 +11,7 @@ import org.junit.*;
 
 import sort.CompetitorPrinter;
 import sort.Formater;
-import sort.SorterMain;
+import sort.ResultCompilerMain;
 import sort.StdCompetitorPrinter;
 import static org.junit.Assert.*;
 

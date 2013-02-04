@@ -7,6 +7,7 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Scanner;
 
 import sort.*;
@@ -44,7 +45,7 @@ public class Test6 {
 	 */
 	@Test
 	public void testResult() throws FileNotFoundException, ParserException {
-		HashMap<Integer, Competitor> competitors;
+		Map<Integer, Competitor> competitors;
 		
 		reader = new CvsReader("src/acceptanstest6/maltider.txt");
 		ArrayList<ArrayList<String>> input = reader.readAll();

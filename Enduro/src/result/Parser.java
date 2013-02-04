@@ -1,15 +1,12 @@
 package result;
 
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Scanner;
-
-import sort.Formater;
+import java.util.Map;
 
 import members.Competitor;
 import members.Time;
+import sort.Formater;
 
 
 /**
@@ -34,7 +31,7 @@ public class Parser {
 	 * @return					
 	 * @throws ParserException	If the input is incorrect.
 	 */
-	public HashMap<Integer, Competitor> parse(ArrayList<ArrayList<String>> input, HashMap<Integer, Competitor> competitors) throws ParserException {
+	public Map<Integer, Competitor> parse(ArrayList<ArrayList<String>> input, Map<Integer, Competitor> competitors) throws ParserException {
 		ArrayList<Identifier> types = new ArrayList<Identifier>();
 		
 		if(input.size() < 2) {
@@ -86,9 +83,9 @@ public class Parser {
 	 * @return			A hashmap of competitors.
 	 * @throws ParserException	If the input file is incorrect.
 	 */
-	public HashMap<Integer, Competitor> parse(
+	public Map<Integer, Competitor> parse(
 			ArrayList<ArrayList<String>> input) throws ParserException {
-		HashMap<Integer, Competitor> competitors = new HashMap<Integer, Competitor>();
+		Map<Integer, Competitor> competitors = new HashMap<Integer, Competitor>();
 		competitors = parse(input, competitors);
 		
 		return competitors;
