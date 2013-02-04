@@ -38,7 +38,7 @@ public class StdCompetitorPrinter implements CompetitorPrinter {
 	public String row(Competitor c) {
 		StringBuilder sb = new StringBuilder();
 		
-		sb.append(SorterMain.formatColumns(c.getIndex(), 
+		sb.append(Formater.formatColumns(c.getIndex(), 
 				totalTime(c), 
 				(c.getStartTimes().isEmpty() ? NO_START : c.getStartTimes().get(0).toString()),
 				(c.getFinishTimes().isEmpty() ? NO_END : c.getFinishTimes().get(0).toString())));
