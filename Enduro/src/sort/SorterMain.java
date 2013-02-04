@@ -13,7 +13,11 @@ import result.ReadResult;
 public class SorterMain {
 	
 	/**
-	 * @param args Arg0 = Input registered, Arg1 = Input Start Times, Arg2 = Input Finish Times, Arg3 = Input names, Arg4 = Output
+
+	 * Read input files and create list with competitors, and call printResults
+	 * to print the results to the output file.
+	 * 
+	 * @param args Arg0 = Input registered, Arg1 = Input Start Times, Arg2 = Input Finish Times, Arg3 = Input names, Arg4 = Output Result
 	 */
 	public static void main(String[] args) {
 		ReadResult readResult = new ReadResult(
@@ -29,6 +33,12 @@ public class SorterMain {
 
 	}
 	
+	/**
+	 * Prints the result in the list with competitors to the output file.
+	 * 
+	 * @param competitors	list of competitors
+	 * @param output		the file to write to
+	 */
 	public static void printResults(List<Competitor> competitors, String output) {
 		try {
 			File outputFile = new File(output);
@@ -50,7 +60,7 @@ public class SorterMain {
 	 * @param s String
 	 * @return String as column
 	 */
-	public static String formatColumn(Object o) {
+	private static String formatColumn(Object o) {
 		return o + "; ";
 	}
 	
