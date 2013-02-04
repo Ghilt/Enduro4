@@ -29,7 +29,8 @@ public class Competitor implements Comparable<Competitor> {
 			return laps;
 		
 		if (finishTimes.size() == 1) {
-			laps.add(new Lap(startTimes.get(0),finishTimes.get(0)));
+			//laps.add(new Lap(startTimes.get(0),finishTimes.get(0)));
+			return laps;
 		} else {
 			for (int i = 0; i < finishTimes.size(); i++) {
 				if (i == 0) 

@@ -30,8 +30,7 @@ public class TestLapRace {
 	@Test
 	public void TestZeroLaps(){
 		c.addFinishTime(t2);
-		assertEquals(c.getLaps().size(), 1);
-		assertEquals(c.getLaps().get(0).getTotal(), t1.difference(t2));
+		assertEquals(c.getLaps().size(), 0);
 	}
 	
 	@Test
