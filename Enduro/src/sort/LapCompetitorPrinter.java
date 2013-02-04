@@ -26,12 +26,24 @@ public class LapCompetitorPrinter extends Printer {
 		StringBuilder sb = new StringBuilder();
 		sb.append(Formater.formatColumns(c.getIndex(), c.getName(), c.getNumberOfLaps(),
 				totalTime(c))+"; ");
-		for(int i=0;i<maxLaps;i++){
+		int i = 0;
+		while(i < c.getLaps().size()){
 			sb.append(Formater.formatColumns(c.getLaps().get(i).getTotal())+"; ");
+			i++;
+		}
+		while(i < maxLaps){
+			sb.append("; ");
+			i++;
 		}
 		sb.append(c.getStartTimes().get(0)+ "; ");
-		for(int i=0;i<maxLaps-1;i++){
+		i = 0;
+		while(i < c.getLaps().size()-1) {
 			sb.append(Formater.formatColumns(c.getLaps().get(i).getEnd())+"; ");
+			i++;
+		}
+		while(i < maxLaps - 1){
+			sb.append("; ");
+			i++;
 		}
 		sb.append(Formater.formatColumns(c.getFinishTimes().get(c.getFinishTimes().size()-1)));
 		return sb.toString();

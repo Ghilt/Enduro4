@@ -33,7 +33,14 @@ public class TestLapRacePrinter {
 		assertEquals(Formater.formatColumns(1, c.getName(), 1 , new Time("00.00.15").difference(new Time("00.45.00")), new Time("00.00.15"), new Time("00.45.00")), cp.row(c));
 	}
 	
-	@Ignore
+	@Test
+	public void emptyLaps() {
+		c.addStartTime(new Time("00.00.15"));
+		c.addFinishTime(new Time("00.45.00"));
+		assertEquals(c.getLaps().size(), 0);
+	}
+	
+	@Test
 	public void manyLaps() {
 		c.addStartTime(new Time("00.00.15"));
 		c.addFinishTime(new Time("00.20.00"));
