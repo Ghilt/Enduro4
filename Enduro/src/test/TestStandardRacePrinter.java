@@ -5,12 +5,11 @@ import org.junit.*;
 import sort.Competitor;
 import sort.CompetitorPrinter;
 import sort.Formater;
-import sort.SorterMain;
 import sort.StdCompetitorPrinter;
 import sort.Time;
 import static org.junit.Assert.*;
 
-public class TestCompetitor {
+public class TestStandardRacePrinter {
 	
 	private Competitor c;
 	private CompetitorPrinter cp;
@@ -18,9 +17,8 @@ public class TestCompetitor {
 	
 	@Before
 	public void setup() {
-		cp = new StdCompetitorPrinter();
 		c = new Competitor(1);
-		c.addName("Niklas Svensson");
+		cp = new StdCompetitorPrinter();
 	}
 	
 	@Test
@@ -39,7 +37,7 @@ public class TestCompetitor {
 	@Test
 	public void testBadEnd() {
 		c.addStartTime(new Time(10));		
-		assertEquals(Formater.formatColumns(1, c.getName(), Time.NULL_TIME, new Time(10), StdCompetitorPrinter.NO_END + ";"), cp.row(c));
+		assertEquals(Formater.formatColumns(1,c.getName(),  Time.NULL_TIME, new Time(10), StdCompetitorPrinter.NO_END + ";"), cp.row(c));
 	}
 	
 	@Test
