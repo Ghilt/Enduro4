@@ -6,14 +6,15 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import members.Competitor;
+import members.Time;
+
 import org.junit.Before;
 import org.junit.Test;
 
 import result.CvsReader;
 import result.Parser;
 import result.ParserException;
-import sort.Competitor;
-import sort.Time;
 
 public class TestParser {
 
