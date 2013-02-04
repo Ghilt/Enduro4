@@ -13,45 +13,64 @@ import result.CvsReader;
 import result.Parser;
 import result.ParserException;
 
-
 public class ResultCompilerMain {
-	
-	public static final String STARTTIMES = "start.txt";
-	public static final String NAMEFILE = "namn.txt";
-	public static final String FINISHTIMES = "slut.txt";
-	public static final String RESULTFILE = "resultat.txt";
-	
-	/**
 
+	public static final String STARTTIMES = "start";
+	public static final String NAMEFILE = "namn";
+	public static final String FINISHTIMES = "slut";
+	public static final String RESULTFILE = "resultat";
+	public static final String EXTENSION = ".txt";
+
+	/**
+	 * 
 	 * Read input files and create list with competitors, and call printResults
 	 * to print the results to the output file.
-	 * @throws URISyntaxException 
+	 * 
+	 * @throws URISyntaxException
 	 * 
 	 */
 	public static void main(String[] args) throws URISyntaxException {
-		CodeSource codeSource = ResultCompilerMain.class.getProtectionDomain().getCodeSource();
+		CodeSource codeSource = ResultCompilerMain.class.getProtectionDomain()
+				.getCodeSource();
 		File jarFile = new File(codeSource.getLocation().toURI().getPath());
 		String jarDir = jarFile.getParentFile().getPath();
-		
+
 		Parser p = new Parser();
-		
-		CvsReader startReader = new CvsReader(jarDir + File.separator + STARTTIMES);
-		CvsReader finishReader = new CvsReader(jarDir + File.separator + FINISHTIMES);
-		CvsReader nameReader = new CvsReader(jarDir + File.separator + NAMEFILE);
-		
+
+		String startPath = jarDir + File.separator + STARTTIMES + EXTENSION;
+		String namePath = jarDir + File.separator + NAMEFILE + EXTENSION;
+		String finishPathPart = jarDir + File.separator + FINISHTIMES;
+		String resultPath = jarDir + File.separator + RESULTFILE + EXTENSION;
+
+		CvsReader startReader = new CvsReader(startPath);
+		CvsReader nameReader = new CvsReader(namePath);
+
+		ArrayList<CvsReader> endReaderList = new ArrayList<CvsReader>();
+		for (int i = 0; new File(finishPathPart + i + EXTENSION).exists(); i++) {
+			endReaderList.add(new CvsReader(finishPathPart + i + EXTENSION));
+		}
+		// CvsReader nameReader = new CvsReader(jarDir + File.separator +
+		// NAMEFILE);
+
 		Map<Integer, Competitor> map = new HashMap<Integer, Competitor>();
-		
+
 		try {
 			p.parse(startReader.readAll(), map);
-			p.parse(finishReader.readAll(), map);
+			for (CvsReader end : endReaderList) {
+				p.parse(end.readAll(), map);
+				// System.out.println("DERP");
+			}
+			// if(new File(jarDir + File.separator + NAMEFILE).exists()){
 			p.parse(nameReader.readAll(), map);
+			// }
 			StdCompetitorPrinter printer = new StdCompetitorPrinter();
-			printer.printResults(new ArrayList<Competitor>(map.values()), jarDir + File.separator + RESULTFILE);
+			printer.printResults(new ArrayList<Competitor>(map.values()),
+					resultPath);
 		} catch (FileNotFoundException e) {
 			System.exit(-1);
 		} catch (ParserException e) {
 			System.exit(-1);
 		}
 	}
-	
+
 }
