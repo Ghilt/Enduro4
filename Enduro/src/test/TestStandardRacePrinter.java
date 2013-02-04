@@ -26,19 +26,19 @@ public class TestStandardRacePrinter {
 	public void testGoodTimes() {
 		c.addStartTime(new Time("00.00.15"));
 		c.addFinishTime(new Time("00.45.00"));
-		assertEquals(Formater.formatColumns(1, c.getName(), new Time("00.00.15").difference(new Time("00.45.00")), new Time("00.00.15"), new Time("00.45.00") + ";"), cp.row(c));
+		assertEquals(Formater.formatColumns(1, c.getName(), new Time("00.00.15").difference(new Time("00.45.00")), new Time("00.00.15"), new Time("00.45.00")), cp.row(c));
 	}
 	
 	@Test
 	public void testBadStart() {
 		c.addFinishTime(new Time(45));
-		assertEquals(Formater.formatColumns(1, c.getName(), Time.NULL_TIME, StdCompetitorPrinter.NO_START, new Time(45) + ";"), cp.row(c));
+		assertEquals(Formater.formatColumns(1, c.getName(), Time.NULL_TIME, StdCompetitorPrinter.NO_START, new Time(45)), cp.row(c));
 	}
 	
 	@Test
 	public void testBadEnd() {
 		c.addStartTime(new Time(10));		
-		assertEquals(Formater.formatColumns(1,c.getName(),  Time.NULL_TIME, new Time(10), StdCompetitorPrinter.NO_END + ";"), cp.row(c));
+		assertEquals(Formater.formatColumns(1,c.getName(),  Time.NULL_TIME, new Time(10), StdCompetitorPrinter.NO_END), cp.row(c));
 	}
 	
 	@Test

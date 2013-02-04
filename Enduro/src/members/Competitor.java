@@ -11,26 +11,31 @@ public class Competitor implements Comparable<Competitor> {
 
 	private int index;
 	private List<Time> startTimes;
-	private List<Time> lapMoments;
 	private List<Time> finishTimes;
 	private String name;
 	
+	
+	
+	/**
+	 * The last-time is NOT a lap, in other words: laps = number of
+	 * finishtimes - 1.
+	 * 
+	 * @return a list representing the laps this competitor has done
+	 */
 	public List<Lap> getLaps() {
 		List<Lap> laps = new ArrayList<Lap>();
 		if (startTimes.isEmpty() || finishTimes.isEmpty())
 			return laps;
 		
-		if (lapMoments.isEmpty()) {
+		if (finishTimes.size() == 1) {
 			laps.add(new Lap(startTimes.get(0),finishTimes.get(0)));
 		} else {
-			for (int i = 0; i < lapMoments.size(); i++) {
+			for (int i = 0; i < finishTimes.size(); i++) {
 				if (i == 0) 
-					laps.add(new Lap(startTimes.get(0), lapMoments.get(0)));
+					laps.add(new Lap(startTimes.get(0), finishTimes.get(0)));
 				else
-					laps.add(new Lap(lapMoments.get(i - 1), lapMoments.get(i)));
+					laps.add(new Lap(finishTimes.get(i - 1), finishTimes.get(i)));
 			}
-			
-			laps.add(new Lap(lapMoments.get(lapMoments.size() - 1), finishTimes.get(0)));
 		}
 		
 		return laps;
@@ -57,20 +62,18 @@ public class Competitor implements Comparable<Competitor> {
 	}
 
 	/**
-	 * Return lists of start times.
-	 * 
 	 * @return the list of start times
 	 */
 	public List<Time> getStartTimes() {
 		return startTimes;
 	}
 	
-	public List<Time> getLapMoments() {
-		return lapMoments;
-	}
 	
-	public void addLapMoment(Time t) {
-		lapMoments.add(t);
+	/**
+	 * @return number of laps
+	 */
+	public int numberOfLaps(){
+		return finishTimes.size()-1;
 	}
 
 	/**
@@ -91,8 +94,6 @@ public class Competitor implements Comparable<Competitor> {
 	}
 
 	/**
-	 * Return the list of finish times.
-	 * 
 	 * @return the list of finish times
 	 */
 	public List<Time> getFinishTimes() {
@@ -100,7 +101,6 @@ public class Competitor implements Comparable<Competitor> {
 	}
 
 	/**
-	 * Return the index.
 	 * 
 	 * @return	the index
 	 */
@@ -108,6 +108,9 @@ public class Competitor implements Comparable<Competitor> {
 		return index;
 	}
 	
+	/**
+	 * @return Name
+	 */
 	public String getName() {
 		return name;
 	}
