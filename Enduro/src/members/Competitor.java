@@ -1,6 +1,7 @@
 package members;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -82,6 +83,7 @@ public class Competitor implements Comparable<Competitor> {
 	 */
 	public void addFinishTime(Time t) {
 		finishTimes.add(t);
+		Collections.sort(finishTimes);
 	}
 	
 	/**

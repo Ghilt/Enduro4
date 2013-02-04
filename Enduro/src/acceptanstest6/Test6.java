@@ -73,7 +73,7 @@ public class Test6 {
 		while (scan1.hasNext() && scan2.hasNext()) {
 			line1 = scan1.nextLine();
 			line2 = scan2.nextLine();
-			assertEquals(line1, line2);
+			assertEquals("Wrong result.", line1, line2);
 		}
 	}
 	
