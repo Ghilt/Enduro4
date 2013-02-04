@@ -11,14 +11,29 @@ public class Competitor implements Comparable<Competitor> {
 
 	private int index;
 	private List<Time> startTimes;
+	private List<Time> lapMoments;
 	private List<Time> finishTimes;
 	
-	public static final String NO_START = "Start?";
-	public static final String NO_END = "Slut?";
-	public static final String MULTIPLE_STARTS = "Flera starttider?";
-	public static final String MULTIPLE_ENDS = "Flera sluttider?";
-	public static final String IMPOSSIBLE_TOTAL_TIME = "Omöjlig tid?";
-	public static final Time MINIMUM_TOTAL_TIME = new Time("00.15.00");
+	public List<Lap> getLaps() {
+		List<Lap> laps = new ArrayList<Lap>();
+		if (startTimes.isEmpty() || finishTimes.isEmpty())
+			return laps;
+		
+		if (lapMoments.isEmpty()) {
+			laps.add(new Lap(startTimes.get(0),finishTimes.get(0)));
+		} else {
+			for (int i = 0; i < lapMoments.size(); i++) {
+				if (i == 0) 
+					laps.add(new Lap(startTimes.get(0), lapMoments.get(0)));
+				else
+					laps.add(new Lap(lapMoments.get(i - 1), lapMoments.get(i)));
+			}
+			
+			laps.add(new Lap(lapMoments.get(lapMoments.size() - 1), finishTimes.get(0)));
+		}
+		
+		return laps;
+	}
 	
 	/**
 	 * @param index		index of the competitor
@@ -45,6 +60,14 @@ public class Competitor implements Comparable<Competitor> {
 	 */
 	public List<Time> getStartTimes() {
 		return startTimes;
+	}
+	
+	public List<Time> getLapMoments() {
+		return lapMoments;
+	}
+	
+	public void addLapMoment(Time t) {
+		lapMoments.add(t);
 	}
 
 	/**
@@ -74,61 +97,9 @@ public class Competitor implements Comparable<Competitor> {
 		return index;
 	}
 	
-	/**
-	 * @return Total time elapsed, or Null time string
-	 */
-	private Time totalTime() {
-		return (startTimes.isEmpty() || finishTimes.isEmpty()) ? new NullTime() : 
-			startTimes.get(0).difference(finishTimes.get(0));
-	}
 	
-	
-	/**	
-	 * Is called when a competitor has multiple start/finish times
-	 * 
-	 * @param msg	The errormessage
-	 * @param list	The list of times	
-	 * @return	The errormessage followed by the times seperated by a colon
-	 */
-	private String addTimes(String msg, Object... list) {
-		StringBuilder sb = new StringBuilder();
-		sb.append(msg + (list.length == 0 ? "" : " "));
-		for (int i = 1; i < list.length; i++) {
-			sb.append(list[i]);
-			sb.append(", ");
-		}
-		String res = sb.toString();
-		return res.substring(0, res.length() - 2);
-	}
-	
-	/**
-	 * Prints times for the competitor in the following format:
-	 * Index; Totaltime; Starttime; Finishtime; Errormessage (if any)
-	 */
 	public String toString() {
-		StringBuilder sb = new StringBuilder();
-		
-		sb.append(SorterMain.formatColumns(index, 
-				totalTime(), 
-				(startTimes.isEmpty() ? NO_START : startTimes.get(0).toString()),
-				(finishTimes.isEmpty() ? NO_END : finishTimes.get(0).toString())));
-		sb.append(";");
-		if (startTimes.size() > 1) {
-			sb.append(" ");
-			sb.append(addTimes(MULTIPLE_STARTS, startTimes.toArray()));
-		}
-		
-		if (finishTimes.size() > 1) {
-			sb.append(" ");
-			sb.append(addTimes(MULTIPLE_ENDS, finishTimes.toArray()));	
-		}
-		
-		if (totalTime().compareTo(MINIMUM_TOTAL_TIME) <= 0) {
-			sb.append(" ");
-			sb.append(IMPOSSIBLE_TOTAL_TIME);
-		}
-		
-		return sb.toString();
+		throw new UnsupportedOperationException("Use CompetitorPrinter plz.");
 	}
 	
 	/**
