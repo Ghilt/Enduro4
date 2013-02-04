@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import result.ReadResult;
+import result.Parser;
 
 
 public class SorterMain {
@@ -19,7 +19,7 @@ public class SorterMain {
 	 * @param args Arg0 = Input registered, Arg1 = Input Start Times, Arg2 = Input Finish Times, Arg3 = Output result
 	 */
 	public static void main(String[] args) {
-		ReadResult readResult = new ReadResult(
+		Parser readResult = new Parser(
 				new File(args[0]),
 				new File(args[1]),
 				new File(args[2]));

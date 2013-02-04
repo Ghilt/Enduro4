@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Scanner;
 
 import sort.*;
-import result.ReadResult;
+import result.Parser;
 
 
 
@@ -25,7 +25,7 @@ public class Test3 {
 	
 	@Before
 	public void initialize(){
-		ReadResult readResult = new ReadResult(
+		Parser readResult = new Parser(
 				new File("src/acceptanstest/TEST3register.txt"),
 				new File("src/acceptanstest/TEST3starttider.txt"),
 				new File("src/acceptanstest/TEST3maltider.txt"));

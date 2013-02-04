@@ -9,7 +9,7 @@ import org.junit.Test;
 
 import result.CvsReader;
 
-public class TestReadResult {
+public class TestCvsReader {
 
 	@Test(expected = FileNotFoundException.class)
 	public void testNoSuchFile() throws FileNotFoundException {
