@@ -107,6 +107,10 @@ public class Competitor implements Comparable<Competitor> {
 		return index;
 	}
 	
+	/**
+	 * Returns name
+	 * @return Name
+	 */
 	public String getName() {
 		return name;
 	}
