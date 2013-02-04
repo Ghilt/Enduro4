@@ -30,6 +30,7 @@ public class ResultCompilerMain {
 	 * 
 	 */
 	public static void main(String[] args) throws URISyntaxException {
+		// Detects the location of the executable.
 		CodeSource codeSource = ResultCompilerMain.class.getProtectionDomain()
 				.getCodeSource();
 		File jarFile = new File(codeSource.getLocation().toURI().getPath());
@@ -45,6 +46,7 @@ public class ResultCompilerMain {
 		CvsReader startReader = new CvsReader(startPath);
 		CvsReader nameReader = new CvsReader(namePath);
 
+		// Reads multiple end files for laps.
 		ArrayList<CvsReader> endReaderList = new ArrayList<CvsReader>();
 		for (int i = 0; new File(finishPathPart + i + EXTENSION).exists(); i++) {
 			endReaderList.add(new CvsReader(finishPathPart + i + EXTENSION));
@@ -53,11 +55,14 @@ public class ResultCompilerMain {
 		Map<Integer, Competitor> map = new HashMap<Integer, Competitor>();
 
 		try {
+			// Read starts.
 			p.parse(startReader.readAll(), map);
+			// Read ends
 			for (CvsReader end : endReaderList) {
 				p.parse(end.readAll(), map);
 			}
-			// if(new File(jarDir + File.separator + NAMEFILE).exists()){
+			// Read Names
+			// if(new File(namePath).exists()){
 			p.parse(nameReader.readAll(), map);
 			// }
 			LapCompetitorPrinter printer = new LapCompetitorPrinter();
