@@ -11,7 +11,6 @@ public class Competitor implements Comparable<Competitor> {
 
 	private int index;
 	private List<Time> startTimes;
-	private List<Time> lapMoments;
 	private List<Time> finishTimes;
 	private String name;
 	
@@ -20,17 +19,15 @@ public class Competitor implements Comparable<Competitor> {
 		if (startTimes.isEmpty() || finishTimes.isEmpty())
 			return laps;
 		
-		if (lapMoments.isEmpty()) {
+		if (finishTimes.size() == 1) {
 			laps.add(new Lap(startTimes.get(0),finishTimes.get(0)));
 		} else {
-			for (int i = 0; i < lapMoments.size(); i++) {
+			for (int i = 0; i < finishTimes.size(); i++) {
 				if (i == 0) 
-					laps.add(new Lap(startTimes.get(0), lapMoments.get(0)));
+					laps.add(new Lap(startTimes.get(0), finishTimes.get(0)));
 				else
-					laps.add(new Lap(lapMoments.get(i - 1), lapMoments.get(i)));
+					laps.add(new Lap(finishTimes.get(i - 1), finishTimes.get(i)));
 			}
-			
-			laps.add(new Lap(lapMoments.get(lapMoments.size() - 1), finishTimes.get(0)));
 		}
 		
 		return laps;
@@ -44,7 +41,6 @@ public class Competitor implements Comparable<Competitor> {
 		this.index = index;
 		startTimes = new ArrayList<Time>();
 		finishTimes = new ArrayList<Time>();
-		lapMoments = new ArrayList<Time>();
 	}
 
 	/**
@@ -65,16 +61,8 @@ public class Competitor implements Comparable<Competitor> {
 		return startTimes;
 	}
 	
-	public List<Time> getLapMoments() {
-		return lapMoments;
-	}
-	
-	public void addLapMoment(Time t) {
-		lapMoments.add(t);
-	}
-	
 	public int numberOfLaps(){
-		return lapMoments.size();
+		return finishTimes.size()-1;
 	}
 
 	/**

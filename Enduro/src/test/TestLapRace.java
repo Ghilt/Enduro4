@@ -19,39 +19,42 @@ public class TestLapRace {
 		t3 = new Time(1500);
 		t4 = new Time(2000);
 		c.addStartTime(t1);
-		c.addFinishTime(t2);
 	}
 	
 	@Test
 	public void TestNoStartorFinish(){
 		Competitor c2 = new Competitor(2);
-		assertEquals(c2.getLapMoments().size(), 0);
+		assertEquals(c2.getFinishTimes().size(), 0);
 	}
 	
 	@Test
 	public void TestZeroLaps(){
+		c.addFinishTime(t2);
 		assertEquals(c.getLaps().size(), 1);
 		assertEquals(c.getLaps().get(0).getTotal(), t1.difference(t2));
 	}
 	
 	@Test
 	public void TestOneLap(){
-		c.addLapMoment(t3);
+		c.addFinishTime(t3);
+		c.addFinishTime(t2);
 		assertEquals(c.getLaps().get(0).getTotal(), t1.difference(t3));
 		assertEquals(c.getLaps().get(1).getTotal(), t3.difference(t2));
 	}
 	
 	@Test
 	public void TestNumberOfLaps(){
-		c.addLapMoment(t3);
-		c.addLapMoment(t4);
+		c.addFinishTime(t3);
+		c.addFinishTime(t4);
+		c.addFinishTime(t2);
 		assertEquals(c.numberOfLaps(), 2);
 	}
 	
 	@Test
 	public void TestTwoLaps(){
-		c.addLapMoment(t3);
-		c.addLapMoment(t4);
+		c.addFinishTime(t3);
+		c.addFinishTime(t4);
+		c.addFinishTime(t2);
 		assertEquals(c.getLaps().get(0).getTotal(), t1.difference(t3));
 		assertEquals(c.getLaps().get(1).getTotal(), t3.difference(t4));
 		assertEquals(c.getLaps().get(2).getTotal(), t4.difference(t2));
