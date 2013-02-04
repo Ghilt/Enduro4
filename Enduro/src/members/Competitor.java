@@ -14,6 +14,14 @@ public class Competitor implements Comparable<Competitor> {
 	private List<Time> finishTimes;
 	private String name;
 	
+	
+	
+	/**
+	 * The last-time is NOT a lap, in other words: laps = number of
+	 * finishtimes - 1.
+	 * 
+	 * @return a list representing the laps this competitor has done
+	 */
 	public List<Lap> getLaps() {
 		List<Lap> laps = new ArrayList<Lap>();
 		if (startTimes.isEmpty() || finishTimes.isEmpty())
@@ -53,14 +61,16 @@ public class Competitor implements Comparable<Competitor> {
 	}
 
 	/**
-	 * Return lists of start times.
-	 * 
 	 * @return the list of start times
 	 */
 	public List<Time> getStartTimes() {
 		return startTimes;
 	}
 	
+	
+	/**
+	 * @return number of laps
+	 */
 	public int numberOfLaps(){
 		return finishTimes.size()-1;
 	}
@@ -83,8 +93,6 @@ public class Competitor implements Comparable<Competitor> {
 	}
 
 	/**
-	 * Return the list of finish times.
-	 * 
 	 * @return the list of finish times
 	 */
 	public List<Time> getFinishTimes() {
@@ -92,7 +100,6 @@ public class Competitor implements Comparable<Competitor> {
 	}
 
 	/**
-	 * Return the index.
 	 * 
 	 * @return	the index
 	 */
@@ -101,7 +108,6 @@ public class Competitor implements Comparable<Competitor> {
 	}
 	
 	/**
-	 * Returns name
 	 * @return Name
 	 */
 	public String getName() {
