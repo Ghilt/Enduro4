@@ -25,14 +25,14 @@ public class Test3_5 {
 	
 	@Before
 	public void initialize(){
-		ReadResult readResult = new ReadResult(
-				new File("src/acceptanstest/TEST3_5namnfil.txt"),
-				new File("src/acceptanstest/TEST3starttider.txt"),
-				new File("src/acceptanstest/TEST3maltider.txt"));
-		
-		List<Competitor> competitors = new ArrayList<Competitor>(readResult.openResultFile().values());
-		
-		sorter.printResults(competitors, "src/acceptanstest/TEST3resultat2.txt");
+//		ReadResult readResult = new ReadResult(
+//				new File("src/acceptanstest/TEST3_5namnfil.txt"),
+//				new File("src/acceptanstest/TEST3starttider.txt"),
+//				new File("src/acceptanstest/TEST3maltider.txt"));
+//		
+//		List<Competitor> competitors = new ArrayList<Competitor>(readResult.openResultFile().values());
+//		
+//		sorter.printResults(competitors, "src/acceptanstest/TEST3resultat2.txt");
 		
 		
 	}

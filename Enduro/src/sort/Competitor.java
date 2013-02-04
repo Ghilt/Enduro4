@@ -25,7 +25,7 @@ public class Competitor implements Comparable<Competitor> {
 	 * @param index		index of the competitor
 	 */
 	public Competitor(int index) {
-		name= null;
+		name= "";
 		this.index = index;
 		startTimes = new ArrayList<Time>();
 		finishTimes = new ArrayList<Time>();
@@ -123,8 +123,9 @@ public class Competitor implements Comparable<Competitor> {
 		StringBuilder sb = new StringBuilder();
 		
 
-		sb.append(SorterMain.formatColumns(index, name, 
-				totalTime(), (startTimes.isEmpty() ? NO_START : startTimes.get(0).toString()),
+		sb.append(Formater.formatColumns(index, name,
+				totalTime(), 
+				(startTimes.isEmpty() ? NO_START : startTimes.get(0).toString()),
 				(finishTimes.isEmpty() ? NO_END : finishTimes.get(0).toString())));
 		sb.append(";");
 		if (startTimes.size() > 1) {
