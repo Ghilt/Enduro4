@@ -1,13 +1,14 @@
 package test;
 
+import members.Competitor;
+import members.Time;
+
 import org.junit.*;
 
-import sort.Competitor;
 import sort.CompetitorPrinter;
 import sort.Formater;
 import sort.SorterMain;
 import sort.StdCompetitorPrinter;
-import sort.Time;
 import static org.junit.Assert.*;
 
 public class TestCompetitor {

@@ -2,9 +2,10 @@ package test;
 
 import static org.junit.Assert.*;
 
+import members.Time;
+
 import org.junit.Test;
 
-import sort.Time;
 
 public class TestTime {
 	
