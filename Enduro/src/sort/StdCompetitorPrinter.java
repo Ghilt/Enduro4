@@ -13,8 +13,8 @@ public class StdCompetitorPrinter implements CompetitorPrinter {
 	public static final String NO_START = "Start?";
 	public static final String NO_END = "Slut?";
 	public static final String MULTIPLE_STARTS = "Flera starttider?";
-	public static final String MULTIPLE_ENDS = "Flera sluttider?";
-	public static final String IMPOSSIBLE_TOTAL_TIME = "Omöjlig tid?";
+	public static final String MULTIPLE_ENDS = "Flera måltider?";
+	public static final String IMPOSSIBLE_TOTAL_TIME = "Omöjlig Totaltid?";
 	public static final Time MINIMUM_TOTAL_TIME = new Time("00.15.00");
 
 	/**
