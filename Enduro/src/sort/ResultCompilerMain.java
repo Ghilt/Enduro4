@@ -2,16 +2,13 @@ package sort;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.net.URISyntaxException;
+import java.security.CodeSource;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import members.Competitor;
-
 import result.CvsReader;
 import result.Parser;
 import result.ParserException;
@@ -28,14 +25,19 @@ public class ResultCompilerMain {
 
 	 * Read input files and create list with competitors, and call printResults
 	 * to print the results to the output file.
+	 * @throws URISyntaxException 
 	 * 
 	 */
-	public static void main(String[] args) {
+	public static void main(String[] args) throws URISyntaxException {
+		CodeSource codeSource = ResultCompilerMain.class.getProtectionDomain().getCodeSource();
+		File jarFile = new File(codeSource.getLocation().toURI().getPath());
+		String jarDir = jarFile.getParentFile().getPath();
+		
 		Parser p = new Parser();
 		
-		CvsReader startReader = new CvsReader(STARTTIMES);
-		CvsReader finishReader = new CvsReader(FINISHTIMES);
-		CvsReader nameReader = new CvsReader(NAMEFILE);
+		CvsReader startReader = new CvsReader(jarDir + File.separator + STARTTIMES);
+		CvsReader finishReader = new CvsReader(jarDir + File.separator + FINISHTIMES);
+		CvsReader nameReader = new CvsReader(jarDir + File.separator + NAMEFILE);
 		
 		Map<Integer, Competitor> map = new HashMap<Integer, Competitor>();
 		
@@ -44,7 +46,7 @@ public class ResultCompilerMain {
 			p.parse(finishReader.readAll(), map);
 			p.parse(nameReader.readAll(), map);
 			StdCompetitorPrinter printer = new StdCompetitorPrinter();
-			printer.printResults(new ArrayList<Competitor>(map.values()), RESULTFILE);
+			printer.printResults(new ArrayList<Competitor>(map.values()), jarDir + File.separator + RESULTFILE);
 		} catch (FileNotFoundException e) {
 			System.exit(-1);
 		} catch (ParserException e) {
