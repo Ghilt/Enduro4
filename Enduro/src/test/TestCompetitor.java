@@ -108,7 +108,7 @@ public class TestCompetitor {
 		assertEquals(c3.compareTo(c), 1);
 	}
 	
-	@Ignore
+	@Test
 	public void testGetLaps() {
 		List<Lap> laps;
 		
@@ -121,9 +121,9 @@ public class TestCompetitor {
 		
 		laps = c.getLaps();
 		
-		assertEquals(new Time("00.59.00"), laps.get(0));
-		assertEquals(new Time("01.00.00"), laps.get(1));
-		assertEquals(new Time("01.00.00"), laps.get(2));
+		assertEquals(new Time("00.59.00"), laps.get(0).getTotal());
+		assertEquals(new Time("01.00.00"), laps.get(1).getTotal());
+		assertEquals(new Time("01.00.00"), laps.get(2).getTotal());
 	}
 	
 	
