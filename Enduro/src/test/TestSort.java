@@ -61,7 +61,7 @@ public class TestSort {
 		competitors.add(slowest);
 		competitors.add(fastest);
 		
-		File file = new File("sorted_result.txt");
+		File file = new File("src/test/tmp/sorted_result.txt");
 
 		Scanner scan = null;
 		try {
@@ -73,7 +73,7 @@ public class TestSort {
 		
 		Collections.sort(competitors);
 		
-		SorterMain.printResults(competitors, "sorted_result.txt", cp);
+		SorterMain.printResults(competitors, "src/test/tmp/sorted_result.txt", cp);
 		
 		testFirstLineInResult(scan);
 		

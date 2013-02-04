@@ -24,6 +24,7 @@ public class TestResultFile {
 	private Time start;
 	private Time finish;
 	private CompetitorPrinter cp;
+	private static final String filepath = "src/test/tmp/TestResultFile.txt";
 	
 	@Before
 	public void Initialize() {
@@ -54,10 +55,10 @@ public class TestResultFile {
 
 	@Test
 	public void testSorterMainCreatesFile() {
-		File file = new File("sorted_result.txt");
+		File file = new File(filepath);
 		//Collections.sort(competitors);
 		
-		SorterMain.printResults(competitors, "sorted_result.txt", cp);
+		SorterMain.printResults(competitors, filepath, cp);
 		assertTrue(file.exists());
 	}
 
@@ -65,9 +66,9 @@ public class TestResultFile {
 	public void testResultFile() throws IOException {
 		//Collections.sort(competitors);
 		
-		SorterMain.printResults(competitors, "sorted_result.txt", cp);
+		SorterMain.printResults(competitors, filepath, cp);
 
-		File file = new File("sorted_result.txt");
+		File file = new File(filepath);
 
 		Scanner scan = new Scanner(file);
 
@@ -88,9 +89,9 @@ public class TestResultFile {
 		competitors.add(competitor);
 
 		
-		SorterMain.printResults(competitors, "sorted_result.txt", cp);
+		SorterMain.printResults(competitors, filepath, cp);
 
-		File file = new File("sorted_result.txt");
+		File file = new File(filepath);
 
 		Scanner scan = new Scanner(file);
 
@@ -115,9 +116,9 @@ public class TestResultFile {
 		competitor.addName("Niklas Svensson");
 		competitors.add(competitor);
 		
-		SorterMain.printResults(competitors, "sorted_result.txt", cp);
+		SorterMain.printResults(competitors, filepath, cp);
 
-		File file = new File("sorted_result.txt");
+		File file = new File(filepath);
 
 		Scanner scan = new Scanner(file);
 
@@ -150,9 +151,9 @@ public class TestResultFile {
 		competitors.add(competitor);
 		//Collections.sort(competitors);
 		
-		SorterMain.printResults(competitors, "sorted_result.txt", cp);
+		SorterMain.printResults(competitors, filepath, cp);
 
-		File file = new File("sorted_result.txt");
+		File file = new File(filepath);
 
 		Scanner scan = new Scanner(file);
 
