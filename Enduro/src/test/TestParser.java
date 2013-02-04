@@ -169,8 +169,7 @@ public class TestParser {
 		input.add(row5);
 		input.add(row6);
 		
-		HashMap<Integer, Competitor> competitors = parser.parse(input);
-		
+		Map<Integer, Competitor> competitors = parser.parse(input);
 		
 		assertEquals(competitors.get(1).getFinishTimes().size(), 2);
 		assertEquals(competitors.get(1).getFinishTimes().get(0), new Time("12.11.10"));
