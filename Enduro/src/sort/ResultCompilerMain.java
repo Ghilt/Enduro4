@@ -49,8 +49,6 @@ public class ResultCompilerMain {
 		for (int i = 0; new File(finishPathPart + i + EXTENSION).exists(); i++) {
 			endReaderList.add(new CvsReader(finishPathPart + i + EXTENSION));
 		}
-		// CvsReader nameReader = new CvsReader(jarDir + File.separator +
-		// NAMEFILE);
 
 		Map<Integer, Competitor> map = new HashMap<Integer, Competitor>();
 
@@ -58,12 +56,11 @@ public class ResultCompilerMain {
 			p.parse(startReader.readAll(), map);
 			for (CvsReader end : endReaderList) {
 				p.parse(end.readAll(), map);
-				// System.out.println("DERP");
 			}
 			// if(new File(jarDir + File.separator + NAMEFILE).exists()){
 			p.parse(nameReader.readAll(), map);
 			// }
-			StdCompetitorPrinter printer = new StdCompetitorPrinter();
+			LapCompetitorPrinter printer = new LapCompetitorPrinter();
 			printer.printResults(new ArrayList<Competitor>(map.values()),
 					resultPath);
 		} catch (FileNotFoundException e) {
