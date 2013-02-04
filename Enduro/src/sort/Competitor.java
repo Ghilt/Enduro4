@@ -108,7 +108,7 @@ public class Competitor implements Comparable<Competitor> {
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
 		
-		sb.append(SorterMain.formatColumns(index, 
+		sb.append(Formater.formatColumns(index, 
 				totalTime(), 
 				(startTimes.isEmpty() ? NO_START : startTimes.get(0).toString()),
 				(finishTimes.isEmpty() ? NO_END : finishTimes.get(0).toString())));
