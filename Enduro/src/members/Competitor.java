@@ -118,6 +118,7 @@ public class Competitor implements Comparable<Competitor> {
 		return name;
 	}
 
+	@Override
 	public String toString() {
 		throw new UnsupportedOperationException("Use CompetitorPrinter plz.");
 	}

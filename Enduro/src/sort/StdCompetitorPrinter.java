@@ -18,12 +18,14 @@ public class StdCompetitorPrinter extends Printer {
 	/**
 	 * @return Total time elapsed, or Null time string
 	 */
+	@Override
 	protected Time totalTime(Competitor c) {
 		return (c.getStartTimes().isEmpty() || c.getFinishTimes().isEmpty()) ? new NullTime()
 				: c.getStartTimes().get(0)
 						.difference(c.getFinishTimes().get(0));
 	}
 
+	@Override
 	public String row(Competitor c) {
 		StringBuilder sb = new StringBuilder();
 
@@ -62,6 +64,7 @@ public class StdCompetitorPrinter extends Printer {
 		return sb.toString();
 	}
 
+	@Override
 	protected void appendRows(FileWriter fileWriter,
 			List<Competitor> competitors) throws IOException {
 		fileWriter.append(Formater.formatColumns(Formater.START_NR,
