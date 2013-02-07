@@ -2,7 +2,7 @@ package members;
 
 public class Time implements Comparable<Time> {
 	private final static long ONE_DAY = 86400;
-	private final long HOUR = 3600;
+	private final static long HOUR = 3600;
 
 	/**
 	 * Create time from current system time.
@@ -14,7 +14,6 @@ public class Time implements Comparable<Time> {
 	}
 
 	private static final String SEPARATOR = ".";
-	public static final String NULL_TIME = "--.--.--";
 	private long seconds;
 
 	/**

@@ -2,6 +2,7 @@ package test;
 
 import static org.junit.Assert.assertEquals;
 import members.Competitor;
+import members.NullTime;
 import members.Time;
 
 import org.junit.Before;
@@ -57,7 +58,7 @@ public class TestLapRacePrinter {
 	public void testBadStart() {
 		c.addFinishTime(new Time(45));
 		assertEquals(Formater.formatColumns(1, c.getName(),
-				c.getNumberOfLaps(), Time.NULL_TIME, c.getLaps().get(0)
+				c.getNumberOfLaps(), new NullTime().toString(), c.getLaps().get(0)
 						.getTotal(), Printer.NO_START, new Time(45)), cp.row(c));
 	}
 
@@ -65,7 +66,7 @@ public class TestLapRacePrinter {
 	public void testBadEnd() {
 		c.addStartTime(new Time(10));
 		assertEquals(Formater.formatColumns(1, c.getName(),
-				c.getNumberOfLaps(), Time.NULL_TIME, new Time(10),
+				c.getNumberOfLaps(), new NullTime().toString(), new Time(10),
 				Printer.NO_END + ";"), cp.row(c));
 	}
 

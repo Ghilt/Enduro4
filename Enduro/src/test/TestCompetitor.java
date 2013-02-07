@@ -6,6 +6,7 @@ import java.util.List;
 
 import members.Competitor;
 import members.Lap;
+import members.NullTime;
 import members.Time;
 
 import org.junit.Before;
@@ -39,14 +40,14 @@ public class TestCompetitor {
 	@Test
 	public void testBadStart() {
 		c.addFinishTime(new Time(45));
-		assertEquals(Formater.formatColumns(1, c.getName(), Time.NULL_TIME,
+		assertEquals(Formater.formatColumns(1, c.getName(), new NullTime().toString(),
 				StdCompetitorPrinter.NO_START, new Time(45)), cp.row(c));
 	}
 
 	@Test
 	public void testBadEnd() {
 		c.addStartTime(new Time(10));
-		assertEquals(Formater.formatColumns(1, c.getName(), Time.NULL_TIME,
+		assertEquals(Formater.formatColumns(1, c.getName(), new NullTime().toString(),
 				new Time(10), StdCompetitorPrinter.NO_END), cp.row(c));
 	}
 

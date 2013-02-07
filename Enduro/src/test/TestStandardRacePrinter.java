@@ -2,6 +2,7 @@ package test;
 
 import static org.junit.Assert.assertEquals;
 import members.Competitor;
+import members.NullTime;
 import members.Time;
 
 import org.junit.Before;
@@ -34,14 +35,14 @@ public class TestStandardRacePrinter {
 	@Test
 	public void testBadStart() {
 		c.addFinishTime(new Time(45));
-		assertEquals(Formater.formatColumns(1, c.getName(), Time.NULL_TIME,
+		assertEquals(Formater.formatColumns(1, c.getName(), new NullTime().toString(),
 				StdCompetitorPrinter.NO_START, new Time(45)), cp.row(c));
 	}
 
 	@Test
 	public void testBadEnd() {
 		c.addStartTime(new Time(10));
-		assertEquals(Formater.formatColumns(1, c.getName(), Time.NULL_TIME,
+		assertEquals(Formater.formatColumns(1, c.getName(), new NullTime().toString(),
 				new Time(10), StdCompetitorPrinter.NO_END), cp.row(c));
 	}
 
