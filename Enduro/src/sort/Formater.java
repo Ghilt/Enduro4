@@ -2,30 +2,33 @@ package sort;
 
 /**
  * @author Andrée & Victor
- *
- * Statics for formatting.
+ * 
+ *         Statics for formatting.
  */
 public class Formater {
 	public static final String COLUMN_SEPARATOR = "; ";
 	public static final String LIST_SEPARATOR = ", ";
-	
+
 	public final static String START_NR = "StartNr";
 	public final static String START_TIME = "Starttid";
 	public final static String FINISH_TIME = "Måltid";
 	public final static String NAME = "Namn";
 	public final static String TOTAL_TIME = "Totaltid";
-	
+
 	/**
 	 * Return a string formated for a column
-	 * @param s String
+	 * 
+	 * @param s
+	 *            String
 	 * @return String as column
 	 */
 	private static String formatColumn(Object o) {
 		return o + COLUMN_SEPARATOR;
 	}
-	
+
 	/**
 	 * Format multiple objects using formatColumn
+	 * 
 	 * @see #formatColumn
 	 * @param objs
 	 * @return
@@ -35,17 +38,19 @@ public class Formater {
 		for (Object o : objs) {
 			sb.append(formatColumn(o));
 		}
-		
+
 		String s = sb.toString();
 		return s.substring(0, s.length() - 2);
 	}
-	
-	/**	
+
+	/**
 	 * Is called when a competitor has multiple start/finish times
 	 * 
-	 * @param msg	The errormessage
-	 * @param list	The list of objects	
-	 * @return	The error message followed by the times seperated by a colon
+	 * @param msg
+	 *            The errormessage
+	 * @param list
+	 *            The list of objects
+	 * @return The error message followed by the times seperated by a colon
 	 */
 	public static String formatList(String msg, Object... list) {
 		StringBuilder sb = new StringBuilder();

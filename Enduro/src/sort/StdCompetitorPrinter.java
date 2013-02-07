@@ -1,6 +1,5 @@
 package sort;
 
-import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.List;
@@ -11,11 +10,11 @@ import members.Time;
 
 /**
  * @author Andrée & Victor
- *
- * Prints according to first iteration race.
+ * 
+ *         Prints according to first iteration race.
  */
 public class StdCompetitorPrinter extends Printer {
-	
+
 	/**
 	 * @return Total time elapsed, or Null time string
 	 */
@@ -62,8 +61,9 @@ public class StdCompetitorPrinter extends Printer {
 
 		return sb.toString();
 	}
-	
-	protected void appendRows(FileWriter fileWriter, List<Competitor> competitors) throws IOException {
+
+	protected void appendRows(FileWriter fileWriter,
+			List<Competitor> competitors) throws IOException {
 		fileWriter.append(Formater.formatColumns(Formater.START_NR,
 				Formater.NAME, Formater.TOTAL_TIME, Formater.START_TIME,
 				Formater.FINISH_TIME));

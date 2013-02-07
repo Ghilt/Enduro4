@@ -48,20 +48,20 @@ public class TestSort {
 		Competitor fastest = new Competitor(3);
 		Competitor slowest = new Competitor(1);
 		Competitor secondFastest = new Competitor(2);
-		
+
 		fastest.addStartTime(new Time(10000));
 		fastest.addFinishTime(new Time(30000));
-		
+
 		slowest.addStartTime(new Time(20000));
 		slowest.addFinishTime(new Time(70000));
-		
+
 		secondFastest.addStartTime(new Time(30000));
 		secondFastest.addFinishTime(new Time(60000));
-		
+
 		competitors.add(secondFastest);
 		competitors.add(slowest);
 		competitors.add(fastest);
-		
+
 		File file = new File("src/test/tmp/sorted_result.txt");
 
 		Scanner scan = null;
@@ -71,24 +71,23 @@ public class TestSort {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 		Collections.sort(competitors);
-		
+
 		cp.printResults(competitors, "src/test/tmp/sorted_result.txt");
-		
+
 		testFirstLineInResult(scan);
-		
+
 		assertTrue(file.exists());
-		
+
 		assertTrue(scan.hasNext());
 		assertEquals(scan.nextLine(), fastest.toString());
-		
+
 		assertTrue(scan.hasNext());
 		assertEquals(scan.nextLine(), secondFastest.toString());
-		
+
 		assertTrue(scan.hasNext());
 		assertEquals(scan.nextLine(), slowest.toString());
 	}
-
 
 }

@@ -16,7 +16,7 @@ public class GuiPrinter {
 	public GuiPrinter(String filelink) {
 		super();
 		this.file = new File(filelink);
-		
+
 	}
 
 	private File file;

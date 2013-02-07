@@ -3,15 +3,17 @@ package members;
 /**
  * @author Andrée & Victor
  * 
- * Data structure for handling laps.
- *
+ *         Data structure for handling laps.
+ * 
  */
 public class Lap {
 	private final Time start, end;
-	
+
 	/**
-	 * @param s Start time
-	 * @param e End time or lap moment
+	 * @param s
+	 *            Start time
+	 * @param e
+	 *            End time or lap moment
 	 */
 	public Lap(Time s, Time e) {
 		start = s;
@@ -32,7 +34,7 @@ public class Lap {
 	public Time getEnd() {
 		return end;
 	}
-	
+
 	/**
 	 * @return Lap moment
 	 * @see #getEnd()
@@ -47,10 +49,10 @@ public class Lap {
 	public Time getTotal() {
 		return start.difference(end);
 	}
-	
+
 	@Override
 	public String toString() {
-		
+
 		return getTotal().toString();
 	}
 }
