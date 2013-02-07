@@ -32,10 +32,10 @@ public class Test9 {
 
 		competitors = parser.parse(new CvsReader(
 				"src/acceptanstest9/starttider.txt").readAll());
-		parser.parse(
+		competitors = parser.parse(
 				new CvsReader("src/acceptanstest9/maltider.txt").readAll(),
 				competitors);
-		parser.parse(new CvsReader("src/acceptanstest9/namnfil.txt").readAll(),
+		competitors = parser.parse(new CvsReader("src/acceptanstest9/namnfil.txt").readAll(),
 				competitors);
 
 		LapCompetitorPrinter printer = new LapCompetitorPrinter();

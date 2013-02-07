@@ -33,27 +33,27 @@ public class TestTime {
 
 	@Test
 	public void testConvertFromStringSimple() {
-		assertEquals(new Time(new String("01.00.00")), new Time(3600));
+		assertEquals(new Time(3600), new Time("01.00.00"));
 	}
 
 	@Test
 	public void testConvertFromStringComplicated() {
-		assertEquals(new Time("05.23.01"), new Time(19381));
+		assertEquals(new Time(19381), new Time("05.23.01"));
 	}
 
 	@Test
 	public void testConvertFromInvalidStringGives0() {
-		assertEquals(new Time("bajs"), new Time(0));
+		assertEquals(new Time(0), new Time("bajs"));
 	}
 
 	@Test
 	public void testPrintSimpleTime() {
-		assertEquals(new Time(3600).toString(), "01.00.00");
+		assertEquals("01.00.00", new Time(3600).toString());
 	}
 
 	@Test
 	public void testPrintComplicatedTime() {
-		assertEquals(new Time(19381).toString(), "05.23.01");
+		assertEquals("05.23.01", new Time(19381).toString());
 	}
 
 	@Test

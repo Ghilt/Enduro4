@@ -56,14 +56,14 @@ public class ResultCompilerMain {
 
 		try {
 			// Read starts.
-			p.parse(startReader.readAll(), map);
+			map = p.parse(startReader.readAll(), map);
 			// Read ends
 			for (CvsReader end : endReaderList) {
-				p.parse(end.readAll(), map);
+				map = p.parse(end.readAll(), map);
 			}
 			// Read Names
 			// if(new File(namePath).exists()){
-			p.parse(nameReader.readAll(), map);
+			map = p.parse(nameReader.readAll(), map);
 			// }
 			LapCompetitorPrinter printer = new LapCompetitorPrinter();
 			printer.printResults(new ArrayList<Competitor>(map.values()),

@@ -30,7 +30,7 @@ public class TestCvsReader {
 		ArrayList<ArrayList<String>> array = read.readAll();
 		assertEquals("Row length invalid", 3, array.size());
 		assertEquals("Column length invalid", 4, array.get(0).size());
-		assertEquals("A cell is read invalid", array.get(1).get(2), "art3");
+		assertEquals("A cell is read invalid", "art3", array.get(1).get(2));
 	}
 
 }

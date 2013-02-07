@@ -24,21 +24,21 @@ public class TestLapRace {
 	@Test
 	public void TestNoStartorFinish() {
 		Competitor c2 = new Competitor(2);
-		assertEquals(c2.getFinishTimes().size(), 0);
+		assertEquals(0, c2.getFinishTimes().size());
 	}
 
 	@Test
 	public void TestZeroLaps() {
 		c.addFinishTime(t2);
-		assertEquals(c.getLaps().size(), 0);
+		assertEquals(0, c.getLaps().size());
 	}
 
 	@Test
 	public void TestOneLap() {
 		c.addFinishTime(t3);
 		c.addFinishTime(t2);
-		assertEquals(c.getLaps().get(0).getTotal(), t1.difference(t3));
-		assertEquals(c.getLaps().get(1).getTotal(), t3.difference(t2));
+		assertEquals(t1.difference(t3), c.getLaps().get(0).getTotal());
+		assertEquals(t3.difference(t2), c.getLaps().get(1).getTotal());
 	}
 
 	@Test
@@ -46,7 +46,7 @@ public class TestLapRace {
 		c.addFinishTime(t3);
 		c.addFinishTime(t4);
 		c.addFinishTime(t2);
-		assertEquals(c.numberOfLaps(), 3);
+		assertEquals(3, c.numberOfLaps());
 	}
 
 	@Test
@@ -54,9 +54,9 @@ public class TestLapRace {
 		c.addFinishTime(t3);
 		c.addFinishTime(t4);
 		c.addFinishTime(t2);
-		assertEquals(c.getLaps().get(0).getTotal(), t1.difference(t3));
-		assertEquals(c.getLaps().get(1).getTotal(), t3.difference(t4));
-		assertEquals(c.getLaps().get(2).getTotal(), t4.difference(t2));
+		assertEquals(t1.difference(t3), c.getLaps().get(0).getTotal());
+		assertEquals(t3.difference(t4), c.getLaps().get(1).getTotal());
+		assertEquals(t4.difference(t2), c.getLaps().get(2).getTotal());
 	}
 
 }

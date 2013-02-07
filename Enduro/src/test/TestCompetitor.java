@@ -25,38 +25,41 @@ public class TestCompetitor {
 	public void setup() {
 		cp = new StdCompetitorPrinter();
 		c = new Competitor(1);
-		c.addName("Niklas Svensson");
 	}
 
 	@Test
 	public void testGoodTimes() {
-		c.addStartTime(new Time("00.00.15"));
-		c.addFinishTime(new Time("00.45.00"));
+		Time s = new Time("00.00.15"), f = new Time("00.45.00");
+		c.addStartTime(s);
+		c.addFinishTime(f);
 		assertEquals(Formater.formatColumns(1, c.getName(),
-				new Time("00.00.15").difference(new Time("00.45.00")),
-				new Time("00.00.15"), new Time("00.45.00")), cp.row(c));
+				s.difference(f),
+				s, f), cp.row(c));
 	}
 
 	@Test
 	public void testBadStart() {
-		c.addFinishTime(new Time(45));
+		Time f = new Time(45);
+		c.addFinishTime(f);
 		assertEquals(Formater.formatColumns(1, c.getName(), new NullTime().toString(),
-				StdCompetitorPrinter.NO_START, new Time(45)), cp.row(c));
+				StdCompetitorPrinter.NO_START, f), cp.row(c));
 	}
 
 	@Test
 	public void testBadEnd() {
-		c.addStartTime(new Time(10));
+		Time s = new Time(10);
+		c.addStartTime(s);
 		assertEquals(Formater.formatColumns(1, c.getName(), new NullTime().toString(),
-				new Time(10), StdCompetitorPrinter.NO_END), cp.row(c));
+				s, StdCompetitorPrinter.NO_END), cp.row(c));
 	}
 
 	@Test
 	public void testImpossibleTotalTime() {
-		c.addStartTime(new Time(5));
-		c.addFinishTime(new Time(10));
-		assertEquals(Formater.formatColumns(1, c.getName(), new Time(5),
-				new Time(5), new Time(10),
+		Time s = new Time(5), f = new Time(10);
+		c.addStartTime(s);
+		c.addFinishTime(f);
+		assertEquals(Formater.formatColumns(1, c.getName(), s,
+				s, f,
 				StdCompetitorPrinter.IMPOSSIBLE_TOTAL_TIME), cp.row(c));
 	}
 
@@ -90,16 +93,18 @@ public class TestCompetitor {
 
 	@Test
 	public void testAllPossibleImpossibles() {
-		c.addStartTime(new Time(5));
-		c.addStartTime(new Time(6));
-		c.addFinishTime(new Time(15));
-		c.addFinishTime(new Time(16));
+		Time s1 = new Time(5), s2 = new Time(6),
+				f1 = new Time(15), f2 = new Time(16);
+		c.addStartTime(s1);
+		c.addStartTime(s2);
+		c.addFinishTime(f1);
+		c.addFinishTime(f2);
 
 		assertEquals(Formater.formatColumns(1, c.getName(), new Time(10),
-				new Time(5), new Time(15), StdCompetitorPrinter.MULTIPLE_STARTS
-						+ " " + new Time(6) + " "
+				s1, f1, StdCompetitorPrinter.MULTIPLE_STARTS
+						+ " " + s2 + " "
 						+ StdCompetitorPrinter.MULTIPLE_ENDS + " "
-						+ new Time(16) + " "
+						+ f2 + " "
 						+ StdCompetitorPrinter.IMPOSSIBLE_TOTAL_TIME),
 				cp.row(c));
 	}
@@ -117,9 +122,9 @@ public class TestCompetitor {
 		c2.addFinishTime(new Time("02.00.10"));
 		c3.addFinishTime(new Time("02.01.10"));
 
-		assertEquals(c.compareTo(c2), -1);
-		assertEquals(c2.compareTo(c3), 0);
-		assertEquals(c3.compareTo(c), 1);
+		assertEquals(-1, c.compareTo(c2));
+		assertEquals(0, c2.compareTo(c3));
+		assertEquals(1, c3.compareTo(c));
 	}
 
 	@Test
@@ -131,8 +136,8 @@ public class TestCompetitor {
 		c2.addStartTime(new Time("00.01.00"));
 		c2.addFinishTime(new Time("02.00.10"));
 
-		assertEquals(c.compareTo(c2), 1);
-		assertEquals(c2.compareTo(c), -1);
+		assertEquals(1, c.compareTo(c2));
+		assertEquals(-1, c2.compareTo(c));
 	}
 
 	@Test
@@ -144,8 +149,8 @@ public class TestCompetitor {
 		c2.addStartTime(new Time("00.01.00"));
 		c2.addFinishTime(new Time("02.00.10"));
 
-		assertEquals(c.compareTo(c2), 1);
-		assertEquals(c2.compareTo(c), -1);
+		assertEquals(1, c.compareTo(c2));
+		assertEquals(-1, c2.compareTo(c));
 	}
 
 	@Test
@@ -168,7 +173,7 @@ public class TestCompetitor {
 
 	@Test
 	public void testEmptyLaps() {
-		assertEquals(c.getLaps().size(), 0);
+		assertEquals(0, c.getLaps().size());
 	}
 
 	@Test

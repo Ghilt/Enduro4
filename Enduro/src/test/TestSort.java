@@ -40,7 +40,7 @@ public class TestSort {
 
 		assertTrue(scan.hasNext());
 		assertEquals("First line is missing, empty result list",
-				scan.nextLine(), firstLine);
+				firstLine, scan.nextLine());
 	}
 
 	@Ignore
@@ -81,13 +81,13 @@ public class TestSort {
 		assertTrue(file.exists());
 
 		assertTrue(scan.hasNext());
-		assertEquals(scan.nextLine(), fastest.toString());
+		assertEquals(fastest.toString(), scan.nextLine());
 
 		assertTrue(scan.hasNext());
-		assertEquals(scan.nextLine(), secondFastest.toString());
+		assertEquals(secondFastest.toString(), scan.nextLine());
 
 		assertTrue(scan.hasNext());
-		assertEquals(scan.nextLine(), slowest.toString());
+		assertEquals(slowest.toString(), scan.nextLine());
 	}
 
 }

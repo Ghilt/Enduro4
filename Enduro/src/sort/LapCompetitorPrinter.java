@@ -31,29 +31,30 @@ public class LapCompetitorPrinter extends Printer {
 		sb.append(Formater.formatColumns(c.getIndex(), c.getName(),
 				c.getNumberOfLaps(), totalTime(c))
 				+ "; ");
+		
 		int i = 0;
-		while (i < c.getLaps().size()) {
+		for (; i < c.getLaps().size(); i++) {
 			sb.append(Formater.formatColumns(c.getLaps().get(i).getTotal())
 					+ "; ");
-			i++;
 		}
-		while (i < maxLaps) {
+		
+		for (; i < maxLaps; i++) {
 			sb.append("; ");
-			i++;
 		}
+		
 		sb.append(c.getStartTimes().get(0) + "; ");
-		i = 0;
-		while (i < c.getLaps().size() - 1) {
+		for (i = 0; i < c.getLaps().size() - 1; i++) {
 			sb.append(Formater.formatColumns(c.getLaps().get(i).getEnd())
 					+ "; ");
-			i++;
 		}
-		while (i < maxLaps - 1) {
+		
+		for (; i < maxLaps - 1; i++) {
 			sb.append("; ");
-			i++;
 		}
+		
 		sb.append(Formater.formatColumns(c.getFinishTimes().get(
 				c.getFinishTimes().size() - 1)));
+		
 		return sb.toString();
 	}
 

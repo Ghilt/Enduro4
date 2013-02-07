@@ -8,7 +8,6 @@ package sort;
 public class Formater {
 	public static final String COLUMN_SEPARATOR = "; ";
 	public static final String LIST_SEPARATOR = ", ";
-
 	public final static String START_NR = "StartNr";
 	public final static String START_TIME = "Starttid";
 	public final static String FINISH_TIME = "Måltid";
@@ -47,10 +46,10 @@ public class Formater {
 	 * Is called when a competitor has multiple start/finish times
 	 * 
 	 * @param msg
-	 *            The errormessage
+	 *            The error message
 	 * @param list
 	 *            The list of objects
-	 * @return The error message followed by the times seperated by a colon
+	 * @return The error message followed by the times separated by a colon
 	 */
 	public static String formatList(String msg, Object... list) {
 		StringBuilder sb = new StringBuilder();

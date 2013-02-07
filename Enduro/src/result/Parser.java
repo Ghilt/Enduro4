@@ -14,7 +14,7 @@ import sort.Formater;
  *         Parses files.
  */
 public class Parser {
-
+	
 	public Parser() {
 	}
 
@@ -32,24 +32,26 @@ public class Parser {
 	 *             If the input is incorrect.
 	 */
 	public Map<Integer, Competitor> parse(ArrayList<ArrayList<String>> input,
-			Map<Integer, Competitor> competitors) throws ParserException {
+			Map<Integer, Competitor> cs) throws ParserException {
 		ArrayList<Identifier> types = new ArrayList<Identifier>();
+		
+		Map<Integer, Competitor> competitors = new HashMap<Integer, Competitor>(cs);
 
-		if (input.size() < 2) {
+		if (input.size() < 2)
 			throw new ParserException("Invalid input.");
-		}
+			
 		ArrayList<String> firstLine = input.get(0);
 		types = parseIdentifier(firstLine);
 
-		if (types.size() < 1 || types.get(0) != Identifier.start_nr) {
+		if (types.size() < 1 || types.get(0) != Identifier.start_nr)
 			throw new ParserException("Missing start number.");
-		}
 
 		for (int i = 1; i < input.size(); i++) {
 			ArrayList<String> row = input.get(i);
-			if (row.size() != types.size()) {
+			
+			if (row.size() != types.size())
 				throw new ParserException("Column length mismatch.");
-			}
+			
 			int startNbr = Integer.valueOf(row.get(0));
 
 			Competitor comp = competitors.get(startNbr);
@@ -68,6 +70,8 @@ public class Parser {
 				case start_time:
 					comp.addStartTime(new Time(row.get(j)));
 					break;
+				default:
+					throw new ParserException("Invalid type.");
 				}
 			}
 
