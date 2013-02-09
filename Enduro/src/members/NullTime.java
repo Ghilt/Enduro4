@@ -31,6 +31,10 @@ public class NullTime extends Time {
 	 */
 	@Override
 	public int compareTo(Time time) {
+		if(time instanceof NullTime) {
+			return 0;
+		}
+		
 		return 1;
 	}
 

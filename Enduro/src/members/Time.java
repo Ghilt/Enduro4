@@ -119,6 +119,10 @@ public class Time implements Comparable<Time> {
 
 	@Override
 	public int compareTo(Time time) {
+		if(time instanceof NullTime) {
+			return -1;
+		}
+		
 		long diff = seconds - time.seconds;
 		if (diff < 0) {
 			return -1;
@@ -127,6 +131,15 @@ public class Time implements Comparable<Time> {
 		} else {
 			return 1;
 		}
+	}
+	
+	/**
+	 * Add the time to this time.
+	 * 
+	 * @param time	the time to add
+	 */
+	public void add(Time time) {
+		seconds += time.seconds;
 	}
 
 }

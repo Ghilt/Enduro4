@@ -52,7 +52,6 @@ public class Lap {
 
 	@Override
 	public String toString() {
-
 		return getTotal().toString();
 	}
 }

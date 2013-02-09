@@ -16,25 +16,24 @@ public class Competitor implements Comparable<Competitor> {
 	private String name;
 
 	/**
-	 * The last-time is NOT a lap, in other words: laps = number of finishtimes
+	 * The last-time is NOT a lap, in other words: laps = number of finish times
 	 * - 1.
 	 * 
 	 * @return a list representing the laps this competitor has done
 	 */
 	public List<Lap> getLaps() {
 		List<Lap> laps = new ArrayList<Lap>();
-		if (startTimes.isEmpty() || finishTimes.isEmpty())
-			return laps;
-
-		if (finishTimes.size() == 1) {
-			// laps.add(new Lap(startTimes.get(0),finishTimes.get(0)));
+		/*
+		 * If no start or no more than one finish times, then competitor have no
+		 * finished laps.
+		 */
+		if (startTimes.isEmpty() || finishTimes.size() <= 1) {
 			return laps;
 		} else {
-			for (int i = 0; i < finishTimes.size(); i++) {
-				if (i == 0)
-					laps.add(new Lap(startTimes.get(0), finishTimes.get(0)));
-				else
-					laps.add(new Lap(finishTimes.get(i - 1), finishTimes.get(i)));
+			// First lap time is first finish time - start time
+			laps.add(new Lap(startTimes.get(0), finishTimes.get(0)));
+			for (int i = 1; i < finishTimes.size(); i++) {
+				laps.add(new Lap(finishTimes.get(i - 1), finishTimes.get(i)));
 			}
 		}
 
@@ -124,27 +123,50 @@ public class Competitor implements Comparable<Competitor> {
 	}
 
 	/**
-	 * Compares the total time of this competitor with the competitor o
+	 * Returns the total time of this competitor. If missing start or finish
+	 * time no total time exist. If laps exists, total time is calculated as sum
+	 * of lap times.
+	 * 
+	 * @return the total time
+	 */
+	public Time getTotalTime() {
+		// No total time exists if start or finish times are missing
+		if (startTimes.isEmpty() || finishTimes.isEmpty()) {
+			return new NullTime();
+		}
+
+		Time total = new Time(0);
+
+		List<Lap> laps = getLaps();
+
+		if (!laps.isEmpty()) {
+			for (Lap lap : laps) {
+				total.add(lap.getTotal());
+			}
+		} else {
+			/*
+			 * If no laps exists, total time is difference between first start
+			 * and first finish time
+			 */
+			return startTimes.get(0).difference(finishTimes.get(0));
+		}
+
+		return total;
+	}
+
+	/**
+	 * Compares the total time of this competitor with the total time of the
+	 * competitor o
 	 * 
 	 * @param o
 	 *            The competitor to compare with.
-	 * @return 1 if this competitors total time is less than o's 0 if the total
-	 *         times are equal -1 if this competitors total time is larger than
+	 * @return 1 if this competitors total time is less than o's. 0 if the total
+	 *         times are equal. -1 if this competitors total time is larger than
 	 *         o's
 	 */
 	@Override
 	public int compareTo(Competitor comp) {
-		if (comp.getStartTimes().isEmpty() || comp.getFinishTimes().isEmpty()) {
-			return -1;
-		} else if (startTimes.isEmpty() || finishTimes.isEmpty()) {
-			return 1;
-		}
-
-		Time totalTime = startTimes.get(0).difference(finishTimes.get(0));
-		Time totalTime2 = comp.getStartTimes().get(0)
-				.difference(comp.getFinishTimes().get(0));
-
-		return totalTime.compareTo(totalTime2);
+		return getTotalTime().compareTo(comp.getTotalTime());
 	}
 
 	public int getNumberOfLaps() {
