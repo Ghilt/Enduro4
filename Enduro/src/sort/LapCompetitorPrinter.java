@@ -14,20 +14,6 @@ public class LapCompetitorPrinter extends Printer {
 
 	private final String FIRST_ROW = "StartNr; Namn; #Varv; TotalTid; ";
 
-	/**
-	 * @return Total time elapsed, or Null time string
-	 */
-	/*@Override
-	protected Time totalTime(Competitor c) {
-		return c.getTotalTime();
-		/*return (c.getStartTimes().isEmpty() || c.getFinishTimes().isEmpty()) ? new NullTime()
-				: c.getStartTimes()
-						.get(0)
-						.difference(
-								c.getFinishTimes().get(
-										c.getFinishTimes().size() - 1));*/
-	//}
-
 	@Override
 	public String row(Competitor c) {
 		StringBuilder sb = new StringBuilder();

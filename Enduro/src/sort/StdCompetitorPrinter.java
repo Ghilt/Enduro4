@@ -34,15 +34,15 @@ public class StdCompetitorPrinter extends Printer {
 		StringBuilder sb = new StringBuilder();
 
 		appendCompetitorInfo(sb, c);
-		
+
 		boolean failed = false;
-		
-		failed = appendMultipleTimes(sb, MULTIPLE_STARTS,
-				c.getStartTimes(), failed);
-		
+
+		failed = appendMultipleTimes(sb, MULTIPLE_STARTS, c.getStartTimes(),
+				failed);
+
 		failed = appendMultipleTimes(sb, MULTIPLE_ENDS, c.getFinishTimes(),
 				failed);
-		
+
 		failed = appendImpossibleTotalTime(sb, c, failed);
 
 		return sb.toString();
@@ -50,15 +50,19 @@ public class StdCompetitorPrinter extends Printer {
 
 	/**
 	 * Appends an error message if the total time is less than the value of
-	 * MINIMUM_TOTAL_TIME. If some other error message has been
-	 * appended already, then no extra ';' is needed
+	 * MINIMUM_TOTAL_TIME. If some other error message has been appended
+	 * already, then no extra ';' is needed
 	 * 
-	 * @param sb	the stringbuilder to append to
-	 * @param c		the competitor
-	 * @param failed	 status flag if another error message has already been appended
-	 * @return	the, possibly changed, status flag
+	 * @param sb
+	 *            the stringbuilder to append to
+	 * @param c
+	 *            the competitor
+	 * @param failed
+	 *            status flag if another error message has already been appended
+	 * @return the, possibly changed, status flag
 	 */
-	private boolean appendImpossibleTotalTime(StringBuilder sb, Competitor c, boolean failed) {
+	private boolean appendImpossibleTotalTime(StringBuilder sb, Competitor c,
+			boolean failed) {
 		Time totalTime = totalTime(c);
 
 		if (totalTime.compareTo(MINIMUM_TOTAL_TIME) <= 0) {
@@ -71,7 +75,7 @@ public class StdCompetitorPrinter extends Printer {
 		}
 		return failed;
 	}
-	
+
 	/**
 	 * If list of times contains more than one time, append error message
 	 * followed by list of the extra times. If some other error message has been
