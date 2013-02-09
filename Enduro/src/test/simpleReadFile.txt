@@ -1,4 +1,0 @@
-test1; test2; test3; test4
-arb1; arb2; art3; arb4
-
-korv1; korv2; korv3; korv4
