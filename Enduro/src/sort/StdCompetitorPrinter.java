@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.util.List;
 
 import members.Competitor;
+import members.Lap;
 import members.NullTime;
 import members.Time;
 
@@ -16,10 +17,13 @@ import members.Time;
 public class StdCompetitorPrinter extends Printer {
 
 	/**
+	 * This method is needed because this printer does not consider laps and
+	 * therefore the method 'getTotalTime()' in competitor returns an incorrect
+	 * time.
+	 * 
 	 * @return Total time elapsed, or Null time string
 	 */
-	@Override
-	protected Time totalTime(Competitor c) {
+	private Time totalTime(Competitor c) {
 		return (c.getStartTimes().isEmpty() || c.getFinishTimes().isEmpty()) ? new NullTime()
 				: c.getStartTimes().get(0)
 						.difference(c.getFinishTimes().get(0));
@@ -29,39 +33,90 @@ public class StdCompetitorPrinter extends Printer {
 	public String row(Competitor c) {
 		StringBuilder sb = new StringBuilder();
 
-		sb.append(Formater.formatColumns(c.getIndex(), c.getName(),
-				totalTime(c), (c.getStartTimes().isEmpty() ? NO_START : c
-						.getStartTimes().get(0).toString()), (c
-						.getFinishTimes().isEmpty() ? NO_END : c
-						.getFinishTimes().get(0).toString())));
-		boolean fail = false;
-		if (c.getStartTimes().size() > 1) {
-			sb.append("; ");
-			fail = true;
-			sb.append(Formater.formatList(MULTIPLE_STARTS, c.getStartTimes()
-					.toArray()));
-		}
+		appendCompetitorInfo(sb, c);
+		
+		boolean failed = false;
+		
+		failed = appendMultipleTimes(sb, MULTIPLE_STARTS,
+				c.getStartTimes(), failed);
+		
+		failed = appendMultipleTimes(sb, MULTIPLE_ENDS, c.getFinishTimes(),
+				failed);
+		
+		failed = appendImpossibleTotalTime(sb, c, failed);
 
-		if (c.getFinishTimes().size() > 1) {
-			if (!fail) {
+		return sb.toString();
+	}
+
+	/**
+	 * Appends an error message if the total time is less than the value of
+	 * MINIMUM_TOTAL_TIME. If some other error message has been
+	 * appended already, then no extra ';' is needed
+	 * 
+	 * @param sb	the stringbuilder to append to
+	 * @param c		the competitor
+	 * @param failed	 status flag if another error message has already been appended
+	 * @return	the, possibly changed, status flag
+	 */
+	private boolean appendImpossibleTotalTime(StringBuilder sb, Competitor c, boolean failed) {
+		Time totalTime = totalTime(c);
+
+		if (totalTime.compareTo(MINIMUM_TOTAL_TIME) <= 0) {
+			if (!failed) {
 				sb.append(";");
-				fail = true;
+				failed = true;
 			}
-
-			sb.append(" ");
-			sb.append(Formater.formatList(MULTIPLE_ENDS, c.getFinishTimes()
-					.toArray()));
-		}
-
-		if (totalTime(c).compareTo(MINIMUM_TOTAL_TIME) <= 0) {
-			if (!fail)
-				sb.append(";");
-
 			sb.append(" ");
 			sb.append(IMPOSSIBLE_TOTAL_TIME);
 		}
+		return failed;
+	}
+	
+	/**
+	 * If list of times contains more than one time, append error message
+	 * followed by list of the extra times. If some other error message has been
+	 * appended already, then no extra ';' is needed
+	 * 
+	 * @param sb
+	 *            the stringbuilder to append to
+	 * @param msg
+	 *            the error message
+	 * @param times
+	 *            the list of times
+	 * @param failed
+	 *            status flag if another error message has already been appended
+	 * @return the, possibly changed, status flag
+	 */
+	private boolean appendMultipleTimes(StringBuilder sb, String msg,
+			List<Time> times, boolean failed) {
+		if (times.size() > 1) {
+			if (!failed) {
+				sb.append(";");
+				failed = true;
+			}
+			sb.append(" ");
+			sb.append(Formater.formatList(msg, times.toArray()));
+		}
+		return failed;
+	}
 
-		return sb.toString();
+	/**
+	 * Append the competitors start nbr, name, total time and if any missing
+	 * start/finish times to the stringbuilder.
+	 * 
+	 * @param sb
+	 *            the stringbuilder to append to
+	 * @param c
+	 *            the competitor which info to append
+	 */
+	private void appendCompetitorInfo(StringBuilder sb, Competitor c) {
+		Time totalTime = totalTime(c);
+
+		sb.append(Formater.formatColumns(c.getIndex(), c.getName(), totalTime,
+				(c.getStartTimes().isEmpty() ? NO_START : c.getStartTimes()
+						.get(0).toString()),
+				(c.getFinishTimes().isEmpty() ? NO_END : c.getFinishTimes()
+						.get(0).toString())));
 	}
 
 	@Override

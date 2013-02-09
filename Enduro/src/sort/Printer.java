@@ -25,7 +25,7 @@ public abstract class Printer implements CompetitorPrinter {
 	/**
 	 * @return Total time elapsed, or Null time string
 	 */
-	protected abstract Time totalTime(Competitor c);
+	//protected abstract Time totalTime(Competitor c);
 
 	@Override
 	public abstract String row(Competitor c);
