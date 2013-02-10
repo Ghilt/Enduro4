@@ -39,6 +39,7 @@ public class Formater {
 		}
 
 		String s = sb.toString();
+		// Substring to remove last separator and space (='; ')
 		return s.substring(0, s.length() - 2);
 	}
 
@@ -54,6 +55,7 @@ public class Formater {
 	public static String formatList(String msg, Object... list) {
 		StringBuilder sb = new StringBuilder();
 		sb.append(msg + (list.length == 0 ? "" : " "));
+		// Starts at index 1 because the first time is not an error.
 		for (int i = 1; i < list.length; i++) {
 			sb.append(list[i]);
 			sb.append(LIST_SEPARATOR);

@@ -14,7 +14,7 @@ import sort.Formater;
  *         Parses files.
  */
 public class Parser {
-	
+
 	public Parser() {
 	}
 
@@ -34,13 +34,15 @@ public class Parser {
 	public Map<Integer, Competitor> parse(ArrayList<ArrayList<String>> input,
 			Map<Integer, Competitor> cs) throws ParserException {
 		ArrayList<Identifier> types = new ArrayList<Identifier>();
-		
-		Map<Integer, Competitor> competitors = new HashMap<Integer, Competitor>(cs);
+
+		Map<Integer, Competitor> competitors = new HashMap<Integer, Competitor>(
+				cs);
 
 		if (input.size() < 2)
 			throw new ParserException("Invalid input.");
-			
+
 		ArrayList<String> firstLine = input.get(0);
+		// Parses the first line to know what each column means.
 		types = parseIdentifier(firstLine);
 
 		if (types.size() < 1 || types.get(0) != Identifier.start_nr)
@@ -48,10 +50,11 @@ public class Parser {
 
 		for (int i = 1; i < input.size(); i++) {
 			ArrayList<String> row = input.get(i);
-			
+
 			if (row.size() != types.size())
 				throw new ParserException("Column length mismatch.");
-			
+
+			// Startnbr is always first column.
 			int startNbr = Integer.valueOf(row.get(0));
 
 			Competitor comp = competitors.get(startNbr);
@@ -59,6 +62,8 @@ public class Parser {
 				comp = new Competitor(startNbr);
 			}
 
+			// Starts at index 1 because first column (startnbr) is already
+			// parsed
 			for (int j = 1; j < row.size(); j++) {
 				switch (types.get(j)) {
 				case finish_time:
