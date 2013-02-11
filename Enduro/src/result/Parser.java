@@ -48,6 +48,27 @@ public class Parser {
 		if (types.size() < 1 || types.get(0) != Identifier.start_nr)
 			throw new ParserException("Missing start number.");
 
+		parseRows(input, types, competitors);
+
+		return competitors;
+	}
+
+	/**
+	 * Parses all the rows and att the data to competitors which in turn are
+	 * added to the hashmap of competitors.
+	 * 
+	 * @param input
+	 *            an arraylist with rows
+	 * @param types
+	 *            types of each column
+	 * @param competitors
+	 *            hashmap with competitors
+	 * @throws ParserException
+	 *             thrown if row does not contain the expected nbr of rows
+	 */
+	private void parseRows(ArrayList<ArrayList<String>> input,
+			ArrayList<Identifier> types, Map<Integer, Competitor> competitors)
+			throws ParserException {
 		String classType = "";
 		for (int i = 1; i < input.size(); i++) {
 			ArrayList<String> row = input.get(i);
@@ -63,10 +84,11 @@ public class Parser {
 			int startNbr = Integer.valueOf(row.get(0));
 
 			Competitor comp = competitors.get(startNbr);
+			// If comp does not already exist in hashmap, create a new one
 			if (comp == null) {
 				comp = new Competitor(startNbr);
 			}
-			
+
 			if (classType != "") {
 				comp.setClassType(classType);
 			}
@@ -75,20 +97,23 @@ public class Parser {
 
 			competitors.put(startNbr, comp);
 		}
-		return competitors;
 	}
 
 	/**
-	 * Parses a row and adds data to the competitor.
-	 * How to interpret each column depends on which types are in the list 
-	 * types.
+	 * Parses a row and adds data to the competitor. How to interpret each
+	 * column depends on which types are in the list types.
 	 * 
-	 * @param row	the row to parse
-	 * @param types		the types for each column
-	 * @param comp		the competitor to add the data to
-	 * @throws ParserException	is thrown if it finds an invalid type
+	 * @param row
+	 *            the row to parse
+	 * @param types
+	 *            the types for each column
+	 * @param comp
+	 *            the competitor to add the data to
+	 * @throws ParserException
+	 *             is thrown if it finds an invalid type
 	 */
-	private void parseRow(ArrayList<String> row, ArrayList<Identifier> types, Competitor comp) throws ParserException {
+	private void parseRow(ArrayList<String> row, ArrayList<Identifier> types,
+			Competitor comp) throws ParserException {
 		// Starts at index 1 because first column (startnbr) is already
 		// parsed
 		for (int j = 1; j < row.size(); j++) {
@@ -156,7 +181,7 @@ public class Parser {
 			} else if (s.equalsIgnoreCase(Formater.NAME)) {
 				types.add(Identifier.name);
 			} else {
-				throw new ParserException("Invalid strin: " + s);
+				throw new ParserException("Invalid string: "+s);
 			}
 		}
 

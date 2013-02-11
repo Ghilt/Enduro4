@@ -18,8 +18,8 @@
 	 	<ul><li>Denna ska ha som första rad: "StartNr; Namn"</li></ul>
 	 	<li>"start.txt", denna döps om från "tider.txt", som användaren skapar med hjälp av "register.jar".</li>
 	 	<ul><li>Denna ska ha som första rad: "StartNr; Starttid"</li></ul>
-		<li>"slut.txt", denna döps om från "tider.txt", som användaren skapar med hjälp av "register.jar".</li>
-	 	<ul><li>Denna ska ha som första rad: "StartNr; Måltid"</li></ul>
+	 	<li>En eller flera filer "slutN.txt", där N är en siffra från 0 och uppåt. Dessa döps om från "tider.txt", som användaren skapar med hjälp av "register.jar".</li>
+	 	<ul><li>Dessa ska ha som första rad: "StartNr; Maltid"</li></ul>
        </ul>
       <h2>Användning</h2>
      	<h3>Standard</h3>
@@ -32,6 +32,13 @@
 	</ul>
 		<h3>Varv</h3>
 		<p>Vid tävlingar med flera varv läggs flera sluttider till varje tävlande. I resultatfilen tillkommer utskrift för antal varv, totaltid och målgång för varje varv.</p>
+		
+		<h3>Klasser</h3>
+		<p>Det finns funktion för indelning av tävlande i klasser. 
+		Detta görs genom att skriva in namn på klassen över de tävlande i namnfilen. 
+		Varje ny rad med ett klassnamn startar en ny klass.
+		I resultatfilen skrivs varje klass ut för sig.
+		</p>
     </div>
   </body>
 

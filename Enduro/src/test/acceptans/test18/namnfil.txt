@@ -1,0 +1,7 @@
+StartNr; Namn
+SENIOR
+1; Bosse Eriksson
+2; Nisse Bengtsson
+JUNIOR
+3; Olle Olofsson
+4; Sara Ekstrom

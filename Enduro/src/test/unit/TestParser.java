@@ -60,7 +60,7 @@ public class TestParser {
 		ArrayList<String> row1 = new ArrayList<String>();
 		row1.add("StartNr");
 		row1.add("StartTid");
-		row1.add("MålTid");
+		row1.add("MalTid");
 
 		Time t1 = Time.parse("12.11.10"), t2 = Time.parse("18.11.10"), 
 				t3 = Time.parse("05.11.19"), t4 = Time.parse("20.11.19");
@@ -112,7 +112,7 @@ public class TestParser {
 		input = new ArrayList<ArrayList<String>>();
 		row1 = new ArrayList<String>();
 		row1.add("StartNr");
-		row1.add("MålTid");
+		row1.add("MalTid");
 
 		row2 = new ArrayList<String>();
 		row2.add("1");
@@ -138,7 +138,7 @@ public class TestParser {
 	public void testMultipleFinishTimes() throws ParserException {
 		ArrayList<String> row1 = new ArrayList<String>();
 		row1.add("StartNr");
-		row1.add("Måltid");
+		row1.add("Maltid");
 		
 		Time t1 = Time.parse("12.11.10"), t2 = Time.parse("05.11.19"),
 				t3 = Time.parse("13.21.10"), t4 = Time.parse("14.11.10"),
