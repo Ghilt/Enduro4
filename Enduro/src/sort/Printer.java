@@ -78,7 +78,7 @@ public abstract class Printer implements CompetitorPrinter {
 			}
 			//Prints the "invalid" competitors (the no names)
 			if(!noName.isEmpty()){
-				System.out.println("noName is not empty");
+				fileWriter.append("Icke existerande startnummer" + "\n");
 				appendRows(fileWriter, noName);
 				for (Competitor comp : noName) {
 					fileWriter.append("" + row(comp) + "\n");
