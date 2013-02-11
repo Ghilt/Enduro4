@@ -11,11 +11,13 @@ public class LapCompetitorPrinter extends Printer {
 	private int maxLaps;
 
 	private final String FIRST_ROW = "StartNr; Namn; #Varv; Totaltid; ";
+	
+	
 
 	@Override
 	public String row(Competitor c) {
 		StringBuilder sb = new StringBuilder();
-
+		
 		appendCompetitorInfo(sb, c);
 
 		appendLapTimes(sb, c);
