@@ -12,6 +12,7 @@ import members.Competitor;
 
 import org.junit.Before;
 import org.junit.Ignore;
+import org.junit.Test;
 
 import result.CvsReader;
 import result.Parser;
@@ -31,22 +32,22 @@ public class Test9 {
 		Map<Integer, Competitor> competitors;
 
 		competitors = parser.parse(new CvsReader(
-				"src/acceptanstest9/starttider.txt").readAll());
+				"src/test/acceptans/test9/starttider.txt").readAll());
 		competitors = parser.parse(
-				new CvsReader("src/acceptanstest9/maltider.txt").readAll(),
+				new CvsReader("src/test/acceptans/test9/maltider.txt").readAll(),
 				competitors);
-		competitors = parser.parse(new CvsReader("src/acceptanstest9/namnfil.txt").readAll(),
+		competitors = parser.parse(new CvsReader("src/test/acceptans/test9/namnfil.txt").readAll(),
 				competitors);
 
 		LapCompetitorPrinter printer = new LapCompetitorPrinter();
 		printer.printResults(new ArrayList<Competitor>(competitors.values()),
-				"src/test/tmp/accept9_result.txt");
+				"src/test/acceptans/test9/accept9_result.txt");
 		testResultFiles();
 	}
 
 	private void testResultFiles() throws FileNotFoundException {
-		File file1 = new File("src/acceptanstest9/resultat.txt");
-		File file2 = new File("src/test/tmp/accept9_result.txt");
+		File file1 = new File("src/test/acceptans/test9/resultat.txt");
+		File file2 = new File("src/test/acceptans/test9/accept9_result.txt");
 		Scanner scan1 = new Scanner(file1);
 		Scanner scan2 = new Scanner(file2);
 		String line1, line2;

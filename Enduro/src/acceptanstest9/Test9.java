@@ -11,6 +11,7 @@ import java.util.Scanner;
 import members.Competitor;
 
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import result.CvsReader;
@@ -26,7 +27,7 @@ public class Test9 {
 		parser = new Parser();
 	}
 	
-	@Test
+	@Ignore
 	public void testResult() throws FileNotFoundException, ParserException{
 		Map<Integer, Competitor> competitors;
 		
