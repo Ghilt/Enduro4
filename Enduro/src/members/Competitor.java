@@ -15,6 +15,7 @@ public class Competitor implements Comparable<Competitor> {
 	private List<Time> finishTimes;
 	private String name;
 	private String classType;
+	private int plac;
 
 	/**
 	 * The last-time is NOT a lap, in other words: laps = number of finish times
@@ -55,6 +56,7 @@ public class Competitor implements Comparable<Competitor> {
 	 *            index of the competitor
 	 */
 	public Competitor(int index) {
+		plac = 0;
 		name = "";
 		classType = "";
 		this.index = index;
@@ -139,6 +141,14 @@ public class Competitor implements Comparable<Competitor> {
 	@Override
 	public String toString() {
 		throw new UnsupportedOperationException("Use CompetitorPrinter plz.");
+	}
+	
+	public void setPlac(int p) {
+		plac = p;
+	}
+	
+	public int getPlac() {
+		return plac;
 	}
 
 	/**

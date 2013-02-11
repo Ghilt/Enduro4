@@ -1,6 +1,0 @@
-Plac; StartNr; Namn; #Varv; TotalTid; Varv1; Varv2
-
-1; 10.10.10
-2; 10.10.20
-3; 10.10.30
-4; 10.10.40

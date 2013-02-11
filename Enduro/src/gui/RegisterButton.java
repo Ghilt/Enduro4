@@ -9,6 +9,8 @@ import javax.swing.JButton;
 @SuppressWarnings("serial")
 public class RegisterButton extends JButton implements ActionListener {
 
+	public static final String DEFAULT_TEXT = "REGISTER";
+	public static final String REQUEST_ENTRY = "LÄS IN NR";
 	private Gui frame;
 
 	/**
@@ -21,7 +23,6 @@ public class RegisterButton extends JButton implements ActionListener {
 	 *            The size of the button
 	 */
 	public RegisterButton(Gui frame, Dimension dim) {
-		super("REGISTER");
 		setPreferredSize(dim);
 		setFont(frame.getSmallFont());
 		this.frame = frame;

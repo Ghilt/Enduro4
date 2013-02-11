@@ -6,6 +6,7 @@ import java.net.URISyntaxException;
 import java.security.CodeSource;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -23,6 +24,7 @@ public class ResultCompilerMain {
 	public static final String NAMEFILE = "namn";
 	public static final String FINISHTIMES = "slut";
 	public static final String RESULTFILE = "resultat";
+	public static final String SORTRESULTFILE = "sortresultat";
 	public static final String EXTENSION = ".txt";
 
 	/**
@@ -46,6 +48,7 @@ public class ResultCompilerMain {
 		String namePath = jarDir + File.separator + NAMEFILE + EXTENSION;
 		String finishPathPart = jarDir + File.separator + FINISHTIMES;
 		String resultPath = jarDir + File.separator + RESULTFILE + EXTENSION;
+		String sortResultPath = jarDir + File.separator + SORTRESULTFILE + EXTENSION;
 
 		CvsReader startReader = new CvsReader(startPath);
 		CvsReader nameReader = new CvsReader(namePath);
@@ -74,6 +77,11 @@ public class ResultCompilerMain {
 			LapCompetitorPrinter printer = new LapCompetitorPrinter();
 			printer.printResults(list,
 					resultPath);
+			
+			Collections.sort(list, new CompetitorComparator());
+			printer.printResults(list,
+					sortResultPath);
+			
 			System.out.println("Finished results compilation.");
 		} catch (FileNotFoundException e) {
 			errorMessage(e.getMessage());
@@ -88,6 +96,22 @@ public class ResultCompilerMain {
 		JOptionPane.showMessageDialog(frame, e, "FEL",
 				JOptionPane.ERROR_MESSAGE);
 		frame.dispose();
+	}
+	
+	
+	public static class CompetitorComparator implements Comparator<Competitor>{
+		public CompetitorComparator() { }
+	    @Override
+	    public int compare(Competitor o1, Competitor o2) {
+	    	int cmp = o1.compareTo(o2);
+	        if(cmp == 0) {
+	        	cmp = o1.getNumberOfLaps() - o2.getNumberOfLaps();
+	        	if(cmp == 0) {
+	        		cmp = o1.getTotalTime().compareTo(o2.getTotalTime());
+	        	}
+	        }
+	        return cmp;
+	    }
 	}
 
 }
