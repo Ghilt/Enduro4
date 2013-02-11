@@ -1,4 +1,4 @@
-package test.acceptans.test18;
+package test.acceptans.test15;
 
 import static org.junit.Assert.assertEquals;
 
@@ -12,18 +12,15 @@ import java.util.Scanner;
 import members.Competitor;
 
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import result.CvsReader;
 import result.Parser;
 import result.ParserException;
 import sort.LapCompetitorPrinter;
-import sort.ResultCompilerMain;
-import sort.SortCompetitorPrinter;
-import sort.Sorter;
 
-public class Test18 {
-
+public class Test15 {
 	private CvsReader reader;
 	private Parser parser;
 
@@ -48,19 +45,15 @@ public class Test18 {
 	public void testResult() throws FileNotFoundException, ParserException {
 		Map<Integer, Competitor> competitors;
 
-		reader = new CvsReader("src/test/acceptans/test18/maltider1.txt");
+		reader = new CvsReader("src/test/acceptans/test15/maltider.txt");
 		ArrayList<ArrayList<String>> input = reader.readAll();
 		competitors = parser.parse(input);
 
-		reader = new CvsReader("src/test/acceptans/test18/maltider2.txt");
+		reader = new CvsReader("src/test/acceptans/test15/namnfil.txt");
 		input = reader.readAll();
 		competitors = parser.parse(input, competitors);
 
-		reader = new CvsReader("src/test/acceptans/test18/namnfil.txt");
-		input = reader.readAll();
-		competitors = parser.parse(input, competitors);
-
-		reader = new CvsReader("src/test/acceptans/test18/starttider.txt");
+		reader = new CvsReader("src/test/acceptans/test15/starttider.txt");
 		input = reader.readAll();
 		competitors = parser.parse(input, competitors);
 
@@ -69,21 +62,13 @@ public class Test18 {
 		
 		LapCompetitorPrinter printer = new LapCompetitorPrinter();
 		printer.printResults(list,
-				"src/test/acceptans/test18/resultat_2.txt");
-		testResultFiles("src/test/acceptans/test18/resultat_1.txt", "src/test/acceptans/test18/resultat_2.txt");
-		
-		
-		Collections.sort(list, new Sorter.CompetitorComparator());
-		
-		printer = new SortCompetitorPrinter();
-		printer.printResults(list,
-				"src/test/acceptans/test18/sortresultat_2.txt");
-		testResultFiles("src/test/acceptans/test18/sortresultat.txt", "src/test/acceptans/test18/sortresultat_2.txt");
+				"src/test/acceptans/test15/resultat_2.txt");
+		testResultFiles();
 	}
 
-	private void testResultFiles(String f1, String f2) throws FileNotFoundException {
-		File file1 = new File(f1);
-		File file2 = new File(f2);
+	private void testResultFiles() throws FileNotFoundException {
+		File file1 = new File("src/test/acceptans/test15/resultat.txt");
+		File file2 = new File("src/test/acceptans/test15/resultat_2.txt");
 		Scanner scan1 = new Scanner(file1);
 		Scanner scan2 = new Scanner(file2);
 		String line1, line2;
@@ -93,5 +78,5 @@ public class Test18 {
 			assertEquals("", line1, line2);
 		}
 	}
-	
+
 }

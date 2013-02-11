@@ -9,7 +9,7 @@ import members.Time;
 
 public class LapCompetitorPrinter extends Printer {
 
-	private int maxLaps;
+	protected int maxLaps;
 
 	private final String FIRST_ROW = "StartNr; Namn; #Varv; Totaltid; ";
 
@@ -26,7 +26,6 @@ public class LapCompetitorPrinter extends Printer {
 		appendLapFinishTimes(sb, c);
 
 		appendFinishTime(sb, c);
-
 		return sb.toString();
 	}
 
@@ -39,7 +38,7 @@ public class LapCompetitorPrinter extends Printer {
 	 * @param c
 	 *            the competitor which info to append
 	 */
-	private void appendCompetitorInfo(StringBuilder sb, Competitor c) {
+	protected void appendCompetitorInfo(StringBuilder sb, Competitor c) {
 		sb.append(Formater.formatColumns(c.getIndex(), c.getName(),
 				c.getNumberOfLaps(), c.getTotalTime())
 				+ Formater.COLUMN_SEPARATOR);
@@ -53,8 +52,14 @@ public class LapCompetitorPrinter extends Printer {
 	 * @param c
 	 *            the competitors who's lap times to append
 	 */
-	private void appendLapTimes(StringBuilder sb, Competitor c) {
+	protected void appendLapTimes(StringBuilder sb, Competitor c) {
 		int i = 0;
+		
+		
+		
+		if (c.startMissing())
+			sb.append(Formater.COLUMN_SEPARATOR);
+		
 		for (; i < c.getLaps().size(); i++) {
 			sb.append(Formater.formatColumns(c.getLaps().get(i).getTotal())
 					+ Formater.COLUMN_SEPARATOR);
@@ -63,7 +68,8 @@ public class LapCompetitorPrinter extends Printer {
 		 * Must add additional ';' if the competitors nbr of laps is less than
 		 * the maximum nbr of laps ran by any competitor
 		 */
-		for (; i < maxLaps; i++) {
+		int diff = c.startMissing() ? 1 : 0;
+		for (; i < maxLaps - diff; i++) {
 			sb.append(Formater.COLUMN_SEPARATOR);
 		}
 	}
@@ -94,14 +100,16 @@ public class LapCompetitorPrinter extends Printer {
 	 *            the competitor who's lap finish times to append.
 	 */
 
-	private void appendLapFinishTimes(StringBuilder sb, Competitor c) {
+	protected void appendLapFinishTimes(StringBuilder sb, Competitor c) {
 
 		if (c.getFinishTimes().isEmpty()) {
 			sb.append(NO_END);
 		} else {
 			int i;
-			for (i = 0; i < c.getLaps().size() - 1; i++) {
-				sb.append(Formater.formatColumns(c.getLaps().get(i).getEnd())
+			/* When finishTimes size equals laps size all except the last one (goal) are printed. */
+			int diff = c.startMissing() ? 1 : 0;
+			for (i = 0; i < c.getLaps().size() + diff - 1; i++) {
+				sb.append(Formater.formatColumns(c.getFinishTimes().get(i))
 						+ Formater.COLUMN_SEPARATOR);
 			}
 
@@ -147,12 +155,17 @@ public class LapCompetitorPrinter extends Printer {
 		}
 
 	}
+	
+	protected void appendFirstRow(FileWriter fileWriter) throws IOException {
+		fileWriter.append(FIRST_ROW);
+	}
 
 	@Override
 	protected void appendRows(FileWriter fileWriter,
 			List<Competitor> competitors) throws IOException {
 		maxLaps = getMaxLaps(competitors);
-		fileWriter.append(FIRST_ROW);
+		
+		appendFirstRow(fileWriter);
 
 		for (int i = 1; i < maxLaps + 1; i++) {
 			fileWriter
@@ -164,22 +177,5 @@ public class LapCompetitorPrinter extends Printer {
 					+ Formater.COLUMN_SEPARATOR);
 		}
 		fileWriter.append(Formater.FINISH_TIME + "\n");
-	}
-
-	/**
-	 * Returns the maximum number of laps ran by any competitor.
-	 * 
-	 * @param competitors
-	 *            list of competitors
-	 * @return the maximum number of laps ran by any competitor
-	 */
-	private int getMaxLaps(List<Competitor> competitors) {
-		int a = competitors.get(0).getNumberOfLaps();
-		for (Competitor c : competitors) {
-			if (c.getNumberOfLaps() > a) {
-				a = c.getNumberOfLaps();
-			}
-		}
-		return a;
 	}
 }

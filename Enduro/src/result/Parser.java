@@ -40,16 +40,13 @@ public class Parser {
 
 		if (input.size() < 2)
 			throw new ParserException("Invalid input.");
-
 		ArrayList<String> firstLine = input.get(0);
 		// Parses the first line to know what each column means.
 		types = parseIdentifier(firstLine);
-
 		if (types.size() < 1 || types.get(0) != Identifier.start_nr)
 			throw new ParserException("Missing start number.");
 
 		parseRows(input, types, competitors);
-
 		return competitors;
 	}
 
