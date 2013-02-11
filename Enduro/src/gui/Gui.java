@@ -11,7 +11,6 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
-import javax.swing.JTextField;
 
 import members.Time;
 import sort.Formater;
@@ -24,9 +23,10 @@ public class Gui extends JFrame {
 	private JPanel controlNorthPanel;
 	private JScrollPane textCenterPanel;
 	private JTextArea textArea;
-	private JTextField textField;
+	private EntryField textField;
 
-	private RegisterButton button;
+	private RegisterButton entryButton;
+	private UndoButton undoButton;
 
 	private Font bigFont;
 	private Font smallFont;
@@ -45,7 +45,7 @@ public class Gui extends JFrame {
 	public Gui(String output) {
 
 		screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-		bigFont = new Font("Times New Roman", Font.BOLD, screenSize.height / 7);
+		bigFont = new Font("Times New Roman", Font.BOLD, screenSize.height / 8);
 		smallFont = new Font("Times New Roman", Font.BOLD,
 				screenSize.height / 14);
 
@@ -56,10 +56,11 @@ public class Gui extends JFrame {
 
 		printer = new GuiPrinter(output);
 		emptyEntry = !printer.lastRowHasNr();
-		button.setText(emptyEntry ? RegisterButton.REQUEST_ENTRY
+		entryButton.setText(emptyEntry ? RegisterButton.REQUEST_ENTRY
 				: RegisterButton.DEFAULT_TEXT);
 		if (emptyEntry) {
 			textArea.setText(printer.getLastRow());
+			undoButton.setEnabled(true);
 		}
 
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -76,22 +77,31 @@ public class Gui extends JFrame {
 	private void controlNorthPanelSetUp() {
 
 		// Format dimensions
-		int textFieldLength = (screenSize.width / 3) / bigFont.getSize();
+		int textFieldLength = (screenSize.width / 8) / bigFont.getSize();
 		Dimension buttonDimension = new Dimension(screenSize.width / 3,
 				screenSize.height / 7);
 
 		// Add the Panel
 		controlNorthPanel = new JPanel();
+		controlNorthPanel.setLayout(new BorderLayout());
 		add(controlNorthPanel, BorderLayout.NORTH);
 
 		// Create text field
-		textField = new JTextField(textFieldLength);
+		textField = new EntryField();
 		textField.setFont(bigFont);
+		textField.setColumns(textFieldLength);
 		addRespondToKey();
-		controlNorthPanel.add(textField, BorderLayout.WEST);
+		controlNorthPanel.add(textField, BorderLayout.CENTER);
 
-		button = new RegisterButton(this, buttonDimension);
-		controlNorthPanel.add(button, BorderLayout.EAST);
+		// Add register button
+		entryButton = new RegisterButton(this, buttonDimension);
+		controlNorthPanel.add(entryButton, BorderLayout.EAST);
+
+		// Add undo button
+		undoButton = new UndoButton(this, buttonDimension);
+		undoButton.setText(UndoButton.DEFAULT_TEXT);
+		undoButton.setEnabled(false);
+		controlNorthPanel.add(undoButton, BorderLayout.WEST);
 	}
 
 	/**
@@ -126,7 +136,8 @@ public class Gui extends JFrame {
 	}
 
 	/**
-	 * Tells the program to read the textField and write to file etc.
+	 * Tells the program to read the textField and write to file, update
+	 * textArea, and act on emptyEntry
 	 */
 	public void register() {
 		// Read and then flush the textField
@@ -138,7 +149,7 @@ public class Gui extends JFrame {
 		String temp = Formater.formatColumns(competitorNumber, t);
 
 		if (competitorNumber.isEmpty()) {
-			button.setText(RegisterButton.REQUEST_ENTRY);
+			entryButton.setText(RegisterButton.REQUEST_ENTRY);
 			updateTextArea(temp);
 			if (!emptyEntry)
 				printer.writeLine(temp);
@@ -147,13 +158,14 @@ public class Gui extends JFrame {
 			if (emptyEntry) {
 				printer.enterLateNumber(competitorNumber);
 				emptyEntry = false;
-				button.setText(RegisterButton.DEFAULT_TEXT);
+				entryButton.setText(RegisterButton.DEFAULT_TEXT);
 				addToStartOfTextArea(competitorNumber);
 			} else {
 				printer.writeLine(temp);
 				updateTextArea(temp);
 			}
 		}
+		undoButton.setEnabled(emptyEntry);
 
 		// Finishing updates
 		textField.requestFocus();
@@ -161,6 +173,34 @@ public class Gui extends JFrame {
 		repaint();
 	}
 
+	/**
+	 * Removes the last line of the file and the top line of the textArea
+	 */
+	public void undo() {
+		if (emptyEntry) {
+			printer.clearLastLine();
+			emptyEntry = false;
+			undoButton.setEnabled(emptyEntry);
+			String temp = "";
+			String[] temprows = textArea.getText().split("\\n");
+			for (int i = 1; i < temprows.length && i < MAX_ENTRIES_SHOWN; i++) {
+				temp = temp + temprows[i] + "\n";
+			}
+			textArea.setText(temp);
+
+			// Finishing updates
+			textField.requestFocus();
+			textArea.invalidate();
+			repaint();
+		}
+	}
+
+	/**
+	 * In case of empty entry, the next valid entry adds to the first line
+	 * instead of creating a new one.
+	 * 
+	 * @param comNr
+	 */
 	private void addToStartOfTextArea(String comNr) {
 		String[] str = textArea.getText().split(
 				System.getProperty("line.separator"));
@@ -174,8 +214,14 @@ public class Gui extends JFrame {
 		textArea.setCaretPosition(0);
 	}
 
+	/**
+	 * Updates the TextArea with a new line. Valid or invalid.
+	 * 
+	 * @param temp
+	 * 
+	 */
 	private void updateTextArea(String temp) {
-		if(printer.lastRowHasNr()){
+		if (printer.lastRowHasNr()) {
 			String[] temprows = textArea.getText().split("\\n");
 			for (int i = 0; i < temprows.length && i + 1 < MAX_ENTRIES_SHOWN; i++) {
 				temp = temp + "\n" + temprows[i];
@@ -192,4 +238,5 @@ public class Gui extends JFrame {
 	public Font getBigFont() {
 		return bigFont;
 	}
+
 }
