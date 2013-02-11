@@ -1,4 +1,4 @@
-package test.unit;
+/*package test.unit;
 
 import static org.junit.Assert.assertEquals;
 import members.Competitor;
@@ -56,15 +56,14 @@ public class TestLapRacePrinter {
 				f2, f3), cp.row(c));
 	}
 
-	@Ignore
+	@Test
 	public void testBadStart() {
 		c.addFinishTime(new Time(45));
 		assertEquals(Formater.formatColumns(1, c.getName(),
-				c.getNumberOfLaps(), new NullTime().toString(), "; "
-						, Printer.NO_START, new Time(45)), cp.row(c));
+				c.getNumberOfLaps(), new NullTime().toString(),"; ", Printer.NO_START, new Time(45)), cp.row(c));
 	}
 
-	@Ignore
+	@Test
 	public void testBadEnd() {
 		Time t1 = new Time(10);
 		c.addStartTime(t1);
@@ -73,7 +72,7 @@ public class TestLapRacePrinter {
 				Printer.NO_END + ";"), cp.row(c));
 	}
 
-	@Ignore
+	@Test
 	public void testImpossibleTotalTime() {
 		Time t1 = new Time(5), t2 = new Time(10);
 		c.addStartTime(t1);
@@ -83,7 +82,7 @@ public class TestLapRacePrinter {
 				t2, Printer.IMPOSSIBLE_TOTAL_TIME), cp.row(c));
 	}
 
-	@Ignore
+	@Test
 	public void testImpossibleLapTime() {
 		Time s1 = new Time("00.00.05");
 		c.addStartTime(s1);
@@ -98,7 +97,7 @@ public class TestLapRacePrinter {
 				cp.row(c));
 	}
 
-	@Ignore
+	@Test
 	public void testMultipleStartTimes() {
 		Time s1 = new Time("00.00.05");
 		c.addStartTime(s1);
@@ -108,13 +107,13 @@ public class TestLapRacePrinter {
 		c.addFinishTime(f1);
 		Time f2 = new Time("00.55.06");
 		c.addFinishTime(f2);
-
+		
 		assertEquals(Formater.formatColumns(1, c.getName(),
 				c.getNumberOfLaps(), s1.difference(f2), s1.difference(f1), s1,
 				f1, f2, Printer.MULTIPLE_STARTS + " " + s2), cp.row(c));
 	}
 
-	@Ignore
+	@Test
 	public void testMultipleStartTimesAndImpossibleLapTime() {
 		Time s1 = new Time("00.00.05");
 		c.addStartTime(s1);
@@ -135,3 +134,4 @@ public class TestLapRacePrinter {
 	}
 
 }
+*/
