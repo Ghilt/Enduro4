@@ -195,10 +195,9 @@ public class Competitor implements Comparable<Competitor> {
 	@Override
 	public int compareTo(Competitor comp) {
 		int i = classType.compareTo(comp.classType);
-		i = index - comp.index;
-		/*
-		 * if(i == 0) { return getTotalTime().compareTo(comp.getTotalTime()); }
-		 */
+		
+		if(i == 0) { return index - comp.index; }
+		 
 		return i;
 	}
 
