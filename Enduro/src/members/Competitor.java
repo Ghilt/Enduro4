@@ -14,6 +14,7 @@ public class Competitor implements Comparable<Competitor> {
 	private List<Time> startTimes;
 	private List<Time> finishTimes;
 	private String name;
+	private String classType;
 
 	/**
 	 * The last-time is NOT a lap, in other words: laps = number of finish times
@@ -27,7 +28,7 @@ public class Competitor implements Comparable<Competitor> {
 		 * If no start or no more than one finish times, then competitor have no
 		 * finished laps.
 		 */
-		if (startTimes.isEmpty() || finishTimes.size() <= 1) {
+		if (startTimes.isEmpty() || finishTimes.isEmpty()) {
 			return laps;
 		} else {
 			// First lap time is first finish time - start time
@@ -46,6 +47,7 @@ public class Competitor implements Comparable<Competitor> {
 	 */
 	public Competitor(int index) {
 		name = "";
+		classType = "";
 		this.index = index;
 		startTimes = new ArrayList<Time>();
 		finishTimes = new ArrayList<Time>();
@@ -117,6 +119,13 @@ public class Competitor implements Comparable<Competitor> {
 		return name;
 	}
 
+	/**
+	 * @return classType
+	 */
+	public String getClassType() {
+		return classType;
+	}
+
 	@Override
 	public String toString() {
 		throw new UnsupportedOperationException("Use CompetitorPrinter plz.");
@@ -155,22 +164,30 @@ public class Competitor implements Comparable<Competitor> {
 	}
 
 	/**
-	 * Compares the total time of this competitor with the total time of the
-	 * competitor o
+	 * Compares this competito's class type with comp's.
 	 * 
 	 * @param o
 	 *            The competitor to compare with.
-	 * @return 1 if this competitors total time is less than o's. 0 if the total
-	 *         times are equal. -1 if this competitors total time is larger than
-	 *         o's
+	 * @return 1 if this competitors class type is greater than comp's. 0 if the
+	 *         class types are the same. -1 if this competitors class type is
+	 *         less than comp's.
 	 */
 	@Override
 	public int compareTo(Competitor comp) {
-		return getTotalTime().compareTo(comp.getTotalTime());
+		int i = classType.compareTo(comp.classType);
+		i = index - comp.index;
+		/*
+		 * if(i == 0) { return getTotalTime().compareTo(comp.getTotalTime()); }
+		 */
+		return i;
 	}
 
 	public int getNumberOfLaps() {
 		return numberOfLaps();
+	}
+
+	public void setClassType(String type) {
+		classType = type;
 	}
 
 }

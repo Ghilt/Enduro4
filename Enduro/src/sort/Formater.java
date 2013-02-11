@@ -15,7 +15,7 @@ public class Formater {
 	public final static String TOTAL_TIME = "Totaltid";
 	public final static String LAP_FINISH_TIME = "Varvning";
 	public final static String LAP_TIME = "Varv";
-	
+
 	/**
 	 * Return a string formated for a column
 	 * 
