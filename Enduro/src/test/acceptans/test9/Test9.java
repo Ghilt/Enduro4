@@ -27,7 +27,7 @@ public class Test9 {
 		parser = new Parser();
 	}
 
-	@Ignore
+	@Test
 	public void testResult() throws FileNotFoundException, ParserException {
 		Map<Integer, Competitor> competitors;
 
