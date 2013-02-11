@@ -10,7 +10,7 @@ public class Formater {
 	public static final String LIST_SEPARATOR = ", ";
 	public final static String START_NR = "StartNr";
 	public final static String START_TIME = "Starttid";
-	public final static String FINISH_TIME = "Måltid";
+	public final static String FINISH_TIME = "Maltid";
 	public final static String NAME = "Namn";
 	public final static String TOTAL_TIME = "Totaltid";
 	public final static String LAP_FINISH_TIME = "Varvning";
