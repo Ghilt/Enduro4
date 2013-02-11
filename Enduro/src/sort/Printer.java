@@ -3,6 +3,7 @@ package sort;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import members.Competitor;
@@ -43,19 +44,21 @@ public abstract class Printer implements CompetitorPrinter {
 
 			int fromIndex = 0;
 			int toIndex = 0;
+			// noName are invalid competitors
+			ArrayList<Competitor> noName = new ArrayList<Competitor>(); 
 
 			while (toIndex < competitors.size()) {
 				String classType = competitors.get(toIndex).getClassType();
 				String prevClassType = classType;
 				toIndex = getNewIndex(competitors, fromIndex, toIndex,
 						prevClassType, classType);
-				
+
 				// classList now contains competitors of the same class
 				List<Competitor> classList = competitors.subList(fromIndex,
 						toIndex - 1);
 
 				fromIndex = toIndex - 1;
-				
+
 				// Do not write a line if there's no class type
 				if (classType != "") {
 					fileWriter.append(prevClassType + "\n");
@@ -65,10 +68,24 @@ public abstract class Printer implements CompetitorPrinter {
 				appendRows(fileWriter, classList);
 
 				for (Competitor comp : classList) {
-					fileWriter.append("" + row(comp) + "\n");
+					// Check if person has name a.k.a this person exists
+					if(comp.getName().isEmpty()) {
+						noName.add(comp);
+					} else {
+						fileWriter.append("" + row(comp) + "\n");
+					}
 				}
 			}
-
+			//Prints the "invalid" competitors (the no names)
+			if(!noName.isEmpty()){
+				System.out.println("noName is not empty");
+				appendRows(fileWriter, noName);
+				for (Competitor comp : noName) {
+					fileWriter.append("" + row(comp) + "\n");
+				}
+				
+			}
+			
 			fileWriter.close();
 
 		} catch (IOException e) {
