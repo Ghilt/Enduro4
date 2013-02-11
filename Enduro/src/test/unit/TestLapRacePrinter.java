@@ -67,6 +67,7 @@ public class TestLapRacePrinter {
 	public void testBadStartWithMultipleLaps() {
 		c.addFinishTime(new Time(20));
 		c.addFinishTime(Time())
+		s
 	}
 	
 	@Test
