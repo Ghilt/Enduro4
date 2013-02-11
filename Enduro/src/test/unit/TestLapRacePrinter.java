@@ -60,8 +60,8 @@ public class TestLapRacePrinter {
 	public void testBadStart() {
 		c.addFinishTime(new Time(45));
 		assertEquals(Formater.formatColumns(1, c.getName(),
-				c.getNumberOfLaps(), new NullTime().toString(), c.getLaps().get(0)
-						.getTotal(), Printer.NO_START, new Time(45)), cp.row(c));
+				c.getNumberOfLaps(), new NullTime().toString(), "; "
+						, Printer.NO_START, new Time(45)), cp.row(c));
 	}
 
 	@Ignore

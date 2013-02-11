@@ -32,7 +32,7 @@ public class StdCompetitorPrinter extends Printer {
 	@Override
 	public String row(Competitor c) {
 		StringBuilder sb = new StringBuilder();
-
+		
 		appendCompetitorInfo(sb, c);
 
 		boolean failed = false;
