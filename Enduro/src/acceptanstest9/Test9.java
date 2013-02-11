@@ -5,20 +5,17 @@ import static org.junit.Assert.assertEquals;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
 
-import org.junit.Before;
-import org.junit.Ignore;
-import org.junit.Test;
+import members.Competitor;
 
-import members.*;
+import org.junit.Before;
+import org.junit.Test;
 
 import result.CvsReader;
 import result.Parser;
 import result.ParserException;
-import sort.CompetitorPrinter;
 import sort.LapCompetitorPrinter;
 
 public class Test9 {
@@ -29,7 +26,7 @@ public class Test9 {
 		parser = new Parser();
 	}
 	
-	@Ignore
+	@Test
 	public void testResult() throws FileNotFoundException, ParserException{
 		Map<Integer, Competitor> competitors;
 		
@@ -38,13 +35,13 @@ public class Test9 {
 		parser.parse(new CvsReader("src/acceptanstest9/namnfil.txt").readAll(), competitors);
 		
 		LapCompetitorPrinter printer = new LapCompetitorPrinter();
-		printer.printResults(new ArrayList<Competitor>(competitors.values()), "src/test/tmp/accept9_result.txt");
+		printer.printResults(new ArrayList<Competitor>(competitors.values()), "src/test/accept9_result.txt");
 		testResultFiles();
 	}
-	
+		
 	private void testResultFiles() throws FileNotFoundException {
 		File file1 = new File("src/acceptanstest9/resultat.txt");
-		File file2 = new File("src/test/tmp/accept9_result.txt");
+		File file2 = new File("src/test/accept9_result.txt");
 		Scanner scan1 = new Scanner(file1);
 		Scanner scan2 = new Scanner(file2);
 		String line1, line2;
