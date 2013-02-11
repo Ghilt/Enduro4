@@ -22,7 +22,7 @@ public class StdCompetitorPrinter extends Printer {
 	 * 
 	 * @return Total time elapsed, or Null time string
 	 */
-	private Time totalTime(Competitor c) {
+	protected Time totalTime(Competitor c) {
 		return (c.getStartTimes().isEmpty() || c.getFinishTimes().isEmpty()) ? new NullTime()
 				: c.getStartTimes().get(0)
 						.difference(c.getFinishTimes().get(0));
@@ -60,7 +60,7 @@ public class StdCompetitorPrinter extends Printer {
 	 *            status flag if another error message has already been appended
 	 * @return the, possibly changed, status flag
 	 */
-	private boolean appendImpossibleTotalTime(StringBuilder sb, Competitor c,
+	protected boolean appendImpossibleTotalTime(StringBuilder sb, Competitor c,
 			boolean failed) {
 		Time totalTime = totalTime(c);
 
@@ -90,7 +90,7 @@ public class StdCompetitorPrinter extends Printer {
 	 *            status flag if another error message has already been appended
 	 * @return the, possibly changed, status flag
 	 */
-	private boolean appendMultipleTimes(StringBuilder sb, String msg,
+	protected boolean appendMultipleTimes(StringBuilder sb, String msg,
 			List<Time> times, boolean failed) {
 		if (times.size() > 1) {
 			if (!failed) {
@@ -112,7 +112,7 @@ public class StdCompetitorPrinter extends Printer {
 	 * @param c
 	 *            the competitor which info to append
 	 */
-	private void appendCompetitorInfo(StringBuilder sb, Competitor c) {
+	protected void appendCompetitorInfo(StringBuilder sb, Competitor c) {
 		Time totalTime = totalTime(c);
 
 		sb.append(Formater.formatColumns(c.getIndex(), c.getName(), totalTime,

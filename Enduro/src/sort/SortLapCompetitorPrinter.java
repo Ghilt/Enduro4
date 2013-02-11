@@ -6,7 +6,7 @@ import java.util.List;
 
 import members.Competitor;
 
-public class SortCompetitorPrinter extends LapCompetitorPrinter {
+public class SortLapCompetitorPrinter extends LapCompetitorPrinter {
 
 	private final String FIRST_ROW = "Plac; StartNr; Namn; #Varv; Totaltid; ";
 	

@@ -92,7 +92,7 @@ public class ResultCompilerMain {
 		}
 		if(sorted) {
 			filepath = prop.getProperty("sortedresultfile");
-			printer = new SortCompetitorPrinter();
+			printer = new SortLapCompetitorPrinter();
 			sorter.sortList(true, competitors);
 			printer.printResults(competitors, filepath);
 		}

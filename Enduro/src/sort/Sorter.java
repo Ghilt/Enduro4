@@ -38,9 +38,10 @@ public class Sorter {
 
 		@Override
 		public int compare(Competitor o1, Competitor o2) {
-			int cmp = o1.compareTo(o2);
+			int cmp = o1.getClassType().compareTo(o2.getClassType());
 			if (cmp == 0) {
-				cmp = o1.getNumberOfLaps() - o2.getNumberOfLaps();
+				cmp = o2.getNumberOfLaps() - o1.getNumberOfLaps();
+				
 				if (cmp == 0) {
 					cmp = o1.getTotalTime().compareTo(o2.getTotalTime());
 				}

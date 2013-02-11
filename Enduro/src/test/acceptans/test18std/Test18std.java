@@ -1,4 +1,4 @@
-package test.acceptans.test18;
+package test.acceptans.test18std;
 
 import static org.junit.Assert.assertEquals;
 
@@ -20,9 +20,11 @@ import result.ParserException;
 import sort.LapCompetitorPrinter;
 import sort.ResultCompilerMain;
 import sort.SortLapCompetitorPrinter;
+import sort.SortStdCompetitorPrinter;
 import sort.Sorter;
+import sort.StdCompetitorPrinter;
 
-public class Test18 {
+public class Test18std {
 
 	private CvsReader reader;
 	private Parser parser;
@@ -48,37 +50,33 @@ public class Test18 {
 	public void testResult() throws FileNotFoundException, ParserException {
 		Map<Integer, Competitor> competitors;
 
-		reader = new CvsReader("src/test/acceptans/test18/maltider1.txt");
+		reader = new CvsReader("src/test/acceptans/test18std/maltider1.txt");
 		ArrayList<ArrayList<String>> input = reader.readAll();
 		competitors = parser.parse(input);
 
-		reader = new CvsReader("src/test/acceptans/test18/maltider2.txt");
+		reader = new CvsReader("src/test/acceptans/test18std/namnfil.txt");
 		input = reader.readAll();
 		competitors = parser.parse(input, competitors);
 
-		reader = new CvsReader("src/test/acceptans/test18/namnfil.txt");
-		input = reader.readAll();
-		competitors = parser.parse(input, competitors);
-
-		reader = new CvsReader("src/test/acceptans/test18/starttider.txt");
+		reader = new CvsReader("src/test/acceptans/test18std/starttider.txt");
 		input = reader.readAll();
 		competitors = parser.parse(input, competitors);
 
 		ArrayList<Competitor> list = new ArrayList<Competitor>(competitors.values());
+		
 		Collections.sort(list);
-		
-		LapCompetitorPrinter printer = new LapCompetitorPrinter();
+		StdCompetitorPrinter printer = new StdCompetitorPrinter();
 		printer.printResults(list,
-				"src/test/acceptans/test18/resultat_2.txt");
-		testResultFiles("src/test/acceptans/test18/resultat_1.txt", "src/test/acceptans/test18/resultat_2.txt");
+				"src/test/acceptans/test18std/resultat_2.txt");
+		testResultFiles("src/test/acceptans/test18std/resultat_1.txt", "src/test/acceptans/test18std/resultat_2.txt");
 		
 		
-		Collections.sort(list, new Sorter.CompetitorComparator());
+		Collections.sort(list,new Sorter.CompetitorComparator());
 		
-		printer = new SortLapCompetitorPrinter();
+		printer = new SortStdCompetitorPrinter();
 		printer.printResults(list,
-				"src/test/acceptans/test18/sortresultat_2.txt");
-		testResultFiles("src/test/acceptans/test18/sortresultat.txt", "src/test/acceptans/test18/sortresultat_2.txt");
+				"src/test/acceptans/test18std/sortresultat_2.txt");
+		testResultFiles("src/test/acceptans/test18std/sortresultat.txt", "src/test/acceptans/test18std/sortresultat_2.txt");
 	}
 
 	private void testResultFiles(String f1, String f2) throws FileNotFoundException {
