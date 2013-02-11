@@ -69,7 +69,7 @@ public class Test18 {
 		LapCompetitorPrinter printer = new LapCompetitorPrinter();
 		printer.printResults(list,
 				"src/test/acceptans/test18/resultat_2.txt");
-		testResultFiles("src/test/acceptans/test18/resultat.txt", "src/test/acceptans/test18/resultat_2.txt");
+		testResultFiles("src/test/acceptans/test18/resultat_1.txt", "src/test/acceptans/test18/resultat_2.txt");
 		
 		
 		Collections.sort(list, new ResultCompilerMain.CompetitorComparator());
