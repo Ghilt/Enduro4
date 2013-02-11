@@ -5,6 +5,7 @@ import java.io.FileNotFoundException;
 import java.net.URISyntaxException;
 import java.security.CodeSource;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -67,8 +68,12 @@ public class ResultCompilerMain {
 			//}
 			// Read Names
 			map = p.parse(nameReader.readAll(), map);
-			StdCompetitorPrinter printer = new StdCompetitorPrinter();
-			printer.printResults(new ArrayList<Competitor>(map.values()),
+
+			ArrayList<Competitor> list = new ArrayList<Competitor>(map.values());
+			Collections.sort(list);
+			
+			LapCompetitorPrinter printer = new LapCompetitorPrinter();
+			printer.printResults(list,
 					resultPath);
 			System.out.println("Finished results compilation.");
 		} catch (FileNotFoundException e) {

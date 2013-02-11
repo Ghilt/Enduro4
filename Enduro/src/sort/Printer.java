@@ -25,7 +25,7 @@ public abstract class Printer implements CompetitorPrinter {
 	/**
 	 * @return Total time elapsed, or Null time string
 	 */
-	//protected abstract Time totalTime(Competitor c);
+	// protected abstract Time totalTime(Competitor c);
 
 	@Override
 	public abstract String row(Competitor c);
@@ -44,10 +44,36 @@ public abstract class Printer implements CompetitorPrinter {
 			File outputFile = new File(filepath);
 			FileWriter fileWriter = new FileWriter(outputFile);
 
-			appendRows(fileWriter, competitors);
+			int fromIndex = 0;
+			int toIndex = 0;
 
-			for (Competitor comp : competitors) {
-				fileWriter.append("" + row(comp) + "\n");
+			while (toIndex < competitors.size()) {
+				String classType = competitors.get(toIndex).getClassType();
+				String prevClassType = classType;
+				toIndex++;
+				while (toIndex < competitors.size()
+						&& classType.compareTo(prevClassType) == 0) {
+					classType = competitors.get(toIndex).getClassType();
+					toIndex++;
+				}
+				if (toIndex == competitors.size()) {
+					toIndex++;
+				}
+				List<Competitor> tempList = competitors.subList(fromIndex,
+						toIndex - 1);
+
+				fromIndex = toIndex - 1;
+
+				if (classType != "") {
+					fileWriter.append(prevClassType + "\n");
+				}
+				prevClassType = classType;
+
+				appendRows(fileWriter, tempList);
+
+				for (Competitor comp : tempList) {
+					fileWriter.append("" + row(comp) + "\n");
+				}
 			}
 
 			fileWriter.close();
@@ -55,6 +81,16 @@ public abstract class Printer implements CompetitorPrinter {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+
+	protected String appendClassType(StringBuilder sb, Competitor c,
+			String prevClassType) {
+		String classType = c.getClassType();
+		if (prevClassType.compareTo(classType) != 0 && classType != "") {
+			sb.append(classType + "\n");
+			prevClassType = classType;
+		}
+		return prevClassType;
 	}
 
 	protected abstract void appendRows(FileWriter fileWriter,
