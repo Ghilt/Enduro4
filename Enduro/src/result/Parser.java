@@ -70,7 +70,6 @@ public class Parser {
 			
 			if(classType != "") {
 				comp.setClassType(classType);
-				System.out.println(classType);
 			}
 			
 			// Starts at index 1 because first column (startnbr) is already
