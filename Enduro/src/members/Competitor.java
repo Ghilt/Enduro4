@@ -28,17 +28,26 @@ public class Competitor implements Comparable<Competitor> {
 		 * If no start or no more than one finish times, then competitor have no
 		 * finished laps.
 		 */
-		if (startTimes.isEmpty() || finishTimes.isEmpty()) {
+		if (finishTimes.isEmpty()) {
 			return laps;
 		} else {
 			// First lap time is first finish time - start time
-			laps.add(new Lap(startTimes.get(0), finishTimes.get(0)));
+			if (!startMissing())
+				laps.add(new Lap(startTimes.get(0), finishTimes.get(0)));
+			
 			for (int i = 1; i < finishTimes.size(); i++) {
 				laps.add(new Lap(finishTimes.get(i - 1), finishTimes.get(i)));
 			}
 		}
 
 		return laps;
+	}
+	
+	/**
+	 * @return true if start is missing
+	 */
+	public boolean startMissing() {
+		return startTimes.isEmpty();
 	}
 
 	/**
@@ -72,9 +81,10 @@ public class Competitor implements Comparable<Competitor> {
 
 	/**
 	 * @return number of laps
+	 * @see #getLaps()
 	 */
 	public int numberOfLaps() {
-		return finishTimes.size();
+		return getLaps().size();
 	}
 
 	/**

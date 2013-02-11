@@ -57,7 +57,7 @@ public class TestLapRacePrinter {
 	public void testBadStart() {
 		c.addFinishTime(Time.parse("00.45.00"));
 		assertEquals(Formater.formatColumns(1, c.getName(),
-				c.getNumberOfLaps(), new NullTime().toString(), Printer.NO_START, Time.parse("00.45.00")), cp.row(c));
+				c.getNumberOfLaps(), new NullTime().toString(), "", Printer.NO_START, Time.parse("00.45.00")), cp.row(c));
 	}
 
 

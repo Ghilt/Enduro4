@@ -55,6 +55,12 @@ public class LapCompetitorPrinter extends Printer {
 	 */
 	private void appendLapTimes(StringBuilder sb, Competitor c) {
 		int i = 0;
+		
+		int diff = c.startMissing() ? 1 : 0;
+		
+		for (int n = 0; n < diff; n++)
+			sb.append(Formater.COLUMN_SEPARATOR);
+		
 		for (; i < c.getLaps().size(); i++) {
 			sb.append(Formater.formatColumns(c.getLaps().get(i).getTotal())
 					+ Formater.COLUMN_SEPARATOR);
@@ -63,7 +69,7 @@ public class LapCompetitorPrinter extends Printer {
 		 * Must add additional ';' if the competitors nbr of laps is less than
 		 * the maximum nbr of laps ran by any competitor
 		 */
-		for (; i < maxLaps; i++) {
+		for (; i < maxLaps - diff; i++) {
 			sb.append(Formater.COLUMN_SEPARATOR);
 		}
 	}
@@ -100,8 +106,10 @@ public class LapCompetitorPrinter extends Printer {
 			sb.append(NO_END);
 		} else {
 			int i;
-			for (i = 0; i < c.getLaps().size() - 1; i++) {
-				sb.append(Formater.formatColumns(c.getLaps().get(i).getEnd())
+			/* When finishTimes size equals laps size all except the last one (goal) are printed. */
+			int diff = c.startMissing() ? 1 : 0;
+			for (i = 0; i < c.getLaps().size() + diff - 1; i++) {
+				sb.append(Formater.formatColumns(c.getFinishTimes().get(i))
 						+ Formater.COLUMN_SEPARATOR);
 			}
 
