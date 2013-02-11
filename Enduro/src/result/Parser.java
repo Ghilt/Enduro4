@@ -50,7 +50,7 @@ public class Parser {
 
 		for (int i = 1; i < input.size(); i++) {
 			ArrayList<String> row = input.get(i);
-
+			
 			if (row.size() != types.size())
 				throw new ParserException("Column length mismatch.");
 
@@ -116,8 +116,9 @@ public class Parser {
 	 * @param firstLine
 	 *            The first line containing types of columns.
 	 * @return the arraylist of types
+	 * @throws ParserException if a type is invalid
 	 */
-	private ArrayList<Identifier> parseIdentifier(ArrayList<String> firstLine) {
+	private ArrayList<Identifier> parseIdentifier(ArrayList<String> firstLine) throws ParserException {
 		ArrayList<Identifier> types = new ArrayList<Identifier>();
 
 		for (String s : firstLine) {
@@ -129,6 +130,8 @@ public class Parser {
 				types.add(Identifier.finish_time);
 			} else if (s.equalsIgnoreCase(Formater.NAME)) {
 				types.add(Identifier.name);
+			} else {
+				throw new ParserException("Invalid strin: "+s);
 			}
 		}
 
