@@ -19,8 +19,7 @@ import sort.Formater;
 @SuppressWarnings("serial")
 public class Gui extends JFrame {
 
-	// This number +1 is the number of lines of text kept in memory.
-	private static final int MAXENTRIESSHOWN = 3;
+	private static final int MAX_ENTRIES_SHOWN = 4;
 
 	private JPanel controlNorthPanel;
 	private JScrollPane textCenterPanel;
@@ -35,7 +34,7 @@ public class Gui extends JFrame {
 	private GuiPrinter printer;
 	private Dimension screenSize;
 
-	private boolean emptyEntry = false;
+	private boolean emptyEntry;
 
 	/**
 	 * A simple frame for entering times of racers.
@@ -56,22 +55,17 @@ public class Gui extends JFrame {
 		setTitle("ENDURO");
 
 		printer = new GuiPrinter(output);
+		emptyEntry = !printer.lastRowHasNr();
+		button.setText(emptyEntry ? RegisterButton.REQUEST_ENTRY
+				: RegisterButton.DEFAULT_TEXT);
+		if (emptyEntry) {
+			textArea.setText(printer.getLastRow());
+		}
 
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setResizable(false);
 		setVisible(true);
 		pack();
-		// if (!new File(output).exists()) {
-		// Object[] options = { "Startstation", "Slutstation" };
-		// int choice = JOptionPane.showOptionDialog(this,
-		// "Startstation eller slutstation?", "Stationsval",
-		// JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE,
-		// null, options, options[0]);
-		// printer.writeLine(Formater.formatColumns(Formater.START_NR,
-		// choice == 0 ? Formater.START_TIME : Formater.FINISH_TIME));
-		// // setTitle("ENDURO - " + options[choice]);
-		// } else {
-		// }
 
 		setSize(screenSize);
 	}
@@ -96,7 +90,6 @@ public class Gui extends JFrame {
 		addRespondToKey();
 		controlNorthPanel.add(textField, BorderLayout.WEST);
 
-		// Create the button (separate class)äs in Nr
 		button = new RegisterButton(this, buttonDimension);
 		controlNorthPanel.add(button, BorderLayout.EAST);
 	}
@@ -137,31 +130,59 @@ public class Gui extends JFrame {
 	 */
 	public void register() {
 		// Read and then flush the textField
-		String comNr = textField.getText();
+		String competitorNumber = textField.getText();
 		textField.setText("");
 
 		// Format the new entry.
 		Time t = Time.fromCurrentTime();
-		String temp = Formater.formatColumns(comNr, t);
+		String temp = Formater.formatColumns(competitorNumber, t);
 
-//		if (comNr.isEmpty()) {
-//			button.setText("LÄS IN NR");
-//		}
-
-		// Print to file
-		printer.writeLine(temp);
-		// Add the entry to the top of the recent list.
-		String[] temprows = textArea.getText().split("\\n");
-		for (int i = 0; i < temprows.length && i < MAXENTRIESSHOWN; i++) {
-			temp = temp + "\n" + temprows[i];
-
+		if (competitorNumber.isEmpty()) {
+			button.setText(RegisterButton.REQUEST_ENTRY);
+			updateTextArea(temp);
+			if (!emptyEntry)
+				printer.writeLine(temp);
+			emptyEntry = true;
+		} else {
+			if (emptyEntry) {
+				printer.enterLateNumber(competitorNumber);
+				emptyEntry = false;
+				button.setText(RegisterButton.DEFAULT_TEXT);
+				addToStartOfTextArea(competitorNumber);
+			} else {
+				printer.writeLine(temp);
+				updateTextArea(temp);
+			}
 		}
-		textArea.setText(temp);
 
 		// Finishing updates
 		textField.requestFocus();
 		textArea.invalidate();
 		repaint();
+	}
+
+	private void addToStartOfTextArea(String comNr) {
+		String[] str = textArea.getText().split(
+				System.getProperty("line.separator"));
+		str[0] = comNr + str[0];
+		String newText = "";
+		for (String s : str) {
+			if (!s.isEmpty())
+				newText = newText + s + System.getProperty("line.separator");
+		}
+		textArea.setText(newText);
+		textArea.setCaretPosition(0);
+	}
+
+	private void updateTextArea(String temp) {
+		if(printer.lastRowHasNr()){
+			String[] temprows = textArea.getText().split("\\n");
+			for (int i = 0; i < temprows.length && i + 1 < MAX_ENTRIES_SHOWN; i++) {
+				temp = temp + "\n" + temprows[i];
+
+			}
+			textArea.setText(temp);
+		}
 	}
 
 	public Font getSmallFont() {
