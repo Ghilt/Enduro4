@@ -55,9 +55,9 @@ public class LapCompetitorPrinter extends Printer {
 	protected void appendLapTimes(StringBuilder sb, Competitor c) {
 		int i = 0;
 		
-		int diff = c.startMissing() ? 1 : 0;
 		
-		for (int n = 0; n < diff; n++)
+		
+		if (c.startMissing())
 			sb.append(Formater.COLUMN_SEPARATOR);
 		
 		for (; i < c.getLaps().size(); i++) {
@@ -68,6 +68,7 @@ public class LapCompetitorPrinter extends Printer {
 		 * Must add additional ';' if the competitors nbr of laps is less than
 		 * the maximum nbr of laps ran by any competitor
 		 */
+		int diff = c.startMissing() ? 1 : 0;
 		for (; i < maxLaps - diff; i++) {
 			sb.append(Formater.COLUMN_SEPARATOR);
 		}
