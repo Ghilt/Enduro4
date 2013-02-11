@@ -5,8 +5,6 @@ import java.io.IOException;
 import java.util.List;
 
 import members.Competitor;
-import members.NullTime;
-import members.Time;
 
 public class LapCompetitorPrinter extends Printer {
 

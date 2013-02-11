@@ -11,7 +11,6 @@ import java.util.Scanner;
 import members.Competitor;
 
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import result.CvsReader;

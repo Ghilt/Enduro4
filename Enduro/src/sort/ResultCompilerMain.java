@@ -74,7 +74,7 @@ public class ResultCompilerMain {
 		} catch (FileNotFoundException e) {
 			errorMessage(e.getMessage());
 		} catch (ParserException e) {
-			System.out.println(e.getMessage());
+			errorMessage(e.getMessage());
 			System.exit(-1);
 		}
 	}
