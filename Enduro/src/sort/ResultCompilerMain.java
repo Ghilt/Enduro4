@@ -8,6 +8,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+
 import members.Competitor;
 import result.CvsReader;
 import result.Parser;
@@ -40,17 +43,18 @@ public class ResultCompilerMain {
 
 		String startPath = jarDir + File.separator + STARTTIMES + EXTENSION;
 		String namePath = jarDir + File.separator + NAMEFILE + EXTENSION;
-		String finishPathPart = jarDir + File.separator + FINISHTIMES;
+		String finishPath = jarDir + File.separator + FINISHTIMES + EXTENSION;
 		String resultPath = jarDir + File.separator + RESULTFILE + EXTENSION;
 
 		CvsReader startReader = new CvsReader(startPath);
 		CvsReader nameReader = new CvsReader(namePath);
+		CvsReader endReader = new CvsReader(finishPath);
 
 		// Reads multiple end files for laps.
-		ArrayList<CvsReader> endReaderList = new ArrayList<CvsReader>();
-		for (int i = 0; new File(finishPathPart + i + EXTENSION).exists(); i++) {
-			endReaderList.add(new CvsReader(finishPathPart + i + EXTENSION));
-		}
+		// ArrayList<CvsReader> endReaderList = new ArrayList<CvsReader>();
+		//for (int i = 0; new File(finishPathPart + i + EXTENSION).exists(); i++) {
+		//	endReaderList.add(new CvsReader(finishPathPart + i + EXTENSION));
+		//}
 
 		Map<Integer, Competitor> map = new HashMap<Integer, Competitor>();
 
@@ -58,21 +62,27 @@ public class ResultCompilerMain {
 			// Read starts.
 			map = p.parse(startReader.readAll(), map);
 			// Read ends
-			for (CvsReader end : endReaderList) {
-				map = p.parse(end.readAll(), map);
-			}
+			//for (CvsReader end : endReaderList) {
+				map = p.parse(endReader.readAll(), map);
+			//}
 			// Read Names
-			// if(new File(namePath).exists()){
 			map = p.parse(nameReader.readAll(), map);
-			// }
-			LapCompetitorPrinter printer = new LapCompetitorPrinter();
+			StdCompetitorPrinter printer = new StdCompetitorPrinter();
 			printer.printResults(new ArrayList<Competitor>(map.values()),
 					resultPath);
+			System.out.println("Finished results compilation.");
 		} catch (FileNotFoundException e) {
-			System.exit(-1);
+			errorMessage(e.getMessage());
 		} catch (ParserException e) {
+			errorMessage(e.getMessage());
 			System.exit(-1);
 		}
+	}
+
+	private static void errorMessage(String e) {
+		JFrame frame = new JFrame();
+		JOptionPane.showMessageDialog(frame, e, "FEL", JOptionPane.ERROR_MESSAGE);
+		frame.dispose();
 	}
 
 }
