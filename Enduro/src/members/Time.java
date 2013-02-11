@@ -2,7 +2,7 @@ package members;
 
 public class Time implements Comparable<Time> {
 	private final static long ONE_DAY = 86400;
-	private final long HOUR = 3600;
+	private final static long HOUR = 3600;
 
 	/**
 	 * Create time from current system time.
@@ -14,13 +14,12 @@ public class Time implements Comparable<Time> {
 	}
 
 	private static final String SEPARATOR = ".";
-	public static final String NULL_TIME = "--.--.--";
 	private long seconds;
 
 	/**
-	 * Calculates t - this and returns the difference as a new Time object.
-	 * If the difference is less than 0, one day is added to the time. May
-	 * happen when start and finish time are in different days.
+	 * Calculates t - this and returns the difference as a new Time object. If
+	 * the difference is less than 0, one day is added to the time. May happen
+	 * when start and finish time are in different days.
 	 * 
 	 * @param t
 	 *            The later time
@@ -36,8 +35,7 @@ public class Time implements Comparable<Time> {
 	}
 
 	/**
-	 * Returns a string in the following format:
-	 * hh.mm.ss
+	 * Returns a string in the following format: hh.mm.ss
 	 * 
 	 * @return a string with the time
 	 */
@@ -121,6 +119,10 @@ public class Time implements Comparable<Time> {
 
 	@Override
 	public int compareTo(Time time) {
+		if(time instanceof NullTime) {
+			return -1;
+		}
+		
 		long diff = seconds - time.seconds;
 		if (diff < 0) {
 			return -1;
@@ -129,6 +131,15 @@ public class Time implements Comparable<Time> {
 		} else {
 			return 1;
 		}
+	}
+	
+	/**
+	 * Add the time to this time.
+	 * 
+	 * @param time	the time to add
+	 */
+	public void add(Time time) {
+		seconds += time.seconds;
 	}
 
 }

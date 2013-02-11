@@ -6,13 +6,12 @@ import java.io.IOException;
 import java.util.List;
 
 import members.Competitor;
-import members.NullTime;
 import members.Time;
 
 /**
  * @author Andrée & Victor
- *
- * For printing competitors.
+ * 
+ *         For printing competitors.
  */
 public abstract class Printer implements CompetitorPrinter {
 	public static final String NO_START = "Start?";
@@ -22,17 +21,15 @@ public abstract class Printer implements CompetitorPrinter {
 	public static final String IMPOSSIBLE_TOTAL_TIME = "Omöjlig Totaltid?";
 	public static final String IMPOSSIBLE_LAP_TIME = "Omöjlig varvtid?";
 	public static final Time MINIMUM_TOTAL_TIME = new Time("00.15.00");
-	
-	
+
 	/**
 	 * @return Total time elapsed, or Null time string
 	 */
-	protected abstract Time totalTime(Competitor c);
-	
-	
+	//protected abstract Time totalTime(Competitor c);
+
 	@Override
 	public abstract String row(Competitor c);
-	
+
 	/**
 	 * Prints the result in the list with competitors to the output file.
 	 * 
@@ -46,21 +43,21 @@ public abstract class Printer implements CompetitorPrinter {
 		try {
 			File outputFile = new File(filepath);
 			FileWriter fileWriter = new FileWriter(outputFile);
-			
-			
+
 			appendRows(fileWriter, competitors);
-			
+
 			for (Competitor comp : competitors) {
 				fileWriter.append("" + row(comp) + "\n");
 			}
-			
+
 			fileWriter.close();
 
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
-	
-	protected abstract void appendRows(FileWriter fileWriter, List<Competitor> competitors)  throws IOException;
-	
+
+	protected abstract void appendRows(FileWriter fileWriter,
+			List<Competitor> competitors) throws IOException;
+
 }
