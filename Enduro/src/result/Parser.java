@@ -66,32 +66,46 @@ public class Parser {
 			if (comp == null) {
 				comp = new Competitor(startNbr);
 			}
-
+			
 			if (classType != "") {
 				comp.setClassType(classType);
 			}
 
-			// Starts at index 1 because first column (startnbr) is already
-			// parsed
-			for (int j = 1; j < row.size(); j++) {
-				switch (types.get(j)) {
-				case finish_time:
-					comp.addFinishTime(new Time(row.get(j)));
-					break;
-				case name:
-					comp.addName(row.get(j));
-					break;
-				case start_time:
-					comp.addStartTime(new Time(row.get(j)));
-					break;
-				default:
-					throw new ParserException("Invalid type.");
-				}
-			}
+			parseRow(row, types, comp);
 
 			competitors.put(startNbr, comp);
 		}
 		return competitors;
+	}
+
+	/**
+	 * Parses a row and adds data to the competitor.
+	 * How to interpret each column depends on which types are in the list 
+	 * types.
+	 * 
+	 * @param row	the row to parse
+	 * @param types		the types for each column
+	 * @param comp		the competitor to add the data to
+	 * @throws ParserException	is thrown if it finds an invalid type
+	 */
+	private void parseRow(ArrayList<String> row, ArrayList<Identifier> types, Competitor comp) throws ParserException {
+		// Starts at index 1 because first column (startnbr) is already
+		// parsed
+		for (int j = 1; j < row.size(); j++) {
+			switch (types.get(j)) {
+			case finish_time:
+				comp.addFinishTime(new Time(row.get(j)));
+				break;
+			case name:
+				comp.addName(row.get(j));
+				break;
+			case start_time:
+				comp.addStartTime(new Time(row.get(j)));
+				break;
+			default:
+				throw new ParserException("Invalid type.");
+			}
+		}
 	}
 
 	/**
