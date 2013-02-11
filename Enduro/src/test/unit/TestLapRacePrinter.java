@@ -60,18 +60,25 @@ public class TestLapRacePrinter {
 	public void testBadStart() {
 		c.addFinishTime(new Time(45));
 		assertEquals(Formater.formatColumns(1, c.getName(),
-				c.getNumberOfLaps(), new NullTime().toString(),"; ", Printer.NO_START, new Time(45)), cp.row(c));
+				c.getNumberOfLaps(), new NullTime().toString(), Printer.NO_START, new Time(45)), cp.row(c));
 	}
 
+	@Test
+	public void testBadStartWithMultipleLaps() {
+		c.addFinishTime(new Time(20));
+		c.addFinishTime(Time())
+	}
+	
 	@Test
 	public void testBadEnd() {
 		Time t1 = new Time(10);
 		c.addStartTime(t1);
 		assertEquals(Formater.formatColumns(1, c.getName(),
 				c.getNumberOfLaps(), new NullTime().toString(), t1,
-				Printer.NO_END + ";"), cp.row(c));
+				Printer.NO_END), cp.row(c));
 	}
 
+	
 	@Test
 	public void testImpossibleTotalTime() {
 		Time t1 = new Time(5), t2 = new Time(10);

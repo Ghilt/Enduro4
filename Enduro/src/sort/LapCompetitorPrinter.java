@@ -22,6 +22,8 @@ public class LapCompetitorPrinter extends Printer {
 
 		appendStartTimes(sb, c);
 
+		appendLapFinishTimes(sb, c);
+
 		appendFinishTime(sb, c);
 
 		return sb.toString();
@@ -74,18 +76,40 @@ public class LapCompetitorPrinter extends Printer {
 	 *            the competitors who's lap times to append
 	 */
 	private void appendStartTimes(StringBuilder sb, Competitor c) {
-		int i;
-		sb.append(c.getStartTimes().get(0) + Formater.COLUMN_SEPARATOR);
-		for (i = 0; i < c.getLaps().size() - 1; i++) {
-			sb.append(Formater.formatColumns(c.getLaps().get(i).getEnd())
-					+ Formater.COLUMN_SEPARATOR);
+		if (c.getStartTimes().isEmpty()) {
+			sb.append(NO_START + "; ");
+		} else {
+			sb.append(c.getStartTimes().get(0) + Formater.COLUMN_SEPARATOR);
 		}
-		/*
-		 * Must add additional ';' if the competitors nbr of laps is less than
-		 * the maximum nbr of laps ran by any competitor
-		 */
-		for (; i < maxLaps - 1; i++) {
-			sb.append(Formater.COLUMN_SEPARATOR);
+	}
+
+	/**
+	 * Append the competitors lap finish times ("varvning") to the stringbuilder
+	 * 
+	 * @param sb
+	 *            the stringbuilder to append to
+	 * @param c
+	 *            the competitor who's lap finish times to append.
+	 */
+
+	private void appendLapFinishTimes(StringBuilder sb, Competitor c) {
+
+		if (c.getFinishTimes().isEmpty()) {
+			sb.append(NO_END);
+		} else {
+			int i;
+			for (i = 0; i < c.getLaps().size() - 1; i++) {
+				sb.append(Formater.formatColumns(c.getLaps().get(i).getEnd())
+						+ Formater.COLUMN_SEPARATOR);
+			}
+
+			/*
+			 * Must add additional ';' if the competitors nbr of laps is less
+			 * than the maximum nbr of laps ran by any competitor
+			 */
+			for (; i < maxLaps - 1; i++) {
+				sb.append(Formater.COLUMN_SEPARATOR);
+			}
 		}
 	}
 
@@ -98,8 +122,10 @@ public class LapCompetitorPrinter extends Printer {
 	 *            the competitors who's lap times to append
 	 */
 	private void appendFinishTime(StringBuilder sb, Competitor c) {
+		if (!c.getFinishTimes().isEmpty()) {
 		sb.append(Formater.formatColumns(c.getFinishTimes().get(
 				c.getFinishTimes().size() - 1)));
+		}
 	}
 
 	@Override
@@ -109,13 +135,15 @@ public class LapCompetitorPrinter extends Printer {
 		fileWriter.append(FIRST_ROW);
 
 		for (int i = 1; i < maxLaps + 1; i++) {
-			fileWriter.append(Formater.LAP_TIME + i + Formater.COLUMN_SEPARATOR);
+			fileWriter
+					.append(Formater.LAP_TIME + i + Formater.COLUMN_SEPARATOR);
 		}
 		fileWriter.append(Formater.START_TIME + Formater.COLUMN_SEPARATOR);
 		for (int i = 1; i < maxLaps; i++) {
-			fileWriter.append(Formater.LAP_FINISH_TIME + i + Formater.COLUMN_SEPARATOR);
+			fileWriter.append(Formater.LAP_FINISH_TIME + i
+					+ Formater.COLUMN_SEPARATOR);
 		}
-		fileWriter.append(Formater.FINISH_TIME +"\n");
+		fileWriter.append(Formater.FINISH_TIME + "\n");
 	}
 
 	/**
