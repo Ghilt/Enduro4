@@ -47,7 +47,7 @@ public class ResultCompilerMain {
 		Properties prop = new Properties();
 
 		try {
-			// save properties to project root folder
+			// load properties from config.properties
 			prop.load(new FileInputStream("config.properties"));
 
 		} catch (IOException ex) {
@@ -55,11 +55,13 @@ public class ResultCompilerMain {
 		}
 
 		// Detects the location of the executable.
+		// <<<<<<<------- Do we need this?? ------->>>>>>>
 		CodeSource codeSource = ResultCompilerMain.class.getProtectionDomain()
 				.getCodeSource();
 		File jarFile = new File(codeSource.getLocation().toURI().getPath());
 		String jarDir = jarFile.getParentFile().getPath();
-
+		//<<<<<<<------- Do we need this?? ------->>>>>>>
+		
 		ArrayList<String> inputFiles = getInputFiles(prop);
 		
 		Map<Integer, Competitor> map = null;
@@ -79,6 +81,14 @@ public class ResultCompilerMain {
 
 	}
 
+	/**
+	 * Prints the result to the file specified in the config file under 'resultfile'.
+	 * If 'sorted' in config file is set to 'yes' is also prints a sorted result to the file 
+	 * specified in 'sortedresultfile' in the config file.
+	 * 
+	 * @param prop	contains the values in the config file
+	 * @param competitors	the list of competitors to print
+	 */
 	private static void printResults(Properties prop, ArrayList<Competitor> competitors) {
 		String filepath = prop.getProperty("resultfile");
 		Printer printer = getPrinter(prop);
@@ -98,6 +108,14 @@ public class ResultCompilerMain {
 		}
 	}
 
+	/**
+	 * Parses the content of each file in the list of inputfiles to the list of competitors.
+	 * 
+	 * @param inputFiles	list of inputfiles
+	 * @return
+	 * @throws FileNotFoundException
+	 * @throws ParserException
+	 */
 	private static Map<Integer, Competitor> parseInputFiles(
 			ArrayList<String> inputFiles) throws FileNotFoundException, ParserException {
 		Map<Integer, Competitor> map = new HashMap<Integer, Competitor>();
