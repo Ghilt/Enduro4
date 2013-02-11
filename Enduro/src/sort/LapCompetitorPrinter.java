@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.util.List;
 
 import members.Competitor;
+import members.Time;
 
 public class LapCompetitorPrinter extends Printer {
 
@@ -80,6 +81,7 @@ public class LapCompetitorPrinter extends Printer {
 		} else {
 			sb.append(c.getStartTimes().get(0) + Formater.COLUMN_SEPARATOR);
 		}
+
 	}
 
 	/**
@@ -125,6 +127,24 @@ public class LapCompetitorPrinter extends Printer {
 			sb.append(Formater.formatColumns(c.getFinishTimes().get(
 					c.getFinishTimes().size() - 1)));
 		}
+		if (c.getStartTimes().size() > 1) {
+			sb.append("; " + MULTIPLE_STARTS + " ");
+			for (int i = 1; i < c.getStartTimes().size(); i++) {
+				sb.append(c.getStartTimes().get(i));
+			}
+		}
+		appendCheckImpossibleLapTime(sb, c);
+
+	}
+
+	private void appendCheckImpossibleLapTime(StringBuilder sb, Competitor c) {
+		for (int i = 0; i < c.getLaps().size(); i++) {
+			if (c.getLaps().get(i).getTotal().compareTo(MINIMUM_TOTAL_TIME) <= 0) {
+				sb.append(Formater.formatColumns("; " + IMPOSSIBLE_LAP_TIME));
+				break;
+			}
+		}
+
 	}
 	
 	protected void appendFirstRow(FileWriter fileWriter) throws IOException {

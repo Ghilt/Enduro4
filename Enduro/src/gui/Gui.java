@@ -20,16 +20,22 @@ import sort.Formater;
 public class Gui extends JFrame {
 
 	// This number +1 is the number of lines of text kept in memory.
-	private static final int maxNrOfEntriesShown = 3;
+	private static final int MAXENTRIESSHOWN = 3;
 
 	private JPanel controlNorthPanel;
 	private JScrollPane textCenterPanel;
 	private JTextArea textArea;
 	private JTextField textField;
 
+	private RegisterButton button;
+
 	private Font bigFont;
+	private Font smallFont;
+
 	private GuiPrinter printer;
 	private Dimension screenSize;
+
+	private boolean emptyEntry = false;
 
 	/**
 	 * A simple frame for entering times of racers.
@@ -41,6 +47,8 @@ public class Gui extends JFrame {
 
 		screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 		bigFont = new Font("Times New Roman", Font.BOLD, screenSize.height / 7);
+		smallFont = new Font("Times New Roman", Font.BOLD,
+				screenSize.height / 14);
 
 		setLayout(new BorderLayout());
 		controlNorthPanelSetUp();
@@ -88,9 +96,9 @@ public class Gui extends JFrame {
 		addRespondToKey();
 		controlNorthPanel.add(textField, BorderLayout.WEST);
 
-		// Create the button (separate class)
-		controlNorthPanel.add(new RegisterButton(this, buttonDimension),
-				BorderLayout.EAST);
+		// Create the button (separate class)äs in Nr
+		button = new RegisterButton(this, buttonDimension);
+		controlNorthPanel.add(button, BorderLayout.EAST);
 	}
 
 	/**
@@ -136,13 +144,17 @@ public class Gui extends JFrame {
 		Time t = Time.fromCurrentTime();
 		String temp = Formater.formatColumns(comNr, t);
 
+//		if (comNr.isEmpty()) {
+//			button.setText("LÄS IN NR");
+//		}
+
 		// Print to file
 		printer.writeLine(temp);
-
 		// Add the entry to the top of the recent list.
 		String[] temprows = textArea.getText().split("\\n");
-		for (int i = 0; i < temprows.length && i < maxNrOfEntriesShown; i++) {
+		for (int i = 0; i < temprows.length && i < MAXENTRIESSHOWN; i++) {
 			temp = temp + "\n" + temprows[i];
+
 		}
 		textArea.setText(temp);
 
@@ -152,4 +164,11 @@ public class Gui extends JFrame {
 		repaint();
 	}
 
+	public Font getSmallFont() {
+		return smallFont;
+	}
+
+	public Font getBigFont() {
+		return bigFont;
+	}
 }
