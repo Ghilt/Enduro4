@@ -4,9 +4,12 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import result.ParserException;
+
 /**
- * Parser Class for GUI. Parses a string to an Interval of numbers. 
- * @author Oskar, Andrée! unzunz 
+ * Parser Class for GUI. Parses a string to an Interval of numbers.
+ * 
+ * @author Oskar, Andrée! unzunz
  */
 public class IntervalParser {
 	public static final String INTERVAL_DELIMITER = ",";
@@ -85,9 +88,6 @@ public class IntervalParser {
 		return Arrays.asList(s.split(INTERVAL_DELIMITER));
 	}
 
-	/*
-	 * 
-	 */
 	private Interval interval(String s) {
 		String[] t = s.split(INTERVAL_RANGE);
 
@@ -101,21 +101,41 @@ public class IntervalParser {
 	}
 
 	private final List<Interval> intervals;
+	private final boolean isValid;
+	
 
 	/**
 	 * Parses a string of intervals
 	 * 
 	 * @param str
 	 *            intervals
+	 * @throws ParserException
 	 */
 	public IntervalParser(String str) {
-		List<String> xs = intervals(str);
 		intervals = new ArrayList<Interval>();
+		boolean valid = true;
+		try {
+			List<String> xs = intervals(str);
 
-		for (String x : xs)
-			intervals.add(interval(x));
+			for (String x : xs)
+				intervals.add(interval(x));
+			
+		} catch (Exception e) {
+			valid = false;
+		}
+		
+		isValid = valid;
 	}
 
+	// TODO: STRING SOM FAILAR!!!
+	
+	/**
+	 * @return If String was valid
+	 */
+	public boolean isValid() {
+		return isValid;
+	}
+	
 	/**
 	 * @return returns a list with the intervals
 	 */
