@@ -1,7 +1,8 @@
 StartNr; Namn
 SENIOR
-1; Bosse Eriksson
-2; Nisse Bengtsson
+1; Anders Asson
+2; Bengt Bsson
 JUNIOR
-3; Olle Olofsson
-4; Sara Ekstrom
+101; Chris Csson
+102; David Dsson
+103; Erik Esson

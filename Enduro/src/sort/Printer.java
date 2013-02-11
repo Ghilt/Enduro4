@@ -41,7 +41,6 @@ public abstract class Printer implements CompetitorPrinter {
 		try {
 			File outputFile = new File(filepath);
 			FileWriter fileWriter = new FileWriter(outputFile);
-
 			int fromIndex = 0;
 			int toIndex = 0;
 			// noName are invalid competitors
@@ -56,6 +55,8 @@ public abstract class Printer implements CompetitorPrinter {
 				// classList now contains competitors of the same class
 				List<Competitor> classList = competitors.subList(fromIndex,
 						toIndex - 1);
+				
+				setPlacements(classList);
 
 				fromIndex = toIndex - 1;
 
@@ -84,6 +85,16 @@ public abstract class Printer implements CompetitorPrinter {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	private void setPlacements(List<Competitor> competitors) {
+		int maxLaps = getMaxLaps(competitors);
+		for(int i = 0; i < competitors.size(); i++) {
+			if(competitors.get(i).getNumberOfLaps() == maxLaps) {
+				competitors.get(i).setPlac(i+1);
+			}
+		}
+		
 	}
 
 	/**
@@ -142,5 +153,22 @@ public abstract class Printer implements CompetitorPrinter {
 
 	protected abstract void appendRows(FileWriter fileWriter,
 			List<Competitor> competitors) throws IOException;
+	
+	/**
+	 * Returns the maximum number of laps ran by any competitor.
+	 * 
+	 * @param competitors
+	 *            list of competitors
+	 * @return the maximum number of laps ran by any competitor
+	 */
+	protected int getMaxLaps(List<Competitor> competitors) {
+		int a = competitors.get(0).getNumberOfLaps();
+		for (Competitor c : competitors) {
+			if (c.getNumberOfLaps() > a) {
+				a = c.getNumberOfLaps();
+			}
+		}
+		return a;
+	}
 
 }

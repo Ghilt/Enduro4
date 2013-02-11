@@ -1,6 +1,7 @@
 package sort;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -8,6 +9,7 @@ import java.net.URISyntaxException;
 import java.security.CodeSource;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
@@ -26,11 +28,13 @@ public class ResultCompilerMain {
 	public static final String NAMEFILE = "namn";
 	public static final String FINISHTIMES = "slut";
 	public static final String RESULTFILE = "resultat";
+	public static final String SORTRESULTFILE = "sortresultat";
 	public static final String EXTENSION = ".txt";
 	private final static String LAP_RACE = "laprace";
 	private final static String STANDARD = "standard";
-	private final static String YES = "yes";
-	private final String NO = "no";
+	public final static String YES = "yes";
+	public final static String NO = "no";
+
 	/**
 	 * 
 	 * Read input files and create list with competitors, and call printResults
@@ -40,95 +44,116 @@ public class ResultCompilerMain {
 	 * 
 	 */
 	public static void main(String[] args) throws URISyntaxException {
-		
 		Properties prop = new Properties();
-		 
-    	try {
-    		//save properties to project root folder
-    		prop.store(new FileOutputStream("config.properties"), null);
-    		
- 
-    	} catch (IOException ex) {
-    		ex.printStackTrace();
-        }
-		
-		
-		
-		
+
+		try {
+			// save properties to project root folder
+			prop.load(new FileInputStream("config.properties"));
+
+		} catch (IOException ex) {
+			ex.printStackTrace();
+		}
+
 		// Detects the location of the executable.
 		CodeSource codeSource = ResultCompilerMain.class.getProtectionDomain()
 				.getCodeSource();
 		File jarFile = new File(codeSource.getLocation().toURI().getPath());
 		String jarDir = jarFile.getParentFile().getPath();
 
-		Parser p = new Parser();
-
-		String startPath = jarDir + File.separator + STARTTIMES + EXTENSION;
-		String namePath = jarDir + File.separator + NAMEFILE + EXTENSION;
-		String finishPathPart = jarDir + File.separator + FINISHTIMES;
-		String resultPath = jarDir + File.separator + RESULTFILE + EXTENSION;
-
-		CvsReader startReader = new CvsReader(startPath);
-		CvsReader nameReader = new CvsReader(namePath);
-
-		// Reads multiple end files for laps.
-		ArrayList<CvsReader> endReaderList = new ArrayList<CvsReader>();
-		for (int i = 0; new File(finishPathPart + i + EXTENSION).exists(); i++) {
-			endReaderList.add(new CvsReader(finishPathPart + i + EXTENSION));
-		}
-
-		Map<Integer, Competitor> map = new HashMap<Integer, Competitor>();
-
+		ArrayList<String> inputFiles = getInputFiles(prop);
+		
+		Map<Integer, Competitor> map = null;
 		try {
-			// Read starts.
-			map = p.parse(startReader.readAll(), map);
-			// Read ends
-			for (CvsReader end : endReaderList) {
-				map = p.parse(end.readAll(), map);
-			}
-			// Read Names
-			map = p.parse(nameReader.readAll(), map);
-
-			ArrayList<Competitor> list = new ArrayList<Competitor>(map.values());
-			
-			sortList(prop, list);
-			
-			Printer printer = getPrinter(prop);
-			
-			printer.printResults(list,
-					resultPath);
-			
-			
+			map = parseInputFiles(inputFiles);
 		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
 			errorMessage(e.getMessage());
 		} catch (ParserException e) {
+			// TODO Auto-generated catch block
 			errorMessage(e.getMessage());
-			System.exit(-1);
+		}
+
+		ArrayList<Competitor> list = new ArrayList<Competitor>(map.values());
+		
+		printResults(prop, list);
+
+	}
+
+	private static void printResults(Properties prop, ArrayList<Competitor> competitors) {
+		String filepath = prop.getProperty("resultfile");
+		Printer printer = getPrinter(prop);
+		Sorter sorter = new Sorter();
+		sorter.sortList(false, competitors);
+		printer.printResults(competitors, filepath);
+		
+		boolean sorted = false;
+		if(prop.containsKey("sorted")) {
+			sorted = prop.get("sorted").equals(YES);
+		}
+		if(sorted) {
+			filepath = prop.getProperty("sortedresultfile");
+			printer = new SortCompetitorPrinter();
+			sorter.sortList(true, competitors);
+			printer.printResults(competitors, filepath);
 		}
 	}
 
-	private static void sortList(Properties prop, ArrayList<Competitor> list) {
-		if(prop.contains("sorted") && prop.getProperty("sorted").equals(YES)) {
-//			Collection.sort(list, new ...)
-		} else {
-			Collections.sort(list);
+	private static Map<Integer, Competitor> parseInputFiles(
+			ArrayList<String> inputFiles) throws FileNotFoundException, ParserException {
+		Map<Integer, Competitor> map = new HashMap<Integer, Competitor>();
+		Parser p = new Parser();
+		for(String file : inputFiles) {
+			map = p.parse(read(file), map);
 		}
+		return map;
 	}
 
+	private static ArrayList<String> getInputFiles(Properties prop) {
+		ArrayList<String> inputFiles = new ArrayList<String>();
+		if (prop.containsKey("starttimes")) {
+			inputFiles.add(prop.getProperty("starttimes"));
+		}
+		if (prop.containsKey("namefile")) {
+			inputFiles.add(prop.getProperty("namefile"));
+		}
+		String finishPath = "";
+		if (prop.containsKey("finishfiles")) {
+			finishPath = prop.getProperty("finishfiles");
+		}
+		String[] finishFiles = finishPath.split(" ");
+		for(String s : finishFiles) {
+			inputFiles.add(s);
+		}
+		return inputFiles;
+	}
+
+	private static ArrayList<ArrayList<String>> read(String file) throws FileNotFoundException {
+		CvsReader reader = new CvsReader(file);
+		
+		return reader.readAll();
+	}
+
+	/**
+	 * Return a printer. Which type depends on the status of 'racetype' in the
+	 * config file. If 'racetype' status does not exist in config file, a
+	 * stdCompetitorPrinter is returned. Else if 'racetype' status is set to
+	 * 'laprace', a lapCompetitorPrinter is returned, and finally if 'racetype'
+	 * status is set to 'laprace' and the 'sorted' status is set to 'yes' a
+	 * SortCompetitorPrinter is returned.
+	 * 
+	 * @param prop
+	 *            properties to get status in config file
+	 * @return a printer, which type depends on the status in the config file
+	 */
 	private static Printer getPrinter(Properties prop) {
 		Printer printer = null;
-		
+
 		String printerType = prop.getProperty("racetype");
-		
-		if(printerType.equals(STANDARD)) {
+
+		if (printerType.equals(STANDARD)) {
 			printer = new StdCompetitorPrinter();
 		} else if (printerType.equals(LAP_RACE)) {
 			printer = new LapCompetitorPrinter();
-			
-//			if (prop.containsKey("sorted")
-//					&& prop.getProperty("sorted").equals(YES)) {
-//				printer = new SortCompetitorPrinter();
-//			}
 		}
 		return printer;
 	}
@@ -139,5 +164,7 @@ public class ResultCompilerMain {
 				JOptionPane.ERROR_MESSAGE);
 		frame.dispose();
 	}
+
+	
 
 }
