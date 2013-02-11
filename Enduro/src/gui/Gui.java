@@ -55,17 +55,17 @@ public class Gui extends JFrame {
 		setResizable(false);
 		setVisible(true);
 		pack();
-		if (!new File(output).exists()) {
-			Object[] options = { "Startstation", "Slutstation" };
-			int choice = JOptionPane.showOptionDialog(this,
-					"Startstation eller slutstation?", "Stationsval",
-					JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE,
-					null, options, options[0]);
-			printer.writeLine(Formater.formatColumns(Formater.START_NR,
-					choice == 0 ? Formater.START_TIME : Formater.FINISH_TIME));
-			// setTitle("ENDURO - " + options[choice]);
-		} else {
-		}
+		// if (!new File(output).exists()) {
+		// Object[] options = { "Startstation", "Slutstation" };
+		// int choice = JOptionPane.showOptionDialog(this,
+		// "Startstation eller slutstation?", "Stationsval",
+		// JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE,
+		// null, options, options[0]);
+		// printer.writeLine(Formater.formatColumns(Formater.START_NR,
+		// choice == 0 ? Formater.START_TIME : Formater.FINISH_TIME));
+		// // setTitle("ENDURO - " + options[choice]);
+		// } else {
+		// }
 
 		setSize(screenSize);
 	}
