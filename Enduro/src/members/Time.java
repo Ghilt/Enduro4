@@ -6,13 +6,25 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
+/**
+ * @author Andrée & Henrik
+ *
+ */
 public class Time implements Comparable<Time> {
-	private static final SimpleDateFormat BIG_FORMAT = new SimpleDateFormat(
-			"d/MM/yy HH.mm.ss.ms z");
+//	private static final SimpleDateFormat BIG_FORMAT = new SimpleDateFormat(
+//			"d/MM/yy HH.mm.ss.ms z");
 	private static final SimpleDateFormat FORMAT = new SimpleDateFormat(
 			"HH.mm.ss");
+	
+	private static final int[] VALID_FIELDS = {
+		Calendar.DAY_OF_YEAR, Calendar.HOUR, Calendar.MINUTE,
+		Calendar.SECOND
+	};
 
-	private static Calendar defaultCalendar() {
+	/**
+	 * @return Default GregorianCalendar
+	 */
+	public static Calendar defaultCalendar() {
 		return new GregorianCalendar(1970, Calendar.JANUARY, 1, 00, 00, 00);
 	}
 
@@ -30,23 +42,30 @@ public class Time implements Comparable<Time> {
 		return t;
 	}
 
+	/**
+	 * @param str "HH.mm.ss"
+	 * @return Time
+	 * @see #parse(int, String)
+	 */
 	public static Time parse(String str) {
+		return parse(0, str);
+	}
+
+	/**
+	 * @param dayOfYear Day of year
+	 * @param str "HH.mm.ss"
+	 * @return Time
+	 */
+	public static Time parse(int dayOfYear, String str) {
 		try {
 			Calendar cal = defaultCalendar();
 			cal.setTime(FORMAT.parse(str));
-			cal.set(Calendar.DAY_OF_MONTH, 0);
+			cal.set(Calendar.DAY_OF_YEAR, dayOfYear);
 			cal.set(Calendar.MILLISECOND, 0);
 			return new Time(cal);
 		} catch (ParseException e) {
 			return new NullTime();
 		}
-	}
-
-	public static Time parse(int dayofMonth, String time) {
-		Time t = Time.parse(time);
-		t.cal.set(Calendar.DAY_OF_MONTH, dayofMonth);
-
-		return t;
 	}
 
 	/**
@@ -84,18 +103,29 @@ public class Time implements Comparable<Time> {
 		if (getClass() != obj.getClass())
 			return false;
 		Time other = (Time) obj;
-		if ((cal.getTimeInMillis() / 1000) != (other.cal.getTimeInMillis() / 1000))
-			return false;
+		return equalDates(other.cal);
+	}
+
+	private boolean equalDates(Calendar cal2) {
+		for (int i : VALID_FIELDS)
+			if (cal.get(i) != cal2.get(i))
+				return false;
+		
 		return true;
 	}
 
 	/**
-	 * Generates a time with seconds set to 0;
+	 * Time with defaultCalendar
+	 * @see #defaultCalendar()
 	 */
 	public Time() {
 		cal = defaultCalendar();
 	}
 
+	/**
+	 * Time
+	 * @param seconds Seconds since EPOCH
+	 */
 	public Time(int seconds) {
 		this();
 		
@@ -114,8 +144,8 @@ public class Time implements Comparable<Time> {
 		dd = left;
 		
 		cal.set(Calendar.YEAR, 1970);
-		cal.set(Calendar.DAY_OF_MONTH, dd);
-		cal.set(Calendar.HOUR_OF_DAY, hh);
+		cal.set(Calendar.DAY_OF_YEAR, dd);
+		cal.set(Calendar.HOUR, hh);
 		cal.set(Calendar.MINUTE, mm);
 		cal.set(Calendar.SECOND, ss);
 		cal.set(Calendar.MILLISECOND, 0);
@@ -128,11 +158,6 @@ public class Time implements Comparable<Time> {
 	 */
 	public Time(Calendar cal) {
 		this.cal = cal;
-	}
-
-	public Time(Date date) {
-		this();
-		cal.setTime(date);
 	}
 
 	@Override
@@ -149,9 +174,11 @@ public class Time implements Comparable<Time> {
 	 * @param time
 	 *            the time to add
 	 */
-	public void add(Time time) {
-		cal.setTimeInMillis(cal.getTime().getTime()
-				+ time.cal.getTime().getTime());
+	public Time add(Time time) {
+		for (int i : VALID_FIELDS)
+			cal.add(i, time.cal.get(i));
+		
+		return this;
 	}
 
 }
