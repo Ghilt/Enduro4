@@ -20,6 +20,7 @@ import result.ParserException;
 import sort.LapCompetitorPrinter;
 import sort.ResultCompilerMain;
 import sort.SortCompetitorPrinter;
+import sort.Sorter;
 
 public class Test18 {
 
@@ -72,7 +73,7 @@ public class Test18 {
 		testResultFiles("src/test/acceptans/test18/resultat_1.txt", "src/test/acceptans/test18/resultat_2.txt");
 		
 		
-		Collections.sort(list, new ResultCompilerMain.CompetitorComparator());
+		Collections.sort(list, new Sorter.CompetitorComparator());
 		
 		printer = new SortCompetitorPrinter();
 		printer.printResults(list,

@@ -41,7 +41,6 @@ public abstract class Printer implements CompetitorPrinter {
 		try {
 			File outputFile = new File(filepath);
 			FileWriter fileWriter = new FileWriter(outputFile);
-
 			int fromIndex = 0;
 			int toIndex = 0;
 			// noName are invalid competitors
