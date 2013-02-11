@@ -8,6 +8,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+
 import members.Competitor;
 import result.CvsReader;
 import result.Parser;
@@ -62,17 +65,21 @@ public class ResultCompilerMain {
 				map = p.parse(end.readAll(), map);
 			}
 			// Read Names
-			// if(new File(namePath).exists()){
 			map = p.parse(nameReader.readAll(), map);
-			// }
 			LapCompetitorPrinter printer = new LapCompetitorPrinter();
 			printer.printResults(new ArrayList<Competitor>(map.values()),
 					resultPath);
 		} catch (FileNotFoundException e) {
-			System.exit(-1);
+			errorMessage(e.getMessage());
 		} catch (ParserException e) {
 			System.exit(-1);
 		}
+	}
+
+	private static void errorMessage(String e) {
+		JFrame frame = new JFrame();
+		JOptionPane.showMessageDialog(frame, e, "FEL", JOptionPane.ERROR_MESSAGE);
+		frame.dispose();
 	}
 
 }
