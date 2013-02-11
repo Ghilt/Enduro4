@@ -5,7 +5,6 @@ import java.io.IOException;
 import java.util.List;
 
 import members.Competitor;
-import members.Lap;
 import members.NullTime;
 import members.Time;
 
