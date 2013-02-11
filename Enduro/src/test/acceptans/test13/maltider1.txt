@@ -1,4 +1,4 @@
-StartNr; Måltid
+StartNr; Maltid
 2; 12.21.00
 102; 12.23.00
 103; 12.24.00
