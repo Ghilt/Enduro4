@@ -72,7 +72,7 @@ public class ResultCompilerMain {
 			map = p.parse(nameReader.readAll(), map);
 
 			ArrayList<Competitor> list = new ArrayList<Competitor>(map.values());
-			Collections.sort(list);
+			//Collections.sort(list);
 			
 			LapCompetitorPrinter printer = new LapCompetitorPrinter();
 			printer.printResults(list,

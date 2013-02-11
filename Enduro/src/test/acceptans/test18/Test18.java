@@ -19,7 +19,7 @@ import result.Parser;
 import result.ParserException;
 import sort.LapCompetitorPrinter;
 import sort.ResultCompilerMain;
-import sort.SortCompetitorPrinter;
+import sort.SortLapCompetitorPrinter;
 
 public class Test18 {
 
@@ -74,7 +74,7 @@ public class Test18 {
 		
 		Collections.sort(list, new ResultCompilerMain.CompetitorComparator());
 		
-		printer = new SortCompetitorPrinter();
+		printer = new SortLapCompetitorPrinter();
 		printer.printResults(list,
 				"src/test/acceptans/test18/sortresultat_2.txt");
 		testResultFiles("src/test/acceptans/test18/sortresultat.txt", "src/test/acceptans/test18/sortresultat_2.txt");
