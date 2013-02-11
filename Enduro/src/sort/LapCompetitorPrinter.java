@@ -11,13 +11,11 @@ public class LapCompetitorPrinter extends Printer {
 	private int maxLaps;
 
 	private final String FIRST_ROW = "StartNr; Namn; #Varv; Totaltid; ";
-	
-	
 
 	@Override
 	public String row(Competitor c) {
 		StringBuilder sb = new StringBuilder();
-		
+
 		appendCompetitorInfo(sb, c);
 
 		appendLapTimes(sb, c);
@@ -125,8 +123,8 @@ public class LapCompetitorPrinter extends Printer {
 	 */
 	private void appendFinishTime(StringBuilder sb, Competitor c) {
 		if (!c.getFinishTimes().isEmpty()) {
-		sb.append(Formater.formatColumns(c.getFinishTimes().get(
-				c.getFinishTimes().size() - 1)));
+			sb.append(Formater.formatColumns(c.getFinishTimes().get(
+					c.getFinishTimes().size() - 1)));
 		}
 	}
 

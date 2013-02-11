@@ -44,18 +44,17 @@ public class Parser {
 		ArrayList<String> firstLine = input.get(0);
 		// Parses the first line to know what each column means.
 		types = parseIdentifier(firstLine);
-		
+
 		if (types.size() < 1 || types.get(0) != Identifier.start_nr)
 			throw new ParserException("Missing start number.");
-		
+
 		String classType = "";
 		for (int i = 1; i < input.size(); i++) {
 			ArrayList<String> row = input.get(i);
-			
+
 			if (row.size() != 1 && row.size() != types.size()) {
 				throw new ParserException("Column length mismatch.");
-			}
-			else if (row.size() == 1) {
+			} else if (row.size() == 1) {
 				classType = row.get(0);
 				continue;
 			}
@@ -67,11 +66,11 @@ public class Parser {
 			if (comp == null) {
 				comp = new Competitor(startNbr);
 			}
-			
-			if(classType != "") {
+
+			if (classType != "") {
 				comp.setClassType(classType);
 			}
-			
+
 			// Starts at index 1 because first column (startnbr) is already
 			// parsed
 			for (int j = 1; j < row.size(); j++) {
@@ -126,9 +125,11 @@ public class Parser {
 	 * @param firstLine
 	 *            The first line containing types of columns.
 	 * @return the arraylist of types
-	 * @throws ParserException if a type is invalid
+	 * @throws ParserException
+	 *             if a type is invalid
 	 */
-	private ArrayList<Identifier> parseIdentifier(ArrayList<String> firstLine) throws ParserException {
+	private ArrayList<Identifier> parseIdentifier(ArrayList<String> firstLine)
+			throws ParserException {
 		ArrayList<Identifier> types = new ArrayList<Identifier>();
 
 		for (String s : firstLine) {
@@ -141,7 +142,7 @@ public class Parser {
 			} else if (s.equalsIgnoreCase(Formater.NAME)) {
 				types.add(Identifier.name);
 			} else {
-				throw new ParserException("Invalid strin: "+s);
+				throw new ParserException("Invalid strin: " + s);
 			}
 		}
 

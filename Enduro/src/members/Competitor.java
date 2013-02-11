@@ -28,7 +28,7 @@ public class Competitor implements Comparable<Competitor> {
 		 * If no start or no more than one finish times, then competitor have no
 		 * finished laps.
 		 */
-		if (startTimes.isEmpty() || finishTimes.size() <= 1) {
+		if (startTimes.isEmpty() || finishTimes.isEmpty()) {
 			return laps;
 		} else {
 			// First lap time is first finish time - start time
