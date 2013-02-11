@@ -37,28 +37,15 @@
 		<p>Det finns funktion för indelning av tävlande i klasser. 
 		Detta görs genom att skriva in namn på klassen över de tävlande i namnfilen. 
 		Varje ny rad med ett klassnamn startar en ny klass.
-		I resultatfilen skrivs varje klass ut för sig.</p>
+		I resultatfilen skrivs varje klass ut för sig.
 		
 		<h3>Registrering av tider</h3>
 		<h4>Otillåtna startnummer</h4>
 		<p>Registreras ett eller flera startnummer som inte finns i namnfilen så kommer dessa att skrivas ut i botten av resultatlistan under rubriken "Icke existerande startnummer".</p>
 		</p>
+		<h3>Sortering</h3>
+		<p>Två resultatfiler skrivs ut, en osorterad lista och en sorterad lista med placeringen. </p>
 		
-		<h3>Konfigurations-fil</h3>
-		<p>I filen config.properties måste man skriva in nedanstående information för att kunna köra programmet:</p>
-	<ul>
-	  <li>starttimes (Namnet på filen med starttider)</li>
-	  <li>namefile (Namnet på filen med namnen)</li>
-	  <li>finishtimes (Namnen på de filer som innehåller måltider, om flera, separerade med mellanrum)</li>
-	  <li>resultfile (Namnet på den filen som resultatet sorterat efter startnummer ska skrivas ut på)</li>
-	  <li>sortedresultfile (Namnet på den filen som resultatet sorterat efter placering ska skrivas ut på)</li>
-	  <li>sorted (yes om en fil sorterad efter placering ska skrivas ut, no om det inte ska skrivas ut en sådan fil)</li>
-	  <li>racetype (Vilken typ av race det är. standard: ett standard lopp, laprace: ett varvlopp)</li>
-	</ul>
-	<p>All data skrivs enligt följande format:</br>
-	<p>confignamn=värde</br>
-	<p>tex	namefile=namn.txt</p>
-	<p>Notera att filerna måste ligga i samma mapp som programmet.</p> 
     </div>
   </body>
 

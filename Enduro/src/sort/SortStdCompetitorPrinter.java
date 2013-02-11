@@ -9,9 +9,9 @@ import members.NullTime;
 import members.Time;
 
 /**
- * @author Andrée & Victor
+ * @author Karl & Jacob
  * 
- *         Prints according to first iteration race.
+ *         Prints out a sorted standardlist.
  */
 public class SortStdCompetitorPrinter extends StdCompetitorPrinter {
 
@@ -32,14 +32,6 @@ public class SortStdCompetitorPrinter extends StdCompetitorPrinter {
 		appendCompetitorInfo(sb, c);
 
 		boolean failed = false;
-		
-		
-
-//		failed = appendMultipleTimes(sb, MULTIPLE_STARTS, c.getStartTimes(),
-//				failed);
-//
-//		failed = appendMultipleTimes(sb, MULTIPLE_ENDS, c.getFinishTimes(),
-//				failed);
 
 		failed = appendImpossibleTotalTime(sb, c, failed);
 
