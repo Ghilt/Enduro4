@@ -12,7 +12,7 @@ public class LapCompetitorPrinter extends Printer {
 
 	private int maxLaps;
 
-	private final String FIRST_ROW = "StartNr; Namn; #Varv; TotalTid; ";
+	private final String FIRST_ROW = "StartNr; Namn; #Varv; Totaltid; ";
 
 	@Override
 	public String row(Competitor c) {
@@ -41,7 +41,7 @@ public class LapCompetitorPrinter extends Printer {
 	private void appendCompetitorInfo(StringBuilder sb, Competitor c) {
 		sb.append(Formater.formatColumns(c.getIndex(), c.getName(),
 				c.getNumberOfLaps(), c.getTotalTime())
-				+ "; ");
+				+ Formater.COLUMN_SEPARATOR);
 	}
 
 	/**
@@ -56,14 +56,14 @@ public class LapCompetitorPrinter extends Printer {
 		int i = 0;
 		for (; i < c.getLaps().size(); i++) {
 			sb.append(Formater.formatColumns(c.getLaps().get(i).getTotal())
-					+ "; ");
+					+ Formater.COLUMN_SEPARATOR);
 		}
 		/*
 		 * Must add additional ';' if the competitors nbr of laps is less than
 		 * the maximum nbr of laps ran by any competitor
 		 */
 		for (; i < maxLaps; i++) {
-			sb.append("; ");
+			sb.append(Formater.COLUMN_SEPARATOR);
 		}
 	}
 
@@ -77,17 +77,17 @@ public class LapCompetitorPrinter extends Printer {
 	 */
 	private void appendStartTimes(StringBuilder sb, Competitor c) {
 		int i;
-		sb.append(c.getStartTimes().get(0) + "; ");
+		sb.append(c.getStartTimes().get(0) + Formater.COLUMN_SEPARATOR);
 		for (i = 0; i < c.getLaps().size() - 1; i++) {
 			sb.append(Formater.formatColumns(c.getLaps().get(i).getEnd())
-					+ "; ");
+					+ Formater.COLUMN_SEPARATOR);
 		}
 		/*
 		 * Must add additional ';' if the competitors nbr of laps is less than
 		 * the maximum nbr of laps ran by any competitor
 		 */
 		for (; i < maxLaps - 1; i++) {
-			sb.append("; ");
+			sb.append(Formater.COLUMN_SEPARATOR);
 		}
 	}
 
@@ -111,13 +111,13 @@ public class LapCompetitorPrinter extends Printer {
 		fileWriter.append(FIRST_ROW);
 
 		for (int i = 1; i < maxLaps + 1; i++) {
-			fileWriter.append("Varv" + i + "; ");
+			fileWriter.append(Formater.LAP_TIME + i + Formater.COLUMN_SEPARATOR);
 		}
-		fileWriter.append("StartTid; ");
+		fileWriter.append(Formater.START_TIME + Formater.COLUMN_SEPARATOR);
 		for (int i = 1; i < maxLaps; i++) {
-			fileWriter.append("Varvning" + i + "; ");
+			fileWriter.append(Formater.LAP_FINISH_TIME + i + Formater.COLUMN_SEPARATOR);
 		}
-		fileWriter.append("Måltid\n");
+		fileWriter.append(Formater.FINISH_TIME +"\n");
 	}
 
 	/**
