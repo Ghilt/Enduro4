@@ -2,12 +2,15 @@ package sort;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.net.URISyntaxException;
 import java.security.CodeSource;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Properties;
 
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -24,7 +27,10 @@ public class ResultCompilerMain {
 	public static final String FINISHTIMES = "slut";
 	public static final String RESULTFILE = "resultat";
 	public static final String EXTENSION = ".txt";
-
+	private final static String LAP_RACE = "laprace";
+	private final static String STANDARD = "standard";
+	private final static String YES = "yes";
+	private final String NO = "no";
 	/**
 	 * 
 	 * Read input files and create list with competitors, and call printResults
@@ -34,6 +40,21 @@ public class ResultCompilerMain {
 	 * 
 	 */
 	public static void main(String[] args) throws URISyntaxException {
+		
+		Properties prop = new Properties();
+		 
+    	try {
+    		//save properties to project root folder
+    		prop.store(new FileOutputStream("config.properties"), null);
+    		
+ 
+    	} catch (IOException ex) {
+    		ex.printStackTrace();
+        }
+		
+		
+		
+		
 		// Detects the location of the executable.
 		CodeSource codeSource = ResultCompilerMain.class.getProtectionDomain()
 				.getCodeSource();
@@ -69,18 +90,47 @@ public class ResultCompilerMain {
 			map = p.parse(nameReader.readAll(), map);
 
 			ArrayList<Competitor> list = new ArrayList<Competitor>(map.values());
-			Collections.sort(list);
 			
-			LapCompetitorPrinter printer = new LapCompetitorPrinter();
+			sortList(prop, list);
+			
+			Printer printer = getPrinter(prop);
+			
 			printer.printResults(list,
 					resultPath);
-			System.out.println("Finished results compilation.");
+			
+			
 		} catch (FileNotFoundException e) {
 			errorMessage(e.getMessage());
 		} catch (ParserException e) {
 			errorMessage(e.getMessage());
 			System.exit(-1);
 		}
+	}
+
+	private static void sortList(Properties prop, ArrayList<Competitor> list) {
+		if(prop.contains("sorted") && prop.getProperty("sorted").equals(YES)) {
+//			Collection.sort(list, new ...)
+		} else {
+			Collections.sort(list);
+		}
+	}
+
+	private static Printer getPrinter(Properties prop) {
+		Printer printer = null;
+		
+		String printerType = prop.getProperty("racetype");
+		
+		if(printerType.equals(STANDARD)) {
+			printer = new StdCompetitorPrinter();
+		} else if (printerType.equals(LAP_RACE)) {
+			printer = new LapCompetitorPrinter();
+			
+//			if (prop.containsKey("sorted")
+//					&& prop.getProperty("sorted").equals(YES)) {
+//				printer = new SortCompetitorPrinter();
+//			}
+		}
+		return printer;
 	}
 
 	private static void errorMessage(String e) {
