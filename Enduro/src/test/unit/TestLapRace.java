@@ -29,6 +29,7 @@ public class TestLapRace {
 
 	@Test
 	public void TestZeroLaps() {
+		c = new Competitor(1);
 		c.addFinishTime(t2);
 		assertEquals(0, c.getLaps().size());
 	}

@@ -41,7 +41,7 @@ public class Test13 {
 	 * @throws ParserException
 	 *             If input from CvsReader is incorrect.
 	 */
-	@Ignore
+	@Test
 	public void testResult() throws FileNotFoundException, ParserException {
 		Map<Integer, Competitor> competitors;
 
