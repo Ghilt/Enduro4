@@ -67,13 +67,13 @@ public class Parser {
 			for (int j = 1; j < row.size(); j++) {
 				switch (types.get(j)) {
 				case finish_time:
-					comp.addFinishTime(new Time(row.get(j)));
+					comp.addFinishTime(Time.parse(row.get(j)));
 					break;
 				case name:
 					comp.addName(row.get(j));
 					break;
 				case start_time:
-					comp.addStartTime(new Time(row.get(j)));
+					comp.addStartTime(Time.parse(row.get(j)));
 					break;
 				default:
 					throw new ParserException("Invalid type.");

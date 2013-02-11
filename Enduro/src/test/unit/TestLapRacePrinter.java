@@ -27,7 +27,7 @@ public class TestLapRacePrinter {
 
 	@Test
 	public void testOneLap() {
-		Time t1 = new Time("00.00.15"), t2 = new Time("00.45.00");
+		Time t1 = Time.parse("00.00.15"), t2 = Time.parse("00.45.00");
 		c.addStartTime(t1);
 		c.addFinishTime(t2);
 		assertEquals(Formater.formatColumns(1, c.getName(), 1, t1.difference(t2), t1, t2), cp.row(c));
@@ -35,23 +35,23 @@ public class TestLapRacePrinter {
 
 	@Test
 	public void emptyLaps() {
-		c.addStartTime(new Time("00.00.15"));
-		c.addFinishTime(new Time("00.45.00"));
+		c.addStartTime(Time.parse("00.00.15"));
+		c.addFinishTime(Time.parse("00.45.00"));
 		assertEquals(0, c.getLaps().size());
 	}
 
 	@Test
 	public void manyLaps() {
-		Time s1 = new Time("00.00.15"),
-				f1 = new Time("00.20.00"),
-				f2 = new Time("00.35.00"),
-				f3 = new Time("00.45.00");
+		Time s1 = Time.parse("00.00.15"),
+				f1 = Time.parse("00.20.00"),
+				f2 = Time.parse("00.35.00"),
+				f3 = Time.parse("00.45.00");
 		c.addStartTime(s1);
 		c.addFinishTime(f1);
 		c.addFinishTime(f2);
 		c.addFinishTime(f3);
-		assertEquals(Formater.formatColumns(1, c.getName(), 3, s1.difference(f3), new Time(
-				"00.19.45"), new Time("00.15.00"), new Time("00.10.00"),
+		assertEquals(Formater.formatColumns(1, c.getName(), 3, s1.difference(f3), Time.parse(
+				"00.19.45"), Time.parse("00.15.00"), Time.parse("00.10.00"),
 				s1, f1,
 				f2, f3), cp.row(c));
 	}
@@ -85,11 +85,11 @@ public class TestLapRacePrinter {
 
 	@Ignore
 	public void testImpossibleLapTime() {
-		Time s1 = new Time("00.00.05");
+		Time s1 = Time.parse("00.00.05");
 		c.addStartTime(s1);
-		Time f1 = new Time("00.25.00");
+		Time f1 = Time.parse("00.25.00");
 		c.addFinishTime(f1);
-		Time f2 = new Time("00.26.00");
+		Time f2 = Time.parse("00.26.00");
 		c.addFinishTime(f2);
 
 		assertEquals(Formater.formatColumns(1, c.getName(),
@@ -100,13 +100,13 @@ public class TestLapRacePrinter {
 
 	@Ignore
 	public void testMultipleStartTimes() {
-		Time s1 = new Time("00.00.05");
+		Time s1 = Time.parse("00.00.05");
 		c.addStartTime(s1);
-		Time s2 = new Time("00.00.06");
+		Time s2 = Time.parse("00.00.06");
 		c.addStartTime(s2);
-		Time f1 = new Time("00.20.06");
+		Time f1 = Time.parse("00.20.06");
 		c.addFinishTime(f1);
-		Time f2 = new Time("00.55.06");
+		Time f2 = Time.parse("00.55.06");
 		c.addFinishTime(f2);
 
 		assertEquals(Formater.formatColumns(1, c.getName(),
@@ -116,15 +116,15 @@ public class TestLapRacePrinter {
 
 	@Ignore
 	public void testMultipleStartTimesAndImpossibleLapTime() {
-		Time s1 = new Time("00.00.05");
+		Time s1 = Time.parse("00.00.05");
 		c.addStartTime(s1);
-		Time s2 = new Time("00.00.06");
+		Time s2 = Time.parse("00.00.06");
 		c.addStartTime(s2);
-		Time f1 = new Time("00.20.06");
+		Time f1 = Time.parse("00.20.06");
 		c.addFinishTime(f1);
-		Time f2 = new Time("00.55.06");
+		Time f2 = Time.parse("00.55.06");
 		c.addFinishTime(f2);
-		Time f3 = new Time("00.57.00");
+		Time f3 = Time.parse("00.57.00");
 		c.addFinishTime(f3);
 
 		assertEquals(Formater.formatColumns(1, c.getName(),

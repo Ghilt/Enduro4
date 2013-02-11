@@ -37,7 +37,7 @@ public class TestParser {
 		row1.add("StartNr");
 		row1.add("StartTid");
 
-		Time t1 = new Time("12.11.10"), t2 = new Time("05.11.19");
+		Time t1 = Time.parse("12.11.10"), t2 = Time.parse("05.11.19");
 		ArrayList<String> row2 = new ArrayList<String>();
 		row2.add("1");
 		row2.add(t1.toString());
@@ -62,8 +62,8 @@ public class TestParser {
 		row1.add("StartTid");
 		row1.add("MålTid");
 
-		Time t1 = new Time("12.11.10"), t2 = new Time("18.11.10"), 
-				t3 = new Time("05.11.19"), t4 = new Time("20.11.19");
+		Time t1 = Time.parse("12.11.10"), t2 = Time.parse("18.11.10"), 
+				t3 = Time.parse("05.11.19"), t4 = Time.parse("20.11.19");
 		
 		ArrayList<String> row2 = new ArrayList<String>();
 		row2.add("1");
@@ -92,8 +92,8 @@ public class TestParser {
 		row1.add("StartNr");
 		row1.add("StartTid");
 		
-		Time t1 = new Time("12.11.10"), t2 = new Time("05.11.19"),
-				t3 = new Time("20.11.10"), t4 = new Time("22.11.19");
+		Time t1 = Time.parse("12.11.10"), t2 = Time.parse("05.11.19"),
+				t3 = Time.parse("20.11.10"), t4 = Time.parse("22.11.19");
 
 		ArrayList<String> row2 = new ArrayList<String>();
 		row2.add("1");
@@ -140,9 +140,9 @@ public class TestParser {
 		row1.add("StartNr");
 		row1.add("Måltid");
 		
-		Time t1 = new Time("12.11.10"), t2 = new Time("05.11.19"),
-				t3 = new Time("13.21.10"), t4 = new Time("14.11.10"),
-				t5 = new Time("14.33.10");
+		Time t1 = Time.parse("12.11.10"), t2 = Time.parse("05.11.19"),
+				t3 = Time.parse("13.21.10"), t4 = Time.parse("14.11.10"),
+				t5 = Time.parse("14.33.10");
 
 		ArrayList<String> row2 = new ArrayList<String>();
 		row2.add("1");

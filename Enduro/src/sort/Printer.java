@@ -20,7 +20,7 @@ public abstract class Printer implements CompetitorPrinter {
 	public static final String MULTIPLE_ENDS = "Flera måltider?";
 	public static final String IMPOSSIBLE_TOTAL_TIME = "Omöjlig Totaltid?";
 	public static final String IMPOSSIBLE_LAP_TIME = "Omöjlig varvtid?";
-	public static final Time MINIMUM_TOTAL_TIME = new Time("00.15.00");
+	public static final Time MINIMUM_TOTAL_TIME = Time.parse("00.15.00");
 
 	/**
 	 * @return Total time elapsed, or Null time string

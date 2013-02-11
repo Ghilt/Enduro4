@@ -2,6 +2,8 @@ package test.unit;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+import members.NullTime;
 import members.Time;
 
 import org.junit.Test;
@@ -10,20 +12,42 @@ public class TestTime {
 
 	@Test
 	public void testTimeDifference() {
-		Time t1 = new Time(10);
-		Time t2 = new Time(15);
-		Time df = new Time(5);
+		Time t1 = Time.parse(0, "00.01.00");
+		Time t2 = Time.parse(0, "01.11.00");
+		Time df = Time.parse(0, "01.10.00");
 
-		assertEquals(t1.difference(t2), df);
+		Time ddddd = t1.difference(t2);
+		assertEquals(df, ddddd);
+	}
+	
+	@Test
+	public void testBiggerTimeDiff() {
+		Time t1 = Time.parse(0, "00.20.15");
+		Time t2 = Time.parse(0, "01.45.00");
+		Time df = Time.parse(0, "01.24.45");
+
+		Time ddddd = t1.difference(t2);
+		assertEquals(df, ddddd);
+	}
+	
+	@Test
+	public void testWeirdBiggerTimeDiff() {
+		Time t1 = Time.parse("00.00.15");
+		Time t2 = Time.parse("00.45.00");
+		Time df = Time.parse("00.44.45");
+
+		Time ddddd = t1.difference(t2);
+		assertEquals( df, ddddd);
+		assertEquals("00.44.45", df.toString());
 	}
 
 	@Test
 	public void testTimeDifferenceOverMidnight() {
-		Time t1 = new Time(86000);
-		Time t2 = new Time(400);
-		Time df = new Time(800);
+		Time t1 = Time.parse(1, "00.01.00");
+		Time t2 = Time.parse(2, "00.01.00");
+		Time df = Time.parse(1, "00.00.00");
 
-		assertEquals(t1.difference(t2), df);
+		assertEquals(df, t1.difference(t2));
 	}
 
 	@Test
@@ -33,17 +57,17 @@ public class TestTime {
 
 	@Test
 	public void testConvertFromStringSimple() {
-		assertEquals(new Time(3600), new Time("01.00.00"));
+		assertEquals(new Time(3600), Time.parse("01.00.00"));
 	}
 
 	@Test
 	public void testConvertFromStringComplicated() {
-		assertEquals(new Time(19381), new Time("05.23.01"));
+		assertEquals(new Time(19381), Time.parse("05.23.01"));
 	}
 
 	@Test
 	public void testConvertFromInvalidStringGives0() {
-		assertEquals(new Time(0), new Time("bajs"));
+		assertEquals(new NullTime(), Time.parse("bajs"));
 	}
 
 	@Test
@@ -56,9 +80,8 @@ public class TestTime {
 		assertEquals("05.23.01", new Time(19381).toString());
 	}
 
-	@Test
 	public void testTimeCompareTo() {
-		assertEquals(-1, new Time(100).compareTo(new Time(200)));
+		assertTrue(new Time(100).compareTo(new Time(200)) < 0);
 	}
 
 }
