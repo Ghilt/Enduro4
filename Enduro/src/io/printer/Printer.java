@@ -1,4 +1,4 @@
-package printer;
+package io.printer;
 
 import java.io.File;
 import java.io.FileWriter;

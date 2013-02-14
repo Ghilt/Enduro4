@@ -1,7 +1,7 @@
 package test.unit;
 
 import static org.junit.Assert.*;
-import gui.tools.IntervalParser;
+import io.reader.IntervalParser;
 
 import org.junit.Test;
 

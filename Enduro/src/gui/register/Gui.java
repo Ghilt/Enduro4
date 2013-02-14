@@ -3,6 +3,8 @@ package gui.register;
 import gui.tools.NumberEntryField;
 import gui.tools.GuiPrinter;
 
+import io.Formater;
+
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -15,7 +17,6 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
-import members.Formater;
 import members.Time;
 
 @SuppressWarnings("serial")

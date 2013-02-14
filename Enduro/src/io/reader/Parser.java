@@ -1,11 +1,12 @@
-package reader;
+package io.reader;
+
+import io.Formater;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 import members.Competitor;
-import members.Formater;
 import members.Time;
 
 /**

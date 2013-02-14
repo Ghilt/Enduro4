@@ -2,6 +2,11 @@ package test.acceptans.test9;
 
 import static org.junit.Assert.assertEquals;
 
+import io.printer.LapCompetitorPrinter;
+import io.reader.CvsReader;
+import io.reader.Parser;
+import io.reader.ParserException;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
@@ -13,11 +18,7 @@ import members.Competitor;
 import org.junit.Before;
 import org.junit.Test;
 
-import printer.LapCompetitorPrinter;
 
-import reader.CvsReader;
-import reader.Parser;
-import reader.ParserException;
 
 public class Test9 {
 	private static final String RESULT_PATH = "src/test/tmp/test9.txt";

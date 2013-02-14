@@ -1,5 +1,13 @@
 package main;
 
+import io.printer.LapCompetitorPrinter;
+import io.printer.Printer;
+import io.printer.SortLapCompetitorPrinter;
+import io.printer.StdCompetitorPrinter;
+import io.reader.CvsReader;
+import io.reader.Parser;
+import io.reader.ParserException;
+
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -12,16 +20,9 @@ import java.util.Properties;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
-import printer.LapCompetitorPrinter;
-import printer.Printer;
-import printer.SortLapCompetitorPrinter;
-import printer.StdCompetitorPrinter;
 
 import members.Competitor;
 import members.Sorter;
-import reader.CvsReader;
-import reader.Parser;
-import reader.ParserException;
 
 public class ResultCompilerMain {
 

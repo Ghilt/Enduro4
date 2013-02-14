@@ -2,6 +2,9 @@ package test.unit;
 
 import static org.junit.Assert.assertEquals;
 
+import io.reader.Parser;
+import io.reader.ParserException;
+
 import java.util.ArrayList;
 import java.util.Map;
 
@@ -11,8 +14,6 @@ import members.Time;
 import org.junit.Before;
 import org.junit.Test;
 
-import reader.Parser;
-import reader.ParserException;
 
 public class TestParser {
 

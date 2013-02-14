@@ -1,4 +1,4 @@
-package gui.tools;
+package io.reader;
 
 import java.util.ArrayList;
 import java.util.Arrays;

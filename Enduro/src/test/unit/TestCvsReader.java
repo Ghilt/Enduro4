@@ -2,12 +2,13 @@ package test.unit;
 
 import static org.junit.Assert.assertEquals;
 
+import io.reader.CvsReader;
+
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
 import org.junit.Test;
 
-import reader.CvsReader;
 
 public class TestCvsReader {
 

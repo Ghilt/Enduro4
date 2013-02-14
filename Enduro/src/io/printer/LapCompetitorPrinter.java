@@ -1,4 +1,6 @@
-package printer;
+package io.printer;
+
+import io.Formater;
 
 import java.io.FileWriter;
 import java.io.IOException;
@@ -6,7 +8,6 @@ import java.util.List;
 
 
 import members.Competitor;
-import members.Formater;
 
 public class LapCompetitorPrinter extends Printer {
 

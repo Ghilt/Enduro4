@@ -2,6 +2,12 @@ package test.acceptans.test18std;
 
 import static org.junit.Assert.assertEquals;
 
+import io.printer.SortStdCompetitorPrinter;
+import io.printer.StdCompetitorPrinter;
+import io.reader.CvsReader;
+import io.reader.Parser;
+import io.reader.ParserException;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
@@ -15,12 +21,7 @@ import members.Sorter;
 import org.junit.Before;
 import org.junit.Test;
 
-import printer.SortStdCompetitorPrinter;
-import printer.StdCompetitorPrinter;
 
-import reader.CvsReader;
-import reader.Parser;
-import reader.ParserException;
 
 public class Test18std {
 

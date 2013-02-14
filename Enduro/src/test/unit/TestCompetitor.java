@@ -3,10 +3,13 @@ package test.unit;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
+import io.Formater;
+import io.printer.CompetitorPrinter;
+import io.printer.StdCompetitorPrinter;
+
 import java.util.List;
 
 import members.Competitor;
-import members.Formater;
 import members.Lap;
 import members.NullTime;
 import members.Time;
@@ -15,8 +18,6 @@ import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 
-import printer.CompetitorPrinter;
-import printer.StdCompetitorPrinter;
 
 
 public class TestCompetitor {
