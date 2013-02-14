@@ -18,12 +18,13 @@ import result.CvsReader;
 import result.Parser;
 import result.ParserException;
 import sort.LapCompetitorPrinter;
-import sort.ResultCompilerMain;
 import sort.SortLapCompetitorPrinter;
 import sort.Sorter;
 
 public class Test18 {
 
+	private static final String SORT_RESULT_PATH = "src/test/tmp/test18_sort.txt";
+	private static final String RESULT_PATH = "src/test/tmp/test18.txt";
 	private CvsReader reader;
 	private Parser parser;
 
@@ -69,16 +70,16 @@ public class Test18 {
 		
 		LapCompetitorPrinter printer = new LapCompetitorPrinter();
 		printer.printResults(list,
-				"src/test/acceptans/test18/resultat_2.txt");
-		testResultFiles("src/test/acceptans/test18/resultat_1.txt", "src/test/acceptans/test18/resultat_2.txt");
+				RESULT_PATH);
+		testResultFiles("src/test/acceptans/test18/resultat.txt", RESULT_PATH);
 		
 		
 		Collections.sort(list, new Sorter.CompetitorComparator());
 		
 		printer = new SortLapCompetitorPrinter();
 		printer.printResults(list,
-				"src/test/acceptans/test18/sortresultat_2.txt");
-		testResultFiles("src/test/acceptans/test18/sortresultat.txt", "src/test/acceptans/test18/sortresultat_2.txt");
+				SORT_RESULT_PATH);
+		testResultFiles("src/test/acceptans/test18/sortresultat.txt", SORT_RESULT_PATH);
 	}
 
 	private void testResultFiles(String f1, String f2) throws FileNotFoundException {

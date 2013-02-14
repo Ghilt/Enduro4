@@ -12,7 +12,6 @@ import java.util.Scanner;
 import members.Competitor;
 
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import result.CvsReader;
@@ -21,6 +20,7 @@ import result.ParserException;
 import sort.LapCompetitorPrinter;
 
 public class Test15 {
+	private static final String RESULT_PATH = "src/test/tmp/test15.txt";
 	private CvsReader reader;
 	private Parser parser;
 
@@ -62,13 +62,13 @@ public class Test15 {
 		
 		LapCompetitorPrinter printer = new LapCompetitorPrinter();
 		printer.printResults(list,
-				"src/test/acceptans/test15/resultat_2.txt");
+				RESULT_PATH);
 		testResultFiles();
 	}
 
 	private void testResultFiles() throws FileNotFoundException {
 		File file1 = new File("src/test/acceptans/test15/resultat.txt");
-		File file2 = new File("src/test/acceptans/test15/resultat_2.txt");
+		File file2 = new File(RESULT_PATH);
 		Scanner scan1 = new Scanner(file1);
 		Scanner scan2 = new Scanner(file2);
 		String line1, line2;

@@ -17,15 +17,14 @@ import org.junit.Test;
 import result.CvsReader;
 import result.Parser;
 import result.ParserException;
-import sort.LapCompetitorPrinter;
-import sort.ResultCompilerMain;
-import sort.SortLapCompetitorPrinter;
 import sort.SortStdCompetitorPrinter;
 import sort.Sorter;
 import sort.StdCompetitorPrinter;
 
 public class Test18std {
 
+	private static final String SORT_RESULT_PATH = "src/test/tmp/test18_std_sort.txt";
+	private static final String RESULT_PATH = "src/test/tmp/test18_std.txt";
 	private CvsReader reader;
 	private Parser parser;
 
@@ -67,16 +66,16 @@ public class Test18std {
 		Collections.sort(list);
 		StdCompetitorPrinter printer = new StdCompetitorPrinter();
 		printer.printResults(list,
-				"src/test/acceptans/test18std/resultat_2.txt");
-		testResultFiles("src/test/acceptans/test18std/resultat_1.txt", "src/test/acceptans/test18std/resultat_2.txt");
+				RESULT_PATH);
+		testResultFiles("src/test/acceptans/test18std/resultat.txt", RESULT_PATH);
 		
 		
 		Collections.sort(list,new Sorter.CompetitorComparator());
 		
 		printer = new SortStdCompetitorPrinter();
 		printer.printResults(list,
-				"src/test/acceptans/test18std/sortresultat_2.txt");
-		testResultFiles("src/test/acceptans/test18std/sortresultat.txt", "src/test/acceptans/test18std/sortresultat_2.txt");
+				SORT_RESULT_PATH);
+		testResultFiles("src/test/acceptans/test18std/sortresultat.txt", SORT_RESULT_PATH);
 	}
 
 	private void testResultFiles(String f1, String f2) throws FileNotFoundException {

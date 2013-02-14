@@ -19,6 +19,7 @@ import result.ParserException;
 import sort.StdCompetitorPrinter;
 
 public class Test6 {
+	private static final String RESULT_PATH = "src/test/tmp/test6.txt";
 	private CvsReader reader;
 	private Parser parser;
 
@@ -57,13 +58,13 @@ public class Test6 {
 
 		StdCompetitorPrinter printer = new StdCompetitorPrinter();
 		printer.printResults(new ArrayList<Competitor>(competitors.values()),
-				"src/test/acceptans/test6/resultat_2.txt");
+				RESULT_PATH);
 		testResultFiles();
 	}
 
 	private void testResultFiles() throws FileNotFoundException {
 		File file1 = new File("src/test/acceptans/test6/resultat.txt");
-		File file2 = new File("src/test/acceptans/test6/resultat_2.txt");
+		File file2 = new File(RESULT_PATH);
 		Scanner scan1 = new Scanner(file1);
 		Scanner scan2 = new Scanner(file2);
 		String line1, line2;
