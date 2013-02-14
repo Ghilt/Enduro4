@@ -5,12 +5,12 @@ import java.awt.event.KeyEvent;
 import javax.swing.JTextField;
 
 @SuppressWarnings("serial")
-public class EntryField extends JTextField {
+public class NumberEntryField extends JTextField {
 
 	/**
 	 * A field that only accepts valid characters as entries.
 	 */
-	public EntryField() {
+	public NumberEntryField() {
 		super();
 	}
 

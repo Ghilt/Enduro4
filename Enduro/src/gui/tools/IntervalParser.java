@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import reader.ParserException;
-
 /**
  * Parser Class for GUI. Parses a string to an Interval of numbers.
  * 
@@ -108,7 +106,6 @@ public class IntervalParser {
 	 * 
 	 * @param str
 	 *            intervals
-	 * @throws ParserException
 	 */
 	public IntervalParser(String str) {
 		intervals = new ArrayList<Interval>();

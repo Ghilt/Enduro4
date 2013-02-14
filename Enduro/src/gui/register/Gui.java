@@ -1,6 +1,6 @@
 package gui.register;
 
-import gui.tools.EntryField;
+import gui.tools.NumberEntryField;
 import gui.tools.GuiPrinter;
 
 import java.awt.BorderLayout;
@@ -26,7 +26,7 @@ public class Gui extends JFrame {
 	private JPanel controlNorthPanel;
 	private JScrollPane textCenterPanel;
 	private JTextArea textArea;
-	private EntryField textField;
+	private NumberEntryField textField;
 
 	private RegisterButton entryButton;
 	private UndoButton undoButton;
@@ -90,7 +90,7 @@ public class Gui extends JFrame {
 		add(controlNorthPanel, BorderLayout.NORTH);
 
 		// Create text field
-		textField = new EntryField();
+		textField = new NumberEntryField();
 		textField.setFont(bigFont);
 		textField.setColumns(textFieldLength);
 		addRespondToKey();
