@@ -1,22 +1,20 @@
 package test.acceptans.test9;
 
-import static org.junit.Assert.assertEquals;
-
 import io.printer.LapCompetitorPrinter;
 import io.reader.CvsReader;
 import io.reader.Parser;
 import io.reader.ParserException;
 
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Map;
-import java.util.Scanner;
 
 import members.Competitor;
 
 import org.junit.Before;
 import org.junit.Test;
+
+import test.TestUtil;
 
 
 
@@ -44,20 +42,8 @@ public class Test9 {
 		LapCompetitorPrinter printer = new LapCompetitorPrinter();
 		printer.printResults(new ArrayList<Competitor>(competitors.values()),
 				RESULT_PATH);
-		testResultFiles();
+		TestUtil.testResultFiles("src/test/acceptans/test9/resultat.txt",RESULT_PATH);
 	}
 
-	private void testResultFiles() throws FileNotFoundException {
-		File file1 = new File("src/test/acceptans/test9/resultat.txt");
-		File file2 = new File(RESULT_PATH);
-		Scanner scan1 = new Scanner(file1);
-		Scanner scan2 = new Scanner(file2);
-		String line1, line2;
-		while (scan1.hasNext() && scan2.hasNext()) {
-			line1 = scan1.nextLine();
-			line2 = scan2.nextLine();
-			assertEquals("Wrong result.", line1, line2);
-		}
-	}
 
 }

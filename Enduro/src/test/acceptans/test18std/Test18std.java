@@ -1,19 +1,15 @@
 package test.acceptans.test18std;
 
-import static org.junit.Assert.assertEquals;
-
 import io.printer.SortStdCompetitorPrinter;
 import io.printer.StdCompetitorPrinter;
 import io.reader.CvsReader;
 import io.reader.Parser;
 import io.reader.ParserException;
 
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Map;
-import java.util.Scanner;
 
 import members.Competitor;
 import members.Sorter;
@@ -21,7 +17,7 @@ import members.Sorter;
 import org.junit.Before;
 import org.junit.Test;
 
-
+import test.TestUtil;
 
 public class Test18std {
 
@@ -63,34 +59,22 @@ public class Test18std {
 		input = reader.readAll();
 		competitors = parser.parse(input, competitors);
 
-		ArrayList<Competitor> list = new ArrayList<Competitor>(competitors.values());
-		
+		ArrayList<Competitor> list = new ArrayList<Competitor>(
+				competitors.values());
+
 		Collections.sort(list);
 		StdCompetitorPrinter printer = new StdCompetitorPrinter();
-		printer.printResults(list,
+		printer.printResults(list, RESULT_PATH);
+		TestUtil.testResultFiles("src/test/acceptans/test18std/resultat.txt",
 				RESULT_PATH);
-		testResultFiles("src/test/acceptans/test18std/resultat.txt", RESULT_PATH);
-		
-		
-		Collections.sort(list,new Sorter.CompetitorComparator());
-		
+
+		Collections.sort(list, new Sorter.CompetitorComparator());
+
 		printer = new SortStdCompetitorPrinter();
-		printer.printResults(list,
+		printer.printResults(list, SORT_RESULT_PATH);
+		TestUtil.testResultFiles(
+				"src/test/acceptans/test18std/sortresultat.txt",
 				SORT_RESULT_PATH);
-		testResultFiles("src/test/acceptans/test18std/sortresultat.txt", SORT_RESULT_PATH);
 	}
 
-	private void testResultFiles(String f1, String f2) throws FileNotFoundException {
-		File file1 = new File(f1);
-		File file2 = new File(f2);
-		Scanner scan1 = new Scanner(file1);
-		Scanner scan2 = new Scanner(file2);
-		String line1, line2;
-		while (scan1.hasNext() && scan2.hasNext()) {
-			line1 = scan1.nextLine();
-			line2 = scan2.nextLine();
-			assertEquals("", line1, line2);
-		}
-	}
-	
 }

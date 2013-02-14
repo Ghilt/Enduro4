@@ -1,25 +1,21 @@
 package test.acceptans.test15;
 
-import static org.junit.Assert.assertEquals;
-
 import io.printer.LapCompetitorPrinter;
 import io.reader.CvsReader;
 import io.reader.Parser;
 import io.reader.ParserException;
 
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Map;
-import java.util.Scanner;
 
 import members.Competitor;
 
 import org.junit.Before;
 import org.junit.Test;
 
-
+import test.TestUtil;
 
 public class Test15 {
 	private static final String RESULT_PATH = "src/test/tmp/test15.txt";
@@ -59,26 +55,14 @@ public class Test15 {
 		input = reader.readAll();
 		competitors = parser.parse(input, competitors);
 
-		ArrayList<Competitor> list = new ArrayList<Competitor>(competitors.values());
+		ArrayList<Competitor> list = new ArrayList<Competitor>(
+				competitors.values());
 		Collections.sort(list);
-		
-		LapCompetitorPrinter printer = new LapCompetitorPrinter();
-		printer.printResults(list,
-				RESULT_PATH);
-		testResultFiles();
-	}
 
-	private void testResultFiles() throws FileNotFoundException {
-		File file1 = new File("src/test/acceptans/test15/resultat.txt");
-		File file2 = new File(RESULT_PATH);
-		Scanner scan1 = new Scanner(file1);
-		Scanner scan2 = new Scanner(file2);
-		String line1, line2;
-		while (scan1.hasNext() && scan2.hasNext()) {
-			line1 = scan1.nextLine();
-			line2 = scan2.nextLine();
-			assertEquals("", line1, line2);
-		}
+		LapCompetitorPrinter printer = new LapCompetitorPrinter();
+		printer.printResults(list, RESULT_PATH);
+		TestUtil.testResultFiles("src/test/acceptans/test15/resultat.txt",
+				RESULT_PATH);
 	}
 
 }
