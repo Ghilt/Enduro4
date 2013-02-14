@@ -40,10 +40,10 @@ public class TestIntervalParser {
 
 		assertArrayEquals(new IntervalParser.Interval[] {
 				new IntervalParser.Interval(1, 4),
-				new IntervalParser.Interval(6, 18) },
-				p.getIntervals().toArray());
+				new IntervalParser.Interval(6, 18) }, p.getIntervals()
+				.toArray());
 	}
-	
+
 	@Test
 	public void testmixed() {
 		p = new IntervalParser("1-4,6-18,22,55,112-166");
@@ -53,7 +53,7 @@ public class TestIntervalParser {
 				new IntervalParser.Interval(6, 18),
 				new IntervalParser.Interval(22),
 				new IntervalParser.Interval(55),
-				new IntervalParser.Interval(112, 166)},
-				p.getIntervals().toArray());
+				new IntervalParser.Interval(112, 166) }, p.getIntervals()
+				.toArray());
 	}
 }

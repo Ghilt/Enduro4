@@ -5,7 +5,6 @@ import java.io.IOException;
 import java.util.List;
 
 import members.Competitor;
-import members.Time;
 
 public class LapCompetitorPrinter extends Printer {
 
@@ -54,12 +53,10 @@ public class LapCompetitorPrinter extends Printer {
 	 */
 	protected void appendLapTimes(StringBuilder sb, Competitor c) {
 		int i = 0;
-		
-		
-		
+
 		if (c.startMissing())
 			sb.append(Formater.COLUMN_SEPARATOR);
-		
+
 		for (; i < c.getLaps().size(); i++) {
 			sb.append(Formater.formatColumns(c.getLaps().get(i).getTotal())
 					+ Formater.COLUMN_SEPARATOR);
@@ -106,7 +103,10 @@ public class LapCompetitorPrinter extends Printer {
 			sb.append(NO_END);
 		} else {
 			int i;
-			/* When finishTimes size equals laps size all except the last one (goal) are printed. */
+			/*
+			 * When finishTimes size equals laps size all except the last one
+			 * (goal) are printed.
+			 */
 			int diff = c.startMissing() ? 1 : 0;
 			for (i = 0; i < c.getLaps().size() + diff - 1; i++) {
 				sb.append(Formater.formatColumns(c.getFinishTimes().get(i))
@@ -155,7 +155,7 @@ public class LapCompetitorPrinter extends Printer {
 		}
 
 	}
-	
+
 	protected void appendFirstRow(FileWriter fileWriter) throws IOException {
 		fileWriter.append(FIRST_ROW);
 	}
@@ -164,7 +164,7 @@ public class LapCompetitorPrinter extends Printer {
 	protected void appendRows(FileWriter fileWriter,
 			List<Competitor> competitors) throws IOException {
 		maxLaps = getMaxLaps(competitors);
-		
+
 		appendFirstRow(fileWriter);
 
 		for (int i = 1; i < maxLaps + 1; i++) {

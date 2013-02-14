@@ -5,7 +5,6 @@ import java.io.IOException;
 import java.util.List;
 
 import members.Competitor;
-import members.NullTime;
 import members.Time;
 
 /**
@@ -23,12 +22,11 @@ public class SortStdCompetitorPrinter extends StdCompetitorPrinter {
 	 * @return Total time elapsed, or Null time string
 	 */
 
-
 	@Override
 	public String row(Competitor c) {
 		StringBuilder sb = new StringBuilder();
 		appendPlacement(sb, c);
-		
+
 		appendCompetitorInfo(sb, c);
 
 		boolean failed = false;
@@ -37,16 +35,14 @@ public class SortStdCompetitorPrinter extends StdCompetitorPrinter {
 
 		return sb.toString();
 	}
-	
+
 	private void appendPlacement(StringBuilder sb, Competitor c) {
-		if(c.getPlac() == 0) {
+		if (c.getPlac() == 0) {
 			sb.append(Formater.COLUMN_SEPARATOR);
 		} else {
 			sb.append(c.getPlac() + Formater.COLUMN_SEPARATOR);
 		}
 	}
-
-	
 
 	/**
 	 * Append the competitors start nbr, name, total time and if any missing
@@ -67,7 +63,7 @@ public class SortStdCompetitorPrinter extends StdCompetitorPrinter {
 	@Override
 	protected void appendRows(FileWriter fileWriter,
 			List<Competitor> competitors) throws IOException {
-		fileWriter.append(Formater.formatColumns("Plac",Formater.START_NR,
+		fileWriter.append(Formater.formatColumns("Plac", Formater.START_NR,
 				Formater.NAME, Formater.TOTAL_TIME));
 		fileWriter.append("\n");
 	}

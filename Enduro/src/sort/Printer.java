@@ -28,8 +28,8 @@ public abstract class Printer implements CompetitorPrinter {
 
 	/**
 	 * Prints the result in the list with competitors to the output file.
-	 * Divides the list of competitors into different lists depending on
-	 * class types. Send one list at a time to the printer.
+	 * Divides the list of competitors into different lists depending on class
+	 * types. Send one list at a time to the printer.
 	 * 
 	 * @param competitors
 	 *            list of competitors
@@ -44,7 +44,7 @@ public abstract class Printer implements CompetitorPrinter {
 			int fromIndex = 0;
 			int toIndex = 0;
 			// noName are invalid competitors
-			ArrayList<Competitor> noNames = new ArrayList<Competitor>(); 
+			ArrayList<Competitor> noNames = new ArrayList<Competitor>();
 
 			while (toIndex < competitors.size()) {
 				String classType = competitors.get(toIndex).getClassType();
@@ -55,7 +55,7 @@ public abstract class Printer implements CompetitorPrinter {
 				// classList now contains competitors of the same class
 				List<Competitor> classList = competitors.subList(fromIndex,
 						toIndex - 1);
-				
+
 				setPlacements(classList);
 
 				fromIndex = toIndex - 1;
@@ -70,50 +70,52 @@ public abstract class Printer implements CompetitorPrinter {
 
 				for (Competitor comp : classList) {
 					// Check if person has name a.k.a this person exists
-					if(comp.getName().isEmpty()) {
+					if (comp.getName().isEmpty()) {
 						noNames.add(comp);
 					} else {
 						fileWriter.append("" + row(comp) + "\n");
 					}
 				}
 			}
-			
+
 			appendInvalidStartNbrs(fileWriter, noNames);
-			
+
 			fileWriter.close();
 
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
-	
+
 	private void setPlacements(List<Competitor> competitors) {
 		int maxLaps = getMaxLaps(competitors);
-		for(int i = 0; i < competitors.size(); i++) {
-			if(competitors.get(i).getNumberOfLaps() == maxLaps) {
-				competitors.get(i).setPlac(i+1);
+		for (int i = 0; i < competitors.size(); i++) {
+			if (competitors.get(i).getNumberOfLaps() == maxLaps) {
+				competitors.get(i).setPlac(i + 1);
 			}
 		}
-		
+
 	}
 
 	/**
-	 * Prints the invalid competitors
-	 * A competitor is invalid if they have no name.
+	 * Prints the invalid competitors A competitor is invalid if they have no
+	 * name.
 	 * 
-	 * @param fileWriter write to file
-	 * @param noNames List with invalid competitors
+	 * @param fileWriter
+	 *            write to file
+	 * @param noNames
+	 *            List with invalid competitors
 	 * @throws IOException
 	 */
 	private void appendInvalidStartNbrs(FileWriter fileWriter,
 			ArrayList<Competitor> noNames) throws IOException {
-		if(!noNames.isEmpty()){
+		if (!noNames.isEmpty()) {
 			fileWriter.append("Icke existerande startnummer" + "\n");
 			appendRows(fileWriter, noNames);
 			for (Competitor comp : noNames) {
 				fileWriter.append("" + row(comp) + "\n");
 			}
-			
+
 		}
 	}
 
@@ -153,7 +155,7 @@ public abstract class Printer implements CompetitorPrinter {
 
 	protected abstract void appendRows(FileWriter fileWriter,
 			List<Competitor> competitors) throws IOException;
-	
+
 	/**
 	 * Returns the maximum number of laps ran by any competitor.
 	 * 

@@ -178,7 +178,7 @@ public class Parser {
 			} else if (s.equalsIgnoreCase(Formater.NAME)) {
 				types.add(Identifier.name);
 			} else {
-				throw new ParserException("Invalid string: "+s);
+				throw new ParserException("Invalid string: " + s);
 			}
 		}
 

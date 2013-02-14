@@ -8,7 +8,7 @@ import javax.swing.JTextField;
 public class EntryField extends JTextField {
 
 	/**
-	 *  A field that only accepts valid characters as entries.
+	 * A field that only accepts valid characters as entries.
 	 */
 	public EntryField() {
 		super();

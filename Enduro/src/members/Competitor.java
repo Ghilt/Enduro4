@@ -35,7 +35,7 @@ public class Competitor implements Comparable<Competitor> {
 			// First lap time is first finish time - start time
 			if (!startMissing())
 				laps.add(new Lap(startTimes.get(0), finishTimes.get(0)));
-			
+
 			for (int i = 1; i < finishTimes.size(); i++) {
 				laps.add(new Lap(finishTimes.get(i - 1), finishTimes.get(i)));
 			}
@@ -43,7 +43,7 @@ public class Competitor implements Comparable<Competitor> {
 
 		return laps;
 	}
-	
+
 	/**
 	 * @return true if start is missing
 	 */
@@ -142,11 +142,11 @@ public class Competitor implements Comparable<Competitor> {
 	public String toString() {
 		throw new UnsupportedOperationException("Use CompetitorPrinter plz.");
 	}
-	
+
 	public void setPlac(int p) {
 		plac = p;
 	}
-	
+
 	public int getPlac() {
 		return plac;
 	}
@@ -195,9 +195,11 @@ public class Competitor implements Comparable<Competitor> {
 	@Override
 	public int compareTo(Competitor comp) {
 		int i = classType.compareTo(comp.classType);
-		
-		if(i == 0) { return index - comp.index; }
-		 
+
+		if (i == 0) {
+			return index - comp.index;
+		}
+
 		return i;
 	}
 

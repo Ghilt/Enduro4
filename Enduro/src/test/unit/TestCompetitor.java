@@ -1,9 +1,6 @@
 package test.unit;
 
 import static org.junit.Assert.assertEquals;
-import static org.hamcrest.CoreMatchers.not;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 
 import java.util.List;
@@ -37,25 +34,27 @@ public class TestCompetitor {
 		Time s = Time.parse("00.00.15"), f = Time.parse("00.45.00");
 		c.addStartTime(s);
 		c.addFinishTime(f);
-		assertEquals(Formater.formatColumns(1, c.getName(),
-				s.difference(f),
-				s, f), cp.row(c));
+		assertEquals(
+				Formater.formatColumns(1, c.getName(), s.difference(f), s, f),
+				cp.row(c));
 	}
 
 	@Test
 	public void testBadStart() {
 		Time f = new Time(45);
 		c.addFinishTime(f);
-		assertEquals(Formater.formatColumns(1, c.getName(), new NullTime().toString(),
-				StdCompetitorPrinter.NO_START, f), cp.row(c));
+		assertEquals(Formater.formatColumns(1, c.getName(),
+				new NullTime().toString(), StdCompetitorPrinter.NO_START, f),
+				cp.row(c));
 	}
 
 	@Test
 	public void testBadEnd() {
 		Time s = new Time(10);
 		c.addStartTime(s);
-		assertEquals(Formater.formatColumns(1, c.getName(), new NullTime().toString(),
-				s, StdCompetitorPrinter.NO_END), cp.row(c));
+		assertEquals(Formater.formatColumns(1, c.getName(),
+				new NullTime().toString(), s, StdCompetitorPrinter.NO_END),
+				cp.row(c));
 	}
 
 	@Test
@@ -63,8 +62,7 @@ public class TestCompetitor {
 		Time s = new Time(5), f = new Time(10);
 		c.addStartTime(s);
 		c.addFinishTime(f);
-		assertEquals(Formater.formatColumns(1, c.getName(), s,
-				s, f,
+		assertEquals(Formater.formatColumns(1, c.getName(), s, s, f,
 				StdCompetitorPrinter.IMPOSSIBLE_TOTAL_TIME), cp.row(c));
 	}
 
@@ -98,24 +96,23 @@ public class TestCompetitor {
 
 	@Test
 	public void testAllPossibleImpossibles() {
-		Time s1 = new Time(5), s2 = new Time(6),
-				f1 = new Time(15), f2 = new Time(16);
+		Time s1 = new Time(5), s2 = new Time(6), f1 = new Time(15), f2 = new Time(
+				16);
 		c.addStartTime(s1);
 		c.addStartTime(s2);
 		c.addFinishTime(f1);
 		c.addFinishTime(f2);
 
-		assertEquals(Formater.formatColumns(1, c.getName(), new Time(10),
-				s1, f1, StdCompetitorPrinter.MULTIPLE_STARTS
-						+ " " + s2 + " "
-						+ StdCompetitorPrinter.MULTIPLE_ENDS + " "
-						+ f2 + " "
+		assertEquals(Formater.formatColumns(1, c.getName(), new Time(10), s1,
+				f1, StdCompetitorPrinter.MULTIPLE_STARTS + " " + s2 + " "
+						+ StdCompetitorPrinter.MULTIPLE_ENDS + " " + f2 + " "
 						+ StdCompetitorPrinter.IMPOSSIBLE_TOTAL_TIME),
 				cp.row(c));
 	}
 
 	/*
-	 * Does not sort after total time at the moment, only sorts after class type.
+	 * Does not sort after total time at the moment, only sorts after class
+	 * type.
 	 */
 	@Ignore
 	public void testCompareTo() {
@@ -136,7 +133,8 @@ public class TestCompetitor {
 	}
 
 	/*
-	 * Does not sort after total time at the moment, only sorts after class type.
+	 * Does not sort after total time at the moment, only sorts after class
+	 * type.
 	 */
 	@Ignore
 	public void testCompareToWithoutStarttime() {
@@ -152,7 +150,8 @@ public class TestCompetitor {
 	}
 
 	/*
-	 * Does not sort after total time at the moment, only sorts after class type.
+	 * Does not sort after total time at the moment, only sorts after class
+	 * type.
 	 */
 	@Ignore
 	public void testCompareToWithoutFinishtime() {

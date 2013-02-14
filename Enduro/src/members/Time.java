@@ -3,23 +3,20 @@ package members;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.GregorianCalendar;
 
 /**
  * @author Andrée & Henrik
- *
+ * 
  */
 public class Time implements Comparable<Time> {
-//	private static final SimpleDateFormat BIG_FORMAT = new SimpleDateFormat(
-//			"d/MM/yy HH.mm.ss.ms z");
+	// private static final SimpleDateFormat BIG_FORMAT = new SimpleDateFormat(
+	// "d/MM/yy HH.mm.ss.ms z");
 	private static final SimpleDateFormat FORMAT = new SimpleDateFormat(
 			"HH.mm.ss");
-	
-	private static final int[] VALID_FIELDS = {
-		Calendar.DAY_OF_YEAR, Calendar.HOUR, Calendar.MINUTE,
-		Calendar.SECOND
-	};
+
+	private static final int[] VALID_FIELDS = { Calendar.DAY_OF_YEAR,
+			Calendar.HOUR, Calendar.MINUTE, Calendar.SECOND };
 
 	/**
 	 * @return Default GregorianCalendar
@@ -43,7 +40,8 @@ public class Time implements Comparable<Time> {
 	}
 
 	/**
-	 * @param str "HH.mm.ss"
+	 * @param str
+	 *            "HH.mm.ss"
 	 * @return Time
 	 * @see #parse(int, String)
 	 */
@@ -52,8 +50,10 @@ public class Time implements Comparable<Time> {
 	}
 
 	/**
-	 * @param dayOfYear Day of year
-	 * @param str "HH.mm.ss"
+	 * @param dayOfYear
+	 *            Day of year
+	 * @param str
+	 *            "HH.mm.ss"
 	 * @return Time
 	 */
 	public static Time parse(int dayOfYear, String str) {
@@ -81,7 +81,7 @@ public class Time implements Comparable<Time> {
 	public Time difference(Time t) {
 		long diff = t.cal.getTime().getTime() - cal.getTime().getTime();
 
-		return new Time((int)diff / 1000);
+		return new Time((int) diff / 1000);
 	}
 
 	/**
@@ -110,12 +110,13 @@ public class Time implements Comparable<Time> {
 		for (int i : VALID_FIELDS)
 			if (cal.get(i) != cal2.get(i))
 				return false;
-		
+
 		return true;
 	}
 
 	/**
 	 * Time with defaultCalendar
+	 * 
 	 * @see #defaultCalendar()
 	 */
 	public Time() {
@@ -124,11 +125,13 @@ public class Time implements Comparable<Time> {
 
 	/**
 	 * Time
-	 * @param seconds Seconds since EPOCH
+	 * 
+	 * @param seconds
+	 *            Seconds since EPOCH
 	 */
 	public Time(int seconds) {
 		this();
-		
+
 		int left = 0;
 		int ss = 0;
 		int mm = 0;
@@ -142,7 +145,7 @@ public class Time implements Comparable<Time> {
 		hh = left % 24;
 		left = left / 24;
 		dd = left;
-		
+
 		cal.set(Calendar.YEAR, 1970);
 		cal.set(Calendar.DAY_OF_YEAR, dd);
 		cal.set(Calendar.HOUR, hh);
@@ -165,7 +168,7 @@ public class Time implements Comparable<Time> {
 		if (time instanceof NullTime)
 			return -1;
 
-		return (int)(cal.getTime().getTime() - time.cal.getTime().getTime());
+		return (int) (cal.getTime().getTime() - time.cal.getTime().getTime());
 	}
 
 	/**
@@ -177,7 +180,7 @@ public class Time implements Comparable<Time> {
 	public Time add(Time time) {
 		for (int i : VALID_FIELDS)
 			cal.add(i, time.cal.get(i));
-		
+
 		return this;
 	}
 

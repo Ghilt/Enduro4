@@ -78,20 +78,19 @@ public class GuiPrinter {
 
 	}
 
-
 	/**
 	 * Removes the last line in the file.
 	 */
 	public void clearLastLine() {
 		try {
 			ArrayList<String> lines = getLines();
-			lines.remove(lines.size()-1);
+			lines.remove(lines.size() - 1);
 			writeLines(lines);
 		} catch (FileNotFoundException e1) {
 		} catch (IOException e) {
 		}
 	}
-	
+
 	/**
 	 * Adds the string comNr to the beginning of the last line.
 	 * 
@@ -111,6 +110,7 @@ public class GuiPrinter {
 
 	/**
 	 * Overwrites the file with the lines entered.
+	 * 
 	 * @param lines
 	 */
 	private void writeLines(ArrayList<String> lines) {
@@ -135,6 +135,7 @@ public class GuiPrinter {
 
 	/**
 	 * Returns all lines in a document.
+	 * 
 	 * @return String ArrayList
 	 * @throws FileNotFoundException
 	 * @throws IOException

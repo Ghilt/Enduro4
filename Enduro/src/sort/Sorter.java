@@ -9,9 +9,9 @@ import members.Competitor;
 public class Sorter {
 
 	public Sorter() {
-		
+
 	}
-	
+
 	/**
 	 * Sorts the list of competitors. If the sorted status in config file is set
 	 * to 'yes', then it sorts the competitors after class type, then number of
@@ -31,7 +31,7 @@ public class Sorter {
 			Collections.sort(list, new CompetitorComparator());
 		}
 	}
-	
+
 	public static class CompetitorComparator implements Comparator<Competitor> {
 		public CompetitorComparator() {
 		}
@@ -41,7 +41,7 @@ public class Sorter {
 			int cmp = o1.getClassType().compareTo(o2.getClassType());
 			if (cmp == 0) {
 				cmp = o2.getNumberOfLaps() - o1.getNumberOfLaps();
-				
+
 				if (cmp == 0) {
 					cmp = o1.getTotalTime().compareTo(o2.getTotalTime());
 				}

@@ -19,7 +19,7 @@ public class TestTime {
 		Time ddddd = t1.difference(t2);
 		assertEquals(df, ddddd);
 	}
-	
+
 	@Test
 	public void testBiggerTimeDiff() {
 		Time t1 = Time.parse(0, "00.20.15");
@@ -29,7 +29,7 @@ public class TestTime {
 		Time ddddd = t1.difference(t2);
 		assertEquals(df, ddddd);
 	}
-	
+
 	@Test
 	public void testAnotherBiggerTimeDiff() {
 		Time t1 = Time.parse("00.00.15");
@@ -37,7 +37,7 @@ public class TestTime {
 		Time df = Time.parse("00.44.45");
 
 		Time ddddd = t1.difference(t2);
-		assertEquals( df, ddddd);
+		assertEquals(df, ddddd);
 		assertEquals("00.44.45", df.toString());
 	}
 
@@ -49,7 +49,7 @@ public class TestTime {
 
 		assertEquals(df, t1.difference(t2));
 	}
-	
+
 	@Test
 	public void testAnotherDifferenceTime() {
 		Time t1 = Time.parse(1, "12.00.00");
@@ -58,7 +58,7 @@ public class TestTime {
 
 		assertEquals(df, t1.difference(t2));
 	}
-	
+
 	@Test
 	public void testAdd() {
 		Time t1 = Time.parse(0, "12.00.00");
@@ -68,7 +68,7 @@ public class TestTime {
 		t1.add(t2);
 		assertEquals(df, t1);
 	}
-	
+
 	@Test
 	public void testAddDay() {
 		Time t1 = Time.parse(1, "12.00.00");
@@ -78,7 +78,7 @@ public class TestTime {
 		t1.add(t2);
 		assertEquals(df, t1);
 	}
-	
+
 	@Test
 	public void testAddSimple() {
 		Time t1 = Time.parse(0, "00.10.00");

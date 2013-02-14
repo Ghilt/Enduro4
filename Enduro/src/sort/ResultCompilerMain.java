@@ -1,15 +1,10 @@
 package sort;
 
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.URISyntaxException;
-import java.security.CodeSource;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
@@ -54,16 +49,18 @@ public class ResultCompilerMain {
 			ex.printStackTrace();
 		}
 
-		// Detects the location of the executable.
-		// <<<<<<<------- Do we need this?? ------->>>>>>>
-		CodeSource codeSource = ResultCompilerMain.class.getProtectionDomain()
-				.getCodeSource();
-		File jarFile = new File(codeSource.getLocation().toURI().getPath());
-		String jarDir = jarFile.getParentFile().getPath();
-		//<<<<<<<------- Do we need this?? ------->>>>>>>
-		
+		// Detects the location of the executable. Keep as comment if needed
+		// later.
+		//
+		// CodeSource codeSource =
+		// ResultCompilerMain.class.getProtectionDomain()
+		// .getCodeSource();
+		// File jarFile = new File(codeSource.getLocation().toURI().getPath());
+		// String jarDir = jarFile.getParentFile().getPath();
+		//
+
 		ArrayList<String> inputFiles = getInputFiles(prop);
-		
+
 		Map<Integer, Competitor> map = null;
 		try {
 			map = parseInputFiles(inputFiles);
@@ -76,31 +73,35 @@ public class ResultCompilerMain {
 		}
 
 		ArrayList<Competitor> list = new ArrayList<Competitor>(map.values());
-		
+
 		printResults(prop, list);
 
 	}
 
 	/**
-	 * Prints the result to the file specified in the config file under 'resultfile'.
-	 * If 'sorted' in config file is set to 'yes' is also prints a sorted result to the file 
-	 * specified in 'sortedresultfile' in the config file.
+	 * Prints the result to the file specified in the config file under
+	 * 'resultfile'. If 'sorted' in config file is set to 'yes' is also prints a
+	 * sorted result to the file specified in 'sortedresultfile' in the config
+	 * file.
 	 * 
-	 * @param prop	contains the values in the config file
-	 * @param competitors	the list of competitors to print
+	 * @param prop
+	 *            contains the values in the config file
+	 * @param competitors
+	 *            the list of competitors to print
 	 */
-	private static void printResults(Properties prop, ArrayList<Competitor> competitors) {
+	private static void printResults(Properties prop,
+			ArrayList<Competitor> competitors) {
 		String filepath = prop.getProperty("resultfile");
 		Printer printer = getPrinter(prop);
 		Sorter sorter = new Sorter();
 		sorter.sortList(false, competitors);
 		printer.printResults(competitors, filepath);
-		
+
 		boolean sorted = false;
-		if(prop.containsKey("sorted")) {
+		if (prop.containsKey("sorted")) {
 			sorted = prop.get("sorted").equals(YES);
 		}
-		if(sorted) {
+		if (sorted) {
 			filepath = prop.getProperty("sortedresultfile");
 			printer = new SortLapCompetitorPrinter();
 			sorter.sortList(true, competitors);
@@ -109,18 +110,21 @@ public class ResultCompilerMain {
 	}
 
 	/**
-	 * Parses the content of each file in the list of inputfiles to the list of competitors.
+	 * Parses the content of each file in the list of inputfiles to the list of
+	 * competitors.
 	 * 
-	 * @param inputFiles	list of inputfiles
+	 * @param inputFiles
+	 *            list of inputfiles
 	 * @return
 	 * @throws FileNotFoundException
 	 * @throws ParserException
 	 */
 	private static Map<Integer, Competitor> parseInputFiles(
-			ArrayList<String> inputFiles) throws FileNotFoundException, ParserException {
+			ArrayList<String> inputFiles) throws FileNotFoundException,
+			ParserException {
 		Map<Integer, Competitor> map = new HashMap<Integer, Competitor>();
 		Parser p = new Parser();
-		for(String file : inputFiles) {
+		for (String file : inputFiles) {
 			map = p.parse(read(file), map);
 		}
 		return map;
@@ -139,15 +143,16 @@ public class ResultCompilerMain {
 			finishPath = prop.getProperty("finishfiles");
 		}
 		String[] finishFiles = finishPath.split(" ");
-		for(String s : finishFiles) {
+		for (String s : finishFiles) {
 			inputFiles.add(s);
 		}
 		return inputFiles;
 	}
 
-	private static ArrayList<ArrayList<String>> read(String file) throws FileNotFoundException {
+	private static ArrayList<ArrayList<String>> read(String file)
+			throws FileNotFoundException {
 		CvsReader reader = new CvsReader(file);
-		
+
 		return reader.readAll();
 	}
 
@@ -182,7 +187,5 @@ public class ResultCompilerMain {
 				JOptionPane.ERROR_MESSAGE);
 		frame.dispose();
 	}
-
-	
 
 }

@@ -6,27 +6,21 @@ import members.NullTime;
 import members.Time;
 
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import sort.CompetitorPrinter;
 import sort.Formater;
-import sort.SortStdCompetitorPrinter;
 import sort.StdCompetitorPrinter;
 
 public class TestStandardRacePrinter {
 
 	private Competitor c;
-	private Competitor c2;
 	private CompetitorPrinter cp;
-	private CompetitorPrinter scp;
 
 	@Before
 	public void setup() {
 		c = new Competitor(1);
-		c2 = new Competitor(2);
 		cp = new StdCompetitorPrinter();
-		scp = new SortStdCompetitorPrinter();
 	}
 
 	@Test
@@ -37,21 +31,21 @@ public class TestStandardRacePrinter {
 				Time.parse("00.00.15").difference(Time.parse("00.45.00")),
 				Time.parse("00.00.15"), Time.parse("00.45.00")), cp.row(c));
 	}
-	
-
 
 	@Test
 	public void testBadStart() {
 		c.addFinishTime(new Time(45));
-		assertEquals(Formater.formatColumns(1, c.getName(), new NullTime().toString(),
-				StdCompetitorPrinter.NO_START, new Time(45)), cp.row(c));
+		assertEquals(Formater.formatColumns(1, c.getName(),
+				new NullTime().toString(), StdCompetitorPrinter.NO_START,
+				new Time(45)), cp.row(c));
 	}
 
 	@Test
 	public void testBadEnd() {
 		c.addStartTime(new Time(10));
-		assertEquals(Formater.formatColumns(1, c.getName(), new NullTime().toString(),
-				new Time(10), StdCompetitorPrinter.NO_END), cp.row(c));
+		assertEquals(Formater.formatColumns(1, c.getName(),
+				new NullTime().toString(), new Time(10),
+				StdCompetitorPrinter.NO_END), cp.row(c));
 	}
 
 	@Test

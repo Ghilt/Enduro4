@@ -102,7 +102,6 @@ public class IntervalParser {
 
 	private final List<Interval> intervals;
 	private final boolean isValid;
-	
 
 	/**
 	 * Parses a string of intervals
@@ -119,23 +118,23 @@ public class IntervalParser {
 
 			for (String x : xs)
 				intervals.add(interval(x));
-			
+
 		} catch (Exception e) {
 			valid = false;
 		}
-		
+
 		isValid = valid;
 	}
 
 	// TODO: STRING SOM FAILAR!!!
-	
+
 	/**
 	 * @return If String was valid
 	 */
 	public boolean isValid() {
 		return isValid;
 	}
-	
+
 	/**
 	 * @return returns a list with the intervals
 	 */
