@@ -1,10 +1,13 @@
-package gui;
+package main;
+
+
+import gui.register.Gui;
 
 import java.io.File;
 import java.net.URISyntaxException;
 import java.security.CodeSource;
 
-public class GuiMain {
+public class RegisterGuiMain {
 
 	/**
 	 * Launches the Gui for entering race times.
@@ -14,7 +17,7 @@ public class GuiMain {
 	 * @throws URISyntaxException
 	 */
 	public static void main(String[] args) throws URISyntaxException {
-		CodeSource codeSource = GuiMain.class.getProtectionDomain()
+		CodeSource codeSource = RegisterGuiMain.class.getProtectionDomain()
 				.getCodeSource();
 		File jarFile = new File(codeSource.getLocation().toURI().getPath());
 		String jarDir = jarFile.getParentFile().getPath();

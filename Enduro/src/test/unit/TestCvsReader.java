@@ -7,7 +7,7 @@ import java.util.ArrayList;
 
 import org.junit.Test;
 
-import result.CvsReader;
+import reader.CvsReader;
 
 public class TestCvsReader {
 

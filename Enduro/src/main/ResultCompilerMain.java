@@ -1,4 +1,4 @@
-package sort;
+package main;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -12,10 +12,16 @@ import java.util.Properties;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
+import printer.LapCompetitorPrinter;
+import printer.Printer;
+import printer.SortLapCompetitorPrinter;
+import printer.StdCompetitorPrinter;
+
 import members.Competitor;
-import result.CvsReader;
-import result.Parser;
-import result.ParserException;
+import members.Sorter;
+import reader.CvsReader;
+import reader.Parser;
+import reader.ParserException;
 
 public class ResultCompilerMain {
 

@@ -1,10 +1,9 @@
-package sort;
+package members;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 
-import members.Competitor;
 
 public class Sorter {
 

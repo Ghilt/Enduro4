@@ -13,10 +13,11 @@ import members.Competitor;
 import org.junit.Before;
 import org.junit.Test;
 
-import result.CvsReader;
-import result.Parser;
-import result.ParserException;
-import sort.LapCompetitorPrinter;
+import printer.LapCompetitorPrinter;
+
+import reader.CvsReader;
+import reader.Parser;
+import reader.ParserException;
 
 public class Test16 {
 	

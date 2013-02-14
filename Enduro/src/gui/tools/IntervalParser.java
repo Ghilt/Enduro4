@@ -1,10 +1,10 @@
-package gui;
+package gui.tools;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import result.ParserException;
+import reader.ParserException;
 
 /**
  * Parser Class for GUI. Parses a string to an Interval of numbers.

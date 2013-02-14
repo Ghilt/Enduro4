@@ -1,10 +1,12 @@
-package sort;
+package printer;
 
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.List;
 
+
 import members.Competitor;
+import members.Formater;
 
 public class SortLapCompetitorPrinter extends LapCompetitorPrinter {
 

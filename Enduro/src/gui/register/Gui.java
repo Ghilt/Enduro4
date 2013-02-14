@@ -1,4 +1,7 @@
-package gui;
+package gui.register;
+
+import gui.tools.EntryField;
+import gui.tools.GuiPrinter;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
@@ -12,8 +15,8 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
+import members.Formater;
 import members.Time;
-import sort.Formater;
 
 @SuppressWarnings("serial")
 public class Gui extends JFrame {

@@ -1,4 +1,4 @@
-package sort;
+package printer;
 
 import java.io.File;
 import java.io.FileWriter;

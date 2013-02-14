@@ -1,4 +1,4 @@
-package sort;
+package members;
 
 /**
  * @author Andrée & Victor

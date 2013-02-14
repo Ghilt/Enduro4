@@ -1,4 +1,4 @@
-package gui;
+package gui.tools;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -10,7 +10,8 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 
-import sort.Formater;
+import members.Formater;
+
 
 public class GuiPrinter {
 

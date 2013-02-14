@@ -11,8 +11,8 @@ import members.Time;
 import org.junit.Before;
 import org.junit.Test;
 
-import result.Parser;
-import result.ParserException;
+import reader.Parser;
+import reader.ParserException;
 
 public class TestParser {
 

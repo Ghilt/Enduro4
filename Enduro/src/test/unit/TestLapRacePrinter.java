@@ -2,16 +2,17 @@ package test.unit;
 
 import static org.junit.Assert.assertEquals;
 import members.Competitor;
+import members.Formater;
 import members.NullTime;
 import members.Time;
 
 import org.junit.Before;
 import org.junit.Test;
 
-import sort.CompetitorPrinter;
-import sort.Formater;
-import sort.LapCompetitorPrinter;
-import sort.Printer;
+import printer.CompetitorPrinter;
+import printer.LapCompetitorPrinter;
+import printer.Printer;
+
 
 public class TestLapRacePrinter {
 

@@ -10,16 +10,17 @@ import java.util.Map;
 import java.util.Scanner;
 
 import members.Competitor;
+import members.Sorter;
 
 import org.junit.Before;
 import org.junit.Test;
 
-import result.CvsReader;
-import result.Parser;
-import result.ParserException;
-import sort.SortStdCompetitorPrinter;
-import sort.Sorter;
-import sort.StdCompetitorPrinter;
+import printer.SortStdCompetitorPrinter;
+import printer.StdCompetitorPrinter;
+
+import reader.CvsReader;
+import reader.Parser;
+import reader.ParserException;
 
 public class Test18std {
 

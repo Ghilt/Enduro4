@@ -1,12 +1,12 @@
-package result;
+package reader;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 import members.Competitor;
+import members.Formater;
 import members.Time;
-import sort.Formater;
 
 /**
  * @author Henrik & Philip
