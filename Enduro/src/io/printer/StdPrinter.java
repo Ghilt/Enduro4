@@ -16,7 +16,7 @@ import members.Time;
  * 
  *         Prints according to first iteration race.
  */
-public class StdCompetitorPrinter extends Printer {
+public class StdPrinter extends Printer {
 
 	/**
 	 * This method is needed because this printer does not consider laps and

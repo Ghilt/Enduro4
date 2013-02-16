@@ -14,7 +14,7 @@ import members.Time;
  * 
  *         For printing competitors.
  */
-public abstract class Printer implements CompetitorPrinter {
+public abstract class Printer {
 	public static final String NO_START = "Start?";
 	public static final String NO_END = "Slut?";
 	public static final String MULTIPLE_STARTS = "Flera starttider?";
@@ -23,7 +23,6 @@ public abstract class Printer implements CompetitorPrinter {
 	public static final String IMPOSSIBLE_LAP_TIME = "Omöjlig varvtid?";
 	public static final Time MINIMUM_TOTAL_TIME = Time.parse("00.15.00");
 
-	@Override
 	public abstract String row(Competitor c);
 
 	/**
@@ -36,7 +35,6 @@ public abstract class Printer implements CompetitorPrinter {
 	 * @param filepath
 	 *            the file to write to
 	 */
-	@Override
 	public void printResults(List<Competitor> competitors, String filepath) {
 		try {
 			File outputFile = new File(filepath);

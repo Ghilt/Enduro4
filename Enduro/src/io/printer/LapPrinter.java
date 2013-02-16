@@ -9,7 +9,7 @@ import java.util.List;
 
 import members.Competitor;
 
-public class LapCompetitorPrinter extends Printer {
+public class LapPrinter extends Printer {
 
 	protected int maxLaps;
 

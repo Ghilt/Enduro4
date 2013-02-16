@@ -9,7 +9,7 @@ import java.util.List;
 
 import members.Competitor;
 
-public class SortLapCompetitorPrinter extends LapCompetitorPrinter {
+public class SortLapPrinter extends LapPrinter {
 
 	private final String FIRST_ROW = "Plac; StartNr; Namn; #Varv; Totaltid; ";
 

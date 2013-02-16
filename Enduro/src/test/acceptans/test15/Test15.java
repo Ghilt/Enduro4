@@ -1,6 +1,6 @@
 package test.acceptans.test15;
 
-import io.printer.LapCompetitorPrinter;
+import io.printer.LapPrinter;
 import io.reader.CvsReader;
 import io.reader.Parser;
 import io.reader.ParserException;
@@ -59,7 +59,7 @@ public class Test15 {
 				competitors.values());
 		Collections.sort(list);
 
-		LapCompetitorPrinter printer = new LapCompetitorPrinter();
+		LapPrinter printer = new LapPrinter();
 		printer.printResults(list, RESULT_PATH);
 		TestUtil.testResultFiles("src/test/acceptans/test15/resultat.txt",
 				RESULT_PATH);

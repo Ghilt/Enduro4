@@ -1,6 +1,6 @@
 package test.acceptans.test6;
 
-import io.printer.StdCompetitorPrinter;
+import io.printer.StdPrinter;
 import io.reader.CvsReader;
 import io.reader.Parser;
 import io.reader.ParserException;
@@ -54,7 +54,7 @@ public class Test6 {
 		input = reader.readAll();
 		competitors = parser.parse(input, competitors);
 
-		StdCompetitorPrinter printer = new StdCompetitorPrinter();
+		StdPrinter printer = new StdPrinter();
 		printer.printResults(new ArrayList<Competitor>(competitors.values()),
 				RESULT_PATH);
 		TestUtil.testResultFiles("src/test/acceptans/test6/resultat.txt",

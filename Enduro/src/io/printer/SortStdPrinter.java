@@ -15,7 +15,7 @@ import members.Time;
  * 
  *         Prints out a sorted standardlist.
  */
-public class SortStdCompetitorPrinter extends StdCompetitorPrinter {
+public class SortStdPrinter extends StdPrinter {
 
 	/**
 	 * This method is needed because this printer does not consider laps and

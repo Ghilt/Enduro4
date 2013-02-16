@@ -2,7 +2,7 @@ package test.acceptans.test5;
 
 import static org.junit.Assert.assertEquals;
 
-import io.printer.StdCompetitorPrinter;
+import io.printer.StdPrinter;
 import io.reader.CvsReader;
 import io.reader.Parser;
 import io.reader.ParserException;
@@ -58,7 +58,7 @@ public class Test5 {
 		input = reader.readAll();
 		competitors = parser.parse(input, competitors);
 
-		StdCompetitorPrinter printer = new StdCompetitorPrinter();
+		StdPrinter printer = new StdPrinter();
 		printer.printResults(new ArrayList<Competitor>(competitors.values()),
 				RESULT_PATH);
 		testResultFiles();

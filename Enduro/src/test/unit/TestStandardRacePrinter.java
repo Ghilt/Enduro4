@@ -2,8 +2,8 @@ package test.unit;
 
 import static org.junit.Assert.assertEquals;
 import io.Formater;
-import io.printer.CompetitorPrinter;
-import io.printer.StdCompetitorPrinter;
+import io.printer.Printer;
+import io.printer.StdPrinter;
 import members.Competitor;
 import members.NullTime;
 import members.Time;
@@ -16,12 +16,12 @@ import org.junit.Test;
 public class TestStandardRacePrinter {
 
 	private Competitor c;
-	private CompetitorPrinter cp;
+	private Printer cp;
 
 	@Before
 	public void setup() {
 		c = new Competitor(1);
-		cp = new StdCompetitorPrinter();
+		cp = new StdPrinter();
 	}
 
 	@Test
@@ -37,7 +37,7 @@ public class TestStandardRacePrinter {
 	public void testBadStart() {
 		c.addFinishTime(new Time(45));
 		assertEquals(Formater.formatColumns(1, c.getName(),
-				new NullTime().toString(), StdCompetitorPrinter.NO_START,
+				new NullTime().toString(), StdPrinter.NO_START,
 				new Time(45)), cp.row(c));
 	}
 
@@ -46,7 +46,7 @@ public class TestStandardRacePrinter {
 		c.addStartTime(new Time(10));
 		assertEquals(Formater.formatColumns(1, c.getName(),
 				new NullTime().toString(), new Time(10),
-				StdCompetitorPrinter.NO_END), cp.row(c));
+				StdPrinter.NO_END), cp.row(c));
 	}
 
 	@Test
@@ -55,7 +55,7 @@ public class TestStandardRacePrinter {
 		c.addFinishTime(new Time(10));
 		assertEquals(Formater.formatColumns(1, c.getName(), new Time(5),
 				new Time(5), new Time(10),
-				StdCompetitorPrinter.IMPOSSIBLE_TOTAL_TIME), cp.row(c));
+				StdPrinter.IMPOSSIBLE_TOTAL_TIME), cp.row(c));
 	}
 
 	@Test
@@ -68,7 +68,7 @@ public class TestStandardRacePrinter {
 		c.addFinishTime(f2);
 
 		assertEquals(Formater.formatColumns(1, c.getName(), s1.difference(f1),
-				s1, f1, StdCompetitorPrinter.MULTIPLE_ENDS + " " + f2),
+				s1, f1, StdPrinter.MULTIPLE_ENDS + " " + f2),
 				cp.row(c));
 	}
 
@@ -82,7 +82,7 @@ public class TestStandardRacePrinter {
 		c.addFinishTime(f1);
 
 		assertEquals(Formater.formatColumns(1, c.getName(), s1.difference(f1),
-				s1, f1, StdCompetitorPrinter.MULTIPLE_STARTS + " " + s2),
+				s1, f1, StdPrinter.MULTIPLE_STARTS + " " + s2),
 				cp.row(c));
 	}
 
@@ -94,11 +94,11 @@ public class TestStandardRacePrinter {
 		c.addFinishTime(new Time(16));
 
 		assertEquals(Formater.formatColumns(1, c.getName(), new Time(10),
-				new Time(5), new Time(15), StdCompetitorPrinter.MULTIPLE_STARTS
+				new Time(5), new Time(15), StdPrinter.MULTIPLE_STARTS
 						+ " " + new Time(6) + " "
-						+ StdCompetitorPrinter.MULTIPLE_ENDS + " "
+						+ StdPrinter.MULTIPLE_ENDS + " "
 						+ new Time(16) + " "
-						+ StdCompetitorPrinter.IMPOSSIBLE_TOTAL_TIME),
+						+ StdPrinter.IMPOSSIBLE_TOTAL_TIME),
 				cp.row(c));
 	}
 

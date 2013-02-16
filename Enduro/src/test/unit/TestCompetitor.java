@@ -2,10 +2,9 @@ package test.unit;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
-
 import io.Formater;
-import io.printer.CompetitorPrinter;
-import io.printer.StdCompetitorPrinter;
+import io.printer.Printer;
+import io.printer.StdPrinter;
 
 import java.util.List;
 
@@ -23,11 +22,11 @@ import org.junit.Test;
 public class TestCompetitor {
 
 	private Competitor c;
-	private CompetitorPrinter cp;
+	private Printer cp;
 
 	@Before
 	public void setup() {
-		cp = new StdCompetitorPrinter();
+		cp = new StdPrinter();
 		c = new Competitor(1);
 	}
 
@@ -46,7 +45,7 @@ public class TestCompetitor {
 		Time f = new Time(45);
 		c.addFinishTime(f);
 		assertEquals(Formater.formatColumns(1, c.getName(),
-				new NullTime().toString(), StdCompetitorPrinter.NO_START, f),
+				new NullTime().toString(), StdPrinter.NO_START, f),
 				cp.row(c));
 	}
 
@@ -55,7 +54,7 @@ public class TestCompetitor {
 		Time s = new Time(10);
 		c.addStartTime(s);
 		assertEquals(Formater.formatColumns(1, c.getName(),
-				new NullTime().toString(), s, StdCompetitorPrinter.NO_END),
+				new NullTime().toString(), s, StdPrinter.NO_END),
 				cp.row(c));
 	}
 
@@ -65,7 +64,7 @@ public class TestCompetitor {
 		c.addStartTime(s);
 		c.addFinishTime(f);
 		assertEquals(Formater.formatColumns(1, c.getName(), s, s, f,
-				StdCompetitorPrinter.IMPOSSIBLE_TOTAL_TIME), cp.row(c));
+				StdPrinter.IMPOSSIBLE_TOTAL_TIME), cp.row(c));
 	}
 
 	@Test
@@ -78,7 +77,7 @@ public class TestCompetitor {
 		c.addFinishTime(f2);
 
 		assertEquals(Formater.formatColumns(1, c.getName(), s1.difference(f1),
-				s1, f1, StdCompetitorPrinter.MULTIPLE_ENDS + " " + f2),
+				s1, f1, StdPrinter.MULTIPLE_ENDS + " " + f2),
 				cp.row(c));
 	}
 
@@ -92,7 +91,7 @@ public class TestCompetitor {
 		c.addFinishTime(f1);
 
 		assertEquals(Formater.formatColumns(1, c.getName(), s1.difference(f1),
-				s1, f1, StdCompetitorPrinter.MULTIPLE_STARTS + " " + s2),
+				s1, f1, StdPrinter.MULTIPLE_STARTS + " " + s2),
 				cp.row(c));
 	}
 
@@ -106,9 +105,9 @@ public class TestCompetitor {
 		c.addFinishTime(f2);
 
 		assertEquals(Formater.formatColumns(1, c.getName(), new Time(10), s1,
-				f1, StdCompetitorPrinter.MULTIPLE_STARTS + " " + s2 + " "
-						+ StdCompetitorPrinter.MULTIPLE_ENDS + " " + f2 + " "
-						+ StdCompetitorPrinter.IMPOSSIBLE_TOTAL_TIME),
+				f1, StdPrinter.MULTIPLE_STARTS + " " + s2 + " "
+						+ StdPrinter.MULTIPLE_ENDS + " " + f2 + " "
+						+ StdPrinter.IMPOSSIBLE_TOTAL_TIME),
 				cp.row(c));
 	}
 

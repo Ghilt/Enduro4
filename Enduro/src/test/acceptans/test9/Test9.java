@@ -1,6 +1,6 @@
 package test.acceptans.test9;
 
-import io.printer.LapCompetitorPrinter;
+import io.printer.LapPrinter;
 import io.reader.CvsReader;
 import io.reader.Parser;
 import io.reader.ParserException;
@@ -39,7 +39,7 @@ public class Test9 {
 		competitors = parser.parse(new CvsReader("src/test/acceptans/test9/namnfil.txt").readAll(),
 				competitors);
 
-		LapCompetitorPrinter printer = new LapCompetitorPrinter();
+		LapPrinter printer = new LapPrinter();
 		printer.printResults(new ArrayList<Competitor>(competitors.values()),
 				RESULT_PATH);
 		TestUtil.testResultFiles("src/test/acceptans/test9/resultat.txt",RESULT_PATH);

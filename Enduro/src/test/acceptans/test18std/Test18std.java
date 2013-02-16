@@ -1,7 +1,7 @@
 package test.acceptans.test18std;
 
-import io.printer.SortStdCompetitorPrinter;
-import io.printer.StdCompetitorPrinter;
+import io.printer.SortStdPrinter;
+import io.printer.StdPrinter;
 import io.reader.CvsReader;
 import io.reader.Parser;
 import io.reader.ParserException;
@@ -63,14 +63,14 @@ public class Test18std {
 				competitors.values());
 
 		Collections.sort(list);
-		StdCompetitorPrinter printer = new StdCompetitorPrinter();
+		StdPrinter printer = new StdPrinter();
 		printer.printResults(list, RESULT_PATH);
 		TestUtil.testResultFiles("src/test/acceptans/test18std/resultat.txt",
 				RESULT_PATH);
 
 		Collections.sort(list, new Sorter.CompetitorComparator());
 
-		printer = new SortStdCompetitorPrinter();
+		printer = new SortStdPrinter();
 		printer.printResults(list, SORT_RESULT_PATH);
 		TestUtil.testResultFiles(
 				"src/test/acceptans/test18std/sortresultat.txt",

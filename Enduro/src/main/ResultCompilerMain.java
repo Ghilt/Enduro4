@@ -1,9 +1,9 @@
 package main;
 
-import io.printer.LapCompetitorPrinter;
+import io.printer.LapPrinter;
 import io.printer.Printer;
-import io.printer.SortLapCompetitorPrinter;
-import io.printer.StdCompetitorPrinter;
+import io.printer.SortLapPrinter;
+import io.printer.StdPrinter;
 import io.reader.CvsReader;
 import io.reader.Parser;
 import io.reader.ParserException;
@@ -110,7 +110,7 @@ public class ResultCompilerMain {
 		}
 		if (sorted) {
 			filepath = prop.getProperty("sortedresultfile");
-			printer = new SortLapCompetitorPrinter();
+			printer = new SortLapPrinter();
 			sorter.sortList(true, competitors);
 			printer.printResults(competitors, filepath);
 		}
@@ -181,9 +181,9 @@ public class ResultCompilerMain {
 		String printerType = prop.getProperty("racetype");
 
 		if (printerType.equals(STANDARD)) {
-			printer = new StdCompetitorPrinter();
+			printer = new StdPrinter();
 		} else if (printerType.equals(LAP_RACE)) {
-			printer = new LapCompetitorPrinter();
+			printer = new LapPrinter();
 		}
 		return printer;
 	}

@@ -1,7 +1,7 @@
 package test.acceptans.test18lap;
 
-import io.printer.LapCompetitorPrinter;
-import io.printer.SortLapCompetitorPrinter;
+import io.printer.LapPrinter;
+import io.printer.SortLapPrinter;
 import io.reader.CvsReader;
 import io.reader.Parser;
 import io.reader.ParserException;
@@ -68,7 +68,7 @@ public class Test18lap {
 		ArrayList<Competitor> list = new ArrayList<Competitor>(competitors.values());
 		Collections.sort(list);
 		
-		LapCompetitorPrinter printer = new LapCompetitorPrinter();
+		LapPrinter printer = new LapPrinter();
 		printer.printResults(list,
 				RESULT_PATH);
 		TestUtil.testResultFiles("src/test/acceptans/test18lap/resultat.txt", RESULT_PATH);
@@ -76,7 +76,7 @@ public class Test18lap {
 		
 		Collections.sort(list, new Sorter.CompetitorComparator());
 		
-		printer = new SortLapCompetitorPrinter();
+		printer = new SortLapPrinter();
 		printer.printResults(list,
 				SORT_RESULT_PATH);
 		TestUtil.testResultFiles("src/test/acceptans/test18lap/sortresultat.txt", SORT_RESULT_PATH);

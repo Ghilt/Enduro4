@@ -2,8 +2,7 @@ package test.unit;
 
 import static org.junit.Assert.assertEquals;
 import io.Formater;
-import io.printer.CompetitorPrinter;
-import io.printer.LapCompetitorPrinter;
+import io.printer.LapPrinter;
 import io.printer.Printer;
 import members.Competitor;
 import members.NullTime;
@@ -17,12 +16,12 @@ import org.junit.Test;
 public class TestLapRacePrinter {
 
 	private Competitor c;
-	private CompetitorPrinter cp;
+	private Printer cp;
 
 	@Before
 	public void setup() {
 		c = new Competitor(1);
-		cp = new LapCompetitorPrinter();
+		cp = new LapPrinter();
 	}
 
 	@Test
