@@ -10,9 +10,30 @@ import java.util.List;
  */
 public class Competitor implements Comparable<Competitor> {
 
+	public static final int NO_STATION = -1;
+	
+	private class Station implements Comparable<Station>{
+		public Station(Time t) {
+			time = t;
+			nr = -1;
+		}
+		public Station(Time t, int nr) {
+			time = t;
+			this.nr = nr;
+		}
+		private Time time;
+		private int nr;
+		
+		@Override
+		public int compareTo(Station other) {
+			return time.compareTo(other.time);
+		}
+	}
+	
+	
 	private int index;
-	private List<Time> startTimes;
-	private List<Time> finishTimes;
+	private List<Station> startTimes;
+	private List<Station> finishTimes;
 	private String name;
 	private String classType;
 	private int plac;
@@ -34,10 +55,10 @@ public class Competitor implements Comparable<Competitor> {
 		} else {
 			// First lap time is first finish time - start time
 			if (!startMissing())
-				laps.add(new Lap(startTimes.get(0), finishTimes.get(0)));
+				laps.add(new Lap(startTimes.get(0).time, finishTimes.get(0).time));
 
 			for (int i = 1; i < finishTimes.size(); i++) {
-				laps.add(new Lap(finishTimes.get(i - 1), finishTimes.get(i)));
+				laps.add(new Lap(finishTimes.get(i - 1).time, finishTimes.get(i).time));
 			}
 		}
 
@@ -53,7 +74,7 @@ public class Competitor implements Comparable<Competitor> {
 		List<Lap> laps = new ArrayList<Lap>();
 
 		for (int i = 0; i < startTimes.size() && i < finishTimes.size(); i++)
-			laps.add(new Lap(startTimes.get(i), finishTimes.get(i)));
+			laps.add(new Lap(startTimes.get(i).time, finishTimes.get(i).time));
 
 		return laps;
 	}
@@ -74,8 +95,8 @@ public class Competitor implements Comparable<Competitor> {
 		name = "";
 		classType = "";
 		this.index = index;
-		startTimes = new ArrayList<Time>();
-		finishTimes = new ArrayList<Time>();
+		startTimes = new ArrayList<Station>();
+		finishTimes = new ArrayList<Station>();
 	}
 
 	/**
@@ -85,7 +106,7 @@ public class Competitor implements Comparable<Competitor> {
 	 *            the start time to add
 	 */
 	public void addStartTime(Time t) {
-		startTimes.add(t);
+		startTimes.add(new Station(t));
 		Collections.sort(startTimes);
 	}
 
@@ -93,7 +114,11 @@ public class Competitor implements Comparable<Competitor> {
 	 * @return the list of start times
 	 */
 	public List<Time> getStartTimes() {
-		return startTimes;
+		List<Time> ret = new ArrayList<Time>();
+		for(Station s : startTimes){
+			ret.add(s.time.clone());
+		}
+		return ret;
 	}
 
 	/**
@@ -111,7 +136,7 @@ public class Competitor implements Comparable<Competitor> {
 	 *            the finish time to add
 	 */
 	public void addFinishTime(Time t) {
-		finishTimes.add(t);
+		finishTimes.add(new Station(t));
 		Collections.sort(finishTimes);
 	}
 
@@ -128,7 +153,11 @@ public class Competitor implements Comparable<Competitor> {
 	 * @return the list of finish times
 	 */
 	public List<Time> getFinishTimes() {
-		return finishTimes;
+		List<Time> ret = new ArrayList<Time>();
+		for(Station s : finishTimes){
+			ret.add(s.time.clone());
+		}
+		return ret;
 	}
 
 	/**
@@ -190,7 +219,7 @@ public class Competitor implements Comparable<Competitor> {
 			 * If no laps exists, total time is difference between first start
 			 * and first finish time
 			 */
-			return startTimes.get(0).difference(finishTimes.get(0));
+			return startTimes.get(0).time.difference(finishTimes.get(0).time);
 		}
 
 		return total;
@@ -254,7 +283,7 @@ public class Competitor implements Comparable<Competitor> {
 			 * If no laps exists, total time is difference between first start
 			 * and first finish time
 			 */
-			return startTimes.get(0).difference(finishTimes.get(0));
+			return startTimes.get(0).time.difference(finishTimes.get(0).time);
 		}
 
 		return total;
