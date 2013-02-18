@@ -1,5 +1,6 @@
 package main;
 
+import io.printer.BinaryLapPrinter;
 import io.printer.LapPrinter;
 import io.printer.Printer;
 import io.printer.SortLapPrinter;
@@ -40,6 +41,7 @@ public class ResultCompilerMain {
 	public static final String EXTENSION = ".txt";
 	private final static String LAP_RACE = "laprace";
 	private final static String STANDARD = "standard";
+	private final static String BINARY_LAPS = "binarylaps";
 	public final static String YES = "yes";
 	public final static String NO = "no";
 
@@ -203,6 +205,8 @@ public class ResultCompilerMain {
 			printer = new StdPrinter();
 		} else if (printerType.equals(LAP_RACE)) {
 			printer = new LapPrinter();
+		} else if (printerType.equals(BINARY_LAPS)) {
+			printer = new BinaryLapPrinter();
 		}
 		return printer;
 	}
@@ -227,6 +231,9 @@ public class ResultCompilerMain {
 		} else if (printerType.equals(LAP_RACE)) {
 			printer = new SortLapPrinter();
 		}
+		/*else if (printerType.equals(BINARY_LAPS)) {
+			printer = new SortBinLapPrinter();
+		}*/
 		return printer;
 	}
 
