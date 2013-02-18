@@ -12,7 +12,7 @@ public class LapPrinter extends Printer {
 
 	protected int maxLaps;
 
-	private final String FIRST_ROW = "StartNr; Namn; #Varv; Totaltid; ";
+	private final static String FIRST_ROW = "StartNr; Namn; #Varv; Totaltid; ";
 
 	@Override
 	public String row(Competitor c) {

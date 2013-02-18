@@ -11,7 +11,7 @@ import members.Competitor;
 
 public class SortLapPrinter extends LapPrinter {
 
-	private final String FIRST_ROW = "Plac; StartNr; Namn; #Varv; Totaltid; ";
+	private final static String FIRST_ROW = "Plac; StartNr; Namn; #Varv; Totaltid; ";
 
 	protected void appendFirstRow(FileWriter fileWriter) throws IOException {
 		fileWriter.append(FIRST_ROW);

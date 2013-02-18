@@ -11,6 +11,8 @@ import members.Lap;
 
 public class BinaryLapPrinter extends Printer {
 
+	private final static String FIRST_ROW = "StartNr; Namn; Totaltid; #Etapper; ";
+
 	@Override
 	public String row(Competitor c) {
 		StringBuilder sb = new StringBuilder();
@@ -20,17 +22,27 @@ public class BinaryLapPrinter extends Printer {
 		addString(sb, c.getTotalBinaryTime() + "");
 
 		List<Lap> etapper = c.getBinaryLaps();
+
 		addString(sb, etapper.size() + "");
-		for (Lap l : etapper) {
-			addString(sb, l.getTotal() + "");
-		}
+
+		appendEtapper(sb, etapper);
+		appendTimes(sb, etapper);
+
+		sb.setLength(sb.length() - Formater.COLUMN_SEPARATOR.length());
+		return sb.toString();
+	}
+
+	private void appendTimes(StringBuilder sb, List<Lap> etapper) {
 		for (Lap l : etapper) {
 			addString(sb, l.getStart() + "");
 			addString(sb, l.getEnd() + "");
 		}
+	}
 
-		sb.setLength(sb.length() - 2);
-		return sb.toString();
+	private void appendEtapper(StringBuilder sb, List<Lap> etapper) {
+		for (Lap l : etapper) {
+			addString(sb, l.getTotal() + "");
+		}
 	}
 
 	@Override
