@@ -26,9 +26,8 @@ public abstract class Printer {
 	public static final Time MINIMUM_TOTAL_TIME = Time.parse("00.15.00");
 
 	public abstract String row(Competitor c);
-	
+
 	protected abstract void appendFirstRow(StringBuilder sb) throws IOException;
-	
 
 	/**
 	 * Prints the result in the list with competitors to the output file.
@@ -41,55 +40,70 @@ public abstract class Printer {
 	 *            the file to write to
 	 */
 	public final void printResults(List<Competitor> competitors, String filepath) {
+		printResults(competitors, filepath, new Converter() {
+			public String convert(String s) {
+				return s;
+			}
+		});
+	}
+
+	public final void printResults(List<Competitor> competitors,
+			String filepath, Converter converter) {
 		try {
 			File outputFile = new File(filepath);
 			FileWriter fileWriter = new FileWriter(outputFile);
-			StringBuilder sb = new StringBuilder();
-			int fromIndex = 0;
-			int toIndex = 0;
-			// noName are invalid competitors
-			ArrayList<Competitor> noNames = new ArrayList<Competitor>();
-
-			while (toIndex < competitors.size()) {
-				String classType = competitors.get(toIndex).getClassType();
-				String prevClassType = classType;
-				toIndex = getNewIndex(competitors, fromIndex, toIndex,
-						prevClassType, classType);
-
-				// classList now contains competitors of the same class
-				List<Competitor> classList = competitors.subList(fromIndex,
-						toIndex - 1);
-
-				setPlacements(classList);
-
-				fromIndex = toIndex - 1;
-
-				// Do not write a line if there's no class type
-				if (classType != "") {
-					sb.append(prevClassType + "\n");
-				}
-				prevClassType = classType;
-				
-				appendFirstRow(sb);
-				appendRows(sb, classList);
-
-				for (Competitor comp : classList) {
-					// Check if person has name a.k.a this person exists
-					if (comp.getName().isEmpty()) {
-						noNames.add(comp);
-					} else {
-						sb.append("" + row(comp) + "\n");
-					}
-				}
-			}
-
-			appendInvalidStartNbrs(sb, noNames);
-			fileWriter.append(sb.toString());
+			String results = build(competitors);
+			results = converter.convert(results);
+			fileWriter.append(results);
 			fileWriter.close();
 
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+
+	private String build(List<Competitor> competitors) throws IOException {
+		StringBuilder sb = new StringBuilder();
+		int fromIndex = 0;
+		int toIndex = 0;
+		// noName are invalid competitors
+		ArrayList<Competitor> noNames = new ArrayList<Competitor>();
+
+		while (toIndex < competitors.size()) {
+			String classType = competitors.get(toIndex).getClassType();
+			String prevClassType = classType;
+			toIndex = getNewIndex(competitors, fromIndex, toIndex,
+					prevClassType, classType);
+
+			// classList now contains competitors of the same class
+			List<Competitor> classList = competitors.subList(fromIndex,
+					toIndex - 1);
+
+			setPlacements(classList);
+
+			fromIndex = toIndex - 1;
+
+			// Do not write a line if there's no class type
+			if (classType != "") {
+				sb.append(prevClassType + "\n");
+			}
+			prevClassType = classType;
+
+			appendFirstRow(sb);
+			appendRows(sb, classList);
+
+			for (Competitor comp : classList) {
+				// Check if person has name a.k.a this person exists
+				if (comp.getName().isEmpty()) {
+					noNames.add(comp);
+				} else {
+					sb.append("" + row(comp) + "\n");
+				}
+			}
+		}
+
+		appendInvalidStartNbrs(sb, noNames);
+		return sb.toString();
 	}
 
 	protected void setPlacements(List<Competitor> competitors) {
