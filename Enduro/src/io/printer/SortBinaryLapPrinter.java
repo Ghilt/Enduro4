@@ -6,16 +6,20 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.List;
 
-
 import members.Competitor;
 import members.Lap;
 
 public class SortBinaryLapPrinter extends BinaryLapPrinter {
-	
+
 	private int maxBinLaps;
 
+	/**
+	 * First row = "Plac; StartNr; Namn; Totaltid; #Etapper;"
+	 */
 	protected void appendFirstRow(FileWriter fileWriter) throws IOException {
-		fileWriter.append(Formater.formatColumns(Formater.PLACEMENT, Formater.START_NR, Formater.NAME, Formater.TOTAL_TIME, Formater.BINARY_LAP_NUMBER));
+		fileWriter.append(Formater.formatColumns(Formater.PLACEMENT,
+				Formater.START_NR, Formater.NAME, Formater.TOTAL_TIME,
+				Formater.BINARY_LAP_NUMBER));
 		fileWriter.append(Formater.COLUMN_SEPARATOR);
 	}
 
@@ -29,36 +33,43 @@ public class SortBinaryLapPrinter extends BinaryLapPrinter {
 		appendCompetitorInfo(sb, c);
 
 		appendNumberOfBinLaps(sb, c);
-		
+
 		appendBinaryLaps(sb, c);
 
 		return sb.toString();
 	}
-	
-	
+
 	/**
-	 * Appends the competitors 
+	 * Appends the competitors binary lap times.
 	 * 
 	 * @param sb
 	 *            the stringbuilder to append to
 	 * @param c
-	 *            the competitor which info to append 
+	 *            the competitor which info to append
 	 */
 	protected void appendBinaryLaps(StringBuilder sb, Competitor c) {
 		List<Lap> binLaps = c.getBinaryLaps();
 		for (int i = 0; i < binLaps.size() - 1; i++) {
 			sb.append(binLaps.get(i).getTotal() + Formater.COLUMN_SEPARATOR);
 		}
-		sb.append(binLaps.get(binLaps.size()-1).getTotal());
+		sb.append(binLaps.get(binLaps.size() - 1).getTotal());
 	}
 
+	/**
+	 * Appends the number of binary laps the competitors has completed.
+	 * 
+	 * @param sb
+	 *            the stringbuilder to append to
+	 * @param c
+	 *            the competitor which info to append
+	 */
 	private void appendNumberOfBinLaps(StringBuilder sb, Competitor c) {
 		sb.append(c.getNumberOfBinaryLaps() + Formater.COLUMN_SEPARATOR);
 	}
 
 	/**
-	 * Append the competitors start nbr, name, nbr of laps and total time to the
-	 * stringbuilder.
+	 * Append the competitors start nbr, name, nbr of binary laps and total time
+	 * to the stringbuilder.
 	 * 
 	 * @param sb
 	 *            the stringbuilder to append to
@@ -73,6 +84,9 @@ public class SortBinaryLapPrinter extends BinaryLapPrinter {
 		}
 	}
 
+	/**
+	 * Append first row and then competitors info for each competitor.
+	 */
 	@Override
 	protected void appendRows(FileWriter fileWriter,
 			List<Competitor> competitors) throws IOException {
@@ -81,14 +95,18 @@ public class SortBinaryLapPrinter extends BinaryLapPrinter {
 		appendFirstRow(fileWriter);
 
 		for (int i = 1; i < maxBinLaps; i++) {
-			fileWriter
-					.append(Formater.BINARY_LAP_TIME + i + Formater.COLUMN_SEPARATOR);
+			fileWriter.append(Formater.BINARY_LAP_TIME + i
+					+ Formater.COLUMN_SEPARATOR);
 		}
 		fileWriter.append(Formater.BINARY_LAP_TIME + maxBinLaps);
+
 		fileWriter.append(Formater.LINE_BREAK);
 
 	}
-	
+
+	/**
+	 * Loops the sorted list of competitors and add a placement to each.
+	 */
 	protected void setPlacements(List<Competitor> competitors) {
 		maxBinLaps = getMaxLaps(competitors);
 		for (int i = 0; i < competitors.size(); i++) {

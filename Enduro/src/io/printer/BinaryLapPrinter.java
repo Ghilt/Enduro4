@@ -15,7 +15,10 @@ public class BinaryLapPrinter extends Printer {
 	protected final String FIRST_ROW = "StartNr; Namn; Totaltid; #Etapper; ";
 
 	protected void appendFirstRow(FileWriter fileWriter) throws IOException {
-		fileWriter.append(Formater.formatColumns(Formater.START_NR, Formater.NAME, Formater.TOTAL_TIME, Formater.BINARY_LAP_NUMBER));
+		fileWriter
+				.append(Formater.formatColumns(Formater.START_NR,
+						Formater.NAME, Formater.TOTAL_TIME,
+						Formater.BINARY_LAP_NUMBER));
 		fileWriter.append(Formater.COLUMN_SEPARATOR);
 	}
 
@@ -31,15 +34,24 @@ public class BinaryLapPrinter extends Printer {
 		return sb.toString();
 	}
 
+	/**
+	 * Appends the total time of each binary lap for the competitor, as well as
+	 * each start and finish time for each binary lap.
+	 * 
+	 * @param sb
+	 *            the stringbuilder to append to
+	 * @param c
+	 *            the competitor who's times to append
+	 */
 	protected void appendBinaryLaps(StringBuilder sb, Competitor c) {
 		List<Lap> binLaps = c.getBinaryLaps();
-		addString(sb, binLaps.size() + "");
+		sb.append(binLaps.size() + Formater.COLUMN_SEPARATOR);
 		for (Lap l : binLaps) {
-			addString(sb, l.getTotal() + "");
+			sb.append(l.getTotal() + Formater.COLUMN_SEPARATOR);
 		}
 		for (Lap l : binLaps) {
-			addString(sb, l.getStart() + "");
-			addString(sb, l.getEnd() + "");
+			sb.append(l.getStart() + Formater.COLUMN_SEPARATOR);
+			sb.append(l.getEnd() + Formater.COLUMN_SEPARATOR);
 		}
 	}
 
@@ -54,7 +66,7 @@ public class BinaryLapPrinter extends Printer {
 	 */
 	protected void appendCompetitorInfo(StringBuilder sb, Competitor c) {
 		sb.append(Formater.formatColumns(c.getIndex(), c.getName(),
-				c.getTotalBinaryTime())
+				c.getTotalTime(c.getBinaryLaps()))
 				+ Formater.COLUMN_SEPARATOR);
 	}
 
@@ -98,11 +110,6 @@ public class BinaryLapPrinter extends Printer {
 		}
 		return a;
 
-	}
-
-	protected void addString(StringBuilder sb, String s) {
-		sb.append(s);
-		sb.append(Formater.COLUMN_SEPARATOR);
 	}
 
 }

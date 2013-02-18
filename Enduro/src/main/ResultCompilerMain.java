@@ -150,23 +150,22 @@ public class ResultCompilerMain {
 	private static Map<String, Parser.FileIdentifier> getInputFiles(
 			Properties prop) {
 		Map<String, Parser.FileIdentifier> inputFiles = new HashMap<String, Parser.FileIdentifier>();
-		if (prop.containsKey("starttimes")) {
-			inputFiles.put(prop.getProperty("starttimes"),
-					Parser.FileIdentifier.start_file);
-		}
-		if (prop.containsKey("namefile")) {
-			inputFiles.put(prop.getProperty("namefile"),
-					Parser.FileIdentifier.name_file);
-		}
-		String finishPath = "";
-		if (prop.containsKey("finishfiles")) {
-			finishPath = prop.getProperty("finishfiles");
-		}
-		String[] finishFiles = finishPath.split(" ");
-		for (String s : finishFiles) {
-			inputFiles.put(s, Parser.FileIdentifier.finish_file);
-		}
+		
+		addInputFile(prop, "startfiles", inputFiles, Parser.FileIdentifier.start_file);
+		addInputFile(prop, "namefiles", inputFiles, Parser.FileIdentifier.name_file);
+		addInputFile(prop, "finishfiles", inputFiles, Parser.FileIdentifier.finish_file);
 		return inputFiles;
+	}
+	
+	private static void addInputFile(Properties prop, String property, Map<String, Parser.FileIdentifier> inputFiles, FileIdentifier fileIdentity) {
+		String startPath = "";
+		if (prop.containsKey(property)) {
+			startPath = prop.getProperty(property);
+		}
+		String[] startFiles = startPath.split(" ");
+		for (String s : startFiles) {
+			inputFiles.put(s, fileIdentity);
+		}
 	}
 
 	/**
