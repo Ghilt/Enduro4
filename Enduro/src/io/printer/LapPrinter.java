@@ -6,7 +6,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.List;
 
-
 import members.Competitor;
 
 public class LapPrinter extends Printer {
