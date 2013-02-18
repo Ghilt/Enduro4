@@ -12,13 +12,14 @@
     <div id="content">
      <h2>Förberedelser</h2>
      <h3>Filer</h3>
-	 <p>Det ska finnas tre filer i samma mapp som result.jar-filen.</p>
+	 <p>Det ska finnas minst tre filer i samma mapp som result.jar-filen.</p>
 	 <ul>
-	 	<li>"namn.txt", denna skapas manuellt av användaren.</li>
+	 	<p>Namnet på filerna skrivs i filen "config.properties"</p>
+	 	<li>En namnfil , denna skapas manuellt av användaren.</li>
 	 	<ul><li>Denna ska ha som första rad: "StartNr; Namn"</li></ul>
-	 	<li>"start.txt", denna döps om från "tider.txt", som användaren skapar med hjälp av "register.jar".</li>
+	 	<li>En fil med starttider, denna döps om från "tider.txt", som användaren skapar med hjälp av "register.jar".</li>
 	 	<ul><li>Denna ska ha som första rad: "StartNr; Starttid"</li></ul>
-	 	<li>En eller flera filer "slutN.txt", där N är en siffra från 0 och uppåt. Dessa döps om från "tider.txt", som användaren skapar med hjälp av "register.jar".</li>
+	 	<li>En eller flera filer med sluttider. Dessa döps om från "tider.txt", som användaren skapar med hjälp av "register.jar".</li>
 	 	<ul><li>Dessa ska ha som första rad: "StartNr; Maltid"</li></ul>
        </ul>
       <h2>Användning</h2>
@@ -46,6 +47,20 @@
 		<h3>Sortering</h3>
 		<p>Två resultatfiler skrivs ut, en osorterad lista och en sorterad lista med placeringen. </p>
 		
+		<h3>Konfigurations-fil</h3>
+		<p>I filen config.properties måste man skriva in nedanstående information för att kunna köra programmet:</p>
+	<ul>
+	  <li>starttimes (Namnet på filen med starttider)</li>
+	  <li>namefile (Namnet på filen med namnen)</li>
+	  <li>finishtimes (Namnen på de filer som innehåller måltider, om flera, separerade med mellanrum)</li>
+	  <li>resultfile (Namnet på den filen som resultatet sorterat efter startnummer ska skrivas ut på)</li>
+	  <li>sortedresultfile (Namnet på den filen som resultatet sorterat efter placering ska skrivas ut på)</li>
+	  <li>sorted (yes om en fil sorterad efter placering ska skrivas ut, no om det inte ska skrivas ut en sådan fil)</li>
+	  <li>racetype (Vilken typ av race det är. standard: ett standard lopp, laprace: ett varvlopp)</li>
+	</ul>
+	<p>All data skrivs enligt följande format:</br>
+	<p>confignamn=värde
+	<p>Notera att filerna måste ligga i samma mapp som programmet.</p>
     </div>
   </body>
 
