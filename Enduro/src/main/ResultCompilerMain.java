@@ -157,6 +157,19 @@ public class ResultCompilerMain {
 		return inputFiles;
 	}
 	
+	/**
+	 * Adds the filenames to the map
+	 * 
+	 * @param prop
+	 *            contains the values in the config file
+	 *         property
+	 *         	  the filename we are currently adding  
+	 *         inputFiles
+	 *            the hashmap
+	 *         fileIdentity
+	 *         	  type of the file  
+	 * @return HashMap with filenames as keys and type of file as value
+	 */
 	private static void addInputFile(Properties prop, String property, Map<String, Parser.FileIdentifier> inputFiles, FileIdentifier fileIdentity) {
 		String startPath = "";
 		if (prop.containsKey(property)) {

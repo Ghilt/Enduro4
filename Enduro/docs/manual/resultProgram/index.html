@@ -20,7 +20,7 @@
 	 	<li>En eller flera filer med sluttider. Dessa döps om från "tider.txt", som användaren skapar med hjälp av "register.jar".</li>
        </ul>
       <h2>Användning</h2>
-     	<h3>Standard</h3>
+     	
        <p>Nedan följer instruktioner om hur programmet används.</p>
 	<ul>
 	  <li>Anslut USB-minnet med programmet till datorn.</li>
@@ -28,12 +28,40 @@
 	  <li>Gå till mappen "enduro4".</li>
 	  <li>Starta JAR-filen "result.jar". Filen "result.txt" och "sortresult.txt" (vid standardinställning) genereras nu av programmet.</li>
 	</ul>
+		<h3>Standard</h3>
+		<p> Vid tävlingar med en startpunkt och en målgång får varje tävlande en totaltid. I resultatfilen finns följande:</p>
+		<ul>
+		<li> Startnummer </li>
+		<li> Namn </li>
+		<li> Totaltid </li>
+		<li> Starttid </li>
+		<li> Måltid </li>
+		</ul>
+		<p> Exempel: </p> 
+		<p>StartNr; Namn; TotalTid; Starttid; Maltid </p>
+		<p> För varvlopp och etapplopp läggs ytterligare utskrifter till. Observera att varvlopp och etapplopp inte körs samtidigt, och endast utskrifter för en av tävlingsformerna läggs till. </p>	
+		
 		<h3>Varv</h3>
-		<p>Vid tävlingar med flera varv läggs flera sluttider till varje tävlande. I resultatfilen tillkommer utskrift för antal varv, totaltid och målgång för varje varv.</p>
-		<p>Är det ett ettaplopp kommer varje etapp skrivas ut och varje start och sluttid efter alla etapper.</p>
+		<p>Vid tävlingar med flera varv läggs flera sluttider till varje tävlande. I resultatfilen tillkommer utskrift för följande</p>
+		<ul>
+		<li>antal varv </li>
+		<li>totaltid för alla varv </li>
+		<li>målgång för alla varv</li>
+		</ul>
+		<p> Exempel: </p>
+		<p> StartNr; Namn; #Varv; Totaltid; Varv1; Varv2; Varv3; Starttid; Varvning1; Varvning2; Maltid </p>
 		
 		<h3>Etapp</h3>
-		<p>TODO</p>
+		<p>Vid tävlingar med etapper läggs starttider och sluttider för varje etapp till de tävlande. I resultatfilen tillkommer utskrift för följande:</p>
+		<ul>
+		<li>Antal etapper </li>
+		<li>totaltid för alla etapper </li>
+		<li>Starttider för alla etapper</li>
+		<li>målgång för alla etapper</li>
+		</ul>
+		<p> Exempel: </p>
+		<p> StartNr; Namn; Totaltid; #Etapper; Etapp1; Etapp2; Starttid1; Maltid1; Starttid2; Maltid2 </p>
+		
 		<h3>Klasser</h3>
 		<p>Det finns funktion för indelning av tävlande i klasser. 
 		Detta görs genom att skriva in namn på klassen över de tävlande i namnfilen. 
@@ -45,7 +73,16 @@
 		<p>Registreras ett eller flera startnummer som inte finns i namnfilen så kommer dessa att skrivas ut i botten av resultatlistan under rubriken "Icke existerande startnummer".</p>
 		</p>
 		<h3>Sortering</h3>
-		<p>Två resultatfiler skrivs ut, en osorterad lista och en sorterad lista med placeringen. </p>
+		<p>Två resultatfiler skrivs ut, en osorterad lista och en sorterad lista med placeringen. <br>
+		   När resultatlistan sorteras får varje tävlande en placering. Placeringen avgörs på följande vis för de olika tävlingsformerna.</p>
+		<p> <b>Sortering av standardlopp</b> <br>
+		 I standardlopp sorteras resultatlistan efter kortast totaltid. <br><br>
+		 <b>Sortering av varvlopp</b> <br>
+		I varvlopp sorteras resultatlistan först efter antal slutförda varv. Ifall flera tävlande har samma antal slutförda varv sorteras listan efter kortast totaltid. <br><br>
+		 <b>Sortering av etapplopp</b> <br> 
+		 I etapplopp sorteras resultatlistan efter totaltid. Endast de som fullföljt alla etapper får en placering. Alla tävlande är dock med i resultatlistan. </p>
+		 
+		
 		
 		<h3>Konfigurations-fil</h3>
 		<p>I filen config.properties måste man skriva in nedanstående information för att kunna köra programmet:</p>
