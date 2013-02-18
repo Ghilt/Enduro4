@@ -1,0 +1,13 @@
+Teknisk dokumentation ligger i mappen Teknisk dokumentation. Filen är av filformat .html och öppnas med en webbläsare.
+
+Manualen ligger i mappen manual.
+
+Register-programmets manual ligger i GUI-mappen (filen heter index.html)
+
+Resultat-programmets manual ligger i resultProgram-mappen (filen heter index.html)
+
+Ändringar i den här releasen i jämförelse med originalet:
+
+1. Tidsregistrerings-programmet frågar inte efter Start/Sluttid-registrering. Det får hanteras i efterhand.
+2. Exempelfiler finns med så man kan testa resultat-program.
+3. Felmeddelande visas om en fil saknas eller inte kan läsas.
