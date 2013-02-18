@@ -28,7 +28,7 @@ public class BinaryLapPrinter extends Printer {
 			addString(sb, l.getStart() + "");
 			addString(sb, l.getEnd() + "");
 		}
-		
+
 		sb.setLength(sb.length() - 2);
 		return sb.toString();
 	}

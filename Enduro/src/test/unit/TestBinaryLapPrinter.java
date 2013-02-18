@@ -29,8 +29,8 @@ public class TestBinaryLapPrinter {
 
 		Time etapp1 = Time.parse(start1).difference(Time.parse(finish1));
 
-		String formattedRow = Formater.formatColumns(1, c.getName(), etapp1,
-				1, etapp1, Time.parse(start1), Time.parse(finish1));
+		String formattedRow = Formater.formatColumns(1, c.getName(), etapp1, 1,
+				etapp1, Time.parse(start1), Time.parse(finish1));
 
 		assertEquals(formattedRow, cp.row(c));
 	}
