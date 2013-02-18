@@ -51,13 +51,8 @@ public class Competitor implements Comparable<Competitor> {
 	public List<Lap> getBinaryLaps() {
 		List<Lap> laps = new ArrayList<Lap>();
 
-		if (startTimes.isEmpty() || finishTimes.isEmpty()) {
-			return laps;
-		} else {
-			for (int i = 0; i < startTimes.size() && i < finishTimes.size(); i++) {
-				laps.add(new Lap(startTimes.get(i), finishTimes.get(i)));
-			}
-		}
+		for (int i = 0; i < startTimes.size() && i < finishTimes.size(); i++)
+			laps.add(new Lap(startTimes.get(i), finishTimes.get(i)));
 
 		return laps;
 	}
