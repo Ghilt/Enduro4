@@ -156,6 +156,7 @@ public class IntervalParser {
 
 		} catch (Exception e) {
 			valid = false;
+			intervals.clear();
 		}
 
 		this.intervals = Collections.unmodifiableList(intervals);

@@ -63,24 +63,27 @@ public class TestIntervalParser {
 
 		assertArrayEquals(
 				new IntervalParser.Interval[] { new IntervalParser.Interval(1,
-						4) }, p.getIntervals().toArray());
+						4) }, p.getIntervals().toArray());		
 	}
 
 	@Test
 	public void testdoublecomma() {
 		p = new IntervalParser("1-4,");
 		assertTrue(!p.isValid());
+		assertTrue(p.getIntervals().isEmpty());
 	}
 	
 	@Test
 	public void testDoubleRange() {
 		p = new IntervalParser("1-4-");
 		assertTrue(!p.isValid());
+		assertTrue(p.getIntervals().isEmpty());
 	}
 	
 	@Test
 	public void testDoubleRange2() {
 		p = new IntervalParser("1--4");
 		assertTrue(!p.isValid());
+		assertTrue(p.getIntervals().isEmpty());
 	}
 }
