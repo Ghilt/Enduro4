@@ -123,8 +123,6 @@ public class IntervalParser {
 		isValid = valid;
 	}
 
-	// TODO: STRING SOM FAILAR!!!
-
 	/**
 	 * @return If String was valid
 	 */

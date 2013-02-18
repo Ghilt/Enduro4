@@ -9,7 +9,7 @@ import javax.swing.JButton;
 @SuppressWarnings("serial")
 public class UndoButton extends JButton implements ActionListener {
 
-	public static final String DEFAULT_TEXT = "ÅNGRA";
+	public static final String DEFAULT_TEXT = "ÅÅNGRA";
 	private Gui frame;
 
 	/**
