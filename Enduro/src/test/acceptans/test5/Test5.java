@@ -1,17 +1,13 @@
 package test.acceptans.test5;
 
-import static org.junit.Assert.assertEquals;
-
 import io.printer.StdPrinter;
 import io.reader.CvsReader;
 import io.reader.Parser;
 import io.reader.ParserException;
 
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Map;
-import java.util.Scanner;
 
 import members.Competitor;
 
@@ -19,8 +15,6 @@ import org.junit.Before;
 import org.junit.Test;
 
 import test.TestUtil;
-
-
 
 public class Test5 {
 	private static final String RESULT_PATH = "src/test/tmp/test5.txt";
@@ -63,8 +57,8 @@ public class Test5 {
 		StdPrinter printer = new StdPrinter();
 		printer.printResults(new ArrayList<Competitor>(competitors.values()),
 				RESULT_PATH);
-		TestUtil.testResultFiles(RESULT_PATH, "src/test/acceptans/test5/resultat.txt");
+		TestUtil.testResultFiles(RESULT_PATH,
+				"src/test/acceptans/test5/resultat.txt");
 	}
-
 
 }
