@@ -11,12 +11,12 @@
 <p>Systemet består av två olika program. Ett program för registrering av tider (starttider, måltider, varvtider, etapptider) samt ett program för att sortera och sammanställa resultat. Systemet byggs genom att kompilera projektet.</p> 
 
 <h3>Registreringsprogrammet</h3>
-<p>Registreringsprogrammet skapar en fil, vilka resultatprogrammet använder sig av för att skapa resultatlistor.
-Programmet använder sig att ett grafiskt användargränssnitt för att registrera tider till varje startnummer som inmatas. 
+<p>Registreringsprogrammet skapar en fil - vilken resultatprogrammet använder sig av för att skapa resultatlistor.
+Programmet använder sig av ett grafiskt användargränssnitt för att registrera tider till varje startnummer som inmatas. 
 </p>
 
 <h3>Resultatprogrammet</h3>
-<p>Programmet finns till för sammanställa resultatfiler. Det använder sig av en mängd olika textfiler för att kunna sammanställa följande information:</p>
+<p>Programmet finns till för att sammanställa resultatfiler, det använder sig av en mängd olika textfiler för att kunna sammanställa följande information:</p>
 <ul>
 <li>Startnummer </li>
 <li>Namn</li>
@@ -25,7 +25,7 @@ Programmet använder sig att ett grafiskt användargränssnitt för att registre
 <li>Etapptider</li>
 <li>Måltider</li>
 </ul>
-<p>Programmet skriver en resultatfil. I den sammanställs information till en resultatlista med följande utformning:</p>
+<p>Programmet skriver en resultatfil, i vilken information sammanställs till en resultatlista med följande utformning:</p>
 
 <p><i>StartNr; Namn; #Varv; Totaltid; Varv1; Varv2; Starttid; Varvning1; Maltid</i></p>
 <p><i>1; Jacob Arvidsson; 2; 00.42.00; 00.22.00; 00.20.00; 12.00.00; 12.22.00; 12.42.00</i></p>
@@ -47,7 +47,7 @@ Programmet har även felhantering som skriver ut felmeddelande om det har blivit
 </p>
 <h3>Resultatprogrammet</h3>
 <p>Resultatprogrammet är den lite mer avancerade delen av systemet. Programmet läser in filer, lägger till informationen i datastrukturen och skriver sedan ut resultatfilerna.
-För att läsa in informationen från filerna används paketet <code>io.reader</code>. Klassen <code>CvsReader.java</code> har huvudansvaret för att läsa in information från textfiler och klassen <code>Parser.java</code> skapar en Map &lt Integer, Competitor &gt som  mappar alla tävlande med deras startnummer.</br>
+För att läsa in informationen från filerna används paketet <code>io.reader</code>. Klassen <code>CvsReader.java</code> har huvudansvaret för att läsa in information från textfiler och klassen <code>Parser.java</code> skapar en <code>Map &lt Integer, Competitor &gt</code> som  mappar alla tävlande med deras startnummer.</br>
 
 I paketet members finnes klasser som bygger upp datastrukturen. Klassen Competitor.java har följande information om en tävlande:</p>
 <ul>
@@ -59,7 +59,7 @@ I paketet members finnes klasser som bygger upp datastrukturen. Klassen Competit
 <li>Placering</li>
 </ul>
 
-<p>Alla tider definieras av klassen <code>Time.java.</code> Vid varvlopp får en tävlande flera måltider och klassen <code>Lap.java</code> används då för att skapa varv innehållandes starttid, målttid och varvtid. I <code>members.java</code> finns också klassen Sorter.java som används vid utskrift av en sorterad lista sker.</br>
+<p>Alla tider definieras av klassen <code>Time.java.</code> Vid varvlopp får en tävlande flera måltider och klassen <code>Lap.java</code> används då för att skapa varv innehållandes starttid, målttid och varvtid. I <code>members</code> paketet finns också klassen Sorter.java som används vid utskrift av en sorterad lista sker.</br>
 </br>
 Paketet <code>io.printer</code> har sedan klasser som skriver ut resultat med hjälp av Mapen som skapas i Parsern. Det finns fem olika slags printers som används beroende på vilken tävling som körs. Följande printers finns:
 </br></br>
