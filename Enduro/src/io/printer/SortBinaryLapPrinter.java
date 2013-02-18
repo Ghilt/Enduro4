@@ -35,6 +35,15 @@ public class SortBinaryLapPrinter extends BinaryLapPrinter {
 		return sb.toString();
 	}
 	
+	
+	/**
+	 * Appends the competitors 
+	 * 
+	 * @param sb
+	 *            the stringbuilder to append to
+	 * @param c
+	 *            the competitor which info to append 
+	 */
 	protected void appendBinaryLaps(StringBuilder sb, Competitor c) {
 		List<Lap> binLaps = c.getBinaryLaps();
 		for (int i = 0; i < binLaps.size() - 1; i++) {
@@ -76,7 +85,7 @@ public class SortBinaryLapPrinter extends BinaryLapPrinter {
 					.append(Formater.BINARY_LAP_TIME + i + Formater.COLUMN_SEPARATOR);
 		}
 		fileWriter.append(Formater.BINARY_LAP_TIME + maxBinLaps);
-		fileWriter.append("\n");
+		fileWriter.append(Formater.LINE_BREAK);
 
 	}
 	
