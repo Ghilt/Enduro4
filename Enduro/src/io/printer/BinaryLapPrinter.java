@@ -12,7 +12,6 @@ import members.Lap;
 public class BinaryLapPrinter extends Printer {
 
 	protected int maxLaps;
-	protected final String FIRST_ROW = "StartNr; Namn; Totaltid; #Etapper; ";
 
 	protected void appendFirstRow(FileWriter fileWriter) throws IOException {
 		fileWriter

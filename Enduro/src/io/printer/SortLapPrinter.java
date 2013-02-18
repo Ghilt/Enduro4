@@ -60,7 +60,7 @@ public class SortLapPrinter extends LapPrinter {
 					.append(Formater.LAP_TIME + i + Formater.COLUMN_SEPARATOR);
 		}
 		fileWriter.append(Formater.LAP_TIME + maxLaps);
-		fileWriter.append("\n");
+		fileWriter.append(Formater.LINE_BREAK);
 
 	}
 

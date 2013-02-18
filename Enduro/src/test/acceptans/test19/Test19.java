@@ -2,7 +2,6 @@ package test.acceptans.test19;
 
 import io.printer.BinaryLapPrinter;
 import io.printer.SortBinaryLapPrinter;
-import io.printer.SortBinaryLapPrinter;
 import io.reader.CvsReader;
 import io.reader.Parser;
 import io.reader.ParserException;
