@@ -15,12 +15,9 @@
 	 <p>Det ska finnas minst tre filer i samma mapp som result.jar-filen.</p>
 	 <ul>
 	 	<p>Namnet på filerna skrivs i filen "config.properties"</p>
-	 	<li>En namnfil , denna skapas manuellt av användaren.</li>
-	 	<ul><li>Denna ska ha som första rad: "StartNr; Namn"</li></ul>
-	 	<li>En fil med starttider, denna döps om från "tider.txt", som användaren skapar med hjälp av "register.jar".</li>
-	 	<ul><li>Denna ska ha som första rad: "StartNr; Starttid"</li></ul>
+	 	<li>En eller flera filer med namn. Dessa skapas manuellt av användaren.</li>
+	 	<li>En eller flera filer med starttider. Dessa döps om från "tider.txt", som användaren skapar med hjälp av "register.jar".</li>
 	 	<li>En eller flera filer med sluttider. Dessa döps om från "tider.txt", som användaren skapar med hjälp av "register.jar".</li>
-	 	<ul><li>Dessa ska ha som första rad: "StartNr; Maltid"</li></ul>
        </ul>
       <h2>Användning</h2>
      	<h3>Standard</h3>
@@ -35,6 +32,8 @@
 		<p>Vid tävlingar med flera varv läggs flera sluttider till varje tävlande. I resultatfilen tillkommer utskrift för antal varv, totaltid och målgång för varje varv.</p>
 		<p>Är det ett ettaplopp kommer varje etapp skrivas ut och varje start och sluttid efter alla etapper.</p>
 		
+		<h3>Etapp</h3>
+		<p>TODO</p>
 		<h3>Klasser</h3>
 		<p>Det finns funktion för indelning av tävlande i klasser. 
 		Detta görs genom att skriva in namn på klassen över de tävlande i namnfilen. 
