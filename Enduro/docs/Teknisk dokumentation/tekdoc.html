@@ -25,12 +25,12 @@ Programmet använder sig att ett grafiskt användargränssnitt för att registre
 <li>Etapptider</li>
 <li>Måltider</li>
 </ul>
-<p>Programmet skriver två filer. I den ena sammanställs information till en resultatlista med följande utformning:</p>
+<p>Programmet skriver en resultatfil. I den sammanställs information till en resultatlista med följande utformning:</p>
 
 <p><i>StartNr; Namn; #Varv; Totaltid; Varv1; Varv2; Starttid; Varvning1; Maltid</i></p>
 <p><i>1; Jacob Arvidsson; 2; 00.42.00; 00.22.00; 00.20.00; 12.00.00; 12.22.00; 12.42.00</i></p>
 
-<p>I det andra skrivs samma lista ut, fast sorterad. I denna lista skrivs även placering ut.
+<p>I konfigurationsfilen kan man även välja att sortera listan. Då skrivs en till fil ut, med en sorterad lista, utöver den vanliga filen. I denna lista skrivs även placering ut.
 Programmet har även felhantering som skriver ut felmeddelande om det har blivit fel vid registrering. En tävlande kan tillexempel av misstag fått flera starttider, varpå "flera starttider" skrivs ut i filen.</p>
 
  
@@ -78,17 +78,17 @@ I paketet io finns en klass som heter <code>Formater.java.</code> Denna klass se
 
 <h4>Filformat</h4>
 <p>Starttider - Varje startfil innehåller information om startnummer och starttid i följande format:</br>
-<i>StartNr; Startid</br>
+<i>
 2; 12.01.00</br>
 3; 12.02.00</br>
 </i></p>
 <p>Måltider - Varje målfil innehåller information om startnummer och måltid i följande format: </br>
-<i>StartNr; Maltid</br>
+<i>
 2; 12.22.00</br>
 3; 12.23.00</br>
 </i></p>
 <p>Namn - Namnfilen innehåller information om startnummer, namn och eventuellt klass i följande format:</br>
-<i>StartNr; Namn</br>
+<i>
 SENIOR</br>
 1; Anders Asson</br>
 2; Bengt Bsson</br>
@@ -98,7 +98,7 @@ JUNIOR</br>
 
 <p>Om inte klasser anges så innehåller listan endast startnummer och namn. 
 
-För ovanstående filer kan strängen "Startnummer; Starttid/Maltid/Namn" utelämnas. Om så är fallet så måste man ange vilken typ av fil som läses in av parsern. Detta gör man genom att skicka in parametern FileIdentifier i parsern.
+Man måste ange vilken typ av fil som läses in av parsern. Detta gör man genom att skicka in parametern FileIdentifier i parsern.
 </p>
 <p>
 Resultat - Resultatfilen ser olika ut beroende på vilken printer som används:</br>
@@ -110,7 +110,7 @@ SENIOR</br>
 JUNIOR</br>
 4; David Dsson; 01.00.00; 12.05.11; 13.05.11</br>
 </i></p>
-<p><code>SortStdPrinter.java</code> ser lika dan ut förutom att listan är sorterad efter totaltid. Om inte klasser anges så antas alla tävlande vara i samma klass och klasser skrivs därmed inte ut.</p>
+<p><code>SortStdPrinter.java</code> ser lika dan ut förutom att listan är sorterad efter totaltid inom varje klass. Klasserna sorteras i namnordning. Om inte klasser anges så antas alla tävlande vara i samma klass och klasser skrivs därmed inte ut.</p>
 
 
 <p><b>LapPrinter:</b></br>
