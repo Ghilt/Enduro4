@@ -66,8 +66,8 @@ public class SortStdPrinter extends StdPrinter {
 	@Override
 	protected void appendRows(FileWriter fileWriter,
 			List<Competitor> competitors) throws IOException {
-		fileWriter.append(Formater.formatColumns("Plac", Formater.START_NR,
+		fileWriter.append(Formater.formatColumns(Formater.PLACEMENT, Formater.START_NR,
 				Formater.NAME, Formater.TOTAL_TIME));
-		fileWriter.append("\n");
+		fileWriter.append(Formater.LINE_BREAK);
 	}
 }

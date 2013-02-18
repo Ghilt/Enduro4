@@ -1,0 +1,5 @@
+GemensamKlass
+Plac; StartNr; Namn; Totaltid; #Etapper; Etapp1; Etapp2
+1; 1; Ander Asson; 01.11.01; 2; 01.00.00; 00.11.01
+2; 3; Bengt Bsson; 01.22.02; 2; 01.10.00; 00.12.02
+3; 2; Claes Csson; 01.34.03; 2; 01.20.00; 00.14.03

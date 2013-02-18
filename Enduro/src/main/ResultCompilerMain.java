@@ -1,11 +1,6 @@
 package main;
 
-import io.printer.BinaryLapPrinter;
-import io.printer.LapPrinter;
-import io.printer.Printer;
-import io.printer.SortLapPrinter;
-import io.printer.SortStdPrinter;
-import io.printer.StdPrinter;
+import io.printer.*;
 import io.reader.CvsReader;
 import io.reader.Parser;
 import io.reader.Parser.FileIdentifier;
@@ -23,13 +18,12 @@ import java.util.Properties;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
-
 import members.Competitor;
 import members.Sorter;
 
 /**
  * @author tf08vo5
- *
+ * 
  */
 public class ResultCompilerMain {
 
@@ -41,7 +35,7 @@ public class ResultCompilerMain {
 	public static final String EXTENSION = ".txt";
 	private final static String LAP_RACE = "laprace";
 	private final static String STANDARD = "standard";
-	private final static String BINARY_LAPS = "binarylaps";
+	private final static String BINARY_LAPS = "etapprace";
 	public final static String YES = "yes";
 	public final static String NO = "no";
 
@@ -74,7 +68,7 @@ public class ResultCompilerMain {
 		// String jarDir = jarFile.getParentFile().getPath();
 		//
 
-		Map<String, FileIdentifier> inputFiles =  getInputFiles(prop);
+		Map<String, FileIdentifier> inputFiles = getInputFiles(prop);
 
 		Map<Integer, Competitor> map = null;
 		try {
@@ -128,14 +122,14 @@ public class ResultCompilerMain {
 	 * 
 	 * @param inputFiles
 	 *            list of inputfiles
-	 * @param prop 
+	 * @param prop
 	 * @return a hashmap with the competitors information
 	 * @throws FileNotFoundException
 	 * @throws ParserException
 	 */
 	private static Map<Integer, Competitor> parseInputFiles(
-			Map<String, FileIdentifier> inputFiles, Properties prop) throws FileNotFoundException,
-			ParserException {
+			Map<String, FileIdentifier> inputFiles, Properties prop)
+			throws FileNotFoundException, ParserException {
 		Map<Integer, Competitor> map = new HashMap<Integer, Competitor>();
 		Parser p = new Parser();
 		for (String file : inputFiles.keySet()) {
@@ -143,38 +137,40 @@ public class ResultCompilerMain {
 		}
 		return map;
 	}
-	
-	
-	
+
 	/**
-	 * Reads the filenames of the files with names or times in the config-file 
-	 * and puts them in an hashmap with filenames as keys and file type as values.
+	 * Reads the filenames of the files with names or times in the config-file
+	 * and puts them in an hashmap with filenames as keys and file type as
+	 * values.
 	 * 
 	 * @param prop
-	 * 				contains the values in the config file
+	 *            contains the values in the config file
 	 * @return HashMap with filenames as keys and type of file as value
 	 */
-	private static Map<String, Parser.FileIdentifier> getInputFiles(Properties prop) {
+	private static Map<String, Parser.FileIdentifier> getInputFiles(
+			Properties prop) {
 		Map<String, Parser.FileIdentifier> inputFiles = new HashMap<String, Parser.FileIdentifier>();
-		if (prop.containsKey("starttimes")) {
-			inputFiles.put(prop.getProperty("starttimes"), Parser.FileIdentifier.start_file);
-		}
-		if (prop.containsKey("namefile")) {
-			inputFiles.put(prop.getProperty("namefile"), Parser.FileIdentifier.name_file);
-		}
-		String finishPath = "";
-		if (prop.containsKey("finishfiles")) {
-			finishPath = prop.getProperty("finishfiles");
-		}
-		String[] finishFiles = finishPath.split(" ");
-		for (String s : finishFiles) {
-			inputFiles.put(s, Parser.FileIdentifier.finish_file);
-		}
+		
+		addInputFile(prop, "startfiles", inputFiles, Parser.FileIdentifier.start_file);
+		addInputFile(prop, "namefiles", inputFiles, Parser.FileIdentifier.name_file);
+		addInputFile(prop, "finishfiles", inputFiles, Parser.FileIdentifier.finish_file);
 		return inputFiles;
+	}
+	
+	private static void addInputFile(Properties prop, String property, Map<String, Parser.FileIdentifier> inputFiles, FileIdentifier fileIdentity) {
+		String startPath = "";
+		if (prop.containsKey(property)) {
+			startPath = prop.getProperty(property);
+		}
+		String[] startFiles = startPath.split(" ");
+		for (String s : startFiles) {
+			inputFiles.put(s, fileIdentity);
+		}
 	}
 
 	/**
 	 * Reads the content of the file
+	 * 
 	 * @param file
 	 * @return an arraylist of strings with all the lines in file
 	 * @throws FileNotFoundException
@@ -189,8 +185,8 @@ public class ResultCompilerMain {
 	/**
 	 * Return a printer. Which type depends on the status of 'racetype' in the
 	 * config file. If 'racetype' status does not exist in config file, a
-	 * StdPrinter is returned. Else if 'racetype' status is set to
-	 * 'laprace', a LapPrinter is returned.
+	 * StdPrinter is returned. Else if 'racetype' status is set to 'laprace', a
+	 * LapPrinter is returned.
 	 * 
 	 * @param prop
 	 *            properties to get status in config file
@@ -210,16 +206,17 @@ public class ResultCompilerMain {
 		}
 		return printer;
 	}
-	
+
 	/**
-	 * Return a Sortprinter. Which type depends on the status of 'racetype' in the
-	 * config file. If 'racetype' status does not exist in config file, a
+	 * Return a Sortprinter. Which type depends on the status of 'racetype' in
+	 * the config file. If 'racetype' status does not exist in config file, a
 	 * SortStdPrinter is returned. Else if 'racetype' status is set to
 	 * 'laprace', a SortLapPrinter is returned.
 	 * 
 	 * @param prop
 	 *            properties to get status in config file
-	 * @return a Sortprinter, which type depends on the status in the config file
+	 * @return a Sortprinter, which type depends on the status in the config
+	 *         file
 	 */
 	private static Printer getSortPrinter(Properties prop) {
 		Printer printer = null;
@@ -230,19 +227,19 @@ public class ResultCompilerMain {
 			printer = new SortStdPrinter();
 		} else if (printerType.equals(LAP_RACE)) {
 			printer = new SortLapPrinter();
+		} else if (printerType.equals(BINARY_LAPS)) {
+			printer = new SortBinaryLapPrinter();
 		}
-		/*else if (printerType.equals(BINARY_LAPS)) {
-			printer = new SortBinLapPrinter();
-		}*/
 		return printer;
 	}
 
 	/**
-	 * If an error is caught during the parsing, a message is shown.
-	 * See ParserException class for information of what errors
-	 * or FileNotFoundException.
+	 * If an error is caught during the parsing, a message is shown. See
+	 * ParserException class for information of what errors or
+	 * FileNotFoundException.
+	 * 
 	 * @param e
-	 * 			exception
+	 *            exception
 	 */
 	private static void errorMessage(String e) {
 		JFrame frame = new JFrame();

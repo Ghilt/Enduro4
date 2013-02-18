@@ -65,8 +65,8 @@ public class Test13 {
 
 		LapPrinter printer = new LapPrinter();
 		printer.printResults(list, RESULT_PATH);
-		TestUtil.testResultFiles("src/test/acceptans/test13/resultat.txt",
-				RESULT_PATH);
+		TestUtil.testResultFiles(RESULT_PATH,
+				"src/test/acceptans/test13/resultat.txt");
 	}
 
 }

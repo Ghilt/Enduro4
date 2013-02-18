@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 
-
 public class Sorter {
 
 	public Sorter() {
@@ -31,6 +30,11 @@ public class Sorter {
 		}
 	}
 
+	/**
+	 * Comparator used for sorting the competitors depending on their total time of their laps.
+	 * First sorts after class type, then if the competitors has the same class type, sorts after
+	 * total time.
+	 */
 	public static class CompetitorComparator implements Comparator<Competitor> {
 		public CompetitorComparator() {
 		}
@@ -42,7 +46,31 @@ public class Sorter {
 				cmp = o2.getNumberOfLaps() - o1.getNumberOfLaps();
 
 				if (cmp == 0) {
-					cmp = o1.getTotalTime().compareTo(o2.getTotalTime());
+					cmp = o1.getTotalTime(o1.getLaps()).compareTo(
+							o2.getTotalTime(o2.getLaps()));
+				}
+			}
+			return cmp;
+		}
+	}
+	
+	/**
+	 * Comparator used for sorting the competitors depending on their total time of their binary laps.
+	 * First sorts after class type, then if the competitors has the same class type, sorts after
+	 * total time.
+	 */
+	public static class CompetitorBinaryComparator implements Comparator<Competitor> {
+		public CompetitorBinaryComparator() {
+		}
+
+		@Override
+		public int compare(Competitor o1, Competitor o2) {
+			int cmp = o1.getClassType().compareTo(o2.getClassType());
+			if (cmp == 0) {
+				cmp = o2.getNumberOfBinaryLaps() - o1.getNumberOfBinaryLaps();
+
+				if (cmp == 0) {
+					cmp = o1.getTotalTime(o1.getBinaryLaps()).compareTo(o2.getTotalTime(o2.getBinaryLaps()));
 				}
 			}
 			return cmp;
