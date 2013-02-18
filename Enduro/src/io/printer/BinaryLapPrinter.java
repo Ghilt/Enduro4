@@ -10,39 +10,98 @@ import members.Competitor;
 import members.Lap;
 
 public class BinaryLapPrinter extends Printer {
-
+	
+	private final String FIRST_ROW = "StartNr; Namn; Totaltid; #Etapper; ";
+	protected int maxLaps;
+	
+	protected void appendFirstRow(FileWriter fileWriter) throws IOException {
+		fileWriter.append(FIRST_ROW);
+	}
+	
 	@Override
 	public String row(Competitor c) {
 		StringBuilder sb = new StringBuilder();
 
-		addString(sb, c.getIndex() + "");
-		addString(sb, c.getName() + "");
-		addString(sb, c.getTotalBinaryTime() + "");
-
-		List<Lap> etapper = c.getBinaryLaps();
-		addString(sb, etapper.size() + "");
-		for (Lap l : etapper) {
-			addString(sb, l.getTotal() + "");
-		}
-		for (Lap l : etapper) {
-			addString(sb, l.getStart() + "");
-			addString(sb, l.getEnd() + "");
-		}
+		appendCompetitorInfo(sb, c);
+		
+		appendBinaryLaps(sb, c);
 
 		sb.setLength(sb.length() - 2);
 		return sb.toString();
+	}
+	
+	protected void appendBinaryLaps(StringBuilder sb, Competitor c) {
+		List<Lap> binLaps = c.getBinaryLaps();
+		addString(sb, binLaps.size() + "");
+		for (Lap l : binLaps) {
+			addString(sb, l.getTotal() + "");
+		}
+		for (Lap l : binLaps) {
+			addString(sb, l.getStart() + "");
+			addString(sb, l.getEnd() + "");
+		}
+	}
+
+	/**
+	 * Append the competitors start nbr, name, nbr of laps and total time to the
+	 * stringbuilder.
+	 * 
+	 * @param sb
+	 *            the stringbuilder to append to
+	 * @param c
+	 *            the competitor which info to append
+	 */
+	protected void appendCompetitorInfo(StringBuilder sb, Competitor c) {
+		sb.append(Formater.formatColumns(c.getIndex(), c.getName(),
+				c.getTotalBinaryTime())
+				+ Formater.COLUMN_SEPARATOR);
 	}
 
 	@Override
 	protected void appendRows(FileWriter fileWriter,
 			List<Competitor> competitors) throws IOException {
-		// TODO Auto-generated method stub
+		maxLaps = getMaxLaps(competitors);
 
+		appendFirstRow(fileWriter);
+		
+		for (int i = 1; i < maxLaps + 1; i++) {
+			fileWriter
+					.append(Formater.BIN_LAP_TIME + i + Formater.COLUMN_SEPARATOR);
+		}
+		for (int i = 0; i < maxLaps-1; i++) {
+			fileWriter
+			.append(Formater.START_TIME + (i+1) + Formater.COLUMN_SEPARATOR);
+			fileWriter
+			.append(Formater.FINISH_TIME + (i+1) + Formater.COLUMN_SEPARATOR);
+		}
+		fileWriter
+		.append(Formater.START_TIME + maxLaps + Formater.COLUMN_SEPARATOR);
+		fileWriter
+		.append(Formater.FINISH_TIME + maxLaps + "\n");
+	}
+	
+	/**
+	 * Returns the maximum number of laps ran by any competitor.
+	 * 
+	 * @param competitors
+	 *            list of competitors
+	 * @return the maximum number of laps ran by any competitor
+	 */
+	@Override
+	protected int getMaxLaps(List<Competitor> competitors) {
+		int a = competitors.get(0).getNumberOfBinaryLaps();
+		for (Competitor c : competitors) {
+			if (c.getNumberOfLaps() > a) {
+				a = c.getNumberOfBinaryLaps();
+			}
+		}
+		return a;
 	}
 
 	protected void addString(StringBuilder sb, String s) {
 		sb.append(s);
 		sb.append(Formater.COLUMN_SEPARATOR);
 	}
+	
 
 }

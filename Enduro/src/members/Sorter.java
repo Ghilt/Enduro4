@@ -48,4 +48,22 @@ public class Sorter {
 			return cmp;
 		}
 	}
+	
+	public static class CompetitorBinaryComparator implements Comparator<Competitor> {
+		public CompetitorBinaryComparator() {
+		}
+
+		@Override
+		public int compare(Competitor o1, Competitor o2) {
+			int cmp = o1.getClassType().compareTo(o2.getClassType());
+			if (cmp == 0) {
+				cmp = o2.getNumberOfBinaryLaps() - o1.getNumberOfBinaryLaps();
+
+				if (cmp == 0) {
+					cmp = o1.getTotalBinaryTime().compareTo(o2.getTotalBinaryTime());
+				}
+			}
+			return cmp;
+		}
+	}
 }

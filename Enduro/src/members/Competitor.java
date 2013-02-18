@@ -86,6 +86,7 @@ public class Competitor implements Comparable<Competitor> {
 	 */
 	public void addStartTime(Time t) {
 		startTimes.add(t);
+		Collections.sort(startTimes);
 	}
 
 	/**
@@ -251,6 +252,10 @@ public class Competitor implements Comparable<Competitor> {
 
 	public int getNumberOfLaps() {
 		return numberOfLaps();
+	}
+	
+	public int getNumberOfBinaryLaps() {
+		return getBinaryLaps().size();
 	}
 
 	public void setClassType(String type) {

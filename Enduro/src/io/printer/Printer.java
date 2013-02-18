@@ -85,7 +85,7 @@ public abstract class Printer {
 		}
 	}
 
-	private void setPlacements(List<Competitor> competitors) {
+	protected void setPlacements(List<Competitor> competitors) {
 		int maxLaps = getMaxLaps(competitors);
 		for (int i = 0; i < competitors.size(); i++) {
 			if (competitors.get(i).getNumberOfLaps() == maxLaps) {
