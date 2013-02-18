@@ -18,6 +18,8 @@ import members.Competitor;
 import org.junit.Before;
 import org.junit.Test;
 
+import test.TestUtil;
+
 
 
 public class Test5 {
@@ -61,20 +63,8 @@ public class Test5 {
 		StdPrinter printer = new StdPrinter();
 		printer.printResults(new ArrayList<Competitor>(competitors.values()),
 				RESULT_PATH);
-		testResultFiles();
+		TestUtil.testResultFiles(RESULT_PATH, "src/test/acceptans/test5/resultat.txt");
 	}
 
-	private void testResultFiles() throws FileNotFoundException {
-		File file1 = new File("src/test/acceptans/test5/resultat.txt");
-		File file2 = new File(RESULT_PATH);
-		Scanner scan1 = new Scanner(file1);
-		Scanner scan2 = new Scanner(file2);
-		String line1, line2;
-		while (scan1.hasNext() && scan2.hasNext()) {
-			line1 = scan1.nextLine();
-			line2 = scan2.nextLine();
-			assertEquals("Wrong result.", line1, line2);
-		}
-	}
 
 }
