@@ -184,4 +184,13 @@ public class Time implements Comparable<Time> {
 		return this;
 	}
 
+	/**
+	 * Returns a clone of this object.
+	 */
+	public Time clone() {
+		Time t = new Time();
+		t.cal = (Calendar) cal.clone();
+		return t;
+
+	}
 }
