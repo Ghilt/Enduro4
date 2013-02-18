@@ -45,6 +45,19 @@ public class Competitor implements Comparable<Competitor> {
 	}
 
 	/**
+	 * Big laps, defined by one start and one end.
+	 * @return List of laps
+	 */
+	public List<Lap> getBinaryLaps() {
+		List<Lap> laps = new ArrayList<Lap>();
+
+		for (int i = 0; i < startTimes.size() && i < finishTimes.size(); i++)
+			laps.add(new Lap(startTimes.get(i), finishTimes.get(i)));
+
+		return laps;
+	}
+
+	/**
 	 * @return true if start is missing
 	 */
 	public boolean startMissing() {

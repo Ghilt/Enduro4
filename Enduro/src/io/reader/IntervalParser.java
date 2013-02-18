@@ -86,7 +86,7 @@ public class IntervalParser {
 		return Arrays.asList(s.split(INTERVAL_DELIMITER));
 	}
 
-	private Interval interval(String s) {
+	private Interval interval(String s) throws ParserException {
 		String[] t = s.split(INTERVAL_RANGE);
 
 		int first = Integer.valueOf(t[0]);
@@ -113,8 +113,10 @@ public class IntervalParser {
 		try {
 			List<String> xs = intervals(str);
 
-			for (String x : xs)
-				intervals.add(interval(x));
+			for (String x : xs) {
+				if (x.length() > 0)
+					intervals.add(interval(x));
+			}
 
 		} catch (Exception e) {
 			valid = false;
@@ -122,8 +124,6 @@ public class IntervalParser {
 
 		isValid = valid;
 	}
-
-	// TODO: STRING SOM FAILAR!!!
 
 	/**
 	 * @return If String was valid
