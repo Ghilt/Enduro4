@@ -2,7 +2,9 @@ package members;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author Philip & Andrée
@@ -10,9 +12,30 @@ import java.util.List;
  */
 public class Competitor implements Comparable<Competitor> {
 
+	public static final int NO_STATION = -1;
+
+	private class Station implements Comparable<Station> {
+		// public Station(Time t) {
+		// time = t;
+		// nr = -1;
+		// }
+		public Station(Time t, int nr) {
+			time = t;
+			this.nr = nr;
+		}
+
+		private Time time;
+		private int nr;
+
+		@Override
+		public int compareTo(Station other) {
+			return time.compareTo(other.time);
+		}
+	}
+
 	private int index;
-	private List<Time> startTimes;
-	private List<Time> finishTimes;
+	private List<Station> startTimes;
+	private List<Station> finishTimes;
 	private String name;
 	private String classType;
 	private int plac;
@@ -34,14 +57,26 @@ public class Competitor implements Comparable<Competitor> {
 		} else {
 			// First lap time is first finish time - start time
 			if (!startMissing())
-				laps.add(new Lap(startTimes.get(0), finishTimes.get(0)));
+				laps.add(new Lap(startTimes.get(0).time,
+						finishTimes.get(0).time));
 
 			for (int i = 1; i < finishTimes.size(); i++) {
-				laps.add(new Lap(finishTimes.get(i - 1), finishTimes.get(i)));
+				laps.add(new Lap(finishTimes.get(i - 1).time, finishTimes
+						.get(i).time));
 			}
 		}
 
 		return laps;
+	}
+
+	private class StationTimes {
+		private ArrayList<Time> start;
+		private ArrayList<Time> finish;
+
+		public StationTimes() {
+			start = new ArrayList<Time>();
+			finish = new ArrayList<Time>();
+		}
 	}
 
 	/**
@@ -51,16 +86,36 @@ public class Competitor implements Comparable<Competitor> {
 	 */
 	public List<Lap> getBinaryLaps() {
 		List<Lap> laps = new ArrayList<Lap>();
-		int startIndex = 0;
-		int finishIndex = 0;
-//		while(startIndex < startTimes.size() && finishIndex < finishTimes.size()) {
-//			Time startTime = startTimes.get(startIndex);
-//			Time finishTime = finishTimes.get(finishIndex);
-//			if(finishTime.compareTo(startTime))
-//		}
-		for (int i = 0; i < startTimes.size() && i < finishTimes.size(); i++)
-			laps.add(new Lap(startTimes.get(i), finishTimes.get(i)));
 
+		// Put all the stations into 2D matrixes so they can be used properly.
+		Map<Integer, StationTimes> stations = new HashMap<Integer, StationTimes>();
+		for (Station s : startTimes) {
+			if (stations.get(s.nr) == null) {
+				stations.put(s.nr, new StationTimes());
+			}
+			stations.get(s.nr).start.add(s.time);
+		}
+		for (Station s : finishTimes) {
+			if (stations.get(s.nr) == null) {
+				stations.put(s.nr, new StationTimes());
+			}
+			stations.get(s.nr).finish.add(s.time);
+		}
+
+		// Take the first start and end from each station and put them into a
+		// list
+		for (StationTimes ts : stations.values()) {
+			Time a = new NullTime();
+			Time b = new NullTime();
+			if (!ts.start.isEmpty()) {
+				a = ts.start.get(0);
+			}
+			if (!ts.finish.isEmpty()) {
+				b = ts.finish.get(0);
+			}
+			laps.add(new Lap(a, b));
+
+		}
 		return laps;
 	}
 
@@ -80,8 +135,8 @@ public class Competitor implements Comparable<Competitor> {
 		name = "";
 		classType = "";
 		this.index = index;
-		startTimes = new ArrayList<Time>();
-		finishTimes = new ArrayList<Time>();
+		startTimes = new ArrayList<Station>();
+		finishTimes = new ArrayList<Station>();
 	}
 
 	/**
@@ -90,24 +145,13 @@ public class Competitor implements Comparable<Competitor> {
 	 * @param t
 	 *            the start time to add
 	 */
-	public void addStartTime(Time t) {
-		startTimes.add(t);
+	public void addStartTime(Time t, int nr) {
+		startTimes.add(new Station(t, nr));
 		Collections.sort(startTimes);
 	}
 
-	/**
-	 * @return the list of start times
-	 */
-	public List<Time> getStartTimes() {
-		return startTimes;
-	}
-
-	/**
-	 * @return number of laps
-	 * @see #getLaps()
-	 */
-	public int numberOfLaps() {
-		return getLaps().size();
+	public void addStartTime(Time t) {
+		addStartTime(t, NO_STATION);
 	}
 
 	/**
@@ -116,9 +160,32 @@ public class Competitor implements Comparable<Competitor> {
 	 * @param t
 	 *            the finish time to add
 	 */
-	public void addFinishTime(Time t) {
-		finishTimes.add(t);
+	public void addFinishTime(Time t, int nr) {
+		finishTimes.add(new Station(t, nr));
 		Collections.sort(finishTimes);
+	}
+
+	public void addFinishTime(Time t) {
+		addFinishTime(t, NO_STATION);
+	}
+
+	/**
+	 * @return the list of start times
+	 */
+	public List<Time> getStartTimes() {
+		List<Time> ret = new ArrayList<Time>();
+		for (Station s : startTimes) {
+			ret.add(s.time.clone());
+		}
+		return ret;
+	}
+
+	/**
+	 * @return number of laps
+	 * @see #getLaps()
+	 */
+	public int numberOfLaps() {
+		return getLaps().size();
 	}
 
 	/**
@@ -134,7 +201,11 @@ public class Competitor implements Comparable<Competitor> {
 	 * @return the list of finish times
 	 */
 	public List<Time> getFinishTimes() {
-		return finishTimes;
+		List<Time> ret = new ArrayList<Time>();
+		for (Station s : finishTimes) {
+			ret.add(s.time.clone());
+		}
+		return ret;
 	}
 
 	/**
@@ -196,7 +267,7 @@ public class Competitor implements Comparable<Competitor> {
 			 * If no laps exists, total time is difference between first start
 			 * and first finish time
 			 */
-			return startTimes.get(0).difference(finishTimes.get(0));
+			return startTimes.get(0).time.difference(finishTimes.get(0).time);
 		}
 
 		return total;
@@ -207,9 +278,10 @@ public class Competitor implements Comparable<Competitor> {
 	 * 
 	 * @param o
 	 *            The competitor to compare with.
-	 * @return Positive if this competitors class type and then startNr is greater than comp's. 0 if the
-	 *         class types and startNr match. Negative if this competitors class type or startNr is
-	 *         less than comp's.
+	 * @return Positive if this competitors class type and then startNr is
+	 *         greater than comp's. 0 if the class types and startNr match.
+	 *         Negative if this competitors class type or startNr is less than
+	 *         comp's.
 	 */
 	@Override
 	public int compareTo(Competitor comp) {

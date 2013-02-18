@@ -17,7 +17,14 @@ import members.Time;
  */
 public class Parser {
 
+	private int stationNr;
+
+	public Parser(int stationNr) {
+		this.stationNr = stationNr;
+	}
+
 	public Parser() {
+		stationNr = Competitor.NO_STATION;
 	}
 
 	/**
@@ -137,13 +144,13 @@ public class Parser {
 		for (int j = 1; j < row.size(); j++) {
 			switch (types.get(j)) {
 			case finish_time:
-				comp.addFinishTime(Time.parse(row.get(j)));
+				comp.addFinishTime(Time.parse(row.get(j)), stationNr);
 				break;
 			case name:
 				comp.addName(row.get(j));
 				break;
 			case start_time:
-				comp.addStartTime(Time.parse(row.get(j)));
+				comp.addStartTime(Time.parse(row.get(j)), stationNr);
 				break;
 			default:
 				throw new ParserException("Invalid type.");
