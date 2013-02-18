@@ -156,28 +156,25 @@ public class LapPrinter extends Printer {
 
 	}
 
-	protected void appendFirstRow(FileWriter fileWriter) throws IOException {
-		fileWriter.append(Formater.formatColumns(Formater.START_NR,
-				Formater.NAME, Formater.LAP_NUMBER, Formater.TOTAL_TIME));
-		fileWriter.append(Formater.COLUMN_SEPARATOR);
+	@Override
+	protected void appendFirstRow(StringBuilder sb) throws IOException {
+		sb.append(Formater.formatColumns(Formater.START_NR, Formater.NAME,
+				Formater.LAP_NUMBER, Formater.TOTAL_TIME));
+		sb.append(Formater.COLUMN_SEPARATOR);
 	}
 
 	@Override
-	protected void appendRows(FileWriter fileWriter,
-			List<Competitor> competitors) throws IOException {
+	protected void appendRows(StringBuilder sb, List<Competitor> competitors)
+			throws IOException {
 		maxLaps = getMaxLaps(competitors);
 
-		appendFirstRow(fileWriter);
-
 		for (int i = 1; i < maxLaps + 1; i++) {
-			fileWriter
-					.append(Formater.LAP_TIME + i + Formater.COLUMN_SEPARATOR);
+			sb.append(Formater.LAP_TIME + i + Formater.COLUMN_SEPARATOR);
 		}
-		fileWriter.append(Formater.START_TIME + Formater.COLUMN_SEPARATOR);
+		sb.append(Formater.START_TIME + Formater.COLUMN_SEPARATOR);
 		for (int i = 1; i < maxLaps; i++) {
-			fileWriter.append(Formater.LAP_FINISH_TIME + i
-					+ Formater.COLUMN_SEPARATOR);
+			sb.append(Formater.LAP_FINISH_TIME + i + Formater.COLUMN_SEPARATOR);
 		}
-		fileWriter.append(Formater.FINISH_TIME + Formater.LINE_BREAK);
+		sb.append(Formater.FINISH_TIME + Formater.LINE_BREAK);
 	}
 }

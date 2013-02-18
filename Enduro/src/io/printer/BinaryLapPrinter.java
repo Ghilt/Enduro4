@@ -13,12 +13,10 @@ public class BinaryLapPrinter extends Printer {
 
 	protected int maxLaps;
 
-	protected void appendFirstRow(FileWriter fileWriter) throws IOException {
-		fileWriter
-				.append(Formater.formatColumns(Formater.START_NR,
-						Formater.NAME, Formater.TOTAL_TIME,
-						Formater.BINARY_LAP_NUMBER));
-		fileWriter.append(Formater.COLUMN_SEPARATOR);
+	protected void appendFirstRow(StringBuilder sb) throws IOException {
+		sb.append(Formater.formatColumns(Formater.START_NR, Formater.NAME,
+				Formater.TOTAL_TIME, Formater.BINARY_LAP_NUMBER));
+		sb.append(Formater.COLUMN_SEPARATOR);
 	}
 
 	@Override
@@ -70,25 +68,20 @@ public class BinaryLapPrinter extends Printer {
 	}
 
 	@Override
-	protected void appendRows(FileWriter fileWriter,
-			List<Competitor> competitors) throws IOException {
+	protected void appendRows(StringBuilder sb, List<Competitor> competitors)
+			throws IOException {
 		maxLaps = getMaxLaps(competitors);
 
-		appendFirstRow(fileWriter);
-
 		for (int i = 1; i < maxLaps + 1; i++) {
-			fileWriter.append(Formater.BINARY_LAP_TIME + i
-					+ Formater.COLUMN_SEPARATOR);
+			sb.append(Formater.BINARY_LAP_TIME + i + Formater.COLUMN_SEPARATOR);
 		}
 		for (int i = 0; i < maxLaps - 1; i++) {
-			fileWriter.append(Formater.START_TIME + (i + 1)
-					+ Formater.COLUMN_SEPARATOR);
-			fileWriter.append(Formater.FINISH_TIME + (i + 1)
+			sb.append(Formater.START_TIME + (i + 1) + Formater.COLUMN_SEPARATOR);
+			sb.append(Formater.FINISH_TIME + (i + 1)
 					+ Formater.COLUMN_SEPARATOR);
 		}
-		fileWriter.append(Formater.START_TIME + maxLaps
-				+ Formater.COLUMN_SEPARATOR);
-		fileWriter.append(Formater.FINISH_TIME + maxLaps + Formater.LINE_BREAK);
+		sb.append(Formater.START_TIME + maxLaps + Formater.COLUMN_SEPARATOR);
+		sb.append(Formater.FINISH_TIME + maxLaps + Formater.LINE_BREAK);
 
 	}
 

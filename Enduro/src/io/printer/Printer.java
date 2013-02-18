@@ -1,5 +1,7 @@
 package io.printer;
 
+import io.Formater;
+
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -24,6 +26,9 @@ public abstract class Printer {
 	public static final Time MINIMUM_TOTAL_TIME = Time.parse("00.15.00");
 
 	public abstract String row(Competitor c);
+	
+	protected abstract void appendFirstRow(StringBuilder sb) throws IOException;
+	
 
 	/**
 	 * Prints the result in the list with competitors to the output file.
@@ -35,10 +40,11 @@ public abstract class Printer {
 	 * @param filepath
 	 *            the file to write to
 	 */
-	public void printResults(List<Competitor> competitors, String filepath) {
+	public final void printResults(List<Competitor> competitors, String filepath) {
 		try {
 			File outputFile = new File(filepath);
 			FileWriter fileWriter = new FileWriter(outputFile);
+			StringBuilder sb = new StringBuilder();
 			int fromIndex = 0;
 			int toIndex = 0;
 			// noName are invalid competitors
@@ -60,24 +66,25 @@ public abstract class Printer {
 
 				// Do not write a line if there's no class type
 				if (classType != "") {
-					fileWriter.append(prevClassType + "\n");
+					sb.append(prevClassType + "\n");
 				}
 				prevClassType = classType;
-
-				appendRows(fileWriter, classList);
+				
+				appendFirstRow(sb);
+				appendRows(sb, classList);
 
 				for (Competitor comp : classList) {
 					// Check if person has name a.k.a this person exists
 					if (comp.getName().isEmpty()) {
 						noNames.add(comp);
 					} else {
-						fileWriter.append("" + row(comp) + "\n");
+						sb.append("" + row(comp) + "\n");
 					}
 				}
 			}
 
-			appendInvalidStartNbrs(fileWriter, noNames);
-
+			appendInvalidStartNbrs(sb, noNames);
+			fileWriter.append(sb.toString());
 			fileWriter.close();
 
 		} catch (IOException e) {
@@ -105,13 +112,14 @@ public abstract class Printer {
 	 *            List with invalid competitors
 	 * @throws IOException
 	 */
-	private void appendInvalidStartNbrs(FileWriter fileWriter,
+	private void appendInvalidStartNbrs(StringBuilder sb,
 			ArrayList<Competitor> noNames) throws IOException {
 		if (!noNames.isEmpty()) {
-			fileWriter.append("Icke existerande startnummer" + "\n");
-			appendRows(fileWriter, noNames);
+			sb.append("Icke existerande startnummer" + Formater.LINE_BREAK);
+			appendFirstRow(sb);
+			appendRows(sb, noNames);
 			for (Competitor comp : noNames) {
-				fileWriter.append("" + row(comp) + "\n");
+				sb.append("" + row(comp) + "\n");
 			}
 
 		}
@@ -151,7 +159,7 @@ public abstract class Printer {
 		return toIndex;
 	}
 
-	protected abstract void appendRows(FileWriter fileWriter,
+	protected abstract void appendRows(StringBuilder sb,
 			List<Competitor> competitors) throws IOException;
 
 	/**
