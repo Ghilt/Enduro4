@@ -86,7 +86,6 @@ public class Competitor implements Comparable<Competitor> {
 	 */
 	public List<Lap> getBinaryLaps() {
 		List<Lap> laps = new ArrayList<Lap>();
-
 		// Put all the stations into 2D matrixes so they can be used properly.
 		Map<Integer, StationTimes> stations = new HashMap<Integer, StationTimes>();
 		for (Station s : startTimes) {
