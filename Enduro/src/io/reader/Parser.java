@@ -1,13 +1,11 @@
 package io.reader;
 
 import io.Formater;
-import io.reader.Parser.FileIdentifier;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Properties;
 
 import members.Competitor;
 import members.Time;
@@ -151,6 +149,23 @@ public class Parser {
 				throw new ParserException("Invalid type.");
 			}
 		}
+	}
+
+	/**
+	 * Creates a new HashMap of competitors and calls the other parse method.
+	 * 
+	 * @param input
+	 *            The string matrix of data.
+	 * @return A hashmap of competitors.
+	 * @throws ParserException
+	 *             If the input file is incorrect.
+	 */
+	public Map<Integer, Competitor> parse(ArrayList<ArrayList<String>> input,
+			FileIdentifier identifier) throws ParserException {
+		Map<Integer, Competitor> competitors = new HashMap<Integer, Competitor>();
+		competitors = parse(input, competitors, identifier);
+
+		return competitors;
 	}
 
 	/**

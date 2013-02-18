@@ -41,7 +41,7 @@ public class LapPrinter extends Printer {
 	 */
 	protected void appendCompetitorInfo(StringBuilder sb, Competitor c) {
 		sb.append(Formater.formatColumns(c.getIndex(), c.getName(),
-				c.getNumberOfLaps(), c.getTotalTime())
+				c.getNumberOfLaps(), c.getTotalTime(c.getLaps()))
 				+ Formater.COLUMN_SEPARATOR);
 	}
 
