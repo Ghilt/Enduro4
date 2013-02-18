@@ -46,6 +46,7 @@ public class Competitor implements Comparable<Competitor> {
 
 	/**
 	 * Big laps, defined by one start and one end.
+	 * 
 	 * @return List of laps
 	 */
 	public List<Lap> getBinaryLaps() {
@@ -180,6 +181,38 @@ public class Competitor implements Comparable<Competitor> {
 		Time total = new Time(0);
 
 		List<Lap> laps = getLaps();
+
+		if (!laps.isEmpty()) {
+			for (Lap lap : laps) {
+				total.add(lap.getTotal());
+			}
+		} else {
+			/*
+			 * If no laps exists, total time is difference between first start
+			 * and first finish time
+			 */
+			return startTimes.get(0).difference(finishTimes.get(0));
+		}
+
+		return total;
+	}
+
+	/**
+	 * Returns the total time of this competitor assuming it is binary laps. If
+	 * missing start or finish time no total time exist. If laps exists, total
+	 * time is calculated as sum of lap times.
+	 * 
+	 * @return the total time
+	 */
+	public Time getTotalBinaryTime() {
+		// No total time exists if start or finish times are missing
+		if (startTimes.isEmpty() || finishTimes.isEmpty()) {
+			return new NullTime();
+		}
+
+		Time total = new Time(0);
+
+		List<Lap> laps = getBinaryLaps();
 
 		if (!laps.isEmpty()) {
 			for (Lap lap : laps) {
