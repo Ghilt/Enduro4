@@ -58,6 +58,19 @@ public class IntervalParser {
 		public int size() {
 			return end - start + 1;
 		}
+		
+		/**
+		 * Get all numbers in the Interval
+		 * @return List of numbers
+		 */
+		public List<Integer> getNumbers() {
+			List<Integer> xs = new ArrayList<Integer>();
+			
+			for (int i = start; i <= end; i++)
+				xs.add(i);
+			
+			return xs;
+		}
 
 		@Override
 		public int hashCode() {

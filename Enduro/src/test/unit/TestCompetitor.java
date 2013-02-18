@@ -10,6 +10,8 @@ import java.util.List;
 import members.Competitor;
 import members.Lap;
 import members.NullTime;
+import members.Sorter;
+import members.Sorter.CompetitorComparator;
 import members.Time;
 
 import org.junit.Before;
@@ -247,5 +249,62 @@ public class TestCompetitor {
 		assertArrayEquals(new Lap[] { new Lap(t1, f1), new Lap(t2, f2) }, c
 				.getBinaryLaps().toArray());
 	}
-
+	
+	@Test
+	public void testEqualCompetitorComparator(){
+		Time s = Time.parse("00.00.15"), f = Time.parse("00.45.00");
+		c.addStartTime(s);
+		c.addFinishTime(f);
+		c.setClassType("SENIOR");
+		Competitor c2 = new Competitor(2);
+		c2.addStartTime(s);
+		c2.addFinishTime(f);
+		c2.setClassType("SENIOR");
+		CompetitorComparator cpc = new CompetitorComparator();
+		assertTrue(cpc.compare(c, c2)==0);
+		
+	}
+	@Test
+	public void testEqualClassCompetitorComparator(){
+		Time s = Time.parse("00.00.15"), f = Time.parse("00.45.00");
+		c.addStartTime(s);
+		c.addFinishTime(f);
+		c.setClassType("SENIOR");
+		Time s2 = Time.parse("00.00.15"), f2 = Time.parse("00.47.00");
+		Competitor c2 = new Competitor(2);
+		c2.addStartTime(s2);
+		c2.addFinishTime(f2);
+		c2.setClassType("SENIOR");
+		CompetitorComparator cpc = new CompetitorComparator();
+		assertTrue(cpc.compare(c, c2)<0);
+		
+	}
+	public void testDifferentLapCompetitorComparator(){
+		Time s = Time.parse("00.00.15"), f = Time.parse("00.45.00");
+		c.addStartTime(s);
+		c.addFinishTime(f);
+		c.setClassType("SENIOR");
+		Time s2 = Time.parse("00.00.15"), f2 = Time.parse("00.47.00"), f3=Time.parse("01.25.00");
+		Competitor c2 = new Competitor(2);
+		c2.addStartTime(s2);
+		c2.addFinishTime(f2);
+		c2.addFinishTime(f3);
+		c2.setClassType("SENIOR");
+		CompetitorComparator cpc = new CompetitorComparator();
+		assertTrue(cpc.compare(c, c2)<0);
+		
+	}
+	@Test
+	public void testDifferentClassCompetitorComparator(){
+		Time s = Time.parse("00.00.15"), f = Time.parse("00.45.00");
+		c.addStartTime(s);
+		c.addFinishTime(f);
+		c.setClassType("SENIOR");
+		Competitor c2 = new Competitor(2);
+		c2.addStartTime(s);
+		c2.addFinishTime(f);
+		c2.setClassType("JUNIOR");
+		CompetitorComparator cpc = new CompetitorComparator();
+		assertTrue(cpc.compare(c, c2)>0);	
+	}
 }
