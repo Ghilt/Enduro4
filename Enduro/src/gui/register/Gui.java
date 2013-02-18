@@ -1,8 +1,7 @@
 package gui.register;
 
-import gui.tools.NumberEntryField;
 import gui.tools.GuiPrinter;
-
+import gui.tools.NumberEntryField;
 import io.Formater;
 import io.reader.IntervalParser;
 import io.reader.IntervalParser.Interval;
@@ -13,7 +12,6 @@ import java.awt.Font;
 import java.awt.Toolkit;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.util.List;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -154,26 +152,26 @@ public class Gui extends JFrame {
 		// Format the new entry.
 		Time t = Time.fromCurrentTime();
 		String temp = Formater.formatColumns(entry, t);
-
 		IntervalParser p = new IntervalParser(entry);
 
 		if (entry.isEmpty() || !p.isValid()) {
 			entryButton.setText(RegisterButton.REQUEST_ENTRY);
-			updateTextArea(temp);
+			String textOutput = p.isValid() ? temp : Formater.formatColumns("",
+					t);
+
+			updateTextArea(textOutput);
 			if (!emptyEntry)
-				printer.writeLine(temp);
+				printer.writeLines(false, textOutput);
+
 			emptyEntry = true;
 		} else {
 			if (emptyEntry) {
-				if (p.isValid()) {
-					printer.enterLateNumber((String[]) p.getIntervals()
-							.toArray());
-					emptyEntry = false;
-					entryButton.setText(RegisterButton.DEFAULT_TEXT);
-					addToStartOfTextArea(entry);
-				}
+				printer.enterLateNumber(p);
+				emptyEntry = false;
+				entryButton.setText(RegisterButton.DEFAULT_TEXT);
+				addToStartOfTextArea(entry);
 			} else {
-				printInterval(entry);
+				printInterval(entry, p);
 				updateTextArea(temp);
 			}
 		}
@@ -185,20 +183,21 @@ public class Gui extends JFrame {
 		repaint();
 	}
 
+	private void printIntervals(IntervalParser p, Time time) {
+		for (Interval c : p.getIntervals())
+			for (int i : c.getNumbers())
+				printer.writeLines(false, Formater.formatColumns(i, time));
+	}
+
 	/**
 	 * Parses the string as an interval and prints one line for every number
 	 * contained.
 	 * 
 	 * @param entry
 	 */
-	private void printInterval(String entry) {
+	private void printInterval(String entry, IntervalParser p) {
 		Time t = Time.fromCurrentTime();
-		List<Interval> intervals = new IntervalParser(entry).getIntervals();
-		for (Interval i : intervals) {
-			for (int p = i.getStart(); p <= i.getEnd(); p++) {
-				printer.writeLine(Formater.formatColumns(p + "", t));
-			}
-		}
+		printIntervals(p, t);
 	}
 
 	/**

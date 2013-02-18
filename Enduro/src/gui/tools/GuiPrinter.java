@@ -1,6 +1,8 @@
 package gui.tools;
 
 import io.Formater;
+import io.reader.IntervalParser;
+import io.reader.IntervalParser.Interval;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -26,28 +28,6 @@ public class GuiPrinter {
 		super();
 		this.file = new File(filelink);
 
-	}
-
-	/**
-	 * Appends the string to the end of the file
-	 * 
-	 * @param line
-	 *            The data to print
-	 */
-	public void writeLine(String line) {
-		BufferedWriter writer = null;
-		try {
-			writer = new BufferedWriter(new FileWriter(file, true));
-			writer.write(line);
-			writer.newLine();
-		} catch (IOException e) {
-		} finally {
-			try {
-				if (writer != null)
-					writer.close();
-			} catch (IOException e) {
-			}
-		}
 	}
 
 	/**
@@ -85,59 +65,51 @@ public class GuiPrinter {
 		try {
 			ArrayList<String> lines = getLines();
 			lines.remove(lines.size() - 1);
-			writeLines(lines);
+			writeLines(true, lines.toArray());
 		} catch (FileNotFoundException e1) {
 		} catch (IOException e) {
 		}
 	}
 
 	/**
-	 * Adds the string comNr to the beginning of the last line.
+	 * Adds all Intervals in IntervalParser with last line's time.
 	 * 
-	 * @param comNr
-	 *            The string to add.
+	 * @param p
+	 *            IntervalParser
 	 */
-//	public void enterLateNumber(String comNr) {
-//		try {
-//			ArrayList<String> lines = getLines();
-//			lines.set(lines.size() - 1, comNr + lines.get(lines.size() - 1));
-//			writeLines(lines);
-//		} catch (FileNotFoundException e1) {
-//		} catch (IOException e) {
-//		}
-//
-//	}
-	
-	public void enterLateNumber(String... comNrs) {
+	public void enterLateNumber(IntervalParser p) {
 		try {
 			ArrayList<String> lines = getLines();
 			String time = lines.get(lines.size() - 1);
 			lines.remove(lines.size() - 1);
-			
-			for (String c : comNrs) 
-				lines.add(c + time);
-			
-			writeLines(lines);
+
+			for (Interval c : p.getIntervals())
+				for (int i : c.getNumbers())
+					lines.add(i + time);
+
+			writeLines(true, lines.toArray());
 		} catch (FileNotFoundException e1) {
 		} catch (IOException e) {
 		}
 	}
 
 	/**
-	 * Overwrites the file with the lines entered.
+	 * Write objects to file
 	 * 
+	 * @param overwrite
+	 *            If file should be overwritten
 	 * @param lines
+	 *            Objects
 	 */
-	private void writeLines(ArrayList<String> lines) {
+	public void writeLines(boolean overwrite, Object... lines) {
 		String ret = "";
-		for (String s : lines) {
+		for (Object s : lines)
 			ret = ret + s + System.getProperty("line.separator");
-		}
+
 		BufferedWriter writer = null;
 		try {
-			writer = new BufferedWriter(new FileWriter(file));
+			writer = new BufferedWriter(new FileWriter(file, !overwrite));
 			writer.write(ret);
-			writer.newLine();
 		} catch (IOException e) {
 		} finally {
 			try {
