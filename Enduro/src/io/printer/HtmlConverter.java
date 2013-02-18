@@ -12,10 +12,10 @@ public class HtmlConverter implements Converter {
 		
 		String[] column = lines[0].split(Formater.COLUMN_SEPARATOR);
 		sb = new StringBuilder();
-		for(int i = 0; i < lines.length; i++) {
-			sb.append(lines[i]);
+		for(int i = 0; i < column.length; i++) {
+			sb.append("<b>" + column[i] + "</b>");
 		}
-		
+		lines[0] = sb.toString();
 		
 		
 		sb = new StringBuilder();
