@@ -68,6 +68,6 @@ public class SortStdPrinter extends StdPrinter {
 			List<Competitor> competitors) throws IOException {
 		fileWriter.append(Formater.formatColumns(Formater.PLACEMENT, Formater.START_NR,
 				Formater.NAME, Formater.TOTAL_TIME));
-		fileWriter.append("\n");
+		fileWriter.append(Formater.LINE_BREAK);
 	}
 }

@@ -200,8 +200,8 @@ public class Competitor implements Comparable<Competitor> {
 	 * 
 	 * @param o
 	 *            The competitor to compare with.
-	 * @return 1 if this competitors class type is greater than comp's. 0 if the
-	 *         class types are the same. -1 if this competitors class type is
+	 * @return Positive if this competitors class type and then startNr is greater than comp's. 0 if the
+	 *         class types and startNr match. Negative if this competitors class type or startNr is
 	 *         less than comp's.
 	 */
 	@Override

@@ -72,7 +72,7 @@ public class BinaryLapPrinter extends Printer {
 		}
 		fileWriter.append(Formater.START_TIME + i + Formater.COLUMN_SEPARATOR);
 		fileWriter.append(Formater.FINISH_TIME + i);
-		fileWriter.append("\n");
+		fileWriter.append(Formater.LINE_BREAK);
 
 	}
 

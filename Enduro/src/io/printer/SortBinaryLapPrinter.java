@@ -16,7 +16,7 @@ public class SortBinaryLapPrinter extends BinaryLapPrinter {
 		StringBuilder sb = new StringBuilder();
 
 		appendPlacement(sb, c);
-		
+
 		addString(sb, c.getIndex() + "");
 		addString(sb, c.getName() + "");
 		addString(sb, c.getTotalTime(c.getBinaryLaps()) + "");
@@ -68,12 +68,14 @@ public class SortBinaryLapPrinter extends BinaryLapPrinter {
 					+ Formater.COLUMN_SEPARATOR);
 		}
 		fileWriter.append(Formater.BINARY_LAP_TIME + i);
-		fileWriter.append("\n");
+		fileWriter.append(Formater.LINE_BREAK);
 
 	}
 
 	protected void appendFirstRow(FileWriter fileWriter) throws IOException {
-		fileWriter.append(Formater.formatColumns(Formater.PLACEMENT, Formater.START_NR, Formater.NAME, Formater.TOTAL_TIME, Formater.BINARY_LAP_NUMBER));
+		fileWriter.append(Formater.formatColumns(Formater.PLACEMENT,
+				Formater.START_NR, Formater.NAME, Formater.TOTAL_TIME,
+				Formater.BINARY_LAP_NUMBER));
 		fileWriter.append(Formater.COLUMN_SEPARATOR);
 	}
 }
