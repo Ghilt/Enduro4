@@ -16,9 +16,11 @@ public class Formater {
 	public final static String NAME = "Namn";
 	public final static String PLACEMENT = "Plac";
 	public final static String TOTAL_TIME = "Totaltid";
+	
 	public final static String LAP_FINISH_TIME = "Varvning";
 	public final static String LAP_TIME = "Varv";
 	public final static String LAP_NUMBER = "#Varv";
+	
 	public final static String BINARY_LAP_TIME = "Etapp";
 	public final static String BINARY_LAP_NUMBER = "#Etapper";
 

@@ -15,7 +15,8 @@ public class BinaryLapPrinter extends Printer {
 	protected final String FIRST_ROW = "StartNr; Namn; Totaltid; #Etapper; ";
 
 	protected void appendFirstRow(FileWriter fileWriter) throws IOException {
-		fileWriter.append(FIRST_ROW);
+		fileWriter.append(Formater.formatColumns(Formater.START_NR, Formater.NAME, Formater.TOTAL_TIME, Formater.BINARY_LAP_NUMBER));
+		fileWriter.append(Formater.COLUMN_SEPARATOR);
 	}
 
 	@Override

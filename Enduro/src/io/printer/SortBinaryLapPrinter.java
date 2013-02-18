@@ -11,12 +11,12 @@ import members.Competitor;
 import members.Lap;
 
 public class SortBinaryLapPrinter extends BinaryLapPrinter {
-
-	private final String FIRST_ROW = "Plac; StartNr; Namn; Totaltid; #Etapper; ";
+	
 	private int maxBinLaps;
 
 	protected void appendFirstRow(FileWriter fileWriter) throws IOException {
-		fileWriter.append(FIRST_ROW);
+		fileWriter.append(Formater.formatColumns(Formater.PLACEMENT, Formater.START_NR, Formater.NAME, Formater.TOTAL_TIME, Formater.BINARY_LAP_NUMBER));
+		fileWriter.append(Formater.COLUMN_SEPARATOR);
 	}
 
 	@Override
