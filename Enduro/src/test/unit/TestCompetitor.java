@@ -227,5 +227,26 @@ public class TestCompetitor {
 		assertArrayEquals(new Lap[] {
 				new Lap(t1, f1) }, c.getBinaryLaps().toArray());
 	}
+	
+	@Test
+	public void testBinaryLapsNone() {
+		Time t1 = Time.parse("00.01.00");
+		c.addStartTime(t1);
+		
+		assertArrayEquals(new Lap[] { }, c.getBinaryLaps().toArray());
+	}
+	
+	@Test
+	public void testBinaryLapsMultiple() {
+		Time t1 = Time.parse("00.01.00"), f1 = Time.parse("00.34.00"), 
+				t2 = Time.parse("00.39.00"), f2 = Time.parse("00.55:00");
+		c.addStartTime(t1);
+		c.addStartTime(t2);
+		c.addFinishTime(f1);
+		c.addFinishTime(f2);
+		
+		assertArrayEquals(new Lap[] {
+				new Lap(t1, f1), new Lap(t2, f2) }, c.getBinaryLaps().toArray());
+	}
 
 }
