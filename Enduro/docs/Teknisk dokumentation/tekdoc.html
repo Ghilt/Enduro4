@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<head>
+<title>Teknisk dokumentation</title>
+<link rel="stylesheet" type="text/css" href="stylesheet.css">
+<meta charset=utf-8>
+</head>
+
+<body>
+<h1>Teknisk Dokumentation</h1>
+<h2>Översikt av de olika programmen</h2>
+<p>Systemet består av två olika program. Ett program för registrering av tider (starttider, måltider, varvtider, etapptider) samt ett program för att sortera och sammanställa resultat. Systemet byggs genom att kompilera projektet.</p> 
+
+<h3>Registreringsprogrammet</h3>
+<p>Registreringsprogrammet skapar en fil, vilka resultatprogrammet använder sig av för att skapa resultatlistor.
+Programmet använder sig att ett grafiskt användargränssnitt för att registrera tider till varje startnummer som inmatas. 
+</p>
+
+<h3>Resultatprogrammet</h3>
+<p>Programmet finns till för sammanställa resultatfiler. Det använder sig av en mängd olika textfiler för att kunna sammanställa följande information:</p>
+<ul>
+<li>Startnummer </li>
+<li>Namn</li>
+<li>Starttider</li>
+<li>Varvtider</li>
+<li>Etapptider</li>
+<li>Måltider</li>
+</ul>
+<p>Programmet skriver två filer. I den ena sammanställs information till en resultatlista med följande utformning:</p>
+
+<p><i>StartNr; Namn; #Varv; Totaltid; Varv1; Varv2; Starttid; Varvning1; Maltid</i></p>
+<p><i>1; Jacob Arvidsson; 2; 00.42.00; 00.22.00; 00.20.00; 12.00.00; 12.22.00; 12.42.00</i></p>
+
+<p>I det andra skrivs samma lista ut, fast sorterad. I denna lista skrivs även placering ut.
+Programmet har även felhantering som skriver ut felmeddelande om det har blivit fel vid registrering. En tävlande kan tillexempel av misstag fått flera starttider, varpå "flera starttider" skrivs ut i filen.</p>
+
+ 
+
+<h2>Systemspecifikation</h2>
+<img src="s2.png">
+
+<p>I paketet "main" finns två klasser. <code>RegisterGuiMain.java</code> startar registreringsprogrammet och <code>ResultCompilerMain.java</code> sorteringsprogrammet.</p>
+
+<h3>Registreringsprogrammet</h3>
+<p>I paketen <code>gui.register</code> och <code>gui.tools</code> finns allt som registreringsprogrammet använder sig av. De viktigaste klasserna är:
+<code>Gui.java</code> - Är klassen som bygger upp och hanterar det grafiska användargränssnittet. Använder sig av <code>RegisterButton.java</code> och <code>UndoButton.java</code> (lägger till knappar till huvudfönstret) samt <code>NumberEntryField.java</code> som ser till att endast siffor, kommatecken och binderstreck kan skrivas in i textfältet.
+<code>GuiPrinter.java</code> - Är klassen som ansvarar för utskrift till textfiler(start och måltider) som läses in i resultatprogramet.
+</p>
+<h3>Resultatprogrammet</h3>
+<p>Resultatprogrammet är den lite mer avancerade delen av systemet. Programmet läser in filer, lägger till informationen i datastrukturen och skriver sedan ut resultatfilerna.
+För att läsa in informationen från filerna används paketet <code>io.reader</code>. Klassen <code>CvsReader.java</code> har huvudansvaret för att läsa in information från textfiler och klassen <code>Parser.java</code> skapar en Map &lt Integer, Competitor &gt som  mappar alla tävlande med deras startnummer.</br>
+
+I paketet members finnes klasser som bygger upp datastrukturen. Klassen Competitor.java har följande information om en tävlande:</p>
+<ul>
+<li>Startnummer</li>
+<li>Starttid(er)</li>
+<li>Måltid(er)</li>
+<li>Namn</li>
+<li>Klass(junior, senior osv)</li>
+<li>Placering</li>
+</ul>
+
+<p>Alla tider definieras av klassen <code>Time.java.</code> Vid varvlopp får en tävlande flera måltider och klassen <code>Lap.java</code> används då för att skapa varv innehållandes starttid, målttid och varvtid. I <code>members.java</code> finns också klassen Sorter.java som används vid utskrift av en sorterad lista sker.</br>
+</br>
+Paketet <code>io.printer</code> har sedan klasser som skriver ut resultat med hjälp av Mapen som skapas i Parsern. Det finns fem olika slags printers som används beroende på vilken tävling som körs. Följande printers finns:
+</br></br>
+<code>LapPrinter.java</code> - Används för utskrift av varvlopp</br>
+<code>SortLapPrinter.java</code> - Sorterad version av LapPrinter</br>
+<code>StdPrinter.java</code> - Används för utskrift av tävling med endast en start och slutpunk</br>
+<code>SortStdPrinter.java</code> - Sorterad version av StdPrinter</br>
+</br>
+I paketet <code>io.printer</code> finns också en superklass <code>Printer.java</code> som alla andra printers ärver av. </br>
+
+I paketet io finns en klass som heter <code>Formater.java.</code> Denna klass ser till att formateringen av strängarna blir korrekt. Det finns också strängar som används vid  utskrift av titeln, t.ex. Starttid, Måltid, Varvning osv. </p>
+
+<h3> Distribution och filformat</h3>
+
+<p>Vid en tävling kan det finnas flera registreringsstationer som skapar en start- och målfil. Filerna från de olika stationerna överförs sedan till en huvuddator som sammanställer alla tider till en resulatfil med hjälp av resultatprogramet.</p>
+
+<h4>Filformat</h4>
+<p>Starttider - Varje startfil innehåller information om startnummer och starttid i följande format:</br>
+<i>StartNr; Startid</br>
+2; 12.01.00</br>
+3; 12.02.00</br>
+</i></p>
+<p>Måltider - Varje målfil innehåller information om startnummer och måltid i följande format: </br>
+<i>StartNr; Maltid</br>
+2; 12.22.00</br>
+3; 12.23.00</br>
+</i></p>
+<p>Namn - Namnfilen innehåller information om startnummer, namn och eventuellt klass i följande format:</br>
+<i>StartNr; Namn</br>
+SENIOR</br>
+1; Anders Asson</br>
+2; Bengt Bsson</br>
+JUNIOR</br>
+4; David Dsson</br>
+</i></p>
+
+<p>Om inte klasser anges så innehåller listan endast startnummer och namn. 
+
+För ovanstående filer kan strängen "Startnummer; Starttid/Maltid/Namn" utelämnas. Om så är fallet så måste man ange vilken typ av fil som läses in av parsern. Detta gör man genom att skicka in parametern FileIdentifier i parsern.
+</p>
+<p>
+Resultat - Resultatfilen ser olika ut beroende på vilken printer som används:</br>
+<b>StdPrinter:</b></br>
+<i>StartNr; Namn; Totaltid; Starttid; Maltid</br>
+SENIOR</br>
+1; Anders Asson; 01.23.34; 12.00.00; 13.23.34</br>
+2; Bengt Bsson; 01.14.16; 12.01.00; 13.15.16</br>
+JUNIOR</br>
+4; David Dsson; 01.00.00; 12.05.11; 13.05.11</br>
+</i></p>
+<p><code>SortStdPrinter.java</code> ser lika dan ut förutom att listan är sorterad efter totaltid. Om inte klasser anges så antas alla tävlande vara i samma klass och klasser skrivs därmed inte ut.</p>
+
+
+<p><b>LapPrinter:</b></br>
+<i>JUNIOR</br>
+StartNr; Namn; #Varv; Totaltid; Varv1; Varv2; Varv3; Starttid; Varvning1; Varvning2; Maltid</br>
+102; David Dsson; 3; 01.12.07; 00.23.00; 00.20.00; 00.29.07; 12.00.00; 12.23.00; 12.43.00; 13.12.07</br>
+SENIOR</br>
+StartNr; Namn; #Varv; Totaltid; Varv1; Varv2; Varv3; Starttid; Varvning1; Varvning2; Maltid</br>
+1; Anders Asson; 3; 01.23.34; 00.30.00; 00.25.00; 00.28.34; 12.00.00; 12.30.00; 12.55.00; 13.23.34</br>
+2; Bengt Bsson; 3; 00.59.16; 00.21.00; 00.20.00; 00.18.16; 12.00.00; 12.21.00; 12.41.00; 12.59.16</br>
+</i></br>
+<code>SortLapPrinter.java</code> ser lika dan ut förutom att listan är sorterad efter antal varv (avtagande). Om två eller flera tävlande har samma antal varv så sorteras dem efter totaltiden. Om inte klasser anges så antas alla tävlande vara i samma klass och klasser skrivs därmed inte ut.
+</p>
+
+</body>
+</html>
