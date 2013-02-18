@@ -5,9 +5,12 @@ import io.reader.CvsReader;
 import io.reader.Parser;
 import io.reader.ParserException;
 
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Map;
+import java.util.Properties;
 
 import members.Competitor;
 
@@ -23,7 +26,6 @@ public class Test10 {
 
 	@Before
 	public void initialize() {
-
 		parser = new Parser();
 	}
 

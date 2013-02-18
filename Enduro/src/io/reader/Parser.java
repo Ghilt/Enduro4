@@ -1,10 +1,13 @@
 package io.reader;
 
 import io.Formater;
+import io.reader.Parser.FileIdentifier;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.Properties;
 
 import members.Competitor;
 import members.Time;
@@ -34,16 +37,35 @@ public class Parser {
 	 */
 	public Map<Integer, Competitor> parse(ArrayList<ArrayList<String>> input,
 			Map<Integer, Competitor> cs) throws ParserException {
-		ArrayList<Identifier> types = new ArrayList<Identifier>();
+		if (input.size() < 2)
+			throw new ParserException("Invalid input.");
 
 		Map<Integer, Competitor> competitors = new HashMap<Integer, Competitor>(
 				cs);
+		ArrayList<Identifier> types = new ArrayList<Identifier>();
+		ArrayList<String> firstLine = input.get(0);
+		String file = "";
+		// Parses the first line to know what each column means.
+		types = parseIdentifier(firstLine, file);
 
+		if (types.size() < 1 || types.get(0) != Identifier.start_nr)
+			throw new ParserException("Missing start number.");
+
+		parseRows(input.subList(1, input.size()), types, competitors);
+		return competitors;
+	}
+
+	public Map<Integer, Competitor> parse(List<ArrayList<String>> input,
+			Map<Integer, Competitor> cs, FileIdentifier fileIdentifier)
+			throws ParserException {
 		if (input.size() < 2)
 			throw new ParserException("Invalid input.");
-		ArrayList<String> firstLine = input.get(0);
-		// Parses the first line to know what each column means.
-		types = parseIdentifier(firstLine);
+
+		Map<Integer, Competitor> competitors = new HashMap<Integer, Competitor>(
+				cs);
+		ArrayList<Identifier> types = new ArrayList<Identifier>();
+		types = parseIdentifier(fileIdentifier);
+
 		if (types.size() < 1 || types.get(0) != Identifier.start_nr)
 			throw new ParserException("Missing start number.");
 
@@ -64,11 +86,11 @@ public class Parser {
 	 * @throws ParserException
 	 *             thrown if row does not contain the expected nbr of rows
 	 */
-	private void parseRows(ArrayList<ArrayList<String>> input,
+	private void parseRows(List<ArrayList<String>> input,
 			ArrayList<Identifier> types, Map<Integer, Competitor> competitors)
 			throws ParserException {
 		String classType = "";
-		for (int i = 1; i < input.size(); i++) {
+		for (int i = 0; i < input.size(); i++) {
 			ArrayList<String> row = input.get(i);
 
 			if (row.size() != 1 && row.size() != types.size()) {
@@ -156,6 +178,13 @@ public class Parser {
 	}
 
 	/**
+	 * Container for file types.
+	 */
+	public enum FileIdentifier {
+		name_file, start_file, finish_file;
+	}
+
+	/**
 	 * Parses the first lines and returns an arraylist containing enum types the
 	 * types of the columns.
 	 * 
@@ -165,8 +194,8 @@ public class Parser {
 	 * @throws ParserException
 	 *             if a type is invalid
 	 */
-	private ArrayList<Identifier> parseIdentifier(ArrayList<String> firstLine)
-			throws ParserException {
+	private ArrayList<Identifier> parseIdentifier(ArrayList<String> firstLine,
+			String file) throws ParserException {
 		ArrayList<Identifier> types = new ArrayList<Identifier>();
 
 		for (String s : firstLine) {
@@ -179,8 +208,35 @@ public class Parser {
 			} else if (s.equalsIgnoreCase(Formater.NAME)) {
 				types.add(Identifier.name);
 			} else {
-				throw new ParserException("Invalid string: " + s);
+				throw new ParserException("Invalid String " + s);
 			}
+
+		}
+
+		return types;
+	}
+
+	/**
+	 * Adds types to the list of types of columns, depending on what type of
+	 * file, specified in fileIdentity.
+	 * 
+	 * @param fileIdentity
+	 *            the type of file
+	 * @return an arraylist of types of columns
+	 * @throws ParserException
+	 */
+	private ArrayList<Identifier> parseIdentifier(FileIdentifier fileIdentity)
+			throws ParserException {
+		ArrayList<Identifier> types = new ArrayList<Identifier>();
+		types.add(Identifier.start_nr);
+		if (fileIdentity.equals(FileIdentifier.start_file)) {
+			types.add(Identifier.start_time);
+		} else if (fileIdentity.equals(FileIdentifier.finish_file)) {
+			types.add(Identifier.finish_time);
+		} else if (fileIdentity.equals(FileIdentifier.name_file)) {
+			types.add(Identifier.name);
+		} else {
+			throw new ParserException("Invalid file identity");
 		}
 
 		return types;
