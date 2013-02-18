@@ -126,11 +126,15 @@ public class StdPrinter extends Printer {
 	}
 
 	@Override
-	protected void appendRows(FileWriter fileWriter,
+	protected void appendRows(StringBuilder sb,
 			List<Competitor> competitors) throws IOException {
-		fileWriter.append(Formater.formatColumns(Formater.START_NR,
+	}
+
+	@Override
+	protected void appendFirstRow(StringBuilder sb) throws IOException {
+		sb.append(Formater.formatColumns(Formater.START_NR,
 				Formater.NAME, Formater.TOTAL_TIME, Formater.START_TIME,
 				Formater.FINISH_TIME));
-		fileWriter.append("\n");
+		sb.append("\n");
 	}
 }
