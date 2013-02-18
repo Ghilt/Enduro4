@@ -16,8 +16,6 @@ import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 
-
-
 public class TestCompetitor {
 
 	private Competitor c;
@@ -43,8 +41,9 @@ public class TestCompetitor {
 	public void testBadStart() {
 		Time f = new Time(45);
 		c.addFinishTime(f);
-		assertEquals(Formater.formatColumns(1, c.getName(),
-				new NullTime().toString(), StdPrinter.NO_START, f),
+		assertEquals(
+				Formater.formatColumns(1, c.getName(),
+						new NullTime().toString(), StdPrinter.NO_START, f),
 				cp.row(c));
 	}
 
@@ -52,8 +51,9 @@ public class TestCompetitor {
 	public void testBadEnd() {
 		Time s = new Time(10);
 		c.addStartTime(s);
-		assertEquals(Formater.formatColumns(1, c.getName(),
-				new NullTime().toString(), s, StdPrinter.NO_END),
+		assertEquals(
+				Formater.formatColumns(1, c.getName(),
+						new NullTime().toString(), s, StdPrinter.NO_END),
 				cp.row(c));
 	}
 
@@ -76,8 +76,7 @@ public class TestCompetitor {
 		c.addFinishTime(f2);
 
 		assertEquals(Formater.formatColumns(1, c.getName(), s1.difference(f1),
-				s1, f1, StdPrinter.MULTIPLE_ENDS + " " + f2),
-				cp.row(c));
+				s1, f1, StdPrinter.MULTIPLE_ENDS + " " + f2), cp.row(c));
 	}
 
 	@Test
@@ -90,8 +89,7 @@ public class TestCompetitor {
 		c.addFinishTime(f1);
 
 		assertEquals(Formater.formatColumns(1, c.getName(), s1.difference(f1),
-				s1, f1, StdPrinter.MULTIPLE_STARTS + " " + s2),
-				cp.row(c));
+				s1, f1, StdPrinter.MULTIPLE_STARTS + " " + s2), cp.row(c));
 	}
 
 	@Test
@@ -106,8 +104,7 @@ public class TestCompetitor {
 		assertEquals(Formater.formatColumns(1, c.getName(), new Time(10), s1,
 				f1, StdPrinter.MULTIPLE_STARTS + " " + s2 + " "
 						+ StdPrinter.MULTIPLE_ENDS + " " + f2 + " "
-						+ StdPrinter.IMPOSSIBLE_TOTAL_TIME),
-				cp.row(c));
+						+ StdPrinter.IMPOSSIBLE_TOTAL_TIME), cp.row(c));
 	}
 
 	/*
@@ -206,47 +203,49 @@ public class TestCompetitor {
 		assertEquals(Time.parse("02.00.00"), laps.get(2).getTotal());
 		assertEquals(Time.parse("05.00.00"), laps.get(3).getTotal());
 	}
-	
+
 	@Test
 	public void testBinaryLapsSimple() {
 		Time t1 = Time.parse("00.01.00"), f1 = Time.parse("00.34.00");
-		c.addStartTime(t1);
-		c.addFinishTime(f1);
-		
-		assertArrayEquals(new Lap[] {
-				new Lap(t1, f1) }, c.getBinaryLaps().toArray());
+		c.addStartTime(t1, 1);
+		c.addFinishTime(f1, 1);
+
+		assertArrayEquals(new Lap[] { new Lap(t1, f1) }, c.getBinaryLaps()
+				.toArray());
 	}
-	
+
 	@Test
 	public void testBinaryLapsOdd() {
-		Time t1 = Time.parse("00.01.00"), f1 = Time.parse("00.34.00"), f2 = Time.parse("00.55:00");
-		c.addStartTime(t1);
-		c.addFinishTime(f1);
-		c.addFinishTime(f2);
-		
-		assertArrayEquals(new Lap[] {
-				new Lap(t1, f1) }, c.getBinaryLaps().toArray());
+		Time t1 = Time.parse("00.01.00"), f1 = Time.parse("00.34.00"), f2 = Time
+				.parse("00.55:00");
+		c.addStartTime(t1, 1);
+		c.addFinishTime(f1, 1);
+		c.addFinishTime(f2, 2);
+
+		assertArrayEquals(new Lap[] { new Lap(t1, f1),
+				new Lap(new NullTime(), f2) }, c.getBinaryLaps().toArray());
 	}
-	
+
 	@Test
-	public void testBinaryLapsNone() {
+	public void testBinaryLapsHalfOfOne() {
 		Time t1 = Time.parse("00.01.00");
-		c.addStartTime(t1);
-		
-		assertArrayEquals(new Lap[] { }, c.getBinaryLaps().toArray());
+		c.addStartTime(t1, 0);
+
+		assertArrayEquals(new Lap[] { new Lap(t1, new NullTime()) }, c
+				.getBinaryLaps().toArray());
 	}
-	
+
 	@Test
 	public void testBinaryLapsMultiple() {
-		Time t1 = Time.parse("00.01.00"), f1 = Time.parse("00.34.00"), 
-				t2 = Time.parse("00.39.00"), f2 = Time.parse("00.55:00");
-		c.addStartTime(t1);
-		c.addStartTime(t2);
-		c.addFinishTime(f1);
-		c.addFinishTime(f2);
-		
-		assertArrayEquals(new Lap[] {
-				new Lap(t1, f1), new Lap(t2, f2) }, c.getBinaryLaps().toArray());
+		Time t1 = Time.parse("00.01.00"), f1 = Time.parse("00.34.00"), t2 = Time
+				.parse("00.39.00"), f2 = Time.parse("00.55:00");
+		c.addStartTime(t1, 1);
+		c.addStartTime(t2, 2);
+		c.addFinishTime(f1, 1);
+		c.addFinishTime(f2, 2);
+
+		assertArrayEquals(new Lap[] { new Lap(t1, f1), new Lap(t2, f2) }, c
+				.getBinaryLaps().toArray());
 	}
 
 }

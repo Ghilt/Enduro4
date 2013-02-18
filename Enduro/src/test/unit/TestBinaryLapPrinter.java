@@ -42,10 +42,10 @@ public class TestBinaryLapPrinter {
 		Time start2 = Time.parse("01.00.00");
 		Time finish2 = Time.parse("01.40.00");
 
-		c.addStartTime(start1);
-		c.addStartTime(start2);
-		c.addFinishTime(finish1);
-		c.addFinishTime(finish2);
+		c.addStartTime(start1, 1);
+		c.addStartTime(start2, 2);
+		c.addFinishTime(finish1, 1);
+		c.addFinishTime(finish2, 2);
 
 		Time etapp1 = start1.difference(finish1);
 		Time etapp2 = start2.difference(finish2);

@@ -2,7 +2,9 @@ package members;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author Philip & Andrée
@@ -67,6 +69,16 @@ public class Competitor implements Comparable<Competitor> {
 		return laps;
 	}
 
+	private class StationTimes {
+		private ArrayList<Time> start;
+		private ArrayList<Time> finish;
+
+		public StationTimes() {
+			start = new ArrayList<Time>();
+			finish = new ArrayList<Time>();
+		}
+	}
+
 	/**
 	 * Big laps, defined by one start and one end.
 	 * 
@@ -74,17 +86,36 @@ public class Competitor implements Comparable<Competitor> {
 	 */
 	public List<Lap> getBinaryLaps() {
 		List<Lap> laps = new ArrayList<Lap>();
-		int startIndex = 0;
-		int finishIndex = 0;
-		// while(startIndex < startTimes.size() && finishIndex <
-		// finishTimes.size()) {
-		// Time startTime = startTimes.get(startIndex);
-		// Time finishTime = finishTimes.get(finishIndex);
-		// if(finishTime.compareTo(startTime))
-		// }
-		for (int i = 0; i < startTimes.size() && i < finishTimes.size(); i++)
-			laps.add(new Lap(startTimes.get(i).time, finishTimes.get(i).time));
 
+		// Put all the stations into 2D matrixes so they can be used properly.
+		Map<Integer, StationTimes> stations = new HashMap<Integer, StationTimes>();
+		for (Station s : startTimes) {
+			if (stations.get(s.nr) == null) {
+				stations.put(s.nr, new StationTimes());
+			}
+			stations.get(s.nr).start.add(s.time);
+		}
+		for (Station s : finishTimes) {
+			if (stations.get(s.nr) == null) {
+				stations.put(s.nr, new StationTimes());
+			}
+			stations.get(s.nr).finish.add(s.time);
+		}
+
+		// Take the first start and end from each station and put them into a
+		// list
+		for (StationTimes ts : stations.values()) {
+			Time a = new NullTime();
+			Time b = new NullTime();
+			if (!ts.start.isEmpty()) {
+				a = ts.start.get(0);
+			}
+			if (!ts.finish.isEmpty()) {
+				b = ts.finish.get(0);
+			}
+			laps.add(new Lap(a, b));
+
+		}
 		return laps;
 	}
 

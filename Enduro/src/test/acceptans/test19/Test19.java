@@ -51,11 +51,7 @@ public class Test19 {
 
 		reader = new CvsReader(TEST_PATH + "maltider1.txt");
 		input = reader.readAll();
-		competitors = parser.parse(input, competitors,
-				Parser.FileIdentifier.finish_file);
-
-		reader = new CvsReader(TEST_PATH + "maltider2.txt");
-		input = reader.readAll();
+		parser = new Parser(1);
 		competitors = parser.parse(input, competitors,
 				Parser.FileIdentifier.finish_file);
 
@@ -63,9 +59,16 @@ public class Test19 {
 		input = reader.readAll();
 		competitors = parser.parse(input, competitors,
 				Parser.FileIdentifier.start_file);
+		
+		reader = new CvsReader(TEST_PATH + "maltider2.txt");
+		input = reader.readAll();
+		parser = new Parser(2);
+		competitors = parser.parse(input, competitors,
+				Parser.FileIdentifier.finish_file);
 
 		reader = new CvsReader(TEST_PATH + "starttider2.txt");
 		input = reader.readAll();
+		parser = new Parser(2);
 		competitors = parser.parse(input, competitors,
 				Parser.FileIdentifier.start_file);
 
