@@ -155,7 +155,9 @@ public class Gui extends JFrame {
 		Time t = Time.fromCurrentTime();
 		String temp = Formater.formatColumns(entry, t);
 
-		if (entry.isEmpty()) {
+		IntervalParser p = new IntervalParser(entry);
+
+		if (entry.isEmpty() || !p.isValid()) {
 			entryButton.setText(RegisterButton.REQUEST_ENTRY);
 			updateTextArea(temp);
 			if (!emptyEntry)
@@ -163,10 +165,13 @@ public class Gui extends JFrame {
 			emptyEntry = true;
 		} else {
 			if (emptyEntry) {
-				printer.enterLateNumber(entry);
-				emptyEntry = false;
-				entryButton.setText(RegisterButton.DEFAULT_TEXT);
-				addToStartOfTextArea(entry);
+				if (p.isValid()) {
+					printer.enterLateNumber((String[]) p.getIntervals()
+							.toArray());
+					emptyEntry = false;
+					entryButton.setText(RegisterButton.DEFAULT_TEXT);
+					addToStartOfTextArea(entry);
+				}
 			} else {
 				printInterval(entry);
 				updateTextArea(temp);

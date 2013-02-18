@@ -97,15 +97,30 @@ public class GuiPrinter {
 	 * @param comNr
 	 *            The string to add.
 	 */
-	public void enterLateNumber(String comNr) {
+//	public void enterLateNumber(String comNr) {
+//		try {
+//			ArrayList<String> lines = getLines();
+//			lines.set(lines.size() - 1, comNr + lines.get(lines.size() - 1));
+//			writeLines(lines);
+//		} catch (FileNotFoundException e1) {
+//		} catch (IOException e) {
+//		}
+//
+//	}
+	
+	public void enterLateNumber(String... comNrs) {
 		try {
 			ArrayList<String> lines = getLines();
-			lines.set(lines.size() - 1, comNr + lines.get(lines.size() - 1));
+			String time = lines.get(lines.size() - 1);
+			lines.remove(lines.size() - 1);
+			
+			for (String c : comNrs) 
+				lines.add(c + time);
+			
 			writeLines(lines);
 		} catch (FileNotFoundException e1) {
 		} catch (IOException e) {
 		}
-
 	}
 
 	/**
