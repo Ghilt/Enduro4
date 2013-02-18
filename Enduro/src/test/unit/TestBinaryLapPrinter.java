@@ -5,6 +5,7 @@ import io.Formater;
 import io.printer.BinaryLapPrinter;
 import io.printer.Printer;
 import members.Competitor;
+import members.NullTime;
 import members.Time;
 
 import org.junit.*;
@@ -20,7 +21,7 @@ public class TestBinaryLapPrinter {
 	}
 
 	@Test
-	public void testGoodTimes() {
+	public void testOneEtapp() {
 		String start1 = "00.00.15";
 		String finish1 = "00.45.00";
 
@@ -36,16 +37,16 @@ public class TestBinaryLapPrinter {
 	}
 
 	@Test
-	public void testTwoGoodTimes() {
+	public void testTwoEttaps() {
 		Time start1 = Time.parse("00.00.15");
 		Time finish1 = Time.parse("00.45.00");
 		Time start2 = Time.parse("01.00.00");
 		Time finish2 = Time.parse("01.40.00");
 
-		c.addStartTime(start1);
-		c.addStartTime(start2);
-		c.addFinishTime(finish1);
-		c.addFinishTime(finish2);
+		c.addStartTime(start1, 1);
+		c.addStartTime(start2, 2);
+		c.addFinishTime(finish1, 1);
+		c.addFinishTime(finish2, 2);
 
 		Time etapp1 = start1.difference(finish1);
 		Time etapp2 = start2.difference(finish2);
@@ -58,33 +59,69 @@ public class TestBinaryLapPrinter {
 		assertEquals(formattedRow, cp.row(c));
 	}
 
-//	@Test
-//	public void testNoStartTimes() {
-//		Time finish1 = Time.parse("00.45.00");
-//		Time finish2 = Time.parse("01.40.00");
-//		
-//		c.addFinishTime(finish1);
-//		c.addFinishTime(finish2);
-//
-//		String formattedRow = Formater.formatColumns(1, c.getName(), Printer.NO_START, finish1.clone(), finish2.clone());
-//
-//		assertEquals(formattedRow, cp.row(c));
-//	}
-//
-//	@Test
-//	public void testNoFinishTimes() {
-//		Time start1 = Time.parse("00.00.15");
-//		Time finish1 = Time.parse("00.45.00");
-//		Time start2 = Time.parse("01.00.00");
-//
-//		c.addStartTime(start1);
-//		c.addStartTime(start2);
-//		c.addFinishTime(finish1);
-//
-//
-//		String formattedRow ;
-//
-//		assertEquals(formattedRow, cp.row(c));
-//	}
+	@Ignore
+	public void testNoStartTimes() {
+		Time finish1 = Time.parse("00.45.00");
+		Time finish2 = Time.parse("01.40.00");
+
+		c.addFinishTime(finish1);
+		c.addFinishTime(finish2);
+
+		String formattedRow = Formater.formatColumns(1, c.getName(),
+				new NullTime().toString(), 0, Printer.NO_START, finish1,
+				Printer.NO_START, finish2);
+
+		assertEquals(formattedRow, cp.row(c));
+	}
+
+	@Ignore
+	public void testNoFinishTimes() {
+		Time start1 = Time.parse("00.00.15");
+		Time finish1 = Time.parse("00.45.00");
+		Time start2 = Time.parse("01.00.00");
+
+		c.addStartTime(start1);
+		c.addStartTime(start2);
+		c.addFinishTime(finish1);
+
+		String formattedRow = Formater.formatColumns(1, c.getName(),
+				start1.difference(finish1), 1, start1.difference(finish1),
+				new NullTime().toString(), start1, finish1, start2,
+				Printer.NO_END);
+
+		assertEquals(formattedRow, cp.row(c));
+	}
+	@Ignore
+	public void testManyStartTimes() {
+		Time start1 = Time.parse("00.00.15");
+		Time finish1 = Time.parse("00.45.00");
+		Time start2 = Time.parse("01.00.00");
+
+		c.addStartTime(start1, 1);
+		c.addStartTime(start2, 1);
+		c.addFinishTime(finish1, 1);
+
+		String formattedRow = Formater.formatColumns(1, c.getName(),
+				start1.difference(finish1), 1, start1.difference(finish1),
+				start1, finish1, Printer.MULTIPLE_STARTS_ETAPP + 1, start2);
+
+		assertEquals(formattedRow, cp.row(c));
+	}
+	@Ignore
+	public void testManyEndTimes() {
+		Time start1 = Time.parse("00.00.15");
+		Time finish1 = Time.parse("00.45.00");
+		Time finish2 = Time.parse("01.00.00");
+
+		c.addStartTime(start1, 1);
+		c.addStartTime(finish1, 1);
+		c.addFinishTime(finish2, 1);
+
+		String formattedRow = Formater.formatColumns(1, c.getName(),
+				start1.difference(finish1), 1, start1.difference(finish1),
+				start1, finish1, Printer.MULTIPLE_ENDS_ETAPP + 1, finish2);
+
+		assertEquals(formattedRow, cp.row(c));
+	}
 
 }
