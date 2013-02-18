@@ -166,13 +166,13 @@ public class Competitor implements Comparable<Competitor> {
 	}
 
 	/**
-	 * Returns the total time of this competitor assuming it is binary laps. If
-	 * missing start or finish time no total time exist. If laps exists, total
-	 * time is calculated as sum of lap times.
+	 * Returns the total time of this competitor with a type of lap specified by the caller. If
+	 * missing start or finish time no total time exist. If laps or binary laps exist, the total
+	 * time is calculated as sum of those times.
 	 * 
 	 * @return the total time
 	 */
-	public Time getTotalTime(List<Lap> laps ) {
+	public Time getTotalTime(List<Lap> laps) {
 		// No total time exists if start or finish times are missing
 		if (startTimes.isEmpty() || finishTimes.isEmpty()) {
 			return new NullTime();

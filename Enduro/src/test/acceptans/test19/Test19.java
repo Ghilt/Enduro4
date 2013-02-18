@@ -1,6 +1,7 @@
 package test.acceptans.test19;
 
 import io.printer.BinaryLapPrinter;
+import io.printer.SortBinaryLapPrinter;
 import io.reader.CvsReader;
 import io.reader.Parser;
 import io.reader.ParserException;
@@ -20,8 +21,8 @@ import test.TestUtil;
 
 public class Test19 {
 
-//	private static final String SORT_RESULT_PATH = "src/test/tmp/test18_lap_sort.txt";
-	private static final String RESULT_PATH = "src/test/tmp/test18_lap.txt";
+	private static final String SORT_RESULT_PATH = "src/test/tmp/test19_sorted.txt";
+	private static final String RESULT_PATH = "src/test/tmp/test19.txt";
 	private static final String TEST_PATH = "src/test/acceptans/test19/";
 	private CvsReader reader;
 	private Parser parser;
@@ -78,10 +79,10 @@ public class Test19 {
 
 		Collections.sort(list, new Sorter.CompetitorComparator());
 
-//		printer = new SortLapPrinter();
-//		printer.printResults(list, SORT_RESULT_PATH);
-//		TestUtil.testResultFiles(TEST_PATH + "sortresultat.txt",
-//				SORT_RESULT_PATH);
+		printer = new SortBinaryLapPrinter();
+		printer.printResults(list, SORT_RESULT_PATH);
+		TestUtil.testResultFiles(TEST_PATH + "sort_resultat.txt",
+				SORT_RESULT_PATH);
 	}
 
 }

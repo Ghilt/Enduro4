@@ -1,6 +1,6 @@
 StartNr; Namn
 GemensamKlass
 1; Ander Asson
-2; Bengt Bsson
-3; Claes Csson
+3; Bengt Bsson
+2; Claes Csson
 

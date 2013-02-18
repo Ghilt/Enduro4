@@ -9,14 +9,14 @@ import java.util.List;
 import members.Competitor;
 import members.Lap;
 
-public class BinaryLapPrinter extends Printer {
-
-	protected final String FIRST_ROW = "StartNr; Namn; Totaltid; #Etapper; ";
+public class SortBinaryLapPrinter extends BinaryLapPrinter {
 
 	@Override
 	public String row(Competitor c) {
 		StringBuilder sb = new StringBuilder();
 
+		appendPlacement(sb, c);
+		
 		addString(sb, c.getIndex() + "");
 		addString(sb, c.getName() + "");
 		addString(sb, c.getTotalTime(c.getBinaryLaps()) + "");
@@ -26,22 +26,25 @@ public class BinaryLapPrinter extends Printer {
 		addString(sb, etapper.size() + "");
 
 		appendEtapper(sb, etapper);
-		appendTimes(sb, etapper);
 
 		sb.setLength(sb.length() - Formater.COLUMN_SEPARATOR.length());
 		return sb.toString();
 	}
 
-	protected void appendTimes(StringBuilder sb, List<Lap> etapper) {
-		for (Lap l : etapper) {
-			addString(sb, l.getStart() + "");
-			addString(sb, l.getEnd() + "");
-		}
-	}
-
-	protected void appendEtapper(StringBuilder sb, List<Lap> etapper) {
-		for (Lap l : etapper) {
-			addString(sb, l.getTotal() + "");
+	/**
+	 * Append the competitors start nbr, name, nbr of laps and total time to the
+	 * stringbuilder.
+	 * 
+	 * @param sb
+	 *            the stringbuilder to append to
+	 * @param c
+	 *            the competitor which info to append
+	 */
+	private void appendPlacement(StringBuilder sb, Competitor c) {
+		if (c.getPlac() == 0) {
+			sb.append(Formater.COLUMN_SEPARATOR);
+		} else {
+			sb.append(c.getPlac() + Formater.COLUMN_SEPARATOR);
 		}
 	}
 
@@ -59,30 +62,18 @@ public class BinaryLapPrinter extends Printer {
 			}
 		}
 
-		for (int i = 1; i < maxLaps + 1; i++) {
+		int i = 1;
+		for (; i < maxLaps; i++) {
 			fileWriter.append(Formater.BINARY_LAP_TIME + i
 					+ Formater.COLUMN_SEPARATOR);
 		}
-		int i = 1;
-		for (i = 1; i < maxLaps; i++) {
-			fileWriter.append(Formater.START_TIME + i
-					+ Formater.COLUMN_SEPARATOR);
-			fileWriter.append(Formater.FINISH_TIME + i
-					+ Formater.COLUMN_SEPARATOR);
-		}
-		fileWriter.append(Formater.START_TIME + i + Formater.COLUMN_SEPARATOR);
-		fileWriter.append(Formater.FINISH_TIME + i);
+		fileWriter.append(Formater.BINARY_LAP_TIME + i);
 		fileWriter.append("\n");
 
 	}
 
 	protected void appendFirstRow(FileWriter fileWriter) throws IOException {
-		fileWriter.append(FIRST_ROW);
+		fileWriter.append(Formater.formatColumns(Formater.PLACEMENT, Formater.START_NR, Formater.NAME, Formater.TOTAL_TIME, Formater.BINARY_LAP_NUMBER));
+		fileWriter.append(Formater.COLUMN_SEPARATOR);
 	}
-
-	protected void addString(StringBuilder sb, String s) {
-		sb.append(s);
-		sb.append(Formater.COLUMN_SEPARATOR);
-	}
-
 }
