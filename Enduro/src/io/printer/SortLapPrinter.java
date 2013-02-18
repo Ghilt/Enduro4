@@ -6,15 +6,15 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.List;
 
-
 import members.Competitor;
 
 public class SortLapPrinter extends LapPrinter {
 
-	private final String FIRST_ROW = "Plac; StartNr; Namn; #Varv; Totaltid; ";
-
 	protected void appendFirstRow(FileWriter fileWriter) throws IOException {
-		fileWriter.append(FIRST_ROW);
+		fileWriter.append(Formater.formatColumns(Formater.PLACEMENT,
+				Formater.START_NR, Formater.NAME, Formater.LAP_NUMBER,
+				Formater.TOTAL_TIME));
+		fileWriter.append(Formater.COLUMN_SEPARATOR);
 	}
 
 	@Override

@@ -10,26 +10,26 @@ import members.Competitor;
 import members.Lap;
 
 public class BinaryLapPrinter extends Printer {
-	
-	private final String FIRST_ROW = "StartNr; Namn; Totaltid; #Etapper; ";
+
 	protected int maxLaps;
-	
+	protected final String FIRST_ROW = "StartNr; Namn; Totaltid; #Etapper; ";
+
 	protected void appendFirstRow(FileWriter fileWriter) throws IOException {
 		fileWriter.append(FIRST_ROW);
 	}
-	
+
 	@Override
 	public String row(Competitor c) {
 		StringBuilder sb = new StringBuilder();
 
 		appendCompetitorInfo(sb, c);
-		
+
 		appendBinaryLaps(sb, c);
 
 		sb.setLength(sb.length() - 2);
 		return sb.toString();
 	}
-	
+
 	protected void appendBinaryLaps(StringBuilder sb, Competitor c) {
 		List<Lap> binLaps = c.getBinaryLaps();
 		addString(sb, binLaps.size() + "");
@@ -63,23 +63,22 @@ public class BinaryLapPrinter extends Printer {
 		maxLaps = getMaxLaps(competitors);
 
 		appendFirstRow(fileWriter);
-		
+
 		for (int i = 1; i < maxLaps + 1; i++) {
-			fileWriter
-					.append(Formater.BIN_LAP_TIME + i + Formater.COLUMN_SEPARATOR);
+			fileWriter.append(Formater.BINARY_LAP_TIME + i
+					+ Formater.COLUMN_SEPARATOR);
 		}
-		for (int i = 0; i < maxLaps-1; i++) {
-			fileWriter
-			.append(Formater.START_TIME + (i+1) + Formater.COLUMN_SEPARATOR);
-			fileWriter
-			.append(Formater.FINISH_TIME + (i+1) + Formater.COLUMN_SEPARATOR);
+		for (int i = 0; i < maxLaps - 1; i++) {
+			fileWriter.append(Formater.START_TIME + (i + 1)
+					+ Formater.COLUMN_SEPARATOR);
+			fileWriter.append(Formater.FINISH_TIME + (i + 1)
+					+ Formater.COLUMN_SEPARATOR);
 		}
-		fileWriter
-		.append(Formater.START_TIME + maxLaps + Formater.COLUMN_SEPARATOR);
-		fileWriter
-		.append(Formater.FINISH_TIME + maxLaps + "\n");
+		fileWriter.append(Formater.START_TIME + maxLaps
+				+ Formater.COLUMN_SEPARATOR);
+		fileWriter.append(Formater.FINISH_TIME + maxLaps + "\n");
 	}
-	
+
 	/**
 	 * Returns the maximum number of laps ran by any competitor.
 	 * 
@@ -96,12 +95,12 @@ public class BinaryLapPrinter extends Printer {
 			}
 		}
 		return a;
+
 	}
 
 	protected void addString(StringBuilder sb, String s) {
 		sb.append(s);
 		sb.append(Formater.COLUMN_SEPARATOR);
 	}
-	
 
 }

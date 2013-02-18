@@ -12,7 +12,7 @@ public class LapPrinter extends Printer {
 
 	protected int maxLaps;
 
-	private final String FIRST_ROW = "StartNr; Namn; #Varv; Totaltid; ";
+	private final static String FIRST_ROW = "StartNr; Namn; #Varv; Totaltid; ";
 
 	@Override
 	public String row(Competitor c) {
@@ -41,7 +41,7 @@ public class LapPrinter extends Printer {
 	 */
 	protected void appendCompetitorInfo(StringBuilder sb, Competitor c) {
 		sb.append(Formater.formatColumns(c.getIndex(), c.getName(),
-				c.getNumberOfLaps(), c.getTotalTime())
+				c.getNumberOfLaps(), c.getTotalTime(c.getLaps()))
 				+ Formater.COLUMN_SEPARATOR);
 	}
 

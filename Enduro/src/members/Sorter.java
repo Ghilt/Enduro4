@@ -42,7 +42,7 @@ public class Sorter {
 				cmp = o2.getNumberOfLaps() - o1.getNumberOfLaps();
 
 				if (cmp == 0) {
-					cmp = o1.getTotalTime().compareTo(o2.getTotalTime());
+					cmp = o1.getTotalTime(o1.getLaps()).compareTo(o2.getTotalTime(o2.getLaps()));
 				}
 			}
 			return cmp;

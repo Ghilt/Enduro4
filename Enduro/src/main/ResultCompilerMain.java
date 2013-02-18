@@ -3,7 +3,7 @@ package main;
 import io.printer.BinaryLapPrinter;
 import io.printer.LapPrinter;
 import io.printer.Printer;
-import io.printer.SortBinLapPrinter;
+import io.printer.SortBinaryLapPrinter;
 import io.printer.SortLapPrinter;
 import io.printer.SortStdPrinter;
 import io.printer.StdPrinter;
@@ -233,7 +233,7 @@ public class ResultCompilerMain {
 			printer = new SortLapPrinter();
 		}
 		else if (printerType.equals(BINARY_LAPS)) {
-			printer = new SortBinLapPrinter();
+			printer = new SortBinaryLapPrinter();
 		}
 		return printer;
 	}
