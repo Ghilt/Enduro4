@@ -21,6 +21,7 @@ import test.TestUtil;
 
 public class Test18std {
 
+	private static final String TEST_PATH = "src/test/acceptans/test18std/";
 	private static final String SORT_RESULT_PATH = "src/test/tmp/test18_std_sort.txt";
 	private static final String RESULT_PATH = "src/test/tmp/test18_std.txt";
 	private CvsReader reader;
@@ -47,15 +48,15 @@ public class Test18std {
 	public void testResult() throws FileNotFoundException, ParserException {
 		Map<Integer, Competitor> competitors;
 
-		reader = new CvsReader("src/test/acceptans/test18std/maltider1.txt");
+		reader = new CvsReader(TEST_PATH + "maltider1.txt");
 		ArrayList<ArrayList<String>> input = reader.readAll();
 		competitors = parser.parse(input);
 
-		reader = new CvsReader("src/test/acceptans/test18std/namnfil.txt");
+		reader = new CvsReader(TEST_PATH + "namnfil.txt");
 		input = reader.readAll();
 		competitors = parser.parse(input, competitors);
 
-		reader = new CvsReader("src/test/acceptans/test18std/starttider.txt");
+		reader = new CvsReader(TEST_PATH + "starttider.txt");
 		input = reader.readAll();
 		competitors = parser.parse(input, competitors);
 
@@ -65,7 +66,7 @@ public class Test18std {
 		Collections.sort(list);
 		StdPrinter printer = new StdPrinter();
 		printer.printResults(list, RESULT_PATH);
-		TestUtil.testResultFiles("src/test/acceptans/test18std/resultat.txt",
+		TestUtil.testResultFiles(TEST_PATH + "resultat.txt",
 				RESULT_PATH);
 
 		Collections.sort(list, new Sorter.CompetitorComparator());
@@ -73,7 +74,7 @@ public class Test18std {
 		printer = new SortStdPrinter();
 		printer.printResults(list, SORT_RESULT_PATH);
 		TestUtil.testResultFiles(
-				"src/test/acceptans/test18std/sortresultat.txt",
+				TEST_PATH + "sortresultat.txt",
 				SORT_RESULT_PATH);
 	}
 

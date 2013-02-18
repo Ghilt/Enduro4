@@ -8,6 +8,8 @@ package io;
 public class Formater {
 	public static final String COLUMN_SEPARATOR = "; ";
 	public static final String LIST_SEPARATOR = ", ";
+	public final static String LINE_BREAK = "\n";
+	
 	public final static String START_NR = "StartNr";
 	public final static String START_TIME = "Starttid";
 	public final static String FINISH_TIME = "Maltid";

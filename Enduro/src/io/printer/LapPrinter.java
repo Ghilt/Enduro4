@@ -12,8 +12,6 @@ public class LapPrinter extends Printer {
 
 	protected int maxLaps;
 
-	private final static String FIRST_ROW = "StartNr; Namn; #Varv; Totaltid; ";
-
 	@Override
 	public String row(Competitor c) {
 		StringBuilder sb = new StringBuilder();
@@ -159,7 +157,9 @@ public class LapPrinter extends Printer {
 	}
 
 	protected void appendFirstRow(FileWriter fileWriter) throws IOException {
-		fileWriter.append(FIRST_ROW);
+		fileWriter.append(Formater.formatColumns(Formater.START_NR,
+				Formater.NAME, Formater.LAP_NUMBER, Formater.TOTAL_TIME));
+		fileWriter.append(Formater.COLUMN_SEPARATOR);
 	}
 
 	@Override
@@ -178,6 +178,6 @@ public class LapPrinter extends Printer {
 			fileWriter.append(Formater.LAP_FINISH_TIME + i
 					+ Formater.COLUMN_SEPARATOR);
 		}
-		fileWriter.append(Formater.FINISH_TIME + "\n");
+		fileWriter.append(Formater.FINISH_TIME + Formater.LINE_BREAK);
 	}
 }
