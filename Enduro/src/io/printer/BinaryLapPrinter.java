@@ -12,7 +12,6 @@ import members.Lap;
 public class BinaryLapPrinter extends Printer {
 
 	protected int maxLaps;
-	protected final String FIRST_ROW = "StartNr; Namn; Totaltid; #Etapper; ";
 
 	protected void appendFirstRow(FileWriter fileWriter) throws IOException {
 		fileWriter.append(Formater.formatColumns(Formater.START_NR, Formater.NAME, Formater.TOTAL_TIME, Formater.BINARY_LAP_NUMBER));

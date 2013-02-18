@@ -58,4 +58,33 @@ public class TestBinaryLapPrinter {
 		assertEquals(formattedRow, cp.row(c));
 	}
 
+//	@Test
+//	public void testNoStartTimes() {
+//		Time finish1 = Time.parse("00.45.00");
+//		Time finish2 = Time.parse("01.40.00");
+//		
+//		c.addFinishTime(finish1);
+//		c.addFinishTime(finish2);
+//
+//		String formattedRow = Formater.formatColumns(1, c.getName(), Printer.NO_START, finish1.clone(), finish2.clone());
+//
+//		assertEquals(formattedRow, cp.row(c));
+//	}
+//
+//	@Test
+//	public void testNoFinishTimes() {
+//		Time start1 = Time.parse("00.00.15");
+//		Time finish1 = Time.parse("00.45.00");
+//		Time start2 = Time.parse("01.00.00");
+//
+//		c.addStartTime(start1);
+//		c.addStartTime(start2);
+//		c.addFinishTime(finish1);
+//
+//
+//		String formattedRow ;
+//
+//		assertEquals(formattedRow, cp.row(c));
+//	}
+
 }
