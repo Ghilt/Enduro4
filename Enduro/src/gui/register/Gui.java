@@ -4,6 +4,8 @@ import gui.tools.NumberEntryField;
 import gui.tools.GuiPrinter;
 
 import io.Formater;
+import io.reader.IntervalParser;
+import io.reader.IntervalParser.Interval;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
@@ -11,6 +13,7 @@ import java.awt.Font;
 import java.awt.Toolkit;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.util.List;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -145,14 +148,14 @@ public class Gui extends JFrame {
 	 */
 	public void register() {
 		// Read and then flush the textField
-		String competitorNumber = textField.getText();
+		String entry = textField.getText();
 		textField.setText("");
 
 		// Format the new entry.
 		Time t = Time.fromCurrentTime();
-		String temp = Formater.formatColumns(competitorNumber, t);
+		String temp = Formater.formatColumns(entry, t);
 
-		if (competitorNumber.isEmpty()) {
+		if (entry.isEmpty()) {
 			entryButton.setText(RegisterButton.REQUEST_ENTRY);
 			updateTextArea(temp);
 			if (!emptyEntry)
@@ -160,12 +163,12 @@ public class Gui extends JFrame {
 			emptyEntry = true;
 		} else {
 			if (emptyEntry) {
-				printer.enterLateNumber(competitorNumber);
+				printer.enterLateNumber(entry);
 				emptyEntry = false;
 				entryButton.setText(RegisterButton.DEFAULT_TEXT);
-				addToStartOfTextArea(competitorNumber);
+				addToStartOfTextArea(entry);
 			} else {
-				printer.writeLine(temp);
+				printInterval(entry);
 				updateTextArea(temp);
 			}
 		}
@@ -175,6 +178,22 @@ public class Gui extends JFrame {
 		textField.requestFocus();
 		textArea.invalidate();
 		repaint();
+	}
+
+	/**
+	 * Parses the string as an interval and prints one line for every number
+	 * contained.
+	 * 
+	 * @param entry
+	 */
+	private void printInterval(String entry) {
+		Time t = Time.fromCurrentTime();
+		List<Interval> intervals = new IntervalParser(entry).getIntervals();
+		for (Interval i : intervals) {
+			for (int p = i.getStart(); p <= i.getEnd(); p++) {
+				printer.writeLine(Formater.formatColumns(p + "", t));
+			}
+		}
 	}
 
 	/**

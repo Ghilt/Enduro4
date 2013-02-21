@@ -113,8 +113,10 @@ public class IntervalParser {
 		try {
 			List<String> xs = intervals(str);
 
-			for (String x : xs)
-				intervals.add(interval(x));
+			for (String x : xs) {
+				if (x.length() > 0)
+					intervals.add(interval(x));
+			}
 
 		} catch (Exception e) {
 			valid = false;
