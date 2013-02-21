@@ -6,15 +6,16 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.List;
 
-
 import members.Competitor;
 
 public class SortLapPrinter extends LapPrinter {
 
-	private final String FIRST_ROW = "Plac; StartNr; Namn; #Varv; Totaltid; ";
-
-	protected void appendFirstRow(FileWriter fileWriter) throws IOException {
-		fileWriter.append(FIRST_ROW);
+	@Override
+	protected void appendFirstRow(StringBuilder sb) throws IOException {
+		sb.append(Formater.formatColumns(Formater.PLACEMENT,
+				Formater.START_NR, Formater.NAME, Formater.LAP_NUMBER,
+				Formater.TOTAL_TIME));
+		sb.append(Formater.COLUMN_SEPARATOR);
 	}
 
 	@Override
@@ -49,18 +50,15 @@ public class SortLapPrinter extends LapPrinter {
 	}
 
 	@Override
-	protected void appendRows(FileWriter fileWriter,
-			List<Competitor> competitors) throws IOException {
+	protected void appendRows(StringBuilder sb̈́, List<Competitor> competitors)
+			throws IOException {
 		maxLaps = getMaxLaps(competitors);
 
-		appendFirstRow(fileWriter);
-
 		for (int i = 1; i < maxLaps; i++) {
-			fileWriter
-					.append(Formater.LAP_TIME + i + Formater.COLUMN_SEPARATOR);
+			sb̈́.append(Formater.LAP_TIME + i + Formater.COLUMN_SEPARATOR);
 		}
-		fileWriter.append(Formater.LAP_TIME + maxLaps);
-		fileWriter.append("\n");
+		sb̈́.append(Formater.LAP_TIME + maxLaps);
+		sb̈́.append(Formater.LINE_BREAK);
 
 	}
 

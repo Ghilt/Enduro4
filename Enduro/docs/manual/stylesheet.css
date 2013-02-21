@@ -12,18 +12,23 @@ font-family: "Verdana","Times","Serif";
 }
 h1
 {
-font-size:2em;
+font-size:3em;
 font-family: "Verdana","Times","Serif";
 }
 h2
 {
-font-size:1,5em;
+font-size:2em;
 font-family: "Verdana","Times","Serif";
 }
 h3
 {
-font-size:1,25em;
+font-size:1,5em;
 font-family: "Verdana","Times","Serif";
 
+}
+h4 
+{
+  font-size:1,25em;
+  font-family:"Verdana", "Times", "Serif";
 }
                                                                       

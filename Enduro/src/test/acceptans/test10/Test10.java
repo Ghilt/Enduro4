@@ -23,7 +23,6 @@ public class Test10 {
 
 	@Before
 	public void initialize() {
-
 		parser = new Parser();
 	}
 

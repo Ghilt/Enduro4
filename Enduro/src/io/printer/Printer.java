@@ -1,5 +1,7 @@
 package io.printer;
 
+import io.Formater;
+
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -18,12 +20,16 @@ public abstract class Printer {
 	public static final String NO_START = "Start?";
 	public static final String NO_END = "Slut?";
 	public static final String MULTIPLE_STARTS = "Flera starttider?";
+	public static final String MULTIPLE_STARTS_ETAPP = "Flera starttider Etapp";
 	public static final String MULTIPLE_ENDS = "Flera måltider?";
+	public static final String MULTIPLE_ENDS_ETAPP = "Flera måltider Etapp";
 	public static final String IMPOSSIBLE_TOTAL_TIME = "Omöjlig Totaltid?";
 	public static final String IMPOSSIBLE_LAP_TIME = "Omöjlig varvtid?";
 	public static final Time MINIMUM_TOTAL_TIME = Time.parse("00.15.00");
 
 	public abstract String row(Competitor c);
+
+	protected abstract void appendFirstRow(StringBuilder sb) throws IOException;
 
 	/**
 	 * Prints the result in the list with competitors to the output file.
@@ -35,49 +41,22 @@ public abstract class Printer {
 	 * @param filepath
 	 *            the file to write to
 	 */
-	public void printResults(List<Competitor> competitors, String filepath) {
+	public final void printResults(List<Competitor> competitors, String filepath) {
+		printResults(competitors, filepath, new Converter() {
+			public String convert(String s) {
+				return s;
+			}
+		});
+	}
+
+	public final void printResults(List<Competitor> competitors,
+			String filepath, Converter converter) {
 		try {
 			File outputFile = new File(filepath);
 			FileWriter fileWriter = new FileWriter(outputFile);
-			int fromIndex = 0;
-			int toIndex = 0;
-			// noName are invalid competitors
-			ArrayList<Competitor> noNames = new ArrayList<Competitor>();
-
-			while (toIndex < competitors.size()) {
-				String classType = competitors.get(toIndex).getClassType();
-				String prevClassType = classType;
-				toIndex = getNewIndex(competitors, fromIndex, toIndex,
-						prevClassType, classType);
-
-				// classList now contains competitors of the same class
-				List<Competitor> classList = competitors.subList(fromIndex,
-						toIndex - 1);
-
-				setPlacements(classList);
-
-				fromIndex = toIndex - 1;
-
-				// Do not write a line if there's no class type
-				if (classType != "") {
-					fileWriter.append(prevClassType + "\n");
-				}
-				prevClassType = classType;
-
-				appendRows(fileWriter, classList);
-
-				for (Competitor comp : classList) {
-					// Check if person has name a.k.a this person exists
-					if (comp.getName().isEmpty()) {
-						noNames.add(comp);
-					} else {
-						fileWriter.append("" + row(comp) + "\n");
-					}
-				}
-			}
-
-			appendInvalidStartNbrs(fileWriter, noNames);
-
+			String results = build(competitors);
+			results = converter.convert(results);
+			fileWriter.append(results);
 			fileWriter.close();
 
 		} catch (IOException e) {
@@ -85,7 +64,51 @@ public abstract class Printer {
 		}
 	}
 
-	private void setPlacements(List<Competitor> competitors) {
+	private String build(List<Competitor> competitors) throws IOException {
+		StringBuilder sb = new StringBuilder();
+		int fromIndex = 0;
+		int toIndex = 0;
+		// noName are invalid competitors
+		ArrayList<Competitor> noNames = new ArrayList<Competitor>();
+
+		while (toIndex < competitors.size()) {
+			String classType = competitors.get(toIndex).getClassType();
+			String prevClassType = classType;
+			toIndex = getNewIndex(competitors, fromIndex, toIndex,
+					prevClassType, classType);
+
+			// classList now contains competitors of the same class
+			List<Competitor> classList = competitors.subList(fromIndex,
+					toIndex - 1);
+
+			setPlacements(classList);
+
+			fromIndex = toIndex - 1;
+
+			// Do not write a line if there's no class type
+			if (classType != "") {
+				sb.append(prevClassType + "\n");
+			}
+			prevClassType = classType;
+
+			appendFirstRow(sb);
+			appendRows(sb, classList);
+
+			for (Competitor comp : classList) {
+				// Check if person has name a.k.a this person exists
+				if (comp.getName().isEmpty()) {
+					noNames.add(comp);
+				} else {
+					sb.append("" + row(comp) + "\n");
+				}
+			}
+		}
+
+		appendInvalidStartNbrs(sb, noNames);
+		return sb.toString();
+	}
+
+	protected void setPlacements(List<Competitor> competitors) {
 		int maxLaps = getMaxLaps(competitors);
 		for (int i = 0; i < competitors.size(); i++) {
 			if (competitors.get(i).getNumberOfLaps() == maxLaps) {
@@ -105,13 +128,14 @@ public abstract class Printer {
 	 *            List with invalid competitors
 	 * @throws IOException
 	 */
-	private void appendInvalidStartNbrs(FileWriter fileWriter,
+	private void appendInvalidStartNbrs(StringBuilder sb,
 			ArrayList<Competitor> noNames) throws IOException {
 		if (!noNames.isEmpty()) {
-			fileWriter.append("Icke existerande startnummer" + "\n");
-			appendRows(fileWriter, noNames);
+			sb.append("Icke existerande startnummer" + Formater.LINE_BREAK);
+			appendFirstRow(sb);
+			appendRows(sb, noNames);
 			for (Competitor comp : noNames) {
-				fileWriter.append("" + row(comp) + "\n");
+				sb.append("" + row(comp) + "\n");
 			}
 
 		}
@@ -151,7 +175,7 @@ public abstract class Printer {
 		return toIndex;
 	}
 
-	protected abstract void appendRows(FileWriter fileWriter,
+	protected abstract void appendRows(StringBuilder sb,
 			List<Competitor> competitors) throws IOException;
 
 	/**

@@ -1,0 +1,5 @@
+GemensamKlass
+1; Ander Asson;
+2; Bengt Bsson;
+3; Claes Csson;
+

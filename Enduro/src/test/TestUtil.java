@@ -8,7 +8,8 @@ import java.util.Scanner;
 
 public abstract class TestUtil {
 
-	public static void testResultFiles(String f1, String f2) throws FileNotFoundException {
+	public static void testResultFiles(String f1, String f2)
+			throws FileNotFoundException {
 		File file1 = new File(f1);
 		File file2 = new File(f2);
 		Scanner scan1 = new Scanner(file1);
@@ -19,5 +20,7 @@ public abstract class TestUtil {
 			line2 = scan2.nextLine();
 			assertEquals("", line1, line2);
 		}
+		scan1.close();
+		scan2.close();
 	}
 }

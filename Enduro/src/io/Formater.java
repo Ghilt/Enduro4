@@ -8,13 +8,22 @@ package io;
 public class Formater {
 	public static final String COLUMN_SEPARATOR = "; ";
 	public static final String LIST_SEPARATOR = ", ";
+	public final static String LINE_BREAK = "\n";
+	
 	public final static String START_NR = "StartNr";
 	public final static String START_TIME = "Starttid";
 	public final static String FINISH_TIME = "Maltid";
 	public final static String NAME = "Namn";
+	public final static String PLACEMENT = "Plac";
 	public final static String TOTAL_TIME = "Totaltid";
+	
 	public final static String LAP_FINISH_TIME = "Varvning";
 	public final static String LAP_TIME = "Varv";
+	public final static String LAP_NUMBER = "#Varv";
+	
+	public final static String BINARY_LAP_TIME = "Etapp";
+	public final static String BINARY_LAP_NUMBER = "#Etapper";
+
 
 	/**
 	 * Return a string formated for a column

@@ -2,16 +2,19 @@ package io.reader;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 /**
  * Parser Class for GUI. Parses a string to an Interval of numbers.
  * 
- * @author Oskar, Andrée! unzunz
+ * @author Oskar, Andrée!
  */
 public class IntervalParser {
 	public static final String INTERVAL_DELIMITER = ",";
 	public static final String INTERVAL_RANGE = "-";
+	private static final String VALID_INTERVAL_REGEX_SINGLE = "[0-9]*";
+	private static final String VALID_INTERVAL_REGEX_RANGE = "[0-9]*-[0-9]*";
 
 	/**
 	 * Represents an interval
@@ -55,6 +58,19 @@ public class IntervalParser {
 		public int size() {
 			return end - start + 1;
 		}
+		
+		/**
+		 * Get all numbers in the Interval
+		 * @return List of numbers
+		 */
+		public List<Integer> getNumbers() {
+			List<Integer> xs = new ArrayList<Integer>();
+			
+			for (int i = start; i <= end; i++)
+				xs.add(i);
+			
+			return xs;
+		}
 
 		@Override
 		public int hashCode() {
@@ -81,13 +97,43 @@ public class IntervalParser {
 			return true;
 		}
 	}
-
-	private List<String> intervals(String s) {
-		return Arrays.asList(s.split(INTERVAL_DELIMITER));
+	
+	/**
+	 * Count the amount of the character
+	 * @param str String
+	 * @param c Character
+	 * @return Amount of the specific character
+	 */
+	private int countChar(String str, char c) {
+		int count = 0;
+		for (char i : str.toCharArray())
+			if (i == c)
+				count++;
+		return count;	
 	}
 
-	private Interval interval(String s) {
+	/**
+	 * Extracts Strings from a String.
+	 * @param s String
+	 * @return Strings
+	 * @throws ParserException
+	 */
+	private List<String> intervals(String s) throws ParserException {
+		List<String> xs = Arrays.asList(s.split(INTERVAL_DELIMITER));
+		int count = countChar(s, INTERVAL_DELIMITER.charAt(0));
+		
+		if (xs.size() <= count)
+			throw new ParserException("Invalid amount of " + INTERVAL_DELIMITER);
+		
+		return xs;
+	}
+
+	private Interval interval(String s) throws ParserException {
 		String[] t = s.split(INTERVAL_RANGE);
+		
+		if (!(s.matches(VALID_INTERVAL_REGEX_SINGLE) ||
+				s.matches(VALID_INTERVAL_REGEX_RANGE)))
+			throw new ParserException("Invalid regex.");
 
 		int first = Integer.valueOf(t[0]);
 
@@ -95,7 +141,8 @@ public class IntervalParser {
 			return new Interval(first);
 
 		int second = Integer.valueOf(t[1]);
-		return new Interval(first, second);
+		
+		return new Interval(Math.min(first, second), Math.max(first, second));
 	}
 
 	private final List<Interval> intervals;
@@ -108,24 +155,26 @@ public class IntervalParser {
 	 *            intervals
 	 */
 	public IntervalParser(String str) {
-		intervals = new ArrayList<Interval>();
+		List<Interval> intervals = new ArrayList<Interval>();
 		boolean valid = true;
 		try {
 			List<String> xs = intervals(str);
 
 			for (String x : xs) {
-				if (x.length() > 0)
+				if (x.isEmpty())
+					throw new ParserException("Empty range.");
+				else
 					intervals.add(interval(x));
 			}
 
 		} catch (Exception e) {
 			valid = false;
+			intervals.clear();
 		}
 
+		this.intervals = Collections.unmodifiableList(intervals);
 		isValid = valid;
 	}
-
-	// TODO: STRING SOM FAILAR!!!
 
 	/**
 	 * @return If String was valid
@@ -135,7 +184,7 @@ public class IntervalParser {
 	}
 
 	/**
-	 * @return returns a list with the intervals
+	 * @return returns a unmodifiable list with the intervals
 	 */
 	public List<Interval> getIntervals() {
 		return intervals;

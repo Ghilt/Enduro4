@@ -44,6 +44,7 @@ public class CvsReader {
 				ret.add(row);
 			}
 		}
+		scan.close();
 		return ret;
 	}
 

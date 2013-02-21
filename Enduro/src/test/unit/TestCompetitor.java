@@ -1,7 +1,6 @@
 package test.unit;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 import io.Formater;
 import io.printer.Printer;
 import io.printer.StdPrinter;
@@ -11,13 +10,13 @@ import java.util.List;
 import members.Competitor;
 import members.Lap;
 import members.NullTime;
+import members.Sorter;
+import members.Sorter.CompetitorComparator;
 import members.Time;
 
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
-
-
 
 public class TestCompetitor {
 
@@ -44,8 +43,9 @@ public class TestCompetitor {
 	public void testBadStart() {
 		Time f = new Time(45);
 		c.addFinishTime(f);
-		assertEquals(Formater.formatColumns(1, c.getName(),
-				new NullTime().toString(), StdPrinter.NO_START, f),
+		assertEquals(
+				Formater.formatColumns(1, c.getName(),
+						new NullTime().toString(), StdPrinter.NO_START, f),
 				cp.row(c));
 	}
 
@@ -53,8 +53,9 @@ public class TestCompetitor {
 	public void testBadEnd() {
 		Time s = new Time(10);
 		c.addStartTime(s);
-		assertEquals(Formater.formatColumns(1, c.getName(),
-				new NullTime().toString(), s, StdPrinter.NO_END),
+		assertEquals(
+				Formater.formatColumns(1, c.getName(),
+						new NullTime().toString(), s, StdPrinter.NO_END),
 				cp.row(c));
 	}
 
@@ -77,8 +78,7 @@ public class TestCompetitor {
 		c.addFinishTime(f2);
 
 		assertEquals(Formater.formatColumns(1, c.getName(), s1.difference(f1),
-				s1, f1, StdPrinter.MULTIPLE_ENDS + " " + f2),
-				cp.row(c));
+				s1, f1, StdPrinter.MULTIPLE_ENDS + " " + f2), cp.row(c));
 	}
 
 	@Test
@@ -91,8 +91,7 @@ public class TestCompetitor {
 		c.addFinishTime(f1);
 
 		assertEquals(Formater.formatColumns(1, c.getName(), s1.difference(f1),
-				s1, f1, StdPrinter.MULTIPLE_STARTS + " " + s2),
-				cp.row(c));
+				s1, f1, StdPrinter.MULTIPLE_STARTS + " " + s2), cp.row(c));
 	}
 
 	@Test
@@ -107,8 +106,7 @@ public class TestCompetitor {
 		assertEquals(Formater.formatColumns(1, c.getName(), new Time(10), s1,
 				f1, StdPrinter.MULTIPLE_STARTS + " " + s2 + " "
 						+ StdPrinter.MULTIPLE_ENDS + " " + f2 + " "
-						+ StdPrinter.IMPOSSIBLE_TOTAL_TIME),
-				cp.row(c));
+						+ StdPrinter.IMPOSSIBLE_TOTAL_TIME), cp.row(c));
 	}
 
 	/*
@@ -208,4 +206,105 @@ public class TestCompetitor {
 		assertEquals(Time.parse("05.00.00"), laps.get(3).getTotal());
 	}
 
+	@Test
+	public void testBinaryLapsSimple() {
+		Time t1 = Time.parse("00.01.00"), f1 = Time.parse("00.34.00");
+		c.addStartTime(t1, 1);
+		c.addFinishTime(f1, 1);
+
+		assertArrayEquals(new Lap[] { new Lap(t1, f1) }, c.getBinaryLaps()
+				.toArray());
+	}
+
+	@Test
+	public void testBinaryLapsOdd() {
+		Time t1 = Time.parse("00.01.00"), f1 = Time.parse("00.34.00"), f2 = Time
+				.parse("00.55:00");
+		c.addStartTime(t1, 1);
+		c.addFinishTime(f1, 1);
+		c.addFinishTime(f2, 2);
+
+		assertArrayEquals(new Lap[] { new Lap(t1, f1),
+				new Lap(new NullTime(), f2) }, c.getBinaryLaps().toArray());
+	}
+
+	@Test
+	public void testBinaryLapsHalfOfOne() {
+		Time t1 = Time.parse("00.01.00");
+		c.addStartTime(t1, 0);
+
+		assertArrayEquals(new Lap[] { new Lap(t1, new NullTime()) }, c
+				.getBinaryLaps().toArray());
+	}
+
+	@Test
+	public void testBinaryLapsMultiple() {
+		Time t1 = Time.parse("00.01.00"), f1 = Time.parse("00.34.00"), t2 = Time
+				.parse("00.39.00"), f2 = Time.parse("00.55:00");
+		c.addStartTime(t1, 1);
+		c.addStartTime(t2, 2);
+		c.addFinishTime(f1, 1);
+		c.addFinishTime(f2, 2);
+
+		assertArrayEquals(new Lap[] { new Lap(t1, f1), new Lap(t2, f2) }, c
+				.getBinaryLaps().toArray());
+	}
+	
+	@Test
+	public void testEqualCompetitorComparator(){
+		Time s = Time.parse("00.00.15"), f = Time.parse("00.45.00");
+		c.addStartTime(s);
+		c.addFinishTime(f);
+		c.setClassType("SENIOR");
+		Competitor c2 = new Competitor(2);
+		c2.addStartTime(s);
+		c2.addFinishTime(f);
+		c2.setClassType("SENIOR");
+		CompetitorComparator cpc = new CompetitorComparator();
+		assertTrue(cpc.compare(c, c2)==0);
+		
+	}
+	@Test
+	public void testEqualClassCompetitorComparator(){
+		Time s = Time.parse("00.00.15"), f = Time.parse("00.45.00");
+		c.addStartTime(s);
+		c.addFinishTime(f);
+		c.setClassType("SENIOR");
+		Time s2 = Time.parse("00.00.15"), f2 = Time.parse("00.47.00");
+		Competitor c2 = new Competitor(2);
+		c2.addStartTime(s2);
+		c2.addFinishTime(f2);
+		c2.setClassType("SENIOR");
+		CompetitorComparator cpc = new CompetitorComparator();
+		assertTrue(cpc.compare(c, c2)<0);
+		
+	}
+	public void testDifferentLapCompetitorComparator(){
+		Time s = Time.parse("00.00.15"), f = Time.parse("00.45.00");
+		c.addStartTime(s);
+		c.addFinishTime(f);
+		c.setClassType("SENIOR");
+		Time s2 = Time.parse("00.00.15"), f2 = Time.parse("00.47.00"), f3=Time.parse("01.25.00");
+		Competitor c2 = new Competitor(2);
+		c2.addStartTime(s2);
+		c2.addFinishTime(f2);
+		c2.addFinishTime(f3);
+		c2.setClassType("SENIOR");
+		CompetitorComparator cpc = new CompetitorComparator();
+		assertTrue(cpc.compare(c, c2)<0);
+		
+	}
+	@Test
+	public void testDifferentClassCompetitorComparator(){
+		Time s = Time.parse("00.00.15"), f = Time.parse("00.45.00");
+		c.addStartTime(s);
+		c.addFinishTime(f);
+		c.setClassType("SENIOR");
+		Competitor c2 = new Competitor(2);
+		c2.addStartTime(s);
+		c2.addFinishTime(f);
+		c2.setClassType("JUNIOR");
+		CompetitorComparator cpc = new CompetitorComparator();
+		assertTrue(cpc.compare(c, c2)>0);	
+	}
 }

@@ -64,10 +64,15 @@ public class SortStdPrinter extends StdPrinter {
 	}
 
 	@Override
-	protected void appendRows(FileWriter fileWriter,
+	protected void appendRows(StringBuilder sb,
 			List<Competitor> competitors) throws IOException {
-		fileWriter.append(Formater.formatColumns("Plac", Formater.START_NR,
+		
+	}
+	
+	@Override
+	protected void appendFirstRow(StringBuilder sb) throws IOException {
+		sb.append(Formater.formatColumns(Formater.PLACEMENT, Formater.START_NR,
 				Formater.NAME, Formater.TOTAL_TIME));
-		fileWriter.append("\n");
+		sb.append(Formater.LINE_BREAK);
 	}
 }
