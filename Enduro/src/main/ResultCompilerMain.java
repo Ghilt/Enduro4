@@ -27,6 +27,7 @@ import members.Sorter;
  */
 public class ResultCompilerMain {
 
+	private static final String RACETYPE = "racetype";
 	public static final String STARTTIMES = "start";
 	public static final String NAMEFILE = "namn";
 	public static final String FINISHTIMES = "slut";
@@ -38,6 +39,7 @@ public class ResultCompilerMain {
 	private final static String BINARY_LAPS = "etapprace";
 	public final static String YES = "yes";
 	public final static String NO = "no";
+	public static final String NUMBER_BINARY = "antalstationer";
 
 	/**
 	 * 
@@ -68,15 +70,17 @@ public class ResultCompilerMain {
 		// String jarDir = jarFile.getParentFile().getPath();
 		//
 
-		Map<String, FileIdentifier> inputFiles = getInputFiles(prop);
+		Map<String, FileHeader> inputFiles = getInputFiles(prop);
 
 		Map<Integer, Competitor> map = null;
 		try {
 			map = parseInputFiles(inputFiles, prop);
 		} catch (FileNotFoundException e) {
 			errorMessage(e.getMessage());
+			System.exit(-1);
 		} catch (ParserException e) {
 			errorMessage(e.getMessage());
+			System.exit(-1);
 		}
 
 		ArrayList<Competitor> list = new ArrayList<Competitor>(map.values());
@@ -128,12 +132,19 @@ public class ResultCompilerMain {
 	 * @throws ParserException
 	 */
 	private static Map<Integer, Competitor> parseInputFiles(
-			Map<String, FileIdentifier> inputFiles, Properties prop)
+			Map<String, FileHeader> inputFiles, Properties prop)
 			throws FileNotFoundException, ParserException {
+
 		Map<Integer, Competitor> map = new HashMap<Integer, Competitor>();
+
 		Parser p = new Parser();
+		System.out.println(inputFiles.keySet());
 		for (String file : inputFiles.keySet()) {
-			map = p.parse(read(file), map, inputFiles.get(file));
+			// for (int i=0; i<inputFiles.size(); i++) {
+			System.out.println("derp"+read(file)+ " "+file);
+			p.setStationNr(inputFiles.get(file).station);
+			map = p.parse(read(file), map, inputFiles.get(file).id);
+			
 		}
 		return map;
 	}
@@ -147,24 +158,50 @@ public class ResultCompilerMain {
 	 *            contains the values in the config file
 	 * @return HashMap with filenames as keys and type of file as value
 	 */
-	private static Map<String, Parser.FileIdentifier> getInputFiles(
-			Properties prop) {
-		Map<String, Parser.FileIdentifier> inputFiles = new HashMap<String, Parser.FileIdentifier>();
-		
-		addInputFile(prop, "startfiles", inputFiles, Parser.FileIdentifier.start_file);
-		addInputFile(prop, "namefiles", inputFiles, Parser.FileIdentifier.name_file);
-		addInputFile(prop, "finishfiles", inputFiles, Parser.FileIdentifier.finish_file);
+	private static Map<String, FileHeader> getInputFiles(Properties prop) {
+
+		Map<String, FileHeader> inputFiles = new HashMap<String, FileHeader>();
+
+		addInputFile(prop, "namefiles", inputFiles,
+				Parser.FileIdentifier.name_file, Competitor.NO_STATION);
+		int e = 1;
+		if (prop.containsKey(NUMBER_BINARY)
+				&& prop.getProperty(RACETYPE).equalsIgnoreCase(BINARY_LAPS)) {
+			try {
+				e = Integer.parseInt(prop.getProperty(NUMBER_BINARY));
+				for (int i = 1; i <= e; i++) {
+					addInputFile(prop, "startfiles" + "_" + i, inputFiles,
+							Parser.FileIdentifier.start_file, i);
+					addInputFile(prop, "finishfiles" + "_" + i, inputFiles,
+							Parser.FileIdentifier.finish_file, i);
+				}
+			} catch (NumberFormatException e1) {
+			}
+		} else {
+			addInputFile(prop, "startfiles", inputFiles,
+					Parser.FileIdentifier.start_file, Competitor.NO_STATION);
+			addInputFile(prop, "finishfiles", inputFiles,
+					Parser.FileIdentifier.finish_file, Competitor.NO_STATION);
+		}
+
+//		System.out.println(inputFiles.size());
+//		System.out.println(inputFiles);
+//		System.out.println(inputFiles.keySet());
 		return inputFiles;
 	}
-	
-	private static void addInputFile(Properties prop, String property, Map<String, Parser.FileIdentifier> inputFiles, FileIdentifier fileIdentity) {
+
+	private static void addInputFile(Properties prop, String property,
+			Map<String, FileHeader> inputFiles, FileIdentifier fileIdentity,
+			int stationNr) {
+
+		//System.out.println(""+property +" "+fileIdentity+" "+stationNr);
 		String startPath = "";
 		if (prop.containsKey(property)) {
 			startPath = prop.getProperty(property);
 		}
 		String[] startFiles = startPath.split(" ");
 		for (String s : startFiles) {
-			inputFiles.put(s, fileIdentity);
+			inputFiles.put(s, new FileHeader(stationNr, fileIdentity));
 		}
 	}
 
@@ -178,7 +215,7 @@ public class ResultCompilerMain {
 	private static ArrayList<ArrayList<String>> read(String file)
 			throws FileNotFoundException {
 		CvsReader reader = new CvsReader(file);
-
+		
 		return reader.readAll();
 	}
 
@@ -195,7 +232,7 @@ public class ResultCompilerMain {
 	private static Printer getPrinter(Properties prop) {
 		Printer printer = null;
 
-		String printerType = prop.getProperty("racetype");
+		String printerType = prop.getProperty(RACETYPE);
 
 		if (printerType.equals(STANDARD)) {
 			printer = new StdPrinter();
@@ -221,7 +258,7 @@ public class ResultCompilerMain {
 	private static Printer getSortPrinter(Properties prop) {
 		Printer printer = null;
 
-		String printerType = prop.getProperty("racetype");
+		String printerType = prop.getProperty(RACETYPE);
 
 		if (printerType.equals(STANDARD)) {
 			printer = new SortStdPrinter();
@@ -246,6 +283,16 @@ public class ResultCompilerMain {
 		JOptionPane.showMessageDialog(frame, e, "FEL",
 				JOptionPane.ERROR_MESSAGE);
 		frame.dispose();
+	}
+
+	private static class FileHeader {
+		public FileHeader(int stationNr, FileIdentifier fileIdentity) {
+			id = fileIdentity;
+			station = stationNr;
+		}
+
+		FileIdentifier id;
+		int station;
 	}
 
 }

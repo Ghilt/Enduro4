@@ -17,6 +17,10 @@ import members.Time;
  */
 public class Parser {
 
+	public void setStationNr(int stationNr) {
+		this.stationNr = stationNr;
+	}
+
 	private int stationNr;
 
 	public Parser(int stationNr) {
