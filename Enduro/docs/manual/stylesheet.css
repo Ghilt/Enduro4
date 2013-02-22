@@ -1,34 +1,45 @@
-#header
-{
 
+body{
 }
-#content
-{
-}
-p
-{
-font-size:1em;
-font-family: "Verdana","Times","Serif";
-}
-h1
-{
-font-size:3em;
-font-family: "Verdana","Times","Serif";
-}
-h2
-{
-font-size:2em;
-font-family: "Verdana","Times","Serif";
-}
-h3
-{
-font-size:1,5em;
-font-family: "Verdana","Times","Serif";
 
+#header{
+	font-family: "Futura", "Helvetica", "Times", "Serif";
+	width:900px;
+	margin:auto;
+	text-align: center;
+	text-decoration: none;
+	
 }
-h4 
-{
-  font-size:1,25em;
-  font-family:"Verdana", "Times", "Serif";
+#content{
+	font-family: "Futura", "Helvetica", "Times", "Serif";
+	width:900px;
+	margin:auto;
 }
-                                                                      
+HR{
+	align:center;
+	width:80%;
+}
+.exempel{
+	font-family:Courir;
+	padding-left: 20px;
+}
+#footer{
+	height:60px;
+	width:900px;
+	margin:auto;
+}
+h1{
+	font-size: 3em;
+}
+h2{
+	font-size: 1.75em;
+}
+h4{
+	font-size: 1.25em;
+}
+p{
+	font-size: 0.9em;
+}
+li{
+	font-size: 0.9em;
+}
