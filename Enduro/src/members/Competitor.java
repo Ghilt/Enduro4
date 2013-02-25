@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 /**
  * @author Philip & Andrée
@@ -13,25 +14,6 @@ import java.util.Map;
 public class Competitor implements Comparable<Competitor> {
 
 	public static final int NO_STATION = -1;
-
-	private class Station implements Comparable<Station> {
-		// public Station(Time t) {
-		// time = t;
-		// nr = -1;
-		// }
-		public Station(Time t, int nr) {
-			time = t;
-			this.nr = nr;
-		}
-
-		private Time time;
-		private int nr;
-
-		@Override
-		public int compareTo(Station other) {
-			return time.compareTo(other.time);
-		}
-	}
 
 	private int index;
 	private List<Station> startTimes;
@@ -86,20 +68,7 @@ public class Competitor implements Comparable<Competitor> {
 	 */
 	public List<Lap> getBinaryLaps() {
 		List<Lap> laps = new ArrayList<Lap>();
-		// Put all the stations into 2D matrixes so they can be used properly.
-		Map<Integer, StationTimes> stations = new HashMap<Integer, StationTimes>();
-		for (Station s : startTimes) {
-			if (stations.get(s.nr) == null) {
-				stations.put(s.nr, new StationTimes());
-			}
-			stations.get(s.nr).start.add(s.time);
-		}
-		for (Station s : finishTimes) {
-			if (stations.get(s.nr) == null) {
-				stations.put(s.nr, new StationTimes());
-			}
-			stations.get(s.nr).finish.add(s.time);
-		}
+		Map<Integer, StationTimes> stations = getStationsMatrix();
 
 		// Take the first start and end from each station and put them into a
 		// list
@@ -117,11 +86,56 @@ public class Competitor implements Comparable<Competitor> {
 		}
 		return laps;
 	}
-	
-	public List<Station> getExtraLapsBinary(){
 
-		return finishTimes;
-		
+	/**
+	 * Creates a list of Stations with the start times as the val0, and end
+	 * times as val1.
+	 * 
+	 * @return List<Station>[2]
+	 */
+	public List<Station>[] getExtraLapsBinary() {
+
+		@SuppressWarnings("unchecked")
+		List<Station>[] ret = new List[2];
+		ret[0] = new ArrayList<Station>();
+		ret[1] = new ArrayList<Station>();
+
+		Map<Integer, StationTimes> stations = getStationsMatrix();
+		for (Entry<Integer, StationTimes> entry : stations.entrySet()) {
+			ArrayList<Time> start = entry.getValue().start;
+			for (int i = 1; i < start.size() && start.size() > 1; i++) {
+				ret[0].add(new Station(start.get(i), entry.getKey()));
+			}
+			ArrayList<Time> end = entry.getValue().finish;
+			for (int i = 1; i < end.size() && end.size() > 1; i++) {
+				ret[1].add(new Station(end.get(i), entry.getKey()));
+			}
+		}
+		return ret;
+
+	}
+
+	/**
+	 * Puts all times into a map of arrays with the stations as keys
+	 * 
+	 * @return
+	 */
+	private Map<Integer, StationTimes> getStationsMatrix() {
+		// Put all the stations into 2D matrixes so they can be used properly.
+		Map<Integer, StationTimes> stations = new HashMap<Integer, StationTimes>();
+		for (Station s : startTimes) {
+			if (stations.get(s.nr) == null) {
+				stations.put(s.nr, new StationTimes());
+			}
+			stations.get(s.nr).start.add(s.time);
+		}
+		for (Station s : finishTimes) {
+			if (stations.get(s.nr) == null) {
+				stations.put(s.nr, new StationTimes());
+			}
+			stations.get(s.nr).finish.add(s.time);
+		}
+		return stations;
 	}
 
 	/**

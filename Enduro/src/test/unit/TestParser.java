@@ -1,13 +1,10 @@
 package test.unit;
 
 import static org.junit.Assert.assertEquals;
-
 import io.reader.Parser;
-import io.reader.Parser.FileIdentifier;
 import io.reader.ParserException;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Map;
 
 import members.Competitor;
@@ -20,13 +17,11 @@ public class TestParser {
 
 	private Parser parser;
 	private ArrayList<ArrayList<String>> input;
-	private Map<Integer, Competitor> map;
 
 	@Before
 	public void setUp() {
 		parser = new Parser();
 		input = new ArrayList<ArrayList<String>>();
-		map = new HashMap<Integer, Competitor>();
 	}
 
 	@Test(expected = ParserException.class)

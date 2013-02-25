@@ -92,8 +92,6 @@ public class ResultCompilerMain {
 		}
 	}
 
-
-
 	/**
 	 * Reads the filenames of the files with names or times in the config-file
 	 * and puts them in a list
@@ -110,14 +108,13 @@ public class ResultCompilerMain {
 
 		addInputFile(prop, "namefiles", inputFiles,
 				Parser.FileIdentifier.name_file, Competitor.NO_STATION);
-
+		
+		
 		if (prop.containsKey(NUMBER_BINARY)
-				&& prop.getProperty(RACETYPE).equalsIgnoreCase(BINARY_LAPS)) 
-	
+				&& prop.getProperty(RACETYPE).equalsIgnoreCase(BINARY_LAPS)) {
 			addBinaryLapInfo(prop, inputFiles);
-			
-		 else {
-			 
+
+		} else {
 			addDefaultInfo(prop, inputFiles);
 		}
 
@@ -138,7 +135,7 @@ public class ResultCompilerMain {
 	private static void addInputFile(Properties prop, String property,
 			List<FileHeader> inputFiles, FileIdentifier fileIdentity,
 			int stationNr) throws IOException {
-		
+
 		String startPath = "";
 		if (prop.containsKey(property)) {
 			startPath = prop.getProperty(property);
@@ -149,10 +146,11 @@ public class ResultCompilerMain {
 		for (String s : startFiles) {
 			if (!new File(s).exists())
 				throw new FileNotFoundException("Filepath: " + s);
-			
+
 			inputFiles.add(new FileHeader(s, stationNr, fileIdentity));
 		}
 	}
+
 	private static void addBinaryLapInfo(Properties prop,
 			List<FileHeader> inputFiles) throws IOException {
 		try {
@@ -176,7 +174,6 @@ public class ResultCompilerMain {
 				Parser.FileIdentifier.finish_file, Competitor.NO_STATION);
 	}
 
-
 	/**
 	 * Parses the content of each file in the list of inputfiles to the list of
 	 * competitors.
@@ -190,19 +187,18 @@ public class ResultCompilerMain {
 	 */
 	private static Map<Integer, Competitor> parseInputFiles(
 			List<FileHeader> inputFiles, Properties prop)
-					throws FileNotFoundException, ParserException {
-		
+			throws FileNotFoundException, ParserException {
+
 		Map<Integer, Competitor> map = new HashMap<Integer, Competitor>();
-		
+
 		Parser p = new Parser();
 		for (FileHeader header : inputFiles) {
 			p.setStationNr(header.station);
 			map = p.parse(read(header.file), map, header.id);
-			
+
 		}
 		return map;
 	}
-
 
 	/**
 	 * Reads the content of the file
@@ -317,7 +313,6 @@ public class ResultCompilerMain {
 				&& prop.containsKey(resultfile)) {
 			String resultfilepath = prop.getProperty(resultfile);
 			printer = getSortPrinter(prop);
-			System.out.println(prop.getProperty("racetype"));
 			sorter.sortList(true, competitors, prop.getProperty("racetype"));
 			printer.printResults(competitors, resultfilepath, conv);
 		}

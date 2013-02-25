@@ -20,9 +20,9 @@ public abstract class Printer {
 	public static final String NO_START = "Start?";
 	public static final String NO_END = "Slut?";
 	public static final String MULTIPLE_STARTS = "Flera starttider?";
-	public static final String MULTIPLE_STARTS_ETAPP = "Flera starttider Etapp";
-	public static final String MULTIPLE_ENDS = "Flera måltider?";
-	public static final String MULTIPLE_ENDS_ETAPP = "Flera måltider Etapp";
+	public static final String MULTIPLE_STARTS_CLEAN = "Flera starttider";
+	public static final String MULTIPLE_ENDS = "Flera sluttider?";
+	public static final String MULTIPLE_ENDS_CLEAN = "Flera sluttider";
 	public static final String IMPOSSIBLE_TOTAL_TIME = "Omöjlig Totaltid?";
 	public static final String IMPOSSIBLE_LAP_TIME = "Omöjlig varvtid?";
 	public static final Time MINIMUM_TOTAL_TIME = Time.parse("00.15.00");

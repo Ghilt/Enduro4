@@ -1,7 +1,6 @@
 package test.acceptans.test21;
 
 import io.printer.BinaryLapPrinter;
-import io.printer.SortBinaryLapPrinter;
 import io.reader.CvsReader;
 import io.reader.Parser;
 import io.reader.ParserException;
@@ -14,13 +13,13 @@ import java.util.Map;
 import members.Competitor;
 import members.Sorter;
 
-import org.junit.*;
+import org.junit.Before;
+import org.junit.Test;
 
 import test.TestUtil;
 
 public class Test21 {
 
-	private static final String SORT_RESULT_PATH = "src/test/tmp/test21_sorted.txt";
 	private static final String RESULT_PATH = "src/test/tmp/test21.txt";
 	private static final String TEST_PATH = "src/test/acceptans/test21/";
 	private CvsReader reader;
@@ -40,7 +39,7 @@ public class Test21 {
 	 * @throws ParserException
 	 *             If input from CvsReader is incorrect.
 	 */
-	@Ignore
+	@Test
 	public void testResult() throws FileNotFoundException, ParserException {
 		Map<Integer, Competitor> competitors;
 
@@ -80,10 +79,6 @@ public class Test21 {
 
 		Collections.sort(list, new Sorter.CompetitorComparator());
 
-		printer = new SortBinaryLapPrinter();
-		printer.printResults(list, SORT_RESULT_PATH);
-		TestUtil.testResultFiles(TEST_PATH + "sort_resultat.txt",
-				SORT_RESULT_PATH);
 	}
 
 }
