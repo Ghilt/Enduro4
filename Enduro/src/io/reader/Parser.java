@@ -63,7 +63,7 @@ public class Parser {
 	public Map<Integer, Competitor> parse(List<ArrayList<String>> input,
 			Map<Integer, Competitor> cs, FileIdentifier fileIdentifier)
 			throws ParserException {
-		if (input.size() < 2)
+		if (input.size() < 1)
 			throw new ParserException("Invalid input.");
 
 		Map<Integer, Competitor> competitors = new HashMap<Integer, Competitor>(
