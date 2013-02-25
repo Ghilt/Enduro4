@@ -65,14 +65,6 @@ public class TestLapRace {
 	}
 
 	@Test
-	public void TestLapGetters() {
-		c.addFinishTime(t3);
-		c.addFinishTime(t2);
-		assertEquals("00.04.37", c.getLaps().get(0).toString());
-		assertFalse(c.getLaps().get(0).hashCode() == c.getLaps().get(1).hashCode());
-	}
-
-	@Test
 	public void TestLapEquals() {
 		c.addFinishTime(t2);
 		c.addFinishTime(t3);

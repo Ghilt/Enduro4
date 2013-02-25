@@ -22,23 +22,24 @@ public class Sorter {
 	 * @param list
 	 *            list containing competitors to sort
 	 */
-	public void sortList(boolean sort, ArrayList<Competitor> list, String racetype) {
+	public void sortList(boolean sort, ArrayList<Competitor> list,
+			String racetype) {
 		if (!sort) {
 			Collections.sort(list);
 		} else {
-			if(racetype.equals("laprace")) {
+			if (racetype.equals("laprace")) {
 				Collections.sort(list, new CompetitorComparator());
 			}
-			if(racetype.equals("etapprace")) {
+			if (racetype.equals("etapprace")) {
 				Collections.sort(list, new CompetitorBinaryComparator());
 			}
 		}
 	}
 
 	/**
-	 * Comparator used for sorting the competitors depending on their total time of their laps.
-	 * First sorts after class type, then if the competitors has the same class type, sorts after
-	 * total time.
+	 * Comparator used for sorting the competitors depending on their total time
+	 * of their laps. First sorts after class type, then if the competitors has
+	 * the same class type, sorts after total time.
 	 */
 	public static class CompetitorComparator implements Comparator<Competitor> {
 		public CompetitorComparator() {
@@ -57,13 +58,14 @@ public class Sorter {
 			return cmp;
 		}
 	}
-	
+
 	/**
-	 * Comparator used for sorting the competitors depending on their total time of their binary laps.
-	 * First sorts after class type, then if the competitors has the same class type, sorts after
-	 * total time.
+	 * Comparator used for sorting the competitors depending on their total time
+	 * of their binary laps. First sorts after class type, then if the
+	 * competitors has the same class type, sorts after total time.
 	 */
-	public static class CompetitorBinaryComparator implements Comparator<Competitor> {
+	public static class CompetitorBinaryComparator implements
+			Comparator<Competitor> {
 		public CompetitorBinaryComparator() {
 		}
 
@@ -74,7 +76,11 @@ public class Sorter {
 				cmp = o2.getNumberOfBinaryLaps() - o1.getNumberOfBinaryLaps();
 
 				if (cmp == 0) {
-					cmp = o1.getTotalTime(o1.getBinaryLaps()).compareTo(o2.getTotalTime(o2.getBinaryLaps()));
+					cmp = o1.getTotalTime(
+							new ArrayList<Lap>(o1.getBinaryLaps().values()))
+							.compareTo(
+									o2.getTotalTime(new ArrayList<Lap>(o2
+											.getBinaryLaps().values())));
 				}
 			}
 			return cmp;
