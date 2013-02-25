@@ -8,6 +8,7 @@ import java.util.List;
 
 import members.Competitor;
 import members.Lap;
+import members.NullTime;
 
 public class SortBinaryLapPrinter extends BinaryLapPrinter {
 
@@ -53,7 +54,12 @@ public class SortBinaryLapPrinter extends BinaryLapPrinter {
 		for (int i = 0; i < binLaps.size() - 1; i++) {
 			sb.append(binLaps.get(i).getTotal() + Formater.COLUMN_SEPARATOR);
 		}
-		sb.append(binLaps.get(binLaps.size() - 1).getTotal());
+		if (binLaps.size() == 0) {
+			sb.append(new NullTime());
+		} else {
+			sb.append(binLaps.get(binLaps.size() - 1).getTotal());
+		}
+		
 	}
 
 	/**
@@ -105,6 +111,7 @@ public class SortBinaryLapPrinter extends BinaryLapPrinter {
 	/**
 	 * Loops the sorted list of competitors and add a placement to each.
 	 */
+	@Override
 	protected void setPlacements(List<Competitor> competitors) {
 		maxBinLaps = getMaxLaps(competitors);
 		for (int i = 0; i < competitors.size(); i++) {
