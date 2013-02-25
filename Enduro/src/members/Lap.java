@@ -36,14 +36,6 @@ public class Lap {
 	}
 
 	/**
-	 * @return Lap moment
-	 * @see #getEnd()
-	 */
-	public Time getLapMoment() {
-		return end;
-	}
-
-	/**
 	 * @return Lap time
 	 */
 	public Time getTotal() {

@@ -109,11 +109,7 @@ public class TestCompetitor {
 						+ StdPrinter.IMPOSSIBLE_TOTAL_TIME), cp.row(c));
 	}
 
-	/*
-	 * Does not sort after total time at the moment, only sorts after class
-	 * type.
-	 */
-	@Ignore
+	@Test
 	public void testCompareTo() {
 		Competitor c2 = new Competitor(2);
 		Competitor c3 = new Competitor(3);
@@ -126,43 +122,10 @@ public class TestCompetitor {
 		c2.addFinishTime(Time.parse("02.00.10"));
 		c3.addFinishTime(Time.parse("02.01.10"));
 
-		assertTrue(c.compareTo(c2) < 0);
-		assertEquals(0, c2.compareTo(c3));
-		assertTrue(c3.compareTo(c) > 0);
-	}
 
-	/*
-	 * Does not sort after total time at the moment, only sorts after class
-	 * type.
-	 */
-	@Ignore
-	public void testCompareToWithoutStarttime() {
-		Competitor c2 = new Competitor(2);
-
-		c.addFinishTime(Time.parse("01.00.10"));
-
-		c2.addStartTime(Time.parse("00.01.00"));
-		c2.addFinishTime(Time.parse("02.00.10"));
-
-		assertEquals(1, c.compareTo(c2));
-		assertEquals(-1, c2.compareTo(c));
-	}
-
-	/*
-	 * Does not sort after total time at the moment, only sorts after class
-	 * type.
-	 */
-	@Ignore
-	public void testCompareToWithoutFinishtime() {
-		Competitor c2 = new Competitor(2);
-
-		c.addStartTime(Time.parse("00.00.10"));
-
-		c2.addStartTime(Time.parse("00.01.00"));
-		c2.addFinishTime(Time.parse("02.00.10"));
-
-		assertEquals(1, c.compareTo(c2));
-		assertEquals(-1, c2.compareTo(c));
+		assertEquals(-1, c2.compareTo(c3));
+		assertEquals(-1, c.compareTo(c2));
+		assertEquals(1, c2.compareTo(c));
 	}
 
 	@Test
@@ -279,6 +242,7 @@ public class TestCompetitor {
 		assertTrue(cpc.compare(c, c2)<0);
 		
 	}
+	@Test
 	public void testDifferentLapCompetitorComparator(){
 		Time s = Time.parse("00.00.15"), f = Time.parse("00.45.00");
 		c.addStartTime(s);
@@ -291,8 +255,7 @@ public class TestCompetitor {
 		c2.addFinishTime(f3);
 		c2.setClassType("SENIOR");
 		CompetitorComparator cpc = new CompetitorComparator();
-		assertTrue(cpc.compare(c, c2)<0);
-		
+		assertTrue(cpc.compare(c, c2)>0);
 	}
 	@Test
 	public void testDifferentClassCompetitorComparator(){

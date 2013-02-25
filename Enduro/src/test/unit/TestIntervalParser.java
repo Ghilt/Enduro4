@@ -1,12 +1,17 @@
 package test.unit;
 
 import static org.junit.Assert.*;
+
+import java.util.ArrayList;
+
 import io.reader.IntervalParser;
+import io.reader.IntervalParser.Interval;
 
 import org.junit.Test;
 
 public class TestIntervalParser {
 	private IntervalParser p;
+	private Interval interval;
 
 	@Test
 	public void testSingle() {
@@ -15,6 +20,41 @@ public class TestIntervalParser {
 		assertEquals(new IntervalParser.Interval(1), p.getIntervals().get(0));
 	}
 
+	@Test
+	public void testGetters() {
+		interval = new Interval(1,2);
+		
+		
+		assertEquals(2, interval.size());
+		assertEquals(1, interval.getStart());
+		assertEquals(2, interval.getEnd());
+		assertArrayEquals(new Integer[] {1,2}, interval.getNumbers().toArray());
+	}
+	
+	@Test
+	public void testHashCode() {
+		interval = new Interval(1,2);
+
+		assertEquals(1024, interval.hashCode());
+	}
+	
+	@Test
+	public void testEquals() {
+		interval = new Interval(1,3);
+		Interval interval2 = new Interval(5,9);
+		Interval interval3 = new Interval(2,3);
+		Interval nullInterval = null;
+		int a = 1;
+		
+		assertFalse(interval.equals(interval2));
+		assertFalse(interval.equals(interval3));
+		assertFalse(interval.equals(nullInterval));
+		assertTrue(interval.equals(interval));
+		assertFalse(interval.equals(a));
+
+	}
+	
+	
 	@Test
 	public void testMultipleSingles() {
 		p = new IntervalParser("1,2");
@@ -86,4 +126,6 @@ public class TestIntervalParser {
 		assertTrue(!p.isValid());
 		assertTrue(p.getIntervals().isEmpty());
 	}
+	
+	
 }
