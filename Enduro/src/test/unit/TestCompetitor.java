@@ -15,7 +15,6 @@ import members.Sorter.CompetitorComparator;
 import members.Time;
 
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 public class TestCompetitor {

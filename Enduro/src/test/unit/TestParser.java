@@ -16,7 +16,6 @@ import members.Time;
 import org.junit.Before;
 import org.junit.Test;
 
-
 public class TestParser {
 
 	private Parser parser;
@@ -187,5 +186,5 @@ public class TestParser {
 		assertEquals(t4, competitors.get(3).getFinishTimes().get(0));
 
 	}
-	
+
 }
