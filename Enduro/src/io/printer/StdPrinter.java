@@ -133,6 +133,6 @@ public class StdPrinter extends Printer {
 		sb.append(Formater.formatColumns(Formater.START_NR,
 				Formater.NAME, Formater.TOTAL_TIME, Formater.START_TIME,
 				Formater.FINISH_TIME));
-		sb.append("\n");
+		sb.append(Formater.LINE_BREAK);
 	}
 }

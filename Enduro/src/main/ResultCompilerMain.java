@@ -90,7 +90,6 @@ public class ResultCompilerMain {
 			errorMessage(e.getMessage());
 			System.exit(-1);
 		}
-
 	}
 
 
@@ -102,7 +101,7 @@ public class ResultCompilerMain {
 	 * @param prop
 	 *            contains the values in the config file
 	 * @return HashMap with filenames as keys and type of file as value
-	 * @throws IOException 
+	 * @throws IOException
 	 */
 	private static List<FileHeader> getInputFiles(Properties prop)
 			throws IOException {
@@ -133,7 +132,8 @@ public class ResultCompilerMain {
 	 *            we are currently adding inputFiles the list of file and
 	 *            headers fileIdentity type of the file
 	 * @return ArrayList with files and headers
-	 * @throws IOException if the config property is missing
+	 * @throws IOException
+	 *             if the config property is missing
 	 */
 	private static void addInputFile(Properties prop, String property,
 			List<FileHeader> inputFiles, FileIdentifier fileIdentity,
@@ -143,7 +143,7 @@ public class ResultCompilerMain {
 		if (prop.containsKey(property)) {
 			startPath = prop.getProperty(property);
 		} else {
-			throw new IOException("Property "+property+" not found.");
+			throw new IOException("Property " + property + " not found.");
 		}
 		String[] startFiles = startPath.split(" ");
 		for (String s : startFiles) {
@@ -303,15 +303,21 @@ public class ResultCompilerMain {
 		sorter.sortList(false, competitors);
 		printer.printResults(competitors, filepath);
 
-		boolean sorted = false;
-		if (prop.containsKey("sorted")) {
-			sorted = prop.get("sorted").equals(YES);
-		}
-		if (sorted) {
-			filepath = prop.getProperty("sortedresultfile");
+		if (prop.containsKey("sorted") && prop.get("sorted").equals(YES)
+				&& prop.containsKey("sortedresultfile")) {
+			String sortresultfile = prop.getProperty("sortedresultfile");
 			printer = getSortPrinter(prop);
 			sorter.sortList(true, competitors);
-			printer.printResults(competitors, filepath);
+			printer.printResults(competitors, sortresultfile);
+		}
+
+		if (prop.containsKey("html") && prop.get("html").equals(YES)
+				&& prop.containsKey("htmlresultfile")) {
+			String htmlresultfile = prop.getProperty("htmlresultfile");
+			printer = getSortPrinter(prop);
+			sorter.sortList(true, competitors);
+			printer.printResults(competitors, htmlresultfile,
+					new HtmlConverter());
 		}
 	}
 

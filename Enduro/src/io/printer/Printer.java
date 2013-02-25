@@ -77,11 +77,10 @@ public abstract class Printer {
 			String prevClassType = classType;
 			toIndex = getNewIndex(competitors, fromIndex, toIndex,
 					prevClassType, classType);
-
+			
 			// classList now contains competitors of the same class
 			List<Competitor> classList = competitors.subList(fromIndex,
 					toIndex - 1);
-
 			setPlacements(classList);
 
 			fromIndex = toIndex - 1;
@@ -90,16 +89,20 @@ public abstract class Printer {
 			if (classType != "") {
 				sb.append(prevClassType + Formater.LINE_BREAK);
 			}
-			prevClassType = classType;
-
-			appendFirstRow(sb);
-			appendRows(sb, classList);
-
+			
+			List<Competitor> printList = new ArrayList<Competitor>();
 			for (Competitor comp : classList) {
 				// Check if person has name a.k.a this person exists
 				if (comp.getName().isEmpty()) {
 					noNames.add(comp);
 				} else {
+					printList.add(comp);
+				}
+			}
+			if(!printList.isEmpty()) {
+				appendFirstRow(sb);
+				appendRows(sb, classList);
+				for(Competitor comp : printList) {
 					sb.append("" + row(comp) + Formater.LINE_BREAK);
 				}
 			}
