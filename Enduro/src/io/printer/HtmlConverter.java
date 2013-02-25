@@ -6,7 +6,7 @@ import io.Formater;
  * Converter that converts to HTML.
  */
 public class HtmlConverter implements Converter {
-	private static final String HTML_START_TAG = "<HTML><BODY>";
+	private static final String HTML_START_TAG = "<HTML><HEAD><TITLE>Result</TITLE><META charset=utf-8></HEAD>";
 	private static final String HTML_END_TAG = "</BODY></HTML>";
 	private static final String FONT = "<FONT SIZE=\"-1\" FACE=\"Helvetica\">";
 	private static final String TABLE_START_TAG = "<P>" + FONT
