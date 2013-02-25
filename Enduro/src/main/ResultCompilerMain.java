@@ -92,31 +92,7 @@ public class ResultCompilerMain {
 		}
 	}
 
-	/**
-	 * Parses the content of each file in the list of inputfiles to the list of
-	 * competitors.
-	 * 
-	 * @param inputFiles
-	 *            list of inputfiles nad their headers
-	 * @param prop
-	 * @return a hashmap with the competitors information
-	 * @throws FileNotFoundException
-	 * @throws ParserException
-	 */
-	private static Map<Integer, Competitor> parseInputFiles(
-			List<FileHeader> inputFiles, Properties prop)
-			throws FileNotFoundException, ParserException {
 
-		Map<Integer, Competitor> map = new HashMap<Integer, Competitor>();
-
-		Parser p = new Parser();
-		for (FileHeader header : inputFiles) {
-			p.setStationNr(header.station);
-			map = p.parse(read(header.file), map, header.id);
-
-		}
-		return map;
-	}
 
 	/**
 	 * Reads the filenames of the files with names or times in the config-file
@@ -134,24 +110,15 @@ public class ResultCompilerMain {
 
 		addInputFile(prop, "namefiles", inputFiles,
 				Parser.FileIdentifier.name_file, Competitor.NO_STATION);
-		int e = 1;
+
 		if (prop.containsKey(NUMBER_BINARY)
-				&& prop.getProperty(RACETYPE).equalsIgnoreCase(BINARY_LAPS)) {
-			try {
-				e = Integer.parseInt(prop.getProperty(NUMBER_BINARY));
-				for (int i = 1; i <= e; i++) {
-					addInputFile(prop, "startfiles" + "_" + i, inputFiles,
-							Parser.FileIdentifier.start_file, i);
-					addInputFile(prop, "finishfiles" + "_" + i, inputFiles,
-							Parser.FileIdentifier.finish_file, i);
-				}
-			} catch (NumberFormatException e1) {
-			}
-		} else {
-			addInputFile(prop, "startfiles", inputFiles,
-					Parser.FileIdentifier.start_file, Competitor.NO_STATION);
-			addInputFile(prop, "finishfiles", inputFiles,
-					Parser.FileIdentifier.finish_file, Competitor.NO_STATION);
+				&& prop.getProperty(RACETYPE).equalsIgnoreCase(BINARY_LAPS)) 
+	
+			addBinaryLapInfo(prop, inputFiles);
+			
+		 else {
+			 
+			addDefaultInfo(prop, inputFiles);
 		}
 
 		return inputFiles;
@@ -171,7 +138,7 @@ public class ResultCompilerMain {
 	private static void addInputFile(Properties prop, String property,
 			List<FileHeader> inputFiles, FileIdentifier fileIdentity,
 			int stationNr) throws IOException {
-
+		
 		String startPath = "";
 		if (prop.containsKey(property)) {
 			startPath = prop.getProperty(property);
@@ -182,10 +149,60 @@ public class ResultCompilerMain {
 		for (String s : startFiles) {
 			if (!new File(s).exists())
 				throw new FileNotFoundException("Filepath: " + s);
-
+			
 			inputFiles.add(new FileHeader(s, stationNr, fileIdentity));
 		}
 	}
+	private static void addBinaryLapInfo(Properties prop,
+			List<FileHeader> inputFiles) throws IOException {
+		try {
+			int e = 1;
+			e = Integer.parseInt(prop.getProperty(NUMBER_BINARY));
+			for (int i = 1; i <= e; i++) {
+				addInputFile(prop, "startfiles" + "_" + i, inputFiles,
+						Parser.FileIdentifier.start_file, i);
+				addInputFile(prop, "finishfiles" + "_" + i, inputFiles,
+						Parser.FileIdentifier.finish_file, i);
+			}
+		} catch (NumberFormatException e1) {
+		}
+	}
+
+	private static void addDefaultInfo(Properties prop,
+			List<FileHeader> inputFiles) throws IOException {
+		addInputFile(prop, "startfiles", inputFiles,
+				Parser.FileIdentifier.start_file, Competitor.NO_STATION);
+		addInputFile(prop, "finishfiles", inputFiles,
+				Parser.FileIdentifier.finish_file, Competitor.NO_STATION);
+	}
+
+
+	/**
+	 * Parses the content of each file in the list of inputfiles to the list of
+	 * competitors.
+	 * 
+	 * @param inputFiles
+	 *            list of inputfiles nad their headers
+	 * @param prop
+	 * @return a hashmap with the competitors information
+	 * @throws FileNotFoundException
+	 * @throws ParserException
+	 */
+	private static Map<Integer, Competitor> parseInputFiles(
+			List<FileHeader> inputFiles, Properties prop)
+					throws FileNotFoundException, ParserException {
+		
+		Map<Integer, Competitor> map = new HashMap<Integer, Competitor>();
+		
+		Parser p = new Parser();
+		for (FileHeader header : inputFiles) {
+			p.setStationNr(header.station);
+			map = p.parse(read(header.file), map, header.id);
+			
+		}
+		return map;
+	}
+
 
 	/**
 	 * Reads the content of the file
