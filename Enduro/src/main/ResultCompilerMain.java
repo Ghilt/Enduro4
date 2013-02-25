@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
@@ -70,7 +71,7 @@ public class ResultCompilerMain {
 		// String jarDir = jarFile.getParentFile().getPath();
 		//
 
-		Map<String, FileHeader> inputFiles = getInputFiles(prop);
+		List<FileHeader> inputFiles = getInputFiles(prop);
 
 		Map<Integer, Competitor> map = null;
 		try {
@@ -89,36 +90,6 @@ public class ResultCompilerMain {
 
 	}
 
-	/**
-	 * Prints the result to the file specified in the config file under
-	 * 'resultfile'. If 'sorted' in config file is set to 'yes' is also prints a
-	 * sorted result to the file specified in 'sortedresultfile' in the config
-	 * file.
-	 * 
-	 * @param prop
-	 *            contains the values in the config file
-	 * @param competitors
-	 *            the list of competitors to print
-	 */
-	private static void printResults(Properties prop,
-			ArrayList<Competitor> competitors) {
-		String filepath = prop.getProperty("resultfile");
-		Printer printer = getPrinter(prop);
-		Sorter sorter = new Sorter();
-		sorter.sortList(false, competitors);
-		printer.printResults(competitors, filepath);
-
-		boolean sorted = false;
-		if (prop.containsKey("sorted")) {
-			sorted = prop.get("sorted").equals(YES);
-		}
-		if (sorted) {
-			filepath = prop.getProperty("sortedresultfile");
-			printer = getSortPrinter(prop);
-			sorter.sortList(true, competitors);
-			printer.printResults(competitors, filepath);
-		}
-	}
 
 	/**
 	 * Parses the content of each file in the list of inputfiles to the list of
@@ -132,18 +103,18 @@ public class ResultCompilerMain {
 	 * @throws ParserException
 	 */
 	private static Map<Integer, Competitor> parseInputFiles(
-			Map<String, FileHeader> inputFiles, Properties prop)
+			List<FileHeader> inputFiles, Properties prop)
 			throws FileNotFoundException, ParserException {
 
 		Map<Integer, Competitor> map = new HashMap<Integer, Competitor>();
 
 		Parser p = new Parser();
-		System.out.println(inputFiles.keySet());
-		for (String file : inputFiles.keySet()) {
+		System.out.println(inputFiles);
+		for (FileHeader header : inputFiles) {
 			// for (int i=0; i<inputFiles.size(); i++) {
-			System.out.println("derp"+read(file)+ " "+file);
-			p.setStationNr(inputFiles.get(file).station);
-			map = p.parse(read(file), map, inputFiles.get(file).id);
+			System.out.println("derp"+read(header.file)+ " "+header);
+			p.setStationNr(header.station);
+			map = p.parse(read(header.file), map, header.id);
 			
 		}
 		return map;
@@ -158,9 +129,9 @@ public class ResultCompilerMain {
 	 *            contains the values in the config file
 	 * @return HashMap with filenames as keys and type of file as value
 	 */
-	private static Map<String, FileHeader> getInputFiles(Properties prop) {
+	private static List<FileHeader> getInputFiles(Properties prop) {
 
-		Map<String, FileHeader> inputFiles = new HashMap<String, FileHeader>();
+		List<FileHeader> inputFiles = new ArrayList<FileHeader>();
 
 		addInputFile(prop, "namefiles", inputFiles,
 				Parser.FileIdentifier.name_file, Competitor.NO_STATION);
@@ -190,18 +161,34 @@ public class ResultCompilerMain {
 		return inputFiles;
 	}
 
+	
+	/**
+	 * Adds the filenames to the map
+	 * 
+	 * @param prop
+	 *            contains the values in the config file
+	 *         property
+	 *         	  the filename we are currently adding  
+	 *         inputFiles
+	 *            the hashmap
+	 *         fileIdentity
+	 *         	  type of the file  
+	 * @return HashMap with filenames as keys and type of file as value
+	 */
 	private static void addInputFile(Properties prop, String property,
-			Map<String, FileHeader> inputFiles, FileIdentifier fileIdentity,
+			List<FileHeader> inputFiles, FileIdentifier fileIdentity,
 			int stationNr) {
 
 		//System.out.println(""+property +" "+fileIdentity+" "+stationNr);
+
+
 		String startPath = "";
 		if (prop.containsKey(property)) {
 			startPath = prop.getProperty(property);
 		}
 		String[] startFiles = startPath.split(" ");
 		for (String s : startFiles) {
-			inputFiles.put(s, new FileHeader(stationNr, fileIdentity));
+			inputFiles.add(new FileHeader(s, stationNr, fileIdentity));
 		}
 	}
 
@@ -285,12 +272,55 @@ public class ResultCompilerMain {
 		frame.dispose();
 	}
 
+
+	/**
+	 * Prints the result to the file specified in the config file under
+	 * 'resultfile'. If 'sorted' in config file is set to 'yes' is also prints a
+	 * sorted result to the file specified in 'sortedresultfile' in the config
+	 * file.
+	 * 
+	 * @param prop
+	 *            contains the values in the config file
+	 * @param competitors
+	 *            the list of competitors to print
+	 */
+	private static void printResults(Properties prop,
+			ArrayList<Competitor> competitors) {
+		String filepath = prop.getProperty("resultfile");
+		Printer printer = getPrinter(prop);
+		Sorter sorter = new Sorter();
+		sorter.sortList(false, competitors);
+		printer.printResults(competitors, filepath);
+
+		boolean sorted = false;
+		if (prop.containsKey("sorted")) {
+			sorted = prop.get("sorted").equals(YES);
+		}
+		if (sorted) {
+			filepath = prop.getProperty("sortedresultfile");
+			printer = getSortPrinter(prop);
+			sorter.sortList(true, competitors);
+			printer.printResults(competitors, filepath);
+		}
+	}
+	
+	/**
+	 * @author Henrik
+	 * A class for holding several variables for use in this class.
+	 */
 	private static class FileHeader {
-		public FileHeader(int stationNr, FileIdentifier fileIdentity) {
+		@Override
+		public String toString() {
+			return "FileHeader [file=" + file + ", id=" + id + ", station="
+					+ station + "]";
+		}
+		public FileHeader(String filePath, int stationNr, FileIdentifier fileIdentity) {
 			id = fileIdentity;
 			station = stationNr;
+			file = filePath;
 		}
 
+		String file;
 		FileIdentifier id;
 		int station;
 	}

@@ -16,11 +16,12 @@ public class SortBinaryLapPrinter extends BinaryLapPrinter {
 	/**
 	 * First row = "Plac; StartNr; Namn; Totaltid; #Etapper;"
 	 */
-	protected void appendFirstRow(FileWriter fileWriter) throws IOException {
-		fileWriter.append(Formater.formatColumns(Formater.PLACEMENT,
+	@Override
+	protected void appendFirstRow(StringBuilder sb) throws IOException {
+		sb.append(Formater.formatColumns(Formater.PLACEMENT,
 				Formater.START_NR, Formater.NAME, Formater.TOTAL_TIME,
 				Formater.BINARY_LAP_NUMBER));
-		fileWriter.append(Formater.COLUMN_SEPARATOR);
+		sb.append(Formater.COLUMN_SEPARATOR);
 	}
 
 	@Override
@@ -88,19 +89,16 @@ public class SortBinaryLapPrinter extends BinaryLapPrinter {
 	 * Append first row and then competitors info for each competitor.
 	 */
 	@Override
-	protected void appendRows(FileWriter fileWriter,
-			List<Competitor> competitors) throws IOException {
+	protected void appendRows(StringBuilder sb, List<Competitor> competitors)
+			throws IOException {
 		maxBinLaps = getMaxLaps(competitors);
 
-		appendFirstRow(fileWriter);
-
 		for (int i = 1; i < maxBinLaps; i++) {
-			fileWriter.append(Formater.BINARY_LAP_TIME + i
-					+ Formater.COLUMN_SEPARATOR);
+			sb.append(Formater.BINARY_LAP_TIME + i + Formater.COLUMN_SEPARATOR);
 		}
-		fileWriter.append(Formater.BINARY_LAP_TIME + maxBinLaps);
+		sb.append(Formater.BINARY_LAP_TIME + maxBinLaps);
 
-		fileWriter.append(Formater.LINE_BREAK);
+		sb.append(Formater.LINE_BREAK);
 
 	}
 
