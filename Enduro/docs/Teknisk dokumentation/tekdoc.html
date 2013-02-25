@@ -35,18 +35,18 @@
 			<li>Måltider</li>
 		</ul>
 		<p>Programmet skriver en resultatfil, i vilken information sammanställs till en 
-		resultatlista med följande utformning:</p>
+		resultatlista som ser olika ut beroende på vilken tävling som körs. Nedan är ett exempel på hur det kan se ut för varvlopp med en tävlande:</p>
 		
 		<div class="exempel">
 			<p>StartNr; Namn; #Varv; Totaltid; Varv1; Varv2; Starttid; Varvning1; Maltid</p>
 			<p>1; Jacob Arvidsson; 2; 00.42.00; 00.22.00; 00.20.00; 12.00.00; 12.22.00; 12.42.00</p>
 		</div>
 		
-		<p>I konfigurationsfilen kan man även välja att sortera listan. Då skrivs en till fil ut, 
+		<p>I konfigurationsfilen kan man även välja att sortera listan (hur listan sorteras förklaras mer ingående längre ned). Då skrivs en till fil ut, 
 		med en sorterad lista, utöver den vanliga filen. I denna lista skrivs även placering ut.
 		Programmet har även felhantering som skriver ut felmeddelande om det har blivit 
 		fel vid registrering. En tävlande kan tillexempel av misstag fått flera starttider, varpå 
-		"flera starttider" skrivs ut i filen.</p>
+		"flera starttider" skrivs ut i filen. I konfigurationsfilen anger man också vilka filer som ska läsas in (namnfil, startfil, målfil), mer information om hur man gör detta hittas i användarmanualen.</p>
 
  	<h2>Systemspecifikation</h2>
 		<img src="s2.png">
@@ -56,12 +56,18 @@
 	<h3>Registreringsprogrammet</h3>
 		<p>I paketen <code>gui.register</code> och <code>gui.tools</code> finns allt som 
 		registreringsprogrammet använder sig av. De viktigaste klasserna är:
-		<code>Gui.java</code> - Är klassen som bygger upp och hanterar det grafiska 
-		användargränssnittet. Använder sig av <code>RegisterButton.java</code> och 
-		<code>UndoButton.java</code> (lägger till knappar till huvudfönstret) samt 
+		<li><code>Gui.java</code></li>
+		<li><code>RegisterButton.java</code></li>
+		<li><code>UndoButton.java</code></li>
+		<li><code>NumberEntryField.java</code></li>
+		<li><code>GuiPrinter.java</code></li>
+		 <p></p>
+		<code>Gui.java</code> är klassen som bygger upp och hanterar det grafiska 
+		användargränssnittet. Den använder sig av <code>RegisterButton.java</code> och 
+		<code>UndoButton.java</code> (lägger till knapparna till huvudfönstret) samt 
 		<code>NumberEntryField.java</code> som ser till att endast siffor, kommatecken och 
 		binderstreck kan skrivas in i textfältet.
-		<code>GuiPrinter.java</code> - Är klassen som ansvarar för utskrift till textfiler
+		<code>GuiPrinter.java</code> är klassen som ansvarar för utskrift till textfiler
 		(start och måltider) som läses in i resultatprogramet.
 		</p>
 
@@ -92,15 +98,14 @@
 		</p>
 
 		<p>Paketet <code>io.printer</code> har sedan klasser som skriver ut resultat med hjälp av Mappen 
-		som skapas i Parsern. Det finns fem olika slags printers som används beroende på vilken 
-		tävling som körs. Följande printers finns:</p>
+		som skapas i Parsern. I paketet finns 6 klasser med olika printers som alla har den gemensama superklassen <code>Printer.java</code>. Följande printers finns:</p>
 		<ul>
-			<li><code>LapPrinter.java</code> - Används för utskrift av varvlopp</li>
-			<li><code>SortLapPrinter.java</code> - Sorterad version av LapPrinter</li>
 			<li><code>StdPrinter.java</code> - Används för utskrift av tävling med endast en start och slutpunk</li>
-			<li><code>SortStdPrinter.java</code> - Sorterad version av StdPrinter</li>
+			<li><code>SortStdPrinter.java</code> - Sorterad version av StdPrinter (sorteras endast efter totaltid).</li>
+			<li><code>LapPrinter.java</code> - Används för utskrift av varvlopp</li>
+			<li><code>SortLapPrinter.java</code> - Sorterad version av LapPrinter (sorteras först efter antal varv och sedan totaltid).</li>
 			<li><code>BinaryLapPrinter.java</code> - Används för utskrift av etapplopp</li>
-			<li><code>SortBinaryLapPrinter.java</code> - Sorterad version av BinaryLapPrinter </li>
+			<li><code>SortBinaryLapPrinter.java</code> - Sorterad version av BinaryLapPrinter (sorteras först efter antal etapper och sedan totaltid).</li>
 		</ul>
 		
 		<p>I paketet <code>io.printer</code> finns också en superklass <code>Printer.java</code> 
@@ -119,19 +124,26 @@
 	<h4>Filformat</h4>
 		<p>Starttider - Varje startfil innehåller information om startnummer och starttid i 
 		följande format:</p>
-		<div class="exempel">	
+		<div class="exempel">
+			<p>(StartNr; Starttid)</p>
+			<p>Exempel:</p>
 			<p>2; 12.01.00</p>
 			<p>3; 12.02.00</p>
 		</div>
 		<p>Måltider - Varje målfil innehåller information om startnummer och måltid i följande 
 		format: </p>
 		<div class="exempel">
+			<p>(StartNr; Måltid)</p>
+			<p>Exempel:</p>
 			<p>2; 12.22.00</p>
 			<p>3; 12.23.00</p>
 		</div>
 		<p>Namn - Namnfilen innehåller information om startnummer, namn och eventuellt klass 
 		i följande format:</p>
 		<div class="exempel">
+			<p>(Klass)</p>
+			<p>(StartNr; Namn)</p>
+			<p>Exempel:</p>
 			<p>SENIOR</p>
 			<p>1; Anders Asson</p>
 			<p>2; Bengt Bsson</p>
@@ -144,7 +156,8 @@
 		<p>Man måste ange vilken typ av fil som läses in av parsern. Detta gör man genom att 
 		skicka in parametern FileIdentifier i parsern.</p>
 		
-		<p>Resultat - Resultatfilen ser olika ut beroende på vilken printer som används:</p>
+		<p><b>Resultat</b></p> 
+		<p>Resultatfilen ser olika ut beroende på vilken printer som används. Kolla text nedan för exempelutskrift för varje printer.</p>
 		<p><b>StdPrinter:</b></p>
 		<div class="exempel">
 			<p>SENIOR</p>
