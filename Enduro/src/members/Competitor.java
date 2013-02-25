@@ -76,10 +76,10 @@ public class Competitor implements Comparable<Competitor> {
 			Time a = new NullTime();
 			Time b = new NullTime();
 			if (!ts.start.isEmpty()) {
-				a = ts.start.get(0);
+				a = ts.start.get(0).clone();
 			}
 			if (!ts.finish.isEmpty()) {
-				b = ts.finish.get(0);
+				b = ts.finish.get(0).clone();
 			}
 			laps.add(new Lap(a, b));
 
@@ -104,11 +104,11 @@ public class Competitor implements Comparable<Competitor> {
 		for (Entry<Integer, StationTimes> entry : stations.entrySet()) {
 			ArrayList<Time> start = entry.getValue().start;
 			for (int i = 1; i < start.size() && start.size() > 1; i++) {
-				ret[0].add(new Station(start.get(i), entry.getKey()));
+				ret[0].add(new Station(start.get(i).clone(), entry.getKey()));
 			}
 			ArrayList<Time> end = entry.getValue().finish;
 			for (int i = 1; i < end.size() && end.size() > 1; i++) {
-				ret[1].add(new Station(end.get(i), entry.getKey()));
+				ret[1].add(new Station(end.get(i).clone(), entry.getKey()));
 			}
 		}
 		return ret;
