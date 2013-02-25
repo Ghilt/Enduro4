@@ -6,6 +6,7 @@ import io.reader.Parser;
 import io.reader.Parser.FileIdentifier;
 import io.reader.ParserException;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -48,6 +49,7 @@ public class ResultCompilerMain {
 	 * to print the results to the output file.
 	 * 
 	 * @throws URISyntaxException
+	 * @throws FileNotFoundException
 	 * 
 	 */
 	public static void main(String[] args) throws URISyntaxException {
@@ -71,32 +73,32 @@ public class ResultCompilerMain {
 		// String jarDir = jarFile.getParentFile().getPath();
 		//
 
-		List<FileHeader> inputFiles = getInputFiles(prop);
-
-		Map<Integer, Competitor> map = null;
 		try {
+			List<FileHeader> inputFiles = getInputFiles(prop);
+			Map<Integer, Competitor> map = null;
 			map = parseInputFiles(inputFiles, prop);
+
+			ArrayList<Competitor> list = new ArrayList<Competitor>(map.values());
+			printResults(prop, list);
 		} catch (FileNotFoundException e) {
 			errorMessage(e.getMessage());
 			System.exit(-1);
 		} catch (ParserException e) {
 			errorMessage(e.getMessage());
 			System.exit(-1);
+		} catch (IOException e) {
+			errorMessage(e.getMessage());
+			System.exit(-1);
 		}
 
-		ArrayList<Competitor> list = new ArrayList<Competitor>(map.values());
-
-		printResults(prop, list);
-
 	}
-
 
 	/**
 	 * Parses the content of each file in the list of inputfiles to the list of
 	 * competitors.
 	 * 
 	 * @param inputFiles
-	 *            list of inputfiles
+	 *            list of inputfiles nad their headers
 	 * @param prop
 	 * @return a hashmap with the competitors information
 	 * @throws FileNotFoundException
@@ -109,27 +111,26 @@ public class ResultCompilerMain {
 		Map<Integer, Competitor> map = new HashMap<Integer, Competitor>();
 
 		Parser p = new Parser();
-		System.out.println(inputFiles);
 		for (FileHeader header : inputFiles) {
 			// for (int i=0; i<inputFiles.size(); i++) {
-			System.out.println("derp"+read(header.file)+ " "+header);
 			p.setStationNr(header.station);
 			map = p.parse(read(header.file), map, header.id);
-			
+
 		}
 		return map;
 	}
 
 	/**
 	 * Reads the filenames of the files with names or times in the config-file
-	 * and puts them in an hashmap with filenames as keys and file type as
-	 * values.
+	 * and puts them in a list
 	 * 
 	 * @param prop
 	 *            contains the values in the config file
 	 * @return HashMap with filenames as keys and type of file as value
+	 * @throws IOException 
 	 */
-	private static List<FileHeader> getInputFiles(Properties prop) {
+	private static List<FileHeader> getInputFiles(Properties prop)
+			throws IOException {
 
 		List<FileHeader> inputFiles = new ArrayList<FileHeader>();
 
@@ -155,39 +156,39 @@ public class ResultCompilerMain {
 					Parser.FileIdentifier.finish_file, Competitor.NO_STATION);
 		}
 
-//		System.out.println(inputFiles.size());
-//		System.out.println(inputFiles);
-//		System.out.println(inputFiles.keySet());
+		// System.out.println(inputFiles.size());
+		// System.out.println(inputFiles);
+		// System.out.println(inputFiles.keySet());
 		return inputFiles;
 	}
 
-	
 	/**
-	 * Adds the filenames to the map
+	 * Adds the filenames to the list
 	 * 
 	 * @param prop
-	 *            contains the values in the config file
-	 *         property
-	 *         	  the filename we are currently adding  
-	 *         inputFiles
-	 *            the hashmap
-	 *         fileIdentity
-	 *         	  type of the file  
-	 * @return HashMap with filenames as keys and type of file as value
+	 *            contains the values in the config file property the filename
+	 *            we are currently adding inputFiles the list of file and
+	 *            headers fileIdentity type of the file
+	 * @return ArrayList with files and headers
+	 * @throws IOException if the config property is missing
 	 */
 	private static void addInputFile(Properties prop, String property,
 			List<FileHeader> inputFiles, FileIdentifier fileIdentity,
-			int stationNr) {
+			int stationNr) throws IOException {
 
-		//System.out.println(""+property +" "+fileIdentity+" "+stationNr);
-
+		// System.out.println(""+property +" "+fileIdentity+" "+stationNr);
 
 		String startPath = "";
 		if (prop.containsKey(property)) {
 			startPath = prop.getProperty(property);
+		} else {
+			throw new IOException("Property "+property+" not found.");
 		}
 		String[] startFiles = startPath.split(" ");
 		for (String s : startFiles) {
+			if (!new File(s).exists())
+				throw new FileNotFoundException("Filepath: " + s);
+
 			inputFiles.add(new FileHeader(s, stationNr, fileIdentity));
 		}
 	}
@@ -202,7 +203,7 @@ public class ResultCompilerMain {
 	private static ArrayList<ArrayList<String>> read(String file)
 			throws FileNotFoundException {
 		CvsReader reader = new CvsReader(file);
-		
+
 		return reader.readAll();
 	}
 
@@ -272,7 +273,6 @@ public class ResultCompilerMain {
 		frame.dispose();
 	}
 
-
 	/**
 	 * Prints the result to the file specified in the config file under
 	 * 'resultfile'. If 'sorted' in config file is set to 'yes' is also prints a
@@ -303,10 +303,10 @@ public class ResultCompilerMain {
 			printer.printResults(competitors, filepath);
 		}
 	}
-	
+
 	/**
-	 * @author Henrik
-	 * A class for holding several variables for use in this class.
+	 * @author Henrik A class for holding several variables for use in this
+	 *         class.
 	 */
 	private static class FileHeader {
 		@Override
@@ -314,7 +314,9 @@ public class ResultCompilerMain {
 			return "FileHeader [file=" + file + ", id=" + id + ", station="
 					+ station + "]";
 		}
-		public FileHeader(String filePath, int stationNr, FileIdentifier fileIdentity) {
+
+		public FileHeader(String filePath, int stationNr,
+				FileIdentifier fileIdentity) {
 			id = fileIdentity;
 			station = stationNr;
 			file = filePath;
