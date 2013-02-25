@@ -284,7 +284,7 @@ public class TestCompetitor {
 		c2.addFinishTime(f1better, 1);
 		c2.addStartTime(s2, 2);
 		Sorter.CompetitorBinaryComparator cpc = new Sorter.CompetitorBinaryComparator();
-		assertTrue(cpc.compare(c, c2)<0);
-		assertEquals(0, c2.getFullBinaryLaps() - c2.getFullBinaryLaps());
+		assertTrue(cpc.compare(c, c2)>0);
+		assertEquals(0, c2.getFullBinaryLaps() - c.getFullBinaryLaps());
 	}
 }

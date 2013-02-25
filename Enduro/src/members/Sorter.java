@@ -76,11 +76,17 @@ public class Sorter {
 				cmp = o2.getFullBinaryLaps() - o1.getFullBinaryLaps();
 
 				if (cmp == 0) {
-					cmp = o1.getTotalTime(
-							new ArrayList<Lap>(o1.getBinaryLaps().values()))
-							.compareTo(
-									o2.getTotalTime(new ArrayList<Lap>(o2
-											.getBinaryLaps().values())));
+					Time total_first=Time.parse("00.00.00");
+					Time total_other=Time.parse("00.00.00");
+					for (int i = 1; i < o1.getFullBinaryLaps()+1; i++) {
+						total_first.add(o1.getBinaryLaps()
+								.get(i)
+								.getTotal());
+						total_other.add(o2.getBinaryLaps()
+								.get(i)
+								.getTotal());
+					}
+					cmp = total_first.compareTo(total_other);
 				}
 			}
 			return cmp;
