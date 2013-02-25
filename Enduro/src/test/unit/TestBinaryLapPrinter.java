@@ -68,7 +68,7 @@ public class TestBinaryLapPrinter {
 		c.addFinishTime(finish2, 2);
 
 		String formattedRow = Formater.formatColumns(1, c.getName(),
-				new NullTime().toString(), 2, new NullTime().toString(),
+				new NullTime().toString(), 0, new NullTime().toString(),
 				new NullTime().toString(), Printer.NO_START, finish1,
 				Printer.NO_START, finish2);
 
@@ -86,7 +86,7 @@ public class TestBinaryLapPrinter {
 		c.addFinishTime(finish1, 1);
 
 		String formattedRow = Formater.formatColumns(1, c.getName(),
-				start1.difference(finish1), 2, start1.difference(finish1),
+				start1.difference(finish1), 1, start1.difference(finish1),
 				new NullTime().toString(), start1, finish1, start2,
 				Printer.NO_END);
 

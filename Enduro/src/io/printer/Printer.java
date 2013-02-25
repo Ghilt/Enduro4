@@ -21,8 +21,8 @@ public abstract class Printer {
 	public static final String NO_END = "Slut?";
 	public static final String MULTIPLE_STARTS = "Flera starttider?";
 	public static final String MULTIPLE_STARTS_CLEAN = "Flera starttider";
-	public static final String MULTIPLE_ENDS = "Flera måltider?";
-	public static final String MULTIPLE_ENDS_CLEAN = "Flera måltider";
+	public static final String MULTIPLE_ENDS = "Flera sluttider?";
+	public static final String MULTIPLE_ENDS_CLEAN = "Flera sluttider";
 	public static final String IMPOSSIBLE_TOTAL_TIME = "Omöjlig Totaltid?";
 	public static final String IMPOSSIBLE_LAP_TIME = "Omöjlig varvtid?";
 	public static final Time MINIMUM_TOTAL_TIME = Time.parse("00.15.00");
@@ -77,11 +77,10 @@ public abstract class Printer {
 			String prevClassType = classType;
 			toIndex = getNewIndex(competitors, fromIndex, toIndex,
 					prevClassType, classType);
-
+			
 			// classList now contains competitors of the same class
 			List<Competitor> classList = competitors.subList(fromIndex,
 					toIndex - 1);
-
 			setPlacements(classList);
 
 			fromIndex = toIndex - 1;
@@ -90,16 +89,20 @@ public abstract class Printer {
 			if (classType != "") {
 				sb.append(prevClassType + Formater.LINE_BREAK);
 			}
-			prevClassType = classType;
-
-			appendFirstRow(sb);
-			appendRows(sb, classList);
-
+			
+			List<Competitor> printList = new ArrayList<Competitor>();
 			for (Competitor comp : classList) {
 				// Check if person has name a.k.a this person exists
 				if (comp.getName().isEmpty()) {
 					noNames.add(comp);
 				} else {
+					printList.add(comp);
+				}
+			}
+			if(!printList.isEmpty()) {
+				appendFirstRow(sb);
+				appendRows(sb, classList);
+				for(Competitor comp : printList) {
 					sb.append("" + row(comp) + Formater.LINE_BREAK);
 				}
 			}

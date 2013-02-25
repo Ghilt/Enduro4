@@ -49,6 +49,21 @@ public class BinaryLapPrinter extends Printer {
 	}
 
 	/**
+	 * Append the competitors start nbr, name, nbr of laps and total time to the
+	 * stringbuilder.
+	 * 
+	 * @param sb
+	 *            the stringbuilder to append to
+	 * @param c
+	 *            the competitor which info to append
+	 */
+	protected void appendCompetitorInfo(StringBuilder sb, Competitor c) {
+		sb.append(Formater.formatColumns(c.getIndex(), c.getName(),
+				c.getTotalTime(c.getBinaryLaps()))
+				+ Formater.COLUMN_SEPARATOR);
+	}
+
+	/**
 	 * Appends the total time of each binary lap for the competitor, as well as
 	 * each start and finish time for each binary lap.
 	 * 
@@ -59,7 +74,13 @@ public class BinaryLapPrinter extends Printer {
 	 */
 	protected void appendBinaryLaps(StringBuilder sb, Competitor c) {
 		List<Lap> binLaps = c.getBinaryLaps();
-		sb.append(binLaps.size() + Formater.COLUMN_SEPARATOR);
+		int nrFullLaps = 0;
+		for(Lap l : binLaps){
+			if(!l.getEnd().isNull() && !l.getStart().isNull()){
+				nrFullLaps++;
+			}
+		}
+		sb.append(nrFullLaps + Formater.COLUMN_SEPARATOR);
 		for (Lap l : binLaps) {
 			sb.append(l.getTotal() + Formater.COLUMN_SEPARATOR);
 		}
@@ -93,21 +114,6 @@ public class BinaryLapPrinter extends Printer {
 			}
 		}
 
-	}
-
-	/**
-	 * Append the competitors start nbr, name, nbr of laps and total time to the
-	 * stringbuilder.
-	 * 
-	 * @param sb
-	 *            the stringbuilder to append to
-	 * @param c
-	 *            the competitor which info to append
-	 */
-	protected void appendCompetitorInfo(StringBuilder sb, Competitor c) {
-		sb.append(Formater.formatColumns(c.getIndex(), c.getName(),
-				c.getTotalTime(c.getBinaryLaps()))
-				+ Formater.COLUMN_SEPARATOR);
 	}
 
 	/**
