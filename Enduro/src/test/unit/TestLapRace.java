@@ -1,7 +1,9 @@
 package test.unit;
 
+import static org.junit.Assert.*;
 import static org.junit.Assert.assertEquals;
 import members.Competitor;
+import members.Lap;
 import members.Time;
 
 import org.junit.Before;
@@ -40,6 +42,7 @@ public class TestLapRace {
 		c.addFinishTime(t2);
 		assertEquals(t1.difference(t3), c.getLaps().get(0).getTotal());
 		assertEquals(t3.difference(t2), c.getLaps().get(1).getTotal());
+
 	}
 
 	@Test
@@ -60,4 +63,36 @@ public class TestLapRace {
 		assertEquals(t4.difference(t2), c.getLaps().get(2).getTotal());
 	}
 
+	@Test
+	public void TestLapGetters() {
+		c.addFinishTime(t3);
+		c.addFinishTime(t2);
+		assertEquals("00.04.37", c.getLaps().get(0).toString());
+		assertFalse(c.getLaps().get(0).hashCode() == c.getLaps().get(1).hashCode());
+	}
+
+	@Test
+	public void TestLapEquals() {
+		c.addFinishTime(t2);
+		c.addFinishTime(t3);
+		c.addFinishTime(t4);
+		
+		Competitor runar = new Competitor(1);
+		t1 = new Time(1233);
+		runar.addStartTime(t1);
+		runar.addFinishTime(t2);
+		runar.addFinishTime(t3);
+		runar.addFinishTime(t4);
+		Lap runarLap = runar.getLaps().get(0);
+		
+		Lap lap = c.getLaps().get(0);
+		Lap nullLap = null;
+		assertTrue(lap.equals(lap));
+		assertFalse(lap.equals(nullLap));
+		assertFalse(lap.equals(3));
+		assertFalse(runarLap ==lap);
+		
+		
+		
+	}
 }
