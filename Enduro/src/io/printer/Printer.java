@@ -92,6 +92,7 @@ public abstract class Printer {
 			prevClassType = classType;
 
 			appendFirstRow(sb);
+			
 			appendRows(sb, classList);
 
 			for (Competitor comp : classList) {

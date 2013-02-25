@@ -80,7 +80,7 @@ public class ResultCompilerMain {
 		}
 
 		ArrayList<Competitor> list = new ArrayList<Competitor>(map.values());
-
+		
 		printResults(prop, list);
 
 	}
@@ -102,7 +102,7 @@ public class ResultCompilerMain {
 		Printer printer = getPrinter(prop);
 		Sorter sorter = new Sorter();
 		sorter.sortList(false, competitors);
-		printer.printResults(competitors, filepath);
+		printer.printResults(competitors, filepath, new HtmlConverter());
 
 		boolean sorted = false;
 		if (prop.containsKey("sorted")) {
