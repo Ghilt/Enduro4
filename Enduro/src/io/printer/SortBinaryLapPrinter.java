@@ -3,6 +3,7 @@ package io.printer;
 import io.Formater;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import members.Competitor;
@@ -49,7 +50,7 @@ public class SortBinaryLapPrinter extends BinaryLapPrinter {
 	 *            the competitor which info to append
 	 */
 	protected void appendBinaryLaps(StringBuilder sb, Competitor c) {
-		List<Lap> binLaps = c.getBinaryLaps();
+		List<Lap> binLaps = new ArrayList<Lap>(c.getBinaryLaps().values());
 		for (int i = 0; i < binLaps.size() - 1; i++) {
 			sb.append(binLaps.get(i).getTotal() + Formater.COLUMN_SEPARATOR);
 		}

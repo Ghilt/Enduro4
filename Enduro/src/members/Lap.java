@@ -7,6 +7,12 @@ package members;
  * 
  */
 public class Lap {
+	@Override
+	public String toString() {
+		return "Lap [start=" + start + ", end=" + end + ", total=" + getTotal()
+				+ " ]";
+	}
+
 	private final Time start, end;
 
 	/**
@@ -39,17 +45,12 @@ public class Lap {
 	 * @return Lap time
 	 */
 	public Time getTotal() {
-		if(start.isNull() || end.isNull()){
+		if (start.isNull() || end.isNull()) {
 			return new NullTime();
 		}
 		return start.difference(end);
 	}
 
-	@Override
-	public String toString() {
-		return getTotal().toString();
-	}
-	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
