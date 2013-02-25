@@ -112,7 +112,6 @@ public class ResultCompilerMain {
 
 		Parser p = new Parser();
 		for (FileHeader header : inputFiles) {
-			// for (int i=0; i<inputFiles.size(); i++) {
 			p.setStationNr(header.station);
 			map = p.parse(read(header.file), map, header.id);
 
@@ -156,9 +155,6 @@ public class ResultCompilerMain {
 					Parser.FileIdentifier.finish_file, Competitor.NO_STATION);
 		}
 
-		// System.out.println(inputFiles.size());
-		// System.out.println(inputFiles);
-		// System.out.println(inputFiles.keySet());
 		return inputFiles;
 	}
 
@@ -175,8 +171,6 @@ public class ResultCompilerMain {
 	private static void addInputFile(Properties prop, String property,
 			List<FileHeader> inputFiles, FileIdentifier fileIdentity,
 			int stationNr) throws IOException {
-
-		// System.out.println(""+property +" "+fileIdentity+" "+stationNr);
 
 		String startPath = "";
 		if (prop.containsKey(property)) {
