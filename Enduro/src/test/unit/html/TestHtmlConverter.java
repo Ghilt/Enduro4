@@ -18,20 +18,20 @@ import org.junit.Test;
 
 import test.TestUtil;
 
+/**
+ * This test is mainly here to make sure that HTML generates. If ANY printer logic is 
+ * changed this test will fail. Just look at the files and make sure that HTML looks good,
+ * and if it does just copy the HTML file(s) to the test/unit/html directory.
+ */
 public class TestHtmlConverter {
 	private static final String OUTPUT = "src/test/tmp/htmltest.html";
 
 	private Converter htmlConv = new HtmlConverter();
 	private Parser parser = new Parser();
-	
-	// Hej Henrik! 
-	// Detta kommer att breaka at some point!
-	// Mvh Andrée & Philip
 
 	@Test
 	public void testLap() throws FileNotFoundException, ParserException {
 		testSomeLap("src/test/unit/html/lap/");
-
 	}
 
 	@Test

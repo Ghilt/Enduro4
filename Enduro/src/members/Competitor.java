@@ -64,26 +64,27 @@ public class Competitor implements Comparable<Competitor> {
 	/**
 	 * Big laps, defined by one start and one end.
 	 * 
-	 * @return List of laps
+	 * @return map of laps with their stations as key
 	 */
-	public List<Lap> getBinaryLaps() {
-		List<Lap> laps = new ArrayList<Lap>();
+	public Map<Integer, Lap> getBinaryLaps() {
+		Map<Integer, Lap> laps = new HashMap<Integer, Lap>();
 		Map<Integer, StationTimes> stations = getStationsMatrix();
 
 		// Take the first start and end from each station and put them into a
 		// list
-		for (StationTimes ts : stations.values()) {
+		for (Entry<Integer, StationTimes> ts : stations.entrySet()) {
 			Time a = new NullTime();
 			Time b = new NullTime();
-			if (!ts.start.isEmpty()) {
-				a = ts.start.get(0);
+			if (!ts.getValue().start.isEmpty()) {
+				a = ts.getValue().start.get(0).clone();
 			}
-			if (!ts.finish.isEmpty()) {
-				b = ts.finish.get(0);
+			
+			if (!ts.getValue().finish.isEmpty()) {
+				b = ts.getValue().finish.get(0).clone();
 			}
-//			if (!a.equals(new NullTime()) && !b.equals(new NullTime())) {
-				laps.add(new Lap(a, b));
-//			}
+
+			laps.put(ts.getKey(), new Lap(a, b));
+
 		}
 		return laps;
 	}
@@ -105,11 +106,11 @@ public class Competitor implements Comparable<Competitor> {
 		for (Entry<Integer, StationTimes> entry : stations.entrySet()) {
 			ArrayList<Time> start = entry.getValue().start;
 			for (int i = 1; i < start.size() && start.size() > 1; i++) {
-				ret[0].add(new Station(start.get(i), entry.getKey()));
+				ret[0].add(new Station(start.get(i).clone(), entry.getKey()));
 			}
 			ArrayList<Time> end = entry.getValue().finish;
 			for (int i = 1; i < end.size() && end.size() > 1; i++) {
-				ret[1].add(new Station(end.get(i), entry.getKey()));
+				ret[1].add(new Station(end.get(i).clone(), entry.getKey()));
 			}
 		}
 		return ret;
@@ -319,12 +320,6 @@ public class Competitor implements Comparable<Competitor> {
 	}
 
 	public int getNumberOfBinaryLaps() {
-//		int n = 0;
-//		for(Lap l : getBinaryLaps()) {
-//			if(!l.getStart().equals(new NullTime()) && !l.getEnd().equals(new NullTime())) {
-//				n++;
-//			}
-//		}
 		return getBinaryLaps().size();
 	}
 
@@ -334,8 +329,8 @@ public class Competitor implements Comparable<Competitor> {
 	
 	public int getFullBinaryLaps() {
 		int nrFullLaps = 0;
-		for(Lap l : getBinaryLaps()){
-			if(!l.getStart().equals(new NullTime()) && !l.getEnd().equals(new NullTime())) {
+		for(Lap l : getBinaryLaps().values()){
+			if(!l.getStart().isNull() && !l.getEnd().isNull()) {
 				nrFullLaps++;
 			}
 		}

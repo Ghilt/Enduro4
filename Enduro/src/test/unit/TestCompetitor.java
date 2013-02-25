@@ -12,6 +12,7 @@ import java.util.List;
 import members.Competitor;
 import members.Lap;
 import members.NullTime;
+import members.Sorter;
 import members.Sorter.CompetitorComparator;
 import members.Time;
 
@@ -175,7 +176,7 @@ public class TestCompetitor {
 		c.addStartTime(t1, 1);
 		c.addFinishTime(f1, 1);
 
-		assertArrayEquals(new Lap[] { new Lap(t1, f1) }, c.getBinaryLaps()
+		assertArrayEquals(new Lap[] { new Lap(t1, f1) }, c.getBinaryLaps().values()
 				.toArray());
 	}
 
@@ -188,7 +189,7 @@ public class TestCompetitor {
 		c.addFinishTime(f2, 2);
 
 		assertArrayEquals(new Lap[] { new Lap(t1, f1),
-				new Lap(new NullTime(), f2) }, c.getBinaryLaps().toArray());
+				new Lap(new NullTime(), f2) }, c.getBinaryLaps().values().toArray());
 	}
 
 	@Test
@@ -197,7 +198,7 @@ public class TestCompetitor {
 		c.addStartTime(t1, 0);
 
 		assertArrayEquals(new Lap[] { new Lap(t1, new NullTime()) }, c
-				.getBinaryLaps().toArray());
+				.getBinaryLaps().values().toArray());
 	}
 
 	@Test
@@ -210,7 +211,7 @@ public class TestCompetitor {
 		c.addFinishTime(f2, 2);
 
 		assertArrayEquals(new Lap[] { new Lap(t1, f1), new Lap(t2, f2) }, c
-				.getBinaryLaps().toArray());
+				.getBinaryLaps().values().toArray());
 	}
 	
 	@Test
@@ -269,5 +270,21 @@ public class TestCompetitor {
 		c2.setClassType("JUNIOR");
 		CompetitorComparator cpc = new CompetitorComparator();
 		assertTrue(cpc.compare(c, c2)>0);	
+	}
+	
+	@Test
+	public void testSortSameFullDifferentStart(){
+		Time s1 = Time.parse("00.00.15"), f1 = Time.parse("00.45.00");
+		Time f1better = Time.parse("00.40.00");
+		Time s2 = Time.parse("01.00.00");
+		c.addStartTime(s1, 1);
+		c.addFinishTime(f1, 1);
+		Competitor c2 = new Competitor(2);
+		c2.addStartTime(s1, 1);
+		c2.addFinishTime(f1better, 1);
+		c2.addStartTime(s2, 2);
+		Sorter.CompetitorBinaryComparator cpc = new Sorter.CompetitorBinaryComparator();
+		assertTrue(cpc.compare(c, c2)<0);
+		assertEquals(0, c2.getFullBinaryLaps() - c2.getFullBinaryLaps());
 	}
 }

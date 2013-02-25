@@ -1,7 +1,8 @@
 package test.unit;
 
-import static org.junit.Assert.*;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 import members.Competitor;
 import members.Lap;
 import members.Time;
@@ -64,14 +65,6 @@ public class TestLapRace {
 	}
 
 	@Test
-	public void TestLapGetters() {
-		c.addFinishTime(t3);
-		c.addFinishTime(t2);
-		assertEquals("00.04.37", c.getLaps().get(0).toString());
-		assertFalse(c.getLaps().get(0).hashCode() == c.getLaps().get(1).hashCode());
-	}
-
-	@Test
 	public void TestLapEquals() {
 		c.addFinishTime(t2);
 		c.addFinishTime(t3);
@@ -92,7 +85,20 @@ public class TestLapRace {
 		assertFalse(lap.equals(3));
 		assertFalse(runarLap ==lap);
 		
+		assertFalse(lap.equals(new Lap(null, null)));
 		
+		lap = new Lap(t1, null);
+		assertFalse(lap.equals(new Lap(null, null)));
 		
+		lap = new Lap(null, t1);
+		assertFalse(lap.equals(new Lap(null, null)));
+		
+		lap = new Lap(t1, null);
+		runarLap = new Lap(null, t1);
+		assertFalse(lap.equals(runarLap));
+		
+		lap = new Lap(null, t1);
+		runarLap = new Lap(t1, t1);
+		assertFalse(lap.equals(runarLap));
 	}
 }
