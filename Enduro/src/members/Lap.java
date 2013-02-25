@@ -47,6 +47,9 @@ public class Lap {
 	 * @return Lap time
 	 */
 	public Time getTotal() {
+		if(start.isNull() || end.isNull()){
+			return new NullTime();
+		}
 		return start.difference(end);
 	}
 

@@ -2,7 +2,6 @@ package io.printer;
 
 import io.Formater;
 
-import java.io.FileWriter;
 import java.io.IOException;
 import java.util.List;
 
@@ -11,7 +10,29 @@ import members.Competitor;
 public class LapPrinter extends Printer {
 
 	protected int maxLaps;
+	
+	@Override
+	protected void appendFirstRow(StringBuilder sb) throws IOException {
+		sb.append(Formater.formatColumns(Formater.START_NR, Formater.NAME,
+				Formater.LAP_NUMBER, Formater.TOTAL_TIME));
+		sb.append(Formater.COLUMN_SEPARATOR);
+	}
 
+	@Override
+	protected void appendRows(StringBuilder sb, List<Competitor> competitors)
+			throws IOException {
+		maxLaps = getMaxLaps(competitors);
+
+		for (int i = 1; i < maxLaps + 1; i++) {
+			sb.append(Formater.LAP_TIME + i + Formater.COLUMN_SEPARATOR);
+		}
+		sb.append(Formater.START_TIME + Formater.COLUMN_SEPARATOR);
+		for (int i = 1; i < maxLaps; i++) {
+			sb.append(Formater.LAP_FINISH_TIME + i + Formater.COLUMN_SEPARATOR);
+		}
+		sb.append(Formater.FINISH_TIME + Formater.LINE_BREAK);
+	}
+	
 	@Override
 	public String row(Competitor c) {
 		StringBuilder sb = new StringBuilder();
@@ -156,25 +177,4 @@ public class LapPrinter extends Printer {
 
 	}
 
-	@Override
-	protected void appendFirstRow(StringBuilder sb) throws IOException {
-		sb.append(Formater.formatColumns(Formater.START_NR, Formater.NAME,
-				Formater.LAP_NUMBER, Formater.TOTAL_TIME));
-		sb.append(Formater.COLUMN_SEPARATOR);
-	}
-
-	@Override
-	protected void appendRows(StringBuilder sb, List<Competitor> competitors)
-			throws IOException {
-		maxLaps = getMaxLaps(competitors);
-
-		for (int i = 1; i < maxLaps + 1; i++) {
-			sb.append(Formater.LAP_TIME + i + Formater.COLUMN_SEPARATOR);
-		}
-		sb.append(Formater.START_TIME + Formater.COLUMN_SEPARATOR);
-		for (int i = 1; i < maxLaps; i++) {
-			sb.append(Formater.LAP_FINISH_TIME + i + Formater.COLUMN_SEPARATOR);
-		}
-		sb.append(Formater.FINISH_TIME + Formater.LINE_BREAK);
-	}
 }

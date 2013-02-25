@@ -193,4 +193,8 @@ public class Time implements Comparable<Time> {
 		return t;
 
 	}
+
+	public boolean isNull() {
+		return false;
+	}
 }

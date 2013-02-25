@@ -55,7 +55,8 @@ public abstract class Printer {
 			File outputFile = new File(filepath);
 			FileWriter fileWriter = new FileWriter(outputFile);
 			String results = build(competitors);
-			results = converter.convert(results);
+			if(converter != null)
+				results = converter.convert(results);
 			fileWriter.append(results);
 			fileWriter.close();
 
@@ -87,7 +88,7 @@ public abstract class Printer {
 
 			// Do not write a line if there's no class type
 			if (classType != "") {
-				sb.append(prevClassType + "\n");
+				sb.append(prevClassType + Formater.LINE_BREAK);
 			}
 			prevClassType = classType;
 
@@ -99,7 +100,7 @@ public abstract class Printer {
 				if (comp.getName().isEmpty()) {
 					noNames.add(comp);
 				} else {
-					sb.append("" + row(comp) + "\n");
+					sb.append("" + row(comp) + Formater.LINE_BREAK);
 				}
 			}
 		}
@@ -135,7 +136,7 @@ public abstract class Printer {
 			appendFirstRow(sb);
 			appendRows(sb, noNames);
 			for (Competitor comp : noNames) {
-				sb.append("" + row(comp) + "\n");
+				sb.append("" + row(comp) + Formater.LINE_BREAK);
 			}
 
 		}

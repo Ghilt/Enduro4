@@ -2,8 +2,8 @@ package io.printer;
 
 import io.Formater;
 
-import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import members.Competitor;
@@ -19,6 +19,23 @@ public class BinaryLapPrinter extends Printer {
 		sb.append(Formater.COLUMN_SEPARATOR);
 	}
 
+	@Override
+	protected void appendRows(StringBuilder sb, List<Competitor> competitors)
+			throws IOException {
+		maxLaps = getMaxLaps(competitors);
+
+		for (int i = 1; i < maxLaps + 1; i++) {
+			sb.append(Formater.BINARY_LAP_TIME + i + Formater.COLUMN_SEPARATOR);
+		}
+		for (int i = 1; i < maxLaps; i++) {
+			sb.append(Formater.START_TIME + i + Formater.COLUMN_SEPARATOR);
+			sb.append(Formater.FINISH_TIME + i + Formater.COLUMN_SEPARATOR);
+		}
+		sb.append(Formater.START_TIME + maxLaps + Formater.COLUMN_SEPARATOR);
+		sb.append(Formater.FINISH_TIME + maxLaps + Formater.LINE_BREAK);
+
+	}
+	
 	@Override
 	public String row(Competitor c) {
 		StringBuilder sb = new StringBuilder();
@@ -46,9 +63,19 @@ public class BinaryLapPrinter extends Printer {
 		for (Lap l : binLaps) {
 			sb.append(l.getTotal() + Formater.COLUMN_SEPARATOR);
 		}
+		ArrayList<String> extraStarts = new ArrayList<String>();
+		ArrayList<String> extraFinishes = new ArrayList<String>();
 		for (Lap l : binLaps) {
-			sb.append(l.getStart() + Formater.COLUMN_SEPARATOR);
-			sb.append(l.getEnd() + Formater.COLUMN_SEPARATOR);
+			if (l.getStart().isNull()) {
+				sb.append(Printer.NO_START + Formater.COLUMN_SEPARATOR);
+			} else {
+				sb.append(l.getStart() + Formater.COLUMN_SEPARATOR);
+			}
+			if (l.getEnd().isNull()) {
+				sb.append(Printer.NO_END + Formater.COLUMN_SEPARATOR);
+			} else {
+				sb.append(l.getEnd() + Formater.COLUMN_SEPARATOR);
+			}
 		}
 	}
 
@@ -65,24 +92,6 @@ public class BinaryLapPrinter extends Printer {
 		sb.append(Formater.formatColumns(c.getIndex(), c.getName(),
 				c.getTotalTime(c.getBinaryLaps()))
 				+ Formater.COLUMN_SEPARATOR);
-	}
-
-	@Override
-	protected void appendRows(StringBuilder sb, List<Competitor> competitors)
-			throws IOException {
-		maxLaps = getMaxLaps(competitors);
-
-		for (int i = 1; i < maxLaps + 1; i++) {
-			sb.append(Formater.BINARY_LAP_TIME + i + Formater.COLUMN_SEPARATOR);
-		}
-		for (int i = 0; i < maxLaps - 1; i++) {
-			sb.append(Formater.START_TIME + (i + 1) + Formater.COLUMN_SEPARATOR);
-			sb.append(Formater.FINISH_TIME + (i + 1)
-					+ Formater.COLUMN_SEPARATOR);
-		}
-		sb.append(Formater.START_TIME + maxLaps + Formater.COLUMN_SEPARATOR);
-		sb.append(Formater.FINISH_TIME + maxLaps + Formater.LINE_BREAK);
-
 	}
 
 	/**
