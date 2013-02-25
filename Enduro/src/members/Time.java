@@ -13,7 +13,7 @@ public class Time implements Comparable<Time> {
 	// private static final SimpleDateFormat BIG_FORMAT = new SimpleDateFormat(
 	// "d/MM/yy HH.mm.ss.ms z");
 	private static final SimpleDateFormat FORMAT = new SimpleDateFormat(
-			" HH.mm.ss");
+			"HH.mm.ss");
 
 	private static final int[] VALID_FIELDS = { Calendar.DAY_OF_YEAR,
 			Calendar.HOUR, Calendar.MINUTE, Calendar.SECOND };
