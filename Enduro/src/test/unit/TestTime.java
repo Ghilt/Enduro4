@@ -123,5 +123,36 @@ public class TestTime {
 	public void testTimeCompareTo() {
 		assertTrue(new Time(100).compareTo(new Time(200)) < 0);
 	}
-
+	
+	@Test
+	public void testNullTimeCompareWithNullTime() {
+		assertEquals(0, new NullTime().compareTo(new NullTime()));
+	}
+	
+	@Test
+	public void testDifferenceWithNull() {
+		Time t1 = new NullTime();
+		Time t2 = Time.parse("05.23.01");
+		assertEquals(t2, t1.difference(t2));
+	}
+	
+	@Test
+	public void testEqualsWithNull() {
+		assertFalse(new Time().equals(null));
+	}
+	
+	@Test
+	public void testEqualsWithString() {
+		assertFalse(new Time().equals("String"));
+	}
+	
+	@Test
+	public void testNullTimeEqualsWithNull() {
+		assertFalse(new NullTime().equals(null));
+	}
+	
+	@Test
+	public void testNullTimeEqualsWithString() {
+		assertFalse(new NullTime().equals("String"));
+	}
 }

@@ -110,7 +110,13 @@ public class Parser {
 			}
 
 			// Startnbr is always first column.
-			int startNbr = Integer.valueOf(row.get(0));
+			int startNbr = 0;
+			if(row.get(0) == "") {
+				
+			} else {
+				startNbr = Integer.valueOf(row.get(0));
+			}
+			
 
 			Competitor comp = competitors.get(startNbr);
 			// If comp does not already exist in hashmap, create a new one
