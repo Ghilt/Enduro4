@@ -175,7 +175,7 @@ public class TestCompetitor {
 		c.addStartTime(t1, 1);
 		c.addFinishTime(f1, 1);
 
-		assertArrayEquals(new Lap[] { new Lap(t1, f1) }, c.getBinaryLaps()
+		assertArrayEquals(new Lap[] { new Lap(t1, f1) }, c.getBinaryLaps().values()
 				.toArray());
 	}
 
@@ -188,7 +188,7 @@ public class TestCompetitor {
 		c.addFinishTime(f2, 2);
 
 		assertArrayEquals(new Lap[] { new Lap(t1, f1),
-				new Lap(new NullTime(), f2) }, c.getBinaryLaps().toArray());
+				new Lap(new NullTime(), f2) }, c.getBinaryLaps().values().toArray());
 	}
 
 	@Test
@@ -197,7 +197,7 @@ public class TestCompetitor {
 		c.addStartTime(t1, 0);
 
 		assertArrayEquals(new Lap[] { new Lap(t1, new NullTime()) }, c
-				.getBinaryLaps().toArray());
+				.getBinaryLaps().values().toArray());
 	}
 
 	@Test
@@ -210,7 +210,7 @@ public class TestCompetitor {
 		c.addFinishTime(f2, 2);
 
 		assertArrayEquals(new Lap[] { new Lap(t1, f1), new Lap(t2, f2) }, c
-				.getBinaryLaps().toArray());
+				.getBinaryLaps().values().toArray());
 	}
 	
 	@Test

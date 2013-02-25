@@ -50,4 +50,9 @@ public class NullTime extends Time {
 	public boolean isNull() {
 		return true;
 	}
+	
+	@Override
+	public Time clone(){
+		return new NullTime();
+	}
 }

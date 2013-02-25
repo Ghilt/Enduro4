@@ -3,7 +3,9 @@ package io.printer;
 import io.Formater;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import members.Competitor;
 import members.Lap;
@@ -12,6 +14,15 @@ import members.Station;
 public class BinaryLapPrinter extends Printer {
 
 	protected int maxLaps;
+
+	public BinaryLapPrinter(int maxLaps) {
+		super();
+		this.maxLaps = maxLaps;
+	}
+
+	public BinaryLapPrinter() {
+		this(0);
+	}
 
 	protected void appendFirstRow(StringBuilder sb) throws IOException {
 		sb.append(Formater.formatColumns(Formater.START_NR, Formater.NAME,
@@ -59,7 +70,7 @@ public class BinaryLapPrinter extends Printer {
 	 */
 	protected void appendCompetitorInfo(StringBuilder sb, Competitor c) {
 		sb.append(Formater.formatColumns(c.getIndex(), c.getName(),
-				c.getTotalTime(c.getBinaryLaps()))
+				c.getTotalTime(new ArrayList<Lap>(c.getBinaryLaps().values())))
 				+ Formater.COLUMN_SEPARATOR);
 	}
 
@@ -73,27 +84,40 @@ public class BinaryLapPrinter extends Printer {
 	 *            the competitor who's times to append
 	 */
 	protected void appendBinaryLaps(StringBuilder sb, Competitor c) {
-		List<Lap> binLaps = c.getBinaryLaps();
+		Map<Integer, Lap> binLaps = c.getBinaryLaps();
+
 		int nrFullLaps = 0;
-		for(Lap l : binLaps){
-			if(!l.getEnd().isNull() && !l.getStart().isNull()){
+		for (Lap l : binLaps.values()) {
+			if (!l.getEnd().isNull() && !l.getStart().isNull()) {
 				nrFullLaps++;
 			}
 		}
 		sb.append(nrFullLaps + Formater.COLUMN_SEPARATOR);
-		for (Lap l : binLaps) {
-			sb.append(l.getTotal() + Formater.COLUMN_SEPARATOR);
-		}
-		for (Lap l : binLaps) {
-			if (l.getStart().isNull()) {
-				sb.append(Printer.NO_START + Formater.COLUMN_SEPARATOR);
+
+		for (int i = 1; i < maxLaps + 1; i++) {
+			Lap currentLap = binLaps.get(i);
+			if (currentLap != null) {
+				sb.append(currentLap.getTotal() + Formater.COLUMN_SEPARATOR);
 			} else {
-				sb.append(l.getStart() + Formater.COLUMN_SEPARATOR);
+				sb.append(Formater.COLUMN_SEPARATOR);
 			}
-			if (l.getEnd().isNull()) {
-				sb.append(Printer.NO_END + Formater.COLUMN_SEPARATOR);
+		}
+		for (int i = 1; i < maxLaps + 1; i++) {
+			Lap currentLap = binLaps.get(i);
+			if (currentLap != null) {
+				if (currentLap.getStart().isNull()) {
+					sb.append(Printer.NO_START + Formater.COLUMN_SEPARATOR);
+				} else {
+					sb.append(currentLap.getStart() + Formater.COLUMN_SEPARATOR);
+				}
+				if (currentLap.getEnd().isNull()) {
+					sb.append(Printer.NO_END + Formater.COLUMN_SEPARATOR);
+				} else {
+					sb.append(currentLap.getEnd() + Formater.COLUMN_SEPARATOR);
+				}
 			} else {
-				sb.append(l.getEnd() + Formater.COLUMN_SEPARATOR);
+				sb.append(Formater.COLUMN_SEPARATOR);
+				sb.append(Formater.COLUMN_SEPARATOR);
 			}
 		}
 		List<Station>[] extras = c.getExtraLapsBinary();

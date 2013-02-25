@@ -64,24 +64,25 @@ public class Competitor implements Comparable<Competitor> {
 	/**
 	 * Big laps, defined by one start and one end.
 	 * 
-	 * @return List of laps
+	 * @return map of laps with their stations as key
 	 */
-	public List<Lap> getBinaryLaps() {
-		List<Lap> laps = new ArrayList<Lap>();
+	public Map<Integer, Lap> getBinaryLaps() {
+		Map<Integer, Lap> laps = new HashMap<Integer, Lap>();
 		Map<Integer, StationTimes> stations = getStationsMatrix();
 
 		// Take the first start and end from each station and put them into a
 		// list
-		for (StationTimes ts : stations.values()) {
+		for (Entry<Integer, StationTimes> ts : stations.entrySet()) {
 			Time a = new NullTime();
 			Time b = new NullTime();
-			if (!ts.start.isEmpty()) {
-				a = ts.start.get(0).clone();
+			if (!ts.getValue().start.isEmpty()) {
+				a = ts.getValue().start.get(0).clone();
 			}
-			if (!ts.finish.isEmpty()) {
-				b = ts.finish.get(0).clone();
+			
+			if (!ts.getValue().finish.isEmpty()) {
+				b = ts.getValue().finish.get(0).clone();
 			}
-			laps.add(new Lap(a, b));
+			laps.put(ts.getKey(), new Lap(a, b));
 
 		}
 		return laps;
