@@ -22,11 +22,16 @@ public class Sorter {
 	 * @param list
 	 *            list containing competitors to sort
 	 */
-	public void sortList(boolean sort, ArrayList<Competitor> list) {
+	public void sortList(boolean sort, ArrayList<Competitor> list, String racetype) {
 		if (!sort) {
 			Collections.sort(list);
 		} else {
-			Collections.sort(list, new CompetitorComparator());
+			if(racetype.equals("laprace")) {
+				Collections.sort(list, new CompetitorComparator());
+			}
+			if(racetype.equals("etapprace")) {
+				Collections.sort(list, new CompetitorBinaryComparator());
+			}
 		}
 	}
 
@@ -44,7 +49,6 @@ public class Sorter {
 			int cmp = o1.getClassType().compareTo(o2.getClassType());
 			if (cmp == 0) {
 				cmp = o2.getNumberOfLaps() - o1.getNumberOfLaps();
-
 				if (cmp == 0) {
 					cmp = o1.getTotalTime(o1.getLaps()).compareTo(
 							o2.getTotalTime(o2.getLaps()));

@@ -296,24 +296,25 @@ public class ResultCompilerMain {
 		String filepath = prop.getProperty("resultfile");
 		Printer printer = getPrinter(prop);
 		Sorter sorter = new Sorter();
-		sorter.sortList(false, competitors);
+		sorter.sortList(false, competitors, "");
 		printer.printResults(competitors, filepath);
+		
+		print(prop, "sorted", "sortedresultfile", competitors, sorter,
+				new NullConverter());
+		print(prop, "html", "htmlresultfile", competitors, sorter,
+				new HtmlConverter());
+	}
 
-		if (prop.containsKey("sorted") && prop.get("sorted").equals(YES)
-				&& prop.containsKey("sortedresultfile")) {
-			String sortresultfile = prop.getProperty("sortedresultfile");
+	private static void print(Properties prop, String printType,
+			String resultfile, ArrayList<Competitor> competitors,
+			Sorter sorter, Converter conv) {
+		Printer printer;
+		if (prop.containsKey(printType) && prop.get(printType).equals(YES)
+				&& prop.containsKey(resultfile)) {
+			String resultfilepath = prop.getProperty(resultfile);
 			printer = getSortPrinter(prop);
-			sorter.sortList(true, competitors);
-			printer.printResults(competitors, sortresultfile);
-		}
-
-		if (prop.containsKey("html") && prop.get("html").equals(YES)
-				&& prop.containsKey("htmlresultfile")) {
-			String htmlresultfile = prop.getProperty("htmlresultfile");
-			printer = getSortPrinter(prop);
-			sorter.sortList(true, competitors);
-			printer.printResults(competitors, htmlresultfile,
-					new HtmlConverter());
+			sorter.sortList(true, competitors, prop.getProperty("racetype"));
+			printer.printResults(competitors, resultfilepath, conv);
 		}
 	}
 

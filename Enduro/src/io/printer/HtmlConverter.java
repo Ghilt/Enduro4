@@ -2,6 +2,9 @@ package io.printer;
 
 import io.Formater;
 
+/**
+ * Converter that converts to HTML.
+ */
 public class HtmlConverter implements Converter {
 	private static final String HTML_START_TAG = "<HTML><BODY>";
 	private static final String HTML_END_TAG = "</BODY></HTML>";
@@ -12,7 +15,7 @@ public class HtmlConverter implements Converter {
 			+ Formater.LINE_BREAK;
 	private static final String ROW_START_TAG = "<TR>" + Formater.LINE_BREAK;
 	private static final String ROW_END_TAG = "</TR>" + Formater.LINE_BREAK;
-	
+
 	private static final String COLUMN_START_TAG = "<TD><P>" + FONT;
 	private static final String COLUMN_END_TAG = "</FONT></P></TD>";
 	private static final String FIRST_ROW_FONT_COLOR = "#FFFF99";
@@ -33,13 +36,13 @@ public class HtmlConverter implements Converter {
 		String rowStartTag = ROW_START_TAG;
 		for (int i = 0, classes = 0; i < lines.length; ++i) {
 			String[] columns = lines[i].split(Formater.COLUMN_SEPARATOR);
-			
-			
+
 			if (columns.length == 1) {
 				if (++classes % 2 == 0) {
 					sb.append(TABLE_END_TAG);
 				}
-				sb.append(CLASS_HEADER_START_TAG + columns[0] + CLASS_HEADER_END_TAG);
+				sb.append(CLASS_HEADER_START_TAG + columns[0]
+						+ CLASS_HEADER_END_TAG);
 				sb.append(TABLE_START_TAG);
 				rowStartTag = FIRST_ROW_START_TAG;
 			} else {

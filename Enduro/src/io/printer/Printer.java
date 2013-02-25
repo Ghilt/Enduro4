@@ -27,6 +27,13 @@ public abstract class Printer {
 	public static final String IMPOSSIBLE_LAP_TIME = "Omöjlig varvtid?";
 	public static final Time MINIMUM_TOTAL_TIME = Time.parse("00.15.00");
 
+	/**
+	 * Returns a row by Competitor.
+	 * 
+	 * @param c
+	 *            Competitor
+	 * @return A String
+	 */
 	public abstract String row(Competitor c);
 
 	protected abstract void appendFirstRow(StringBuilder sb) throws IOException;
@@ -42,20 +49,26 @@ public abstract class Printer {
 	 *            the file to write to
 	 */
 	public final void printResults(List<Competitor> competitors, String filepath) {
-		printResults(competitors, filepath, new Converter() {
-			public String convert(String s) {
-				return s;
-			}
-		});
+		printResults(competitors, filepath, new NullConverter());
 	}
 
+	/**
+	 * Print results to a file.
+	 * 
+	 * @param competitors
+	 *            Competitors to print
+	 * @param filepath
+	 *            Path to file
+	 * @param converter
+	 *            A converter
+	 */
 	public final void printResults(List<Competitor> competitors,
 			String filepath, Converter converter) {
 		try {
 			File outputFile = new File(filepath);
 			FileWriter fileWriter = new FileWriter(outputFile);
 			String results = build(competitors);
-			if(converter != null)
+			if (converter != null)
 				results = converter.convert(results);
 			fileWriter.append(results);
 			fileWriter.close();
@@ -65,6 +78,14 @@ public abstract class Printer {
 		}
 	}
 
+	/**
+	 * Returns the result.
+	 * 
+	 * @param competitors
+	 *            Competitors
+	 * @return Result
+	 * @throws IOException
+	 */
 	private String build(List<Competitor> competitors) throws IOException {
 		StringBuilder sb = new StringBuilder();
 		int fromIndex = 0;
@@ -77,7 +98,7 @@ public abstract class Printer {
 			String prevClassType = classType;
 			toIndex = getNewIndex(competitors, fromIndex, toIndex,
 					prevClassType, classType);
-			
+
 			// classList now contains competitors of the same class
 			List<Competitor> classList = competitors.subList(fromIndex,
 					toIndex - 1);
@@ -89,7 +110,7 @@ public abstract class Printer {
 			if (classType != "") {
 				sb.append(prevClassType + Formater.LINE_BREAK);
 			}
-			
+
 			List<Competitor> printList = new ArrayList<Competitor>();
 			for (Competitor comp : classList) {
 				// Check if person has name a.k.a this person exists
@@ -99,10 +120,10 @@ public abstract class Printer {
 					printList.add(comp);
 				}
 			}
-			if(!printList.isEmpty()) {
+			if (!printList.isEmpty()) {
 				appendFirstRow(sb);
 				appendRows(sb, classList);
-				for(Competitor comp : printList) {
+				for (Competitor comp : printList) {
 					sb.append("" + row(comp) + Formater.LINE_BREAK);
 				}
 			}

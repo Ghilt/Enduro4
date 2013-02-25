@@ -127,7 +127,7 @@ public class BinaryLapPrinter extends Printer {
 	protected int getMaxLaps(List<Competitor> competitors) {
 		int a = competitors.get(0).getNumberOfBinaryLaps();
 		for (Competitor c : competitors) {
-			if (c.getNumberOfLaps() > a) {
+			if (c.getNumberOfBinaryLaps() > a) {
 				a = c.getNumberOfBinaryLaps();
 			}
 		}
