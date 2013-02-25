@@ -63,6 +63,35 @@ public class TestLapRace {
 		assertEquals(t3.difference(t4), c.getLaps().get(1).getTotal());
 		assertEquals(t4.difference(t2), c.getLaps().get(2).getTotal());
 	}
+	
+	@Test
+	public void TestLapHashCodeWithoutFinishTime() {
+		Time t = new Time(1233);
+		Lap lap = new Lap(t, null);
+		assertEquals(31*31 + t.hashCode(), lap.hashCode());
+	}
+	
+	@Test
+	public void TestLapHashCodeWithoutStartTime() {
+		Time t = new Time(1233);
+		Lap lap = new Lap(null, t);
+		assertEquals(31 * (31 + t.hashCode()), lap.hashCode());
+	}
+	
+	@Test
+	public void TestToString() {
+		Time t1 = new Time(1233);
+		Time t2 = new Time(43221);
+		Lap lap = new Lap(t1, t2);
+		assertEquals(lap.toString(), "Lap [start=" + t1 + ", end=" + t2 + ", total=" + t1.difference(t2) + " ]");
+	}
+	
+	
+	@Test
+	public void TestLapHashCodeWithNullTimes() {
+		Lap lap = new Lap(null, null);
+		assertEquals(31 * 31, lap.hashCode());
+	}
 
 	@Test
 	public void TestLapEquals() {
