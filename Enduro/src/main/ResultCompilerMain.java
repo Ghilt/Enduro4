@@ -317,7 +317,6 @@ public class ResultCompilerMain {
 				&& prop.containsKey(resultfile)) {
 			String resultfilepath = prop.getProperty(resultfile);
 			printer = getSortPrinter(prop);
-			System.out.println(prop.getProperty("racetype"));
 			sorter.sortList(true, competitors, prop.getProperty("racetype"));
 			printer.printResults(competitors, resultfilepath, conv);
 		}
