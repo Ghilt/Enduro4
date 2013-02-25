@@ -31,7 +31,6 @@ public class TestHtmlConverter {
 	@Test
 	public void testLap() throws FileNotFoundException, ParserException {
 		testSomeLap("src/test/unit/html/lap/");
-
 	}
 
 	@Test
