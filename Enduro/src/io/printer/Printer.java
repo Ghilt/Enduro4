@@ -55,7 +55,8 @@ public abstract class Printer {
 			File outputFile = new File(filepath);
 			FileWriter fileWriter = new FileWriter(outputFile);
 			String results = build(competitors);
-			results = converter.convert(results);
+			if(converter != null)
+				results = converter.convert(results);
 			fileWriter.append(results);
 			fileWriter.close();
 
@@ -76,31 +77,33 @@ public abstract class Printer {
 			String prevClassType = classType;
 			toIndex = getNewIndex(competitors, fromIndex, toIndex,
 					prevClassType, classType);
-
+			
 			// classList now contains competitors of the same class
 			List<Competitor> classList = competitors.subList(fromIndex,
 					toIndex - 1);
-
 			setPlacements(classList);
 
 			fromIndex = toIndex - 1;
 
 			// Do not write a line if there's no class type
 			if (classType != "") {
-				sb.append(prevClassType + "\n");
+				sb.append(prevClassType + Formater.LINE_BREAK);
 			}
-			prevClassType = classType;
-
-			appendFirstRow(sb);
 			
-			appendRows(sb, classList);
-
+			List<Competitor> printList = new ArrayList<Competitor>();
 			for (Competitor comp : classList) {
 				// Check if person has name a.k.a this person exists
 				if (comp.getName().isEmpty()) {
 					noNames.add(comp);
 				} else {
-					sb.append("" + row(comp) + "\n");
+					printList.add(comp);
+				}
+			}
+			if(!printList.isEmpty()) {
+				appendFirstRow(sb);
+				appendRows(sb, classList);
+				for(Competitor comp : printList) {
+					sb.append("" + row(comp) + Formater.LINE_BREAK);
 				}
 			}
 		}
@@ -136,7 +139,7 @@ public abstract class Printer {
 			appendFirstRow(sb);
 			appendRows(sb, noNames);
 			for (Competitor comp : noNames) {
-				sb.append("" + row(comp) + "\n");
+				sb.append("" + row(comp) + Formater.LINE_BREAK);
 			}
 
 		}

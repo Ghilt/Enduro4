@@ -117,6 +117,12 @@ public class Competitor implements Comparable<Competitor> {
 		}
 		return laps;
 	}
+	
+	public List<Station> getExtraLapsBinary(){
+
+		return finishTimes;
+		
+	}
 
 	/**
 	 * @return true if start is missing
