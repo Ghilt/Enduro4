@@ -1,6 +1,8 @@
 package test.unit;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertArrayEquals;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 import io.Formater;
 import io.printer.Printer;
 import io.printer.StdPrinter;
@@ -10,7 +12,6 @@ import java.util.List;
 import members.Competitor;
 import members.Lap;
 import members.NullTime;
-import members.Sorter;
 import members.Sorter.CompetitorComparator;
 import members.Time;
 

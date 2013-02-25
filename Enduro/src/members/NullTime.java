@@ -45,4 +45,9 @@ public class NullTime extends Time {
 	public Time difference(Time t) {
 		return t;
 	}
+	
+
+	public boolean isNull() {
+		return true;
+	}
 }
