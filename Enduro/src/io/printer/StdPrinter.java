@@ -2,10 +2,8 @@ package io.printer;
 
 import io.Formater;
 
-import java.io.FileWriter;
 import java.io.IOException;
 import java.util.List;
-
 
 import members.Competitor;
 import members.NullTime;
@@ -135,6 +133,6 @@ public class StdPrinter extends Printer {
 		sb.append(Formater.formatColumns(Formater.START_NR,
 				Formater.NAME, Formater.TOTAL_TIME, Formater.START_TIME,
 				Formater.FINISH_TIME));
-		sb.append("\n");
+		sb.append(Formater.LINE_BREAK);
 	}
 }

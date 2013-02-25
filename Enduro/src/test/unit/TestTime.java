@@ -119,6 +119,7 @@ public class TestTime {
 		assertEquals("05.23.01", new Time(19381).toString());
 	}
 
+	@Test
 	public void testTimeCompareTo() {
 		assertTrue(new Time(100).compareTo(new Time(200)) < 0);
 	}

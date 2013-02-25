@@ -36,17 +36,12 @@ public class Lap {
 	}
 
 	/**
-	 * @return Lap moment
-	 * @see #getEnd()
-	 */
-	public Time getLapMoment() {
-		return end;
-	}
-
-	/**
 	 * @return Lap time
 	 */
 	public Time getTotal() {
+		if(start.isNull() || end.isNull()){
+			return new NullTime();
+		}
 		return start.difference(end);
 	}
 

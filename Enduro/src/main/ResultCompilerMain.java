@@ -90,8 +90,92 @@ public class ResultCompilerMain {
 			errorMessage(e.getMessage());
 			System.exit(-1);
 		}
-
 	}
+
+
+
+	/**
+	 * Reads the filenames of the files with names or times in the config-file
+	 * and puts them in a list
+	 * 
+	 * @param prop
+	 *            contains the values in the config file
+	 * @return HashMap with filenames as keys and type of file as value
+	 * @throws IOException
+	 */
+	private static List<FileHeader> getInputFiles(Properties prop)
+			throws IOException {
+
+		List<FileHeader> inputFiles = new ArrayList<FileHeader>();
+
+		addInputFile(prop, "namefiles", inputFiles,
+				Parser.FileIdentifier.name_file, Competitor.NO_STATION);
+
+		if (prop.containsKey(NUMBER_BINARY)
+				&& prop.getProperty(RACETYPE).equalsIgnoreCase(BINARY_LAPS)) 
+	
+			addBinaryLapInfo(prop, inputFiles);
+			
+		 else {
+			 
+			addDefaultInfo(prop, inputFiles);
+		}
+
+		return inputFiles;
+	}
+
+	/**
+	 * Adds the filenames to the list
+	 * 
+	 * @param prop
+	 *            contains the values in the config file property the filename
+	 *            we are currently adding inputFiles the list of file and
+	 *            headers fileIdentity type of the file
+	 * @return ArrayList with files and headers
+	 * @throws IOException
+	 *             if the config property is missing
+	 */
+	private static void addInputFile(Properties prop, String property,
+			List<FileHeader> inputFiles, FileIdentifier fileIdentity,
+			int stationNr) throws IOException {
+		
+		String startPath = "";
+		if (prop.containsKey(property)) {
+			startPath = prop.getProperty(property);
+		} else {
+			throw new IOException("Property " + property + " not found.");
+		}
+		String[] startFiles = startPath.split(" ");
+		for (String s : startFiles) {
+			if (!new File(s).exists())
+				throw new FileNotFoundException("Filepath: " + s);
+			
+			inputFiles.add(new FileHeader(s, stationNr, fileIdentity));
+		}
+	}
+	private static void addBinaryLapInfo(Properties prop,
+			List<FileHeader> inputFiles) throws IOException {
+		try {
+			int e = 1;
+			e = Integer.parseInt(prop.getProperty(NUMBER_BINARY));
+			for (int i = 1; i <= e; i++) {
+				addInputFile(prop, "startfiles" + "_" + i, inputFiles,
+						Parser.FileIdentifier.start_file, i);
+				addInputFile(prop, "finishfiles" + "_" + i, inputFiles,
+						Parser.FileIdentifier.finish_file, i);
+			}
+		} catch (NumberFormatException e1) {
+		}
+	}
+
+	private static void addDefaultInfo(Properties prop,
+			List<FileHeader> inputFiles) throws IOException {
+		addInputFile(prop, "startfiles", inputFiles,
+				Parser.FileIdentifier.start_file, Competitor.NO_STATION);
+		addInputFile(prop, "finishfiles", inputFiles,
+				Parser.FileIdentifier.finish_file, Competitor.NO_STATION);
+	}
+
 
 	/**
 	 * Parses the content of each file in the list of inputfiles to the list of
@@ -106,86 +190,19 @@ public class ResultCompilerMain {
 	 */
 	private static Map<Integer, Competitor> parseInputFiles(
 			List<FileHeader> inputFiles, Properties prop)
-			throws FileNotFoundException, ParserException {
-
+					throws FileNotFoundException, ParserException {
+		
 		Map<Integer, Competitor> map = new HashMap<Integer, Competitor>();
-
+		
 		Parser p = new Parser();
 		for (FileHeader header : inputFiles) {
 			p.setStationNr(header.station);
 			map = p.parse(read(header.file), map, header.id);
-
+			
 		}
 		return map;
 	}
 
-	/**
-	 * Reads the filenames of the files with names or times in the config-file
-	 * and puts them in a list
-	 * 
-	 * @param prop
-	 *            contains the values in the config file
-	 * @return HashMap with filenames as keys and type of file as value
-	 * @throws IOException 
-	 */
-	private static List<FileHeader> getInputFiles(Properties prop)
-			throws IOException {
-
-		List<FileHeader> inputFiles = new ArrayList<FileHeader>();
-
-		addInputFile(prop, "namefiles", inputFiles,
-				Parser.FileIdentifier.name_file, Competitor.NO_STATION);
-		int e = 1;
-		if (prop.containsKey(NUMBER_BINARY)
-				&& prop.getProperty(RACETYPE).equalsIgnoreCase(BINARY_LAPS)) {
-			try {
-				e = Integer.parseInt(prop.getProperty(NUMBER_BINARY));
-				for (int i = 1; i <= e; i++) {
-					addInputFile(prop, "startfiles" + "_" + i, inputFiles,
-							Parser.FileIdentifier.start_file, i);
-					addInputFile(prop, "finishfiles" + "_" + i, inputFiles,
-							Parser.FileIdentifier.finish_file, i);
-				}
-			} catch (NumberFormatException e1) {
-			}
-		} else {
-			addInputFile(prop, "startfiles", inputFiles,
-					Parser.FileIdentifier.start_file, Competitor.NO_STATION);
-			addInputFile(prop, "finishfiles", inputFiles,
-					Parser.FileIdentifier.finish_file, Competitor.NO_STATION);
-		}
-
-		return inputFiles;
-	}
-
-	/**
-	 * Adds the filenames to the list
-	 * 
-	 * @param prop
-	 *            contains the values in the config file property the filename
-	 *            we are currently adding inputFiles the list of file and
-	 *            headers fileIdentity type of the file
-	 * @return ArrayList with files and headers
-	 * @throws IOException if the config property is missing
-	 */
-	private static void addInputFile(Properties prop, String property,
-			List<FileHeader> inputFiles, FileIdentifier fileIdentity,
-			int stationNr) throws IOException {
-
-		String startPath = "";
-		if (prop.containsKey(property)) {
-			startPath = prop.getProperty(property);
-		} else {
-			throw new IOException("Property "+property+" not found.");
-		}
-		String[] startFiles = startPath.split(" ");
-		for (String s : startFiles) {
-			if (!new File(s).exists())
-				throw new FileNotFoundException("Filepath: " + s);
-
-			inputFiles.add(new FileHeader(s, stationNr, fileIdentity));
-		}
-	}
 
 	/**
 	 * Reads the content of the file
@@ -285,17 +302,24 @@ public class ResultCompilerMain {
 		Sorter sorter = new Sorter();
 		sorter.sortList(false, competitors, "");
 		printer.printResults(competitors, filepath);
+		
+		print(prop, "sorted", "sortedresultfile", competitors, sorter,
+				new NullConverter());
+		print(prop, "html", "htmlresultfile", competitors, sorter,
+				new HtmlConverter());
+	}
 
-		boolean sorted = false;
-		if (prop.containsKey("sorted")) {
-			sorted = prop.get("sorted").equals(YES);
-		}
-		if (sorted) {
-			filepath = prop.getProperty("sortedresultfile");
+	private static void print(Properties prop, String printType,
+			String resultfile, ArrayList<Competitor> competitors,
+			Sorter sorter, Converter conv) {
+		Printer printer;
+		if (prop.containsKey(printType) && prop.get(printType).equals(YES)
+				&& prop.containsKey(resultfile)) {
+			String resultfilepath = prop.getProperty(resultfile);
 			printer = getSortPrinter(prop);
 			System.out.println(prop.getProperty("racetype"));
 			sorter.sortList(true, competitors, prop.getProperty("racetype"));
-			printer.printResults(competitors, filepath);
+			printer.printResults(competitors, resultfilepath, conv);
 		}
 	}
 
