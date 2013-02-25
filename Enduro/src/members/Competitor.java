@@ -81,8 +81,9 @@ public class Competitor implements Comparable<Competitor> {
 			if (!ts.finish.isEmpty()) {
 				b = ts.finish.get(0);
 			}
-			laps.add(new Lap(a, b));
-
+//			if (!a.equals(new NullTime()) && !b.equals(new NullTime())) {
+				laps.add(new Lap(a, b));
+//			}
 		}
 		return laps;
 	}
@@ -318,10 +319,26 @@ public class Competitor implements Comparable<Competitor> {
 	}
 
 	public int getNumberOfBinaryLaps() {
+//		int n = 0;
+//		for(Lap l : getBinaryLaps()) {
+//			if(!l.getStart().equals(new NullTime()) && !l.getEnd().equals(new NullTime())) {
+//				n++;
+//			}
+//		}
 		return getBinaryLaps().size();
 	}
 
 	public void setClassType(String type) {
 		classType = type;
+	}
+	
+	public int getFullBinaryLaps() {
+		int nrFullLaps = 0;
+		for(Lap l : getBinaryLaps()){
+			if(!l.getStart().equals(new NullTime()) && !l.getEnd().equals(new NullTime())) {
+				nrFullLaps++;
+			}
+		}
+		return nrFullLaps;
 	}
 }

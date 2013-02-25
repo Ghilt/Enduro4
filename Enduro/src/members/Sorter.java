@@ -71,7 +71,7 @@ public class Sorter {
 		public int compare(Competitor o1, Competitor o2) {
 			int cmp = o1.getClassType().compareTo(o2.getClassType());
 			if (cmp == 0) {
-				cmp = o2.getNumberOfBinaryLaps() - o1.getNumberOfBinaryLaps();
+				cmp = o2.getFullBinaryLaps() - o1.getFullBinaryLaps();
 
 				if (cmp == 0) {
 					cmp = o1.getTotalTime(o1.getBinaryLaps()).compareTo(o2.getTotalTime(o2.getBinaryLaps()));

@@ -29,7 +29,6 @@ public class Lap {
 
 	/**
 	 * @return End time
-	 * @see #getLapMoment()
 	 */
 	public Time getEnd() {
 		return end;

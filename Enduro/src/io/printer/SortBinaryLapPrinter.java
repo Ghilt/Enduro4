@@ -70,7 +70,8 @@ public class SortBinaryLapPrinter extends BinaryLapPrinter {
 	 *            the competitor which info to append
 	 */
 	private void appendNumberOfBinLaps(StringBuilder sb, Competitor c) {
-		sb.append(c.getNumberOfBinaryLaps() + Formater.COLUMN_SEPARATOR);
+		int nrFullLaps = c.getFullBinaryLaps();
+		sb.append(nrFullLaps + Formater.COLUMN_SEPARATOR);
 	}
 
 	/**

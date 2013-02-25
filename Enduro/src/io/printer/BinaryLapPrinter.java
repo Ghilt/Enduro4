@@ -7,6 +7,7 @@ import java.util.List;
 
 import members.Competitor;
 import members.Lap;
+import members.NullTime;
 import members.Station;
 
 public class BinaryLapPrinter extends Printer {
@@ -74,12 +75,7 @@ public class BinaryLapPrinter extends Printer {
 	 */
 	protected void appendBinaryLaps(StringBuilder sb, Competitor c) {
 		List<Lap> binLaps = c.getBinaryLaps();
-		int nrFullLaps = 0;
-		for(Lap l : binLaps){
-			if(!l.getEnd().isNull() && !l.getStart().isNull()){
-				nrFullLaps++;
-			}
-		}
+		int nrFullLaps = c.getFullBinaryLaps();
 		sb.append(nrFullLaps + Formater.COLUMN_SEPARATOR);
 		for (Lap l : binLaps) {
 			sb.append(l.getTotal() + Formater.COLUMN_SEPARATOR);
