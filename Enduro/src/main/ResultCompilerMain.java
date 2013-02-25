@@ -300,7 +300,7 @@ public class ResultCompilerMain {
 		String filepath = prop.getProperty("resultfile");
 		Printer printer = getPrinter(prop);
 		Sorter sorter = new Sorter();
-		sorter.sortList(false, competitors);
+		sorter.sortList(false, competitors, "");
 		printer.printResults(competitors, filepath);
 		
 		print(prop, "sorted", "sortedresultfile", competitors, sorter,
@@ -315,10 +315,11 @@ public class ResultCompilerMain {
 		Printer printer;
 		if (prop.containsKey(printType) && prop.get(printType).equals(YES)
 				&& prop.containsKey(resultfile)) {
-			String htmlresultfile = prop.getProperty(resultfile);
+			String resultfilepath = prop.getProperty(resultfile);
 			printer = getSortPrinter(prop);
-			sorter.sortList(true, competitors);
-			printer.printResults(competitors, htmlresultfile, conv);
+			System.out.println(prop.getProperty("racetype"));
+			sorter.sortList(true, competitors, prop.getProperty("racetype"));
+			printer.printResults(competitors, resultfilepath, conv);
 		}
 	}
 
