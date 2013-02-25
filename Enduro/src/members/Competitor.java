@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 /**
  * @author Philip & Andrée
@@ -86,20 +87,7 @@ public class Competitor implements Comparable<Competitor> {
 	 */
 	public List<Lap> getBinaryLaps() {
 		List<Lap> laps = new ArrayList<Lap>();
-		// Put all the stations into 2D matrixes so they can be used properly.
-		Map<Integer, StationTimes> stations = new HashMap<Integer, StationTimes>();
-		for (Station s : startTimes) {
-			if (stations.get(s.nr) == null) {
-				stations.put(s.nr, new StationTimes());
-			}
-			stations.get(s.nr).start.add(s.time);
-		}
-		for (Station s : finishTimes) {
-			if (stations.get(s.nr) == null) {
-				stations.put(s.nr, new StationTimes());
-			}
-			stations.get(s.nr).finish.add(s.time);
-		}
+		Map<Integer, StationTimes> stations = getStationsMatrix();
 
 		// Take the first start and end from each station and put them into a
 		// list
@@ -117,13 +105,39 @@ public class Competitor implements Comparable<Competitor> {
 		}
 		return laps;
 	}
-	
-	public List<Station> getExtraLapsBinary(){
 
-		return finishTimes;
+	public List<Station>[] getExtraLapsBinary(){
+
+		Map<Integer, StationTimes> stations = getStationsMatrix();
+		for (Entry<Integer, StationTimes> ts : stations.entrySet()) {
+			
+		}
+		return null;
 		
 	}
 
+	/**
+	 * Puts all times into a map of arrays with the stations as keys
+	 * @return
+	 */
+	private Map<Integer, StationTimes> getStationsMatrix() {
+		// Put all the stations into 2D matrixes so they can be used properly.
+		Map<Integer, StationTimes> stations = new HashMap<Integer, StationTimes>();
+		for (Station s : startTimes) {
+			if (stations.get(s.nr) == null) {
+				stations.put(s.nr, new StationTimes());
+			}
+			stations.get(s.nr).start.add(s.time);
+		}
+		for (Station s : finishTimes) {
+			if (stations.get(s.nr) == null) {
+				stations.put(s.nr, new StationTimes());
+			}
+			stations.get(s.nr).finish.add(s.time);
+		}
+		return stations;
+	}
+	
 	/**
 	 * @return true if start is missing
 	 */
