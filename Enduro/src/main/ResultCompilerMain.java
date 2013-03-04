@@ -2,9 +2,6 @@ package main;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.net.URISyntaxException;
 import java.security.CodeSource;
 import java.util.ArrayList;
 import java.util.Map;
@@ -21,56 +18,51 @@ import members.Competitor;
  */
 public class ResultCompilerMain {
 
-	public final static String PROGRAM_DONE = "Programmet färdigt";
+	private static final String ERROR = "FEL";
+	private static final String RESULT = "SLUT";
+	public final static String PROGRAM_DONE = "Program klart";
 
 	/**
 	 * 
 	 * Read input files and create list with competitors, and call printResults
 	 * to print the results to the output file.
 	 * 
-	 * @throws URISyntaxException
-	 * @throws FileNotFoundException
-	 * 
 	 */
-	public static void main(String[] args) throws URISyntaxException {
-
-		// Load the directory
-		CodeSource codeSource = ResultCompilerMain.class.getProtectionDomain()
-				.getCodeSource();
-		File jarFile = new File(codeSource.getLocation().toURI().getPath());
-		String jarDir = jarFile.getParentFile().getPath() + File.separator;
-		//System.out.println("DERP" + jarDir);
-
-		// try to load properties
-		Properties prop = new Properties();
+	public static void main(String[] args) {
 
 		try {
-			// load properties from config.properties
-			prop.load(new FileInputStream(jarDir + "config.properties"));
-
-		} catch (IOException ex) {
-			ex.printStackTrace();
-		}
-
-		// Perform program from config file
-		try {
-			InputFileHandler in = new InputFileHandler(jarDir);
-			Map<Integer, Competitor> map = null;
-			map = in.parseInputFiles(in.getInputFiles(prop), prop);
-
-			ArrayList<Competitor> list = new ArrayList<Competitor>(map.values());
-			in.printResults(prop, list);
+			compile();
 			infoMessage(PROGRAM_DONE);
 		} catch (Exception e) {
 			errorMessage(e.getMessage());
 			System.exit(-1);
 		}
-		// Profit???
+	}
+
+	private static void compile() throws Exception {
+		// Load the directory
+		CodeSource codeSource = ResultCompilerMain.class.getProtectionDomain()
+				.getCodeSource();
+		File jarFile = new File(codeSource.getLocation().toURI().getPath());
+		String jarDir = jarFile.getParentFile().getPath() + File.separator;
+
+		Properties prop = new Properties();
+		// load properties from config.properties
+		prop.load(new FileInputStream(jarDir + "config.properties"));
+
+		// Perform program as instructed by config file
+		InputFileHandler in = new InputFileHandler(jarDir);
+		Map<Integer, Competitor> map = null;
+		map = in.parseInputFiles(in.getInputFiles(prop), prop);
+		ArrayList<Competitor> list = new ArrayList<Competitor>(map.values());
+		in.printResults(prop, list);
+
+		// Profit!!!
 	}
 
 	private static void infoMessage(String e) {
 		JFrame frame = new JFrame();
-		JOptionPane.showMessageDialog(frame, e, "Result",
+		JOptionPane.showMessageDialog(frame, e, RESULT,
 				JOptionPane.PLAIN_MESSAGE);
 		frame.dispose();
 	}
@@ -79,13 +71,10 @@ public class ResultCompilerMain {
 	 * If an error is caught during the parsing, a message is shown. See
 	 * ParserException class for information of what errors or
 	 * FileNotFoundException.
-	 * 
-	 * @param e
-	 *            exception
 	 */
 	private static void errorMessage(String e) {
 		JFrame frame = new JFrame();
-		JOptionPane.showMessageDialog(frame, e, "FEL",
+		JOptionPane.showMessageDialog(frame, e, ERROR,
 				JOptionPane.ERROR_MESSAGE);
 		frame.dispose();
 	}
