@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 /**
  * @author Philip & Andrée
@@ -13,25 +14,6 @@ import java.util.Map;
 public class Competitor implements Comparable<Competitor> {
 
 	public static final int NO_STATION = -1;
-
-	private class Station implements Comparable<Station> {
-		// public Station(Time t) {
-		// time = t;
-		// nr = -1;
-		// }
-		public Station(Time t, int nr) {
-			time = t;
-			this.nr = nr;
-		}
-
-		private Time time;
-		private int nr;
-
-		@Override
-		public int compareTo(Station other) {
-			return time.compareTo(other.time);
-		}
-	}
 
 	private int index;
 	private List<Station> startTimes;
@@ -82,10 +64,65 @@ public class Competitor implements Comparable<Competitor> {
 	/**
 	 * Big laps, defined by one start and one end.
 	 * 
-	 * @return List of laps
+	 * @return map of laps with their stations as key
 	 */
-	public List<Lap> getBinaryLaps() {
-		List<Lap> laps = new ArrayList<Lap>();
+	public Map<Integer, Lap> getBinaryLaps() {
+		Map<Integer, Lap> laps = new HashMap<Integer, Lap>();
+		Map<Integer, StationTimes> stations = getStationsMatrix();
+
+		// Take the first start and end from each station and put them into a
+		// list
+		for (Entry<Integer, StationTimes> ts : stations.entrySet()) {
+			Time a = new NullTime();
+			Time b = new NullTime();
+			if (!ts.getValue().start.isEmpty()) {
+				a = ts.getValue().start.get(0).clone();
+			}
+			
+			if (!ts.getValue().finish.isEmpty()) {
+				b = ts.getValue().finish.get(0).clone();
+			}
+
+			laps.put(ts.getKey(), new Lap(a, b));
+
+		}
+		return laps;
+	}
+
+	/**
+	 * Creates a list of Stations with the start times as the val0, and end
+	 * times as val1.
+	 * 
+	 * @return List<Station>[2]
+	 */
+	public List<Station>[] getExtraLapsBinary() {
+
+		@SuppressWarnings("unchecked")
+		List<Station>[] ret = new List[2];
+		ret[0] = new ArrayList<Station>();
+		ret[1] = new ArrayList<Station>();
+
+		Map<Integer, StationTimes> stations = getStationsMatrix();
+		for (Entry<Integer, StationTimes> entry : stations.entrySet()) {
+			ArrayList<Time> start = entry.getValue().start;
+			for (int i = 1; i < start.size() && start.size() > 1; i++) {
+				ret[0].add(new Station(start.get(i).clone(), entry.getKey()));
+			}
+			ArrayList<Time> end = entry.getValue().finish;
+			for (int i = 1; i < end.size() && end.size() > 1; i++) {
+				ret[1].add(new Station(end.get(i).clone(), entry.getKey()));
+			}
+		}
+		return ret;
+
+	}
+
+	/**
+	 * Puts all times into a map of arrays with the stations as keys
+	 * 
+	 * @return
+	 */
+	private Map<Integer, StationTimes> getStationsMatrix() {
 		// Put all the stations into 2D matrixes so they can be used properly.
 		Map<Integer, StationTimes> stations = new HashMap<Integer, StationTimes>();
 		for (Station s : startTimes) {
@@ -100,22 +137,7 @@ public class Competitor implements Comparable<Competitor> {
 			}
 			stations.get(s.nr).finish.add(s.time);
 		}
-
-		// Take the first start and end from each station and put them into a
-		// list
-		for (StationTimes ts : stations.values()) {
-			Time a = new NullTime();
-			Time b = new NullTime();
-			if (!ts.start.isEmpty()) {
-				a = ts.start.get(0);
-			}
-			if (!ts.finish.isEmpty()) {
-				b = ts.finish.get(0);
-			}
-			laps.add(new Lap(a, b));
-
-		}
-		return laps;
+		return stations;
 	}
 
 	/**
@@ -303,5 +325,15 @@ public class Competitor implements Comparable<Competitor> {
 
 	public void setClassType(String type) {
 		classType = type;
+	}
+	
+	public int getFullBinaryLaps() {
+		int nrFullLaps = 0;
+		for(Lap l : getBinaryLaps().values()){
+			if(!l.getStart().isNull() && !l.getEnd().isNull()) {
+				nrFullLaps++;
+			}
+		}
+		return nrFullLaps;
 	}
 }

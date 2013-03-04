@@ -22,18 +22,24 @@ public class Sorter {
 	 * @param list
 	 *            list containing competitors to sort
 	 */
-	public void sortList(boolean sort, ArrayList<Competitor> list) {
+	public void sortList(boolean sort, ArrayList<Competitor> list,
+			String racetype) {
 		if (!sort) {
 			Collections.sort(list);
 		} else {
-			Collections.sort(list, new CompetitorComparator());
+			if (racetype.equals("laprace")) {
+				Collections.sort(list, new CompetitorComparator());
+			}
+			if (racetype.equals("etapprace")) {
+				Collections.sort(list, new CompetitorBinaryComparator());
+			}
 		}
 	}
 
 	/**
-	 * Comparator used for sorting the competitors depending on their total time of their laps.
-	 * First sorts after class type, then if the competitors has the same class type, sorts after
-	 * total time.
+	 * Comparator used for sorting the competitors depending on their total time
+	 * of their laps. First sorts after class type, then if the competitors has
+	 * the same class type, sorts after total time.
 	 */
 	public static class CompetitorComparator implements Comparator<Competitor> {
 		public CompetitorComparator() {
@@ -44,7 +50,6 @@ public class Sorter {
 			int cmp = o1.getClassType().compareTo(o2.getClassType());
 			if (cmp == 0) {
 				cmp = o2.getNumberOfLaps() - o1.getNumberOfLaps();
-
 				if (cmp == 0) {
 					cmp = o1.getTotalTime(o1.getLaps()).compareTo(
 							o2.getTotalTime(o2.getLaps()));
@@ -53,13 +58,14 @@ public class Sorter {
 			return cmp;
 		}
 	}
-	
+
 	/**
-	 * Comparator used for sorting the competitors depending on their total time of their binary laps.
-	 * First sorts after class type, then if the competitors has the same class type, sorts after
-	 * total time.
+	 * Comparator used for sorting the competitors depending on their total time
+	 * of their binary laps. First sorts after class type, then if the
+	 * competitors has the same class type, sorts after total time.
 	 */
-	public static class CompetitorBinaryComparator implements Comparator<Competitor> {
+	public static class CompetitorBinaryComparator implements
+			Comparator<Competitor> {
 		public CompetitorBinaryComparator() {
 		}
 
@@ -67,10 +73,20 @@ public class Sorter {
 		public int compare(Competitor o1, Competitor o2) {
 			int cmp = o1.getClassType().compareTo(o2.getClassType());
 			if (cmp == 0) {
-				cmp = o2.getNumberOfBinaryLaps() - o1.getNumberOfBinaryLaps();
+				cmp = o2.getFullBinaryLaps() - o1.getFullBinaryLaps();
 
 				if (cmp == 0) {
-					cmp = o1.getTotalTime(o1.getBinaryLaps()).compareTo(o2.getTotalTime(o2.getBinaryLaps()));
+					Time total_first=Time.parse("00.00.00");
+					Time total_other=Time.parse("00.00.00");
+					for (int i = 1; i < o1.getFullBinaryLaps()+1; i++) {
+						total_first.add(o1.getBinaryLaps()
+								.get(i)
+								.getTotal());
+						total_other.add(o2.getBinaryLaps()
+								.get(i)
+								.getTotal());
+					}
+					cmp = total_first.compareTo(total_other);
 				}
 			}
 			return cmp;

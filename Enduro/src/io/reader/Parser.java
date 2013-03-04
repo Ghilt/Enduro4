@@ -17,6 +17,10 @@ import members.Time;
  */
 public class Parser {
 
+	public void setStationNr(int stationNr) {
+		this.stationNr = stationNr;
+	}
+
 	private int stationNr;
 
 	public Parser(int stationNr) {
@@ -42,8 +46,8 @@ public class Parser {
 	 */
 	public Map<Integer, Competitor> parse(ArrayList<ArrayList<String>> input,
 			Map<Integer, Competitor> cs) throws ParserException {
-		if (input.size() < 2)
-			throw new ParserException("Invalid input.");
+		if (input.size() < 1)
+			throw new ParserException("Invalid input. Too short file.");
 
 		Map<Integer, Competitor> competitors = new HashMap<Integer, Competitor>(
 				cs);
@@ -63,8 +67,8 @@ public class Parser {
 	public Map<Integer, Competitor> parse(List<ArrayList<String>> input,
 			Map<Integer, Competitor> cs, FileIdentifier fileIdentifier)
 			throws ParserException {
-		if (input.size() < 2)
-			throw new ParserException("Invalid input.");
+		if (input.size() < 1)
+			throw new ParserException("Invalid input. File too short.");
 
 		Map<Integer, Competitor> competitors = new HashMap<Integer, Competitor>(
 				cs);
@@ -106,7 +110,13 @@ public class Parser {
 			}
 
 			// Startnbr is always first column.
-			int startNbr = Integer.valueOf(row.get(0));
+			int startNbr = 0;
+			if(row.get(0) == "") {
+				
+			} else {
+				startNbr = Integer.valueOf(row.get(0));
+			}
+			
 
 			Competitor comp = competitors.get(startNbr);
 			// If comp does not already exist in hashmap, create a new one

@@ -20,13 +20,20 @@ public abstract class Printer {
 	public static final String NO_START = "Start?";
 	public static final String NO_END = "Slut?";
 	public static final String MULTIPLE_STARTS = "Flera starttider?";
-	public static final String MULTIPLE_STARTS_ETAPP = "Flera starttider Etapp";
-	public static final String MULTIPLE_ENDS = "Flera måltider?";
-	public static final String MULTIPLE_ENDS_ETAPP = "Flera måltider Etapp";
+	public static final String MULTIPLE_STARTS_CLEAN = "Flera starttider";
+	public static final String MULTIPLE_ENDS = "Flera sluttider?";
+	public static final String MULTIPLE_ENDS_CLEAN = "Flera sluttider";
 	public static final String IMPOSSIBLE_TOTAL_TIME = "Omöjlig Totaltid?";
 	public static final String IMPOSSIBLE_LAP_TIME = "Omöjlig varvtid?";
 	public static final Time MINIMUM_TOTAL_TIME = Time.parse("00.15.00");
 
+	/**
+	 * Returns a row by Competitor.
+	 * 
+	 * @param c
+	 *            Competitor
+	 * @return A String
+	 */
 	public abstract String row(Competitor c);
 
 	protected abstract void appendFirstRow(StringBuilder sb) throws IOException;
@@ -42,20 +49,27 @@ public abstract class Printer {
 	 *            the file to write to
 	 */
 	public final void printResults(List<Competitor> competitors, String filepath) {
-		printResults(competitors, filepath, new Converter() {
-			public String convert(String s) {
-				return s;
-			}
-		});
+		printResults(competitors, filepath, new NullConverter());
 	}
 
+	/**
+	 * Print results to a file.
+	 * 
+	 * @param competitors
+	 *            Competitors to print
+	 * @param filepath
+	 *            Path to file
+	 * @param converter
+	 *            A converter
+	 */
 	public final void printResults(List<Competitor> competitors,
 			String filepath, Converter converter) {
 		try {
 			File outputFile = new File(filepath);
 			FileWriter fileWriter = new FileWriter(outputFile);
 			String results = build(competitors);
-			results = converter.convert(results);
+			if (converter != null)
+				results = converter.convert(results);
 			fileWriter.append(results);
 			fileWriter.close();
 
@@ -64,6 +78,14 @@ public abstract class Printer {
 		}
 	}
 
+	/**
+	 * Returns the result.
+	 * 
+	 * @param competitors
+	 *            Competitors
+	 * @return Result
+	 * @throws IOException
+	 */
 	private String build(List<Competitor> competitors) throws IOException {
 		StringBuilder sb = new StringBuilder();
 		int fromIndex = 0;
@@ -80,26 +102,29 @@ public abstract class Printer {
 			// classList now contains competitors of the same class
 			List<Competitor> classList = competitors.subList(fromIndex,
 					toIndex - 1);
-
 			setPlacements(classList);
 
 			fromIndex = toIndex - 1;
 
 			// Do not write a line if there's no class type
 			if (classType != "") {
-				sb.append(prevClassType + "\n");
+				sb.append(prevClassType + Formater.LINE_BREAK);
 			}
-			prevClassType = classType;
 
-			appendFirstRow(sb);
-			appendRows(sb, classList);
-
+			List<Competitor> printList = new ArrayList<Competitor>();
 			for (Competitor comp : classList) {
 				// Check if person has name a.k.a this person exists
 				if (comp.getName().isEmpty()) {
 					noNames.add(comp);
 				} else {
-					sb.append("" + row(comp) + "\n");
+					printList.add(comp);
+				}
+			}
+			if (!printList.isEmpty()) {
+				appendFirstRow(sb);
+				appendRows(sb, classList);
+				for (Competitor comp : printList) {
+					sb.append("" + row(comp) + Formater.LINE_BREAK);
 				}
 			}
 		}
@@ -135,7 +160,7 @@ public abstract class Printer {
 			appendFirstRow(sb);
 			appendRows(sb, noNames);
 			for (Competitor comp : noNames) {
-				sb.append("" + row(comp) + "\n");
+				sb.append("" + row(comp) + Formater.LINE_BREAK);
 			}
 
 		}

@@ -2,12 +2,13 @@ package io.printer;
 
 import io.Formater;
 
-import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import members.Competitor;
 import members.Lap;
+import members.NullTime;
 
 public class SortBinaryLapPrinter extends BinaryLapPrinter {
 
@@ -49,11 +50,16 @@ public class SortBinaryLapPrinter extends BinaryLapPrinter {
 	 *            the competitor which info to append
 	 */
 	protected void appendBinaryLaps(StringBuilder sb, Competitor c) {
-		List<Lap> binLaps = c.getBinaryLaps();
+		List<Lap> binLaps = new ArrayList<Lap>(c.getBinaryLaps().values());
 		for (int i = 0; i < binLaps.size() - 1; i++) {
 			sb.append(binLaps.get(i).getTotal() + Formater.COLUMN_SEPARATOR);
 		}
-		sb.append(binLaps.get(binLaps.size() - 1).getTotal());
+		if (binLaps.size() == 0) {
+			sb.append(new NullTime());
+		} else {
+			sb.append(binLaps.get(binLaps.size() - 1).getTotal());
+		}
+		
 	}
 
 	/**
@@ -65,7 +71,8 @@ public class SortBinaryLapPrinter extends BinaryLapPrinter {
 	 *            the competitor which info to append
 	 */
 	private void appendNumberOfBinLaps(StringBuilder sb, Competitor c) {
-		sb.append(c.getNumberOfBinaryLaps() + Formater.COLUMN_SEPARATOR);
+		int nrFullLaps = c.getFullBinaryLaps();
+		sb.append(nrFullLaps + Formater.COLUMN_SEPARATOR);
 	}
 
 	/**
@@ -105,6 +112,7 @@ public class SortBinaryLapPrinter extends BinaryLapPrinter {
 	/**
 	 * Loops the sorted list of competitors and add a placement to each.
 	 */
+	@Override
 	protected void setPlacements(List<Competitor> competitors) {
 		maxBinLaps = getMaxLaps(competitors);
 		for (int i = 0; i < competitors.size(); i++) {

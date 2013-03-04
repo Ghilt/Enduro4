@@ -1,11 +1,11 @@
 package test.unit;
 
 import static org.junit.Assert.assertEquals;
-
 import io.reader.Parser;
 import io.reader.ParserException;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 
 import members.Competitor;
@@ -13,7 +13,6 @@ import members.Time;
 
 import org.junit.Before;
 import org.junit.Test;
-
 
 public class TestParser {
 
@@ -24,11 +23,73 @@ public class TestParser {
 	public void setUp() {
 		parser = new Parser();
 		input = new ArrayList<ArrayList<String>>();
-
 	}
 
-	@Test(expected = ParserException.class)
+	@Test (expected = ParserException.class)
 	public void testEmptyInput() throws ParserException {
+		parser.parse(input);
+	}
+	
+	@Test (expected = ParserException.class)
+	public void testMissingStartNbr() throws ParserException {
+		ArrayList<String> row1 = new ArrayList<String>();
+		ArrayList<String> row2 = new ArrayList<String>();
+		ArrayList<String> row3 = new ArrayList<String>();
+		row1.add("1");
+		row1.add("Bengt Bsson");
+		row2.add("Chris Csson");
+		row3.add("3");
+		row3.add("David Dsson");
+		input.add(row1);
+		input.add(row2);
+		input.add(row3);
+		parser.parse(input);
+	}
+	
+	@Test (expected = ParserException.class)
+	public void testFileTooShortWithFileIdentifier() throws ParserException {
+		Map<Integer, Competitor> cs = new HashMap<Integer, Competitor>();
+		parser.parse(input, cs, Parser.FileIdentifier.name_file);
+	}
+	
+	@Test (expected = ParserException.class)
+	public void testFileTooShortWithoutFileIdentifier() throws ParserException {
+		Map<Integer, Competitor> cs = new HashMap<Integer, Competitor>();
+		parser.parse(input, cs);
+	}
+	
+	@Test (expected = ParserException.class)
+	public void testInvalidType() throws ParserException {
+		ArrayList<String> row1 = new ArrayList<String>();
+		ArrayList<String> row2 = new ArrayList<String>();
+		ArrayList<String> row3 = new ArrayList<String>();
+		row1.add("startNr");
+		row1.add("FinnsEj");
+		row2.add("1");
+		row2.add("Chris Csson");
+		row3.add("3");
+		row3.add("David Dsson");
+		input.add(row1);
+		input.add(row2);
+		input.add(row3);
+		parser.parse(input);
+	}
+	
+	@Test (expected = ParserException.class)
+	public void testColumnLengthMismatcht() throws ParserException {
+		ArrayList<String> row1 = new ArrayList<String>();
+		ArrayList<String> row2 = new ArrayList<String>();
+		ArrayList<String> row3 = new ArrayList<String>();
+		row1.add("startNr");
+		row1.add("Namn");
+		row1.add("Starttid");
+		row2.add("1");
+		row2.add("Hans");
+		row3.add("3");
+		row3.add("David Dsson");
+		input.add(row1);
+		input.add(row2);
+		input.add(row3);
 		parser.parse(input);
 	}
 

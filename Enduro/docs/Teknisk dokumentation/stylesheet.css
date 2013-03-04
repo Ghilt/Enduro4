@@ -1,4 +1,45 @@
+
 body{
-width:900px;
-margin:auto;
+}
+
+#header{
+	font-family: "Futura", "Helvetica", "Times", "Serif";
+	width:900px;
+	margin:auto;
+	text-align: center;
+	text-decoration: none;
+	
+}
+#content{
+	font-family: "Futura", "Helvetica", "Times", "Serif";
+	width:900px;
+	margin:auto;
+}
+HR{
+	align:center;
+	width:80%;
+}
+.exempel{
+	font-family:Courir;
+	padding-left: 20px;
+}
+#footer{
+	height:60px;
+	width:900px;
+	margin:auto;
+}
+h1{
+	font-size: 3em;
+}
+h2{
+	font-size: 1.75em;
+}
+h4{
+	font-size: 1.25em;
+}
+p{
+	font-size: 0.9em;
+}
+li{
+	font-size: 0.9em;
 }
