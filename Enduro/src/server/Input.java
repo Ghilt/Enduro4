@@ -6,12 +6,10 @@ import java.io.InputStream;
 public class Input extends Thread {
 	private InputStream in;
 	private Monitor monitor;
-	private int clientIdentifier;
 
-	public Input(InputStream inputStream, Monitor monitor, int identifier) {
+	public Input(InputStream inputStream, Monitor monitor) {
 		in = inputStream;
 		this.monitor = monitor;
-		clientIdentifier = identifier;
 	}
 
 	/**
@@ -20,27 +18,38 @@ public class Input extends Thread {
 	 */
 	public void run() {
 		while (!isInterrupted()) {
-			int size;
 			try {
-				size = in.read();
-				if(size == -1) {
-					close();
-				} else {
-					byte msg[] = new byte[size];
-					in.read(msg, 0, size);
-					System.out.println("size=" + size);
-					monitor.register(clientIdentifier, msg);
+				byte[] startNbr = readInput();
+				byte[] msg = readInput();
+				
+				if(startNbr.length != 0 && msg.length != 0) {
+					monitor.register(startNbr, msg);
 				}
 				
 				sleep(10);
-			} catch (IOException e) {
-				interrupt();
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
 		close();
+	}
+
+	private byte[] readInput() {
+		byte[] bytes = null;
+		try {
+			int size = in.read();
+			if (size == -1) {
+				close();
+			} else {
+				bytes = new byte[size];
+				in.read(bytes, 0, size);
+			}
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return bytes;
 	}
 
 	/**
@@ -53,7 +62,5 @@ public class Input extends Thread {
 			System.out.println("Exception when trying to close inputstream?");
 		}
 	}
-
-	
 
 }

@@ -65,7 +65,7 @@ public class StdPrinter extends Printer {
 			boolean failed) {
 		Time totalTime = totalTime(c);
 
-		if (totalTime.compareTo(MINIMUM_TOTAL_TIME) <= 0) {
+		if (!totalTime.isNull() && totalTime.compareTo(MINIMUM_TOTAL_TIME) > 0) {
 			if (!failed) {
 				sb.append(";");
 				failed = true;

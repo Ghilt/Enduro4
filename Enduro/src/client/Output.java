@@ -13,12 +13,10 @@ public class Output {
 	public Output(OutputStream out) {
 		this.out = out;
 	}
-	
+
 	public void sendMessage(byte[] b) {
 		try {
 			out.write(b);
-			
-
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

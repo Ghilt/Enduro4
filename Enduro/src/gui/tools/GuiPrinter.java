@@ -19,7 +19,6 @@ import client.Output;
 public class GuiPrinter {
 
 	private File file;
-	
 	private Output out;
 
 	/**
@@ -27,13 +26,16 @@ public class GuiPrinter {
 	 * 
 	 * @param filelink
 	 *            The location of the file, including name, to write to.
+<<<<<<< HEAD
 	 * @param out 
+=======
+	 * @param out
+>>>>>>> 6f4ba790ac42b0e82c7642708f065bce9144f79b
 	 */
 	public GuiPrinter(String filelink, Output out) {
 		super();
 		this.file = new File(filelink);
 		this.out = out;
-
 	}
 
 	/**
@@ -109,14 +111,16 @@ public class GuiPrinter {
 	 */
 	public void writeLines(boolean overwrite, Object... lines) {
 		String ret = "";
-		for (Object s : lines)
+		for (Object s : lines) {
 			ret = ret + s + System.getProperty("line.separator");
+		}
 
 		BufferedWriter writer = null;
 		try {
 			writer = new BufferedWriter(new FileWriter(file, !overwrite));
 			writer.write(ret);
 //			send(ret);
+
 		} catch (IOException e) {
 		} finally {
 			try {

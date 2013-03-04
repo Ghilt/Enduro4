@@ -11,19 +11,23 @@ public class Server {
 	private Input in;
 	private Socket clientSocket;
 	private ServerSocket socket;
-	private int clientIdentifier;
-
+	private String resultpath = "result.txt";
+	private String namefilepath = "namnfil.txt";
+	
 	public static void main(String[] args) {
 		new Server().handleRequests(27015);
 	}
 
 	private void handleRequests(int srvPort) {
-		in = null;
+		ClassLoader classLoader = Server.class.getClassLoader();
+		String currentFilePath = classLoader.getResource("").getPath();
+		resultpath = currentFilePath + "/" + resultpath;
+		namefilepath = currentFilePath + "/" + namefilepath;
 		monitor = null;
 		clientSocket = null;
 		socket = null;
-		clientIdentifier = 1;
-
+		monitor = new Monitor(resultpath, namefilepath);
+		ServerGui srvGui = new ServerGui();
 		while (true) {
 			try {
 				try {
@@ -32,12 +36,12 @@ public class Server {
 				}
 				// The 'accept' method waits for a client to connect, then
 				// returns a socket connected to that client.
-				System.out.println("Waiting for client to connect...");
+				srvGui.setText("Waiting for client to connect...");
 				clientSocket = socket.accept();
-				System.out.println("Client connected");
+				srvGui.setText("Client connected.");
 
-				monitor = new Monitor();
-				in = new Input(clientSocket.getInputStream(), monitor, clientIdentifier++);
+				
+				in = new Input(clientSocket.getInputStream(), monitor);
 
 				in.start();
 				
