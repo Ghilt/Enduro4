@@ -1,18 +1,15 @@
 package test.unit.gui;
 
-import static org.junit.Assert.*;
-
+import static org.junit.Assert.assertTrue;
+import gui.register.Gui;
 import io.reader.CvsReader;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
-import gui.register.Gui;
-
-import org.junit.*;
-
-import test.TestUtil;
+import org.junit.Before;
+import org.junit.Test;
 
 public class TestGui {
 
