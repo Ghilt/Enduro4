@@ -3,6 +3,7 @@
 <head>
 	<title>Manual</title>
     <link rel="stylesheet" type="text/css" href="../stylesheet.css">
+    <link rel="shortcut icon" href="../icon.ico">
     <meta charset=utf-8>
 </head>
 <body>
@@ -93,19 +94,22 @@
 		<h3>Konfigurations-fil</h3>
 			<p>I filen config.properties måste man skriva in nedanstående information för att kunna köra programmet:</p>
 			<ul>
-				<li>starttimes (Namnet på filen med starttider)</li>
-				<li>namefile (Namnet på filen med namnen)</li>
-			  	<li>finishtimes (Namnen på de filer som innehåller måltider, om flera, separerade med mellanrum)</li>
-			  	<li>resultfile (Namnet på den filen som resultatet sorterat efter startnummer ska skrivas ut på)</li>
-			  	<li>sortedresultfile (Namnet på den filen som resultatet sorterat efter placering ska skrivas ut på)</li>
-			  	<li>sorted (yes om en fil sorterad efter placering ska skrivas ut, no om det inte ska skrivas ut en sådan fil)</li>
-			  	<li>racetype (Vilken typ av race det är. standard: ett standard lopp, laprace: ett varvlopp, etapprace: etapplopp)</li>
-			  	<li>html (Om HTML resultat ska genereras)</li>
-			  	<li>htmlresultfile (Namnet på HTML filen)</li>
+				<li>namefiles: Namnet på filen med namnen</li>
+				<li>starttimes: Namnet på filen med starttider</li>
+			  	<li>finishtimes: Namnen på de filer som innehåller måltider, om flera, separerade med mellanrum</li>
+			  	<li>resultfile: Namnet på den filen som resultatet sorterat efter startnummer ska skrivas ut på</li>
+			  	<li>sortedresultfile: Namnet på den filen som resultatet sorterat efter placering ska skrivas ut på</li>
+			  	<li>sorted: yes om en fil sorterad efter placering ska skrivas ut, no om det inte ska skrivas ut en sådan fil</li>
+			  	<li>racetype: Vilken typ av race det är. standard: ett standard lopp, laprace: ett varvlopp, etapprace: etapplopp</li>
+			  	<li>html: Om HTML resultat ska genereras</li>
+			  	<li>htmlresultfile: Namnet på HTML filen</li>
+			  	<li>antalstationer: Antal stationer i etapprace</li>
+			  	<li>startfiles_n: Namn på de startfiler som tillhör station 'n'</li>
+			  	<li>finishfiles_n: Namn på de slutfiler som tillhör station 'n'</li>
 			</ul>
 			<p>All data skrivs enligt följande format:</p>
-			<p>confignamn=värde</p>
-			<p>Notera att filerna måste ligga i samma mapp som programmet.</p>
+			<p>confignamn = värde</p>
+			<p>Notera att filernas sökväg är från programmet jar-fil.</p>
     </div>
     <div id="footer">
     </div>

@@ -25,7 +25,7 @@ import members.Time;
 @SuppressWarnings("serial")
 public class Gui extends JFrame {
 
-	private static final int MAX_ENTRIES_SHOWN = 4;
+	//private static final int MAX_ENTRIES_SHOWN = 4;
 
 	private JPanel controlNorthPanel;
 	private JScrollPane textCenterPanel;
@@ -195,25 +195,25 @@ public class Gui extends JFrame {
 	}
 
 	
-
-	/**
-	 * In case of empty entry, the next valid entry adds to the first line
-	 * instead of creating a new one.
-	 * 
-	 * @param comNr
-	 */
-	private void addToStartOfTextArea(String comNr) {
-		String[] str = textArea.getText().split(
-				System.getProperty("line.separator"));
-		str[0] = comNr + str[0];
-		String newText = "";
-		for (String s : str) {
-			if (!s.isEmpty())
-				newText = newText + s + System.getProperty("line.separator");
-		}
-		textArea.setText(newText);
-		textArea.setCaretPosition(0);
-	}
+//
+//	/**
+//	 * In case of empty entry, the next valid entry adds to the first line
+//	 * instead of creating a new one.
+//	 * 
+//	 * @param comNr
+//	 */
+//	private void addToStartOfTextArea(String comNr) {
+//		String[] str = textArea.getText().split(
+//				System.getProperty("line.separator"));
+//		str[0] = comNr + str[0];
+//		String newText = "";
+//		for (String s : str) {
+//			if (!s.isEmpty())
+//				newText = newText + s + System.getProperty("line.separator");
+//		}
+//		textArea.setText(newText);
+//		textArea.setCaretPosition(0);
+//	}
 
 	public Font getSmallFont() {
 		return smallFont;

@@ -107,7 +107,7 @@ public class TestIntervalParser {
 	}
 
 	@Test
-	public void testdoublecomma() {
+	public void testTrailingComma() {
 		p = new IntervalParser("1-4,");
 		assertTrue(!p.isValid());
 		assertTrue(p.getIntervals().isEmpty());

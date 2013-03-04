@@ -1,0 +1,46 @@
+<uml>
+   <greenVersion="30500"/>
+   <type>
+      <name="=Enduro/src<main{ResultCompilerMain.java[ResultCompilerMain"/>
+      <height="-1"/>
+      <width="-1"/>
+      <x="12"/>
+      <y="4"/>
+   </type>
+   <type>
+      <name="=Enduro/src<main{RegisterGuiMain.java[RegisterGuiMain"/>
+      <height="-1"/>
+      <width="-1"/>
+      <x="203"/>
+      <y="6"/>
+   </type>
+   <type>
+      <name="=Enduro/src<main{InputFileHandler.java[InputFileHandler"/>
+      <height="-1"/>
+      <width="-1"/>
+      <x="13"/>
+      <y="138"/>
+   </type>
+   <type>
+      <name="=Enduro/src<main{InputFileHandler.java[InputFileHandler[FileHeader"/>
+      <height="-1"/>
+      <width="-1"/>
+      <x="342"/>
+      <y="5"/>
+   </type>
+   <relationship>
+      <class="edu.buffalo.cse.green.relationship.dependency.DependencyLPart"/>
+      <sourceType="=Enduro/src<main{InputFileHandler.java[InputFileHandler"/>
+      <targetType="=Enduro/src<main{InputFileHandler.java[InputFileHandler[FileHeader"/>
+      <bendpoints>
+      </bendpoints>
+   </relationship>
+   <relationship>
+      <class="edu.buffalo.cse.green.relationship.dependency.DependencyIPart"/>
+      <sourceType="=Enduro/src<main{InputFileHandler.java[InputFileHandler"/>
+      <targetType="=Enduro/src<main{InputFileHandler.java[InputFileHandler[FileHeader"/>
+      <bendpoints>
+      </bendpoints>
+   </relationship>
+</uml>
+
