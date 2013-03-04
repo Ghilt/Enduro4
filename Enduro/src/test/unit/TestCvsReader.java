@@ -1,7 +1,6 @@
 package test.unit;
 
 import static org.junit.Assert.assertEquals;
-
 import io.reader.CvsReader;
 
 import java.io.FileNotFoundException;

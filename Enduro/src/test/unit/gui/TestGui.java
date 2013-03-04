@@ -4,7 +4,6 @@ import static org.junit.Assert.assertTrue;
 import gui.register.Gui;
 import io.reader.CvsReader;
 
-import java.awt.event.KeyEvent;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
