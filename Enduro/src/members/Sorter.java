@@ -33,6 +33,9 @@ public class Sorter {
 			if (racetype.equals("etapprace")) {
 				Collections.sort(list, new CompetitorBinaryComparator());
 			}
+			if (racetype.equals("standard")) {
+				Collections.sort(list, new CompetitorStandardComparator());
+			}
 		}
 	}
 
@@ -54,6 +57,28 @@ public class Sorter {
 					cmp = o1.getTotalTime(o1.getLaps()).compareTo(
 							o2.getTotalTime(o2.getLaps()));
 				}
+			}
+			return cmp;
+		}
+	}
+	
+	/**
+	 * Comparator used for sorting the competitors depending on their total time
+	 * of their laps. First sorts after class type, then if the competitors has
+	 * the same class type, sorts after total time.
+	 */
+	public static class CompetitorStandardComparator implements Comparator<Competitor> {
+		public CompetitorStandardComparator() {
+		}
+
+		@Override
+		public int compare(Competitor o1, Competitor o2) {
+			int cmp = o1.getClassType().compareTo(o2.getClassType());
+			if (cmp == 0) {
+					Time total1 = o1.getTotalTime(new ArrayList<Lap>());
+					Time total2 = o2.getTotalTime(new ArrayList<Lap>());
+					cmp = total1.compareTo(total2);
+					
 			}
 			return cmp;
 		}
