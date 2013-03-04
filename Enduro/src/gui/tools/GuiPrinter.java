@@ -26,11 +26,16 @@ public class GuiPrinter {
 	 * 
 	 * @param filelink
 	 *            The location of the file, including name, to write to.
+<<<<<<< HEAD
+	 * @param out 
+=======
 	 * @param out
+>>>>>>> 6f4ba790ac42b0e82c7642708f065bce9144f79b
 	 */
-	public GuiPrinter(String filelink) {
+	public GuiPrinter(String filelink, Output out) {
 		super();
 		this.file = new File(filelink);
+		this.out = out;
 	}
 
 	/**
@@ -114,7 +119,8 @@ public class GuiPrinter {
 		try {
 			writer = new BufferedWriter(new FileWriter(file, !overwrite));
 			writer.write(ret);
-			
+//			send(ret);
+
 		} catch (IOException e) {
 		} finally {
 			try {
@@ -124,6 +130,23 @@ public class GuiPrinter {
 			}
 		}
 	}
+
+//	private void send(String ret) {
+//		String[] send = ret.split(Formater.COLUMN_SEPARATOR);
+//		int lengthOfArray;
+//		if(!send[0].isEmpty()){
+//			for (int i = 0; i < send.length; i++) {
+//				lengthOfArray = send[i].getBytes().length;
+//				byte[] b = new byte[lengthOfArray + 1];
+//				// b[0] = Byte.parseByte(Integer.toString(lengthOfArray));
+//				b[0] = (byte) lengthOfArray;
+//				for (int k = 1; k <= send[i].getBytes().length; k++) {
+//					b[k] = send[i].getBytes()[k - 1];
+//				}
+//				out.sendMessage(b);
+//			}
+//		}
+//	}
 
 	/**
 	 * Returns all lines in a document.

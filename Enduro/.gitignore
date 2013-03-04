@@ -7,3 +7,4 @@ bin/.*
 *.war
 *.ear
 /sorted_result.txt
+/tider.txt

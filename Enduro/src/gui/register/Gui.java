@@ -64,7 +64,7 @@ public class Gui extends JFrame {
 		textCentralPanelSetUp();
 		setTitle("ENDURO");
 
-		printer = new GuiPrinter(filePath);
+		printer = new GuiPrinter(filePath, out);
 		emptyEntry = !printer.lastRowHasNr();
 		entryButton.setText(emptyEntry ? RegisterButton.REQUEST_ENTRY
 				: RegisterButton.DEFAULT_TEXT);
@@ -295,3 +295,4 @@ public class Gui extends JFrame {
 		}
 	}
 }
+
