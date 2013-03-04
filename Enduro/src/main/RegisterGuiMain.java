@@ -23,7 +23,7 @@ public class RegisterGuiMain {
 		String jarDir = jarFile.getParentFile().getPath();
 
 		String str = jarDir + File.separator + "tider.txt";
-		new Gui(str);
+//		new Gui(str);
 	}
 
 }

@@ -1,8 +1,10 @@
-package clientSPIKE;
+package client;
 
 
+import gui.register.Gui;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.Socket;
 import java.net.URISyntaxException;
@@ -32,10 +34,10 @@ public class Client {
 		}
 
 		OutputStream outStream = null;
-
+		InputStream inputStream = null;
 		try {
 			outStream = socket.getOutputStream();
-
+			inputStream = socket.getInputStream();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -49,6 +51,7 @@ public class Client {
 		String str = jarDir + File.separator + "tider.txt";
 
 		new Gui(out, str);
+
 
 	}
 }

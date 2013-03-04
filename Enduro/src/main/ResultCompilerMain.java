@@ -11,6 +11,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URISyntaxException;
+import java.security.CodeSource;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -42,6 +43,7 @@ public class ResultCompilerMain {
 	public final static String YES = "yes";
 	public final static String NO = "no";
 	public static final String NUMBER_BINARY = "antalstationer";
+	public static String jarDir;
 
 	/**
 	 * 
@@ -55,9 +57,14 @@ public class ResultCompilerMain {
 	public static void main(String[] args) throws URISyntaxException {
 		Properties prop = new Properties();
 
+		CodeSource codeSource = ResultCompilerMain.class.getProtectionDomain()
+				.getCodeSource();
+		File jarFile = new File(codeSource.getLocation().toURI().getPath());
+		jarDir = jarFile.getParentFile().getPath();
+
 		try {
 			// load properties from config.properties
-			prop.load(new FileInputStream("config.properties"));
+			prop.load(new FileInputStream(jarDir + "/" + "config.properties"));
 
 		} catch (IOException ex) {
 			ex.printStackTrace();
@@ -65,12 +72,6 @@ public class ResultCompilerMain {
 
 		// Detects the location of the executable. Keep as comment if needed
 		// later.
-		//
-		// CodeSource codeSource =
-		// ResultCompilerMain.class.getProtectionDomain()
-		// .getCodeSource();
-		// File jarFile = new File(codeSource.getLocation().toURI().getPath());
-		// String jarDir = jarFile.getParentFile().getPath();
 		//
 
 		try {
@@ -112,8 +113,7 @@ public class ResultCompilerMain {
 
 		addInputFile(prop, "namefiles", inputFiles,
 				Parser.FileIdentifier.name_file, Competitor.NO_STATION);
-		
-		
+
 		if (prop.containsKey(NUMBER_BINARY)
 				&& prop.getProperty(RACETYPE).equalsIgnoreCase(BINARY_LAPS)) {
 			addBinaryLapInfo(prop, inputFiles);
@@ -140,9 +140,9 @@ public class ResultCompilerMain {
 			List<FileHeader> inputFiles, FileIdentifier fileIdentity,
 			int stationNr) throws IOException {
 
-		String startPath = "";
+		String startPath = jarDir + "/";
 		if (prop.containsKey(property)) {
-			startPath = prop.getProperty(property);
+			startPath = jarDir + "/" + prop.getProperty(property);
 		} else {
 			throw new IOException("Property " + property + " not found.");
 		}
@@ -297,12 +297,12 @@ public class ResultCompilerMain {
 	 */
 	private static void printResults(Properties prop,
 			ArrayList<Competitor> competitors) {
-		String filepath = prop.getProperty("resultfile");
+		String filepath = jarDir + "/" + prop.getProperty("resultfile");
 		Printer printer = getPrinter(prop);
 		Sorter sorter = new Sorter();
 		sorter.sortList(false, competitors, "");
 		printer.printResults(competitors, filepath);
-		
+
 		print(prop, "sorted", "sortedresultfile", competitors, sorter,
 				new NullConverter());
 		print(prop, "html", "htmlresultfile", competitors, sorter,
@@ -315,10 +315,10 @@ public class ResultCompilerMain {
 		Printer printer;
 		if (prop.containsKey(printType) && prop.get(printType).equals(YES)
 				&& prop.containsKey(resultfile)) {
-			String resultfilepath = prop.getProperty(resultfile);
+			String resultfilepath = jarDir + "/" + prop.getProperty(resultfile);
 			printer = getSortPrinter(prop);
 			sorter.sortList(true, competitors, prop.getProperty("racetype"));
-			printer.printResults(competitors, resultfilepath, conv);
+			printer.printResults(competitors, resultfile, conv);
 		}
 	}
 

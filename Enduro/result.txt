@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 Bredd
 StartNr; Namn; Totaltid; #Etapper; Etapp1; Etapp2; Etapp3; Etapp4; Starttid1; Maltid1; Starttid2; Maltid2; Starttid3; Maltid3; Starttid4; Maltid4
 201; Lundahl, Lars; --.--.--; 0; ; ; ; ; ; ; ; ; ; ; ; 
@@ -202,3 +203,12 @@ StartNr; Namn; Totaltid; #Etapper; Etapp1; Etapp2; Etapp3; Etapp4; Etapp5; Start
 51; Berglund, Thomas; --.--.--; 0; ; ; ; ; ; ; ; ; ; ; ; ; ; ; 
 52; Jönsson, Sven Erik; --.--.--; 0; ; ; ; ; ; ; ; ; ; ; ; ; ; ; 
 53; Hansson, Richard;  00.00.00; 0; --.--.--; --.--.--; --.--.--; --.--.--; --.--.--; Start?; Slut?; Start?; Slut?; Start?; Slut?; Start?; Slut?; Start?; Slut?
+=======
+STANDARDKLASS
+StartNr; Namn; Totaltid; #Etapper; Etapp1; Etapp2; Starttid1; Maltid1; Starttid2; Maltid2
+1; Anders Asson; 03.00.10; 2; 01.00.10; 02.00.00; 01.00.00; 02.00.10; 10.00.00; 12.00.00
+2; Bengt Bsson; 03.30.06; 2; 01.00.06; 02.30.00; 01.00.01; 02.00.07; 10.00.01; 12.30.01
+3; Chris Csson; 02.00.00; 1; --.--.--; 02.00.00; 01.00.02; Slut?; 10.00.02; 12.00.02
+4; David Dsson; 03.03.00; 2; 01.03.00; 02.00.00; 01.00.03; 02.03.03; 10.00.03; 12.00.03; Flera sluttider Etapp1 02.12.32
+5; Erik Esson; 01.00.14; 1; 01.00.14; --.--.--; 01.00.04; 02.00.18; Start?; 12.04.12; Flera sluttider Etapp2 12.12.32; Etapp2 12.25.04
+>>>>>>> 634da67fbef2fc647a34239b766fe3c0cf730504
