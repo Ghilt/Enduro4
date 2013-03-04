@@ -21,7 +21,6 @@ import client.Output;
 
 import members.Time;
 
-
 @SuppressWarnings("serial")
 public class Gui extends JFrame {
 
@@ -43,15 +42,17 @@ public class Gui extends JFrame {
 	private boolean emptyEntry;
 
 	private Output out;
-	
+
 	private GuiPrinter printer;
+
+	private Time lateTime;
 
 	/**
 	 * A simple frame for entering times of racers.
 	 */
 	public Gui(Output out, String filePath) {
 		this.out = out;
-		
+
 		screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 		bigFont = new Font("Times New Roman", Font.BOLD, screenSize.height / 8);
 		smallFont = new Font("Times New Roman", Font.BOLD,
@@ -156,8 +157,9 @@ public class Gui extends JFrame {
 		Time t = Time.fromCurrentTime();
 		String temp = Formater.formatColumns(entry, t);
 		IntervalParser p = new IntervalParser(entry);
-		
+
 		if (entry.isEmpty() || !p.isValid()) {
+			lateTime = t;
 			entryButton.setText(RegisterButton.REQUEST_ENTRY);
 			String textOutput = p.isValid() ? temp : Formater.formatColumns("",
 					t);
@@ -173,32 +175,33 @@ public class Gui extends JFrame {
 				emptyEntry = false;
 				entryButton.setText(RegisterButton.DEFAULT_TEXT);
 				addToStartOfTextArea(entry);
+				temp = Formater.formatColumns(entry, lateTime);
 			} else {
 				printInterval(entry, p);
 				updateTextArea(temp);
 			}
 		}
-		String[] send = temp.split(Formater.COLUMN_SEPARATOR);
-		int lengthOfArray;
-		for(int i = 0; i < send.length; i++){
-			lengthOfArray = send[i].getBytes().length;
-			byte[] b = new byte[lengthOfArray+1];
-			//b[0] = Byte.parseByte(Integer.toString(lengthOfArray));
-			b[0] = (byte)lengthOfArray;
-			for(int k = 1; k <= send[i].getBytes().length; k++) {
-				b[k] = send[i].getBytes()[k-1] ;
+		if (!emptyEntry) {
+			String[] send = temp.split(Formater.COLUMN_SEPARATOR);
+			int lengthOfArray;
+			for (int i = 0; i < send.length; i++) {
+				lengthOfArray = send[i].getBytes().length;
+				byte[] b = new byte[lengthOfArray + 1];
+				// b[0] = Byte.parseByte(Integer.toString(lengthOfArray));
+				b[0] = (byte) lengthOfArray;
+				for (int k = 1; k <= send[i].getBytes().length; k++) {
+					b[k] = send[i].getBytes()[k - 1];
+				}
+				out.sendMessage(b);
 			}
-			out.sendMessage(b);
 		}
 		undoButton.setEnabled(emptyEntry);
-		
+
 		// Finishing updates
 		textField.requestFocus();
 		textArea.invalidate();
 		repaint();
 	}
-
-	
 
 	/**
 	 * In case of empty entry, the next valid entry adds to the first line
@@ -226,7 +229,7 @@ public class Gui extends JFrame {
 	public Font getBigFont() {
 		return bigFont;
 	}
-	
+
 	/**
 	 * Updates the TextArea with a new line. Valid or invalid.
 	 * 
@@ -243,13 +246,13 @@ public class Gui extends JFrame {
 			textArea.setText(temp);
 		}
 	}
-	
+
 	private void printIntervals(IntervalParser p, Time time) {
 		for (Interval c : p.getIntervals())
 			for (int i : c.getNumbers())
 				printer.writeLines(false, Formater.formatColumns(i, time));
 	}
-	
+
 	/**
 	 * Parses the string as an interval and prints one line for every number
 	 * contained.
@@ -261,4 +264,25 @@ public class Gui extends JFrame {
 		printIntervals(p, t);
 	}
 
+	/**
+	 * Removes the last line of the file and the top line of the textArea
+	 */
+	public void undo() {
+		if (emptyEntry) {
+			printer.clearLastLine();
+			emptyEntry = false;
+			undoButton.setEnabled(emptyEntry);
+			String temp = "";
+			String[] temprows = textArea.getText().split("\\n");
+			for (int i = 1; i < temprows.length && i < MAX_ENTRIES_SHOWN; i++) {
+				temp = temp + temprows[i] + "\n";
+			}
+			textArea.setText(temp);
+
+			// Finishing updates
+			textField.requestFocus();
+			textArea.invalidate();
+			repaint();
+		}
+	}
 }
