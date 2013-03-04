@@ -22,7 +22,7 @@ public class Acceptans {
 
 	@Test
 	public void testStandard() throws Exception {
-		String path = TEST_PATH + "standard/";
+		String path = TEST_PATH + "lap/";
 		in = new InputFileHandler(path);
 
 		Properties prop = new Properties();
@@ -33,7 +33,7 @@ public class Acceptans {
 		ArrayList<Competitor> list = new ArrayList<Competitor>(map.values());
 		new InputFileHandler(TEMP_PATH).printResults(prop, list);
 
-		TestUtil.testResultFiles(EXPECTED_PATH + "standard.txt", TEMP_PATH
+		TestUtil.testResultFiles(EXPECTED_PATH + "lap.txt", TEMP_PATH
 				+ "result.txt");
 	}
 
