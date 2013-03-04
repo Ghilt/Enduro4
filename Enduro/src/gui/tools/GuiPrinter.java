@@ -14,20 +14,23 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 
+import client.Output;
+
 public class GuiPrinter {
 
 	private File file;
+	private Output out;
 
 	/**
 	 * Starts a new GuiPrinter surrounding target file.
 	 * 
 	 * @param filelink
 	 *            The location of the file, including name, to write to.
+	 * @param out
 	 */
 	public GuiPrinter(String filelink) {
 		super();
 		this.file = new File(filelink);
-
 	}
 
 	/**
@@ -103,13 +106,15 @@ public class GuiPrinter {
 	 */
 	public void writeLines(boolean overwrite, Object... lines) {
 		String ret = "";
-		for (Object s : lines)
+		for (Object s : lines) {
 			ret = ret + s + System.getProperty("line.separator");
+		}
 
 		BufferedWriter writer = null;
 		try {
 			writer = new BufferedWriter(new FileWriter(file, !overwrite));
 			writer.write(ret);
+			
 		} catch (IOException e) {
 		} finally {
 			try {

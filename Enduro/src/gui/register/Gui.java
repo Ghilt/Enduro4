@@ -12,6 +12,7 @@ import java.awt.Font;
 import java.awt.Toolkit;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.util.List;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -184,15 +185,22 @@ public class Gui extends JFrame {
 		if (!emptyEntry) {
 			String[] send = temp.split(Formater.COLUMN_SEPARATOR);
 			int lengthOfArray;
-			for (int i = 0; i < send.length; i++) {
-				lengthOfArray = send[i].getBytes().length;
-				byte[] b = new byte[lengthOfArray + 1];
-				// b[0] = Byte.parseByte(Integer.toString(lengthOfArray));
-				b[0] = (byte) lengthOfArray;
-				for (int k = 1; k <= send[i].getBytes().length; k++) {
-					b[k] = send[i].getBytes()[k - 1];
+			List<Interval> intervals = p.getIntervals();
+			for(Interval interval : intervals) {
+				for(int nbr : interval.getNumbers()) {
+					String line = nbr + "; " + t.toString();
+					send = line.split(Formater.COLUMN_SEPARATOR);
+					for (int i = 0; i < send.length; i++) {
+						lengthOfArray = send[i].getBytes().length;
+						byte[] b = new byte[lengthOfArray + 1];
+						// b[0] = Byte.parseByte(Integer.toString(lengthOfArray));
+						b[0] = (byte) lengthOfArray;
+						for (int k = 1; k <= send[i].getBytes().length; k++) {
+							b[k] = send[i].getBytes()[k - 1];
+						}
+						out.sendMessage(b);	
+					}
 				}
-				out.sendMessage(b);
 			}
 		}
 		undoButton.setEnabled(emptyEntry);

@@ -33,11 +33,11 @@ public class Monitor {
 	}
 
 	private void readNameFile(String namefilepath) {
-//		competitors = new HashMap<Integer, Competitor>();
 		Parser parser = new Parser();
 		CvsReader reader = new CvsReader(namefilepath);
 		try {
-			competitors = parser.parse(reader.readAll(), Parser.FileIdentifier.name_file);
+			competitors = parser.parse(reader.readAll(),
+					Parser.FileIdentifier.name_file);
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -48,22 +48,11 @@ public class Monitor {
 	}
 
 	public synchronized void register(byte[] startNbr, byte[] msg) {
-		String temp = new String(startNbr);
-		String[] interval = temp.split("-");
-		int firstNbr;
-		int lastNbr;
-		if (interval.length > 1) {
-			firstNbr = Integer.valueOf(interval[0]);
-			lastNbr = Integer.valueOf(interval[1]);
-		} else {
-			firstNbr = lastNbr = Integer.valueOf(interval[0]);
-		}
+		int startNr = Integer.valueOf(new String(startNbr));
 		String s = new String(msg);
 
 		Time time = Time.parse(s);
-		for (int startNr = firstNbr; startNr <= lastNbr; startNr++) {
-			registerCompetitor(startNr, time);
-		}
+		registerCompetitor(startNr, time);
 
 		ArrayList<Competitor> list = new ArrayList<Competitor>(
 				competitors.values());
