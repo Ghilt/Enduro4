@@ -13,6 +13,7 @@ import java.awt.Toolkit;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -47,8 +48,7 @@ public class Gui extends JFrame {
 	 * @param output
 	 *            The file to write the entries to.
 	 */
-	public Gui(String output) {
-
+	public Gui(String output, String icon) {
 		screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 		bigFont = new Font("Times New Roman", Font.BOLD, screenSize.height / 8);
 		smallFont = new Font("Times New Roman", Font.BOLD,
@@ -74,6 +74,9 @@ public class Gui extends JFrame {
 		pack();
 
 		setSize(screenSize);
+		
+		ImageIcon img = new ImageIcon(icon);
+		setIconImage(img.getImage());
 	}
 
 	/**
