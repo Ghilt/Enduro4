@@ -12,11 +12,15 @@ import java.awt.Font;
 import java.awt.Toolkit;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.io.IOException;
+import java.io.OutputStream;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
+
+import client.Output;
 
 import members.Time;
 
@@ -41,13 +45,16 @@ public class Gui extends JFrame {
 
 	private boolean emptyEntry;
 
+	private Output out;
+
 	/**
 	 * A simple frame for entering times of racers.
 	 * 
 	 * @param output
 	 *            The file to write the entries to.
 	 */
-	public Gui(String output) {
+	public Gui(Output out2, String output) {
+		this.out = out2;
 
 		screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 		bigFont = new Font("Times New Roman", Font.BOLD, screenSize.height / 8);
@@ -181,6 +188,9 @@ public class Gui extends JFrame {
 		textField.requestFocus();
 		textArea.invalidate();
 		repaint();
+
+		out.sendMessage(t.toString());
+
 	}
 
 	private void printIntervals(IntervalParser p, Time time) {

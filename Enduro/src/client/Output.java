@@ -1,4 +1,4 @@
-package clientSPIKE;
+package client;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -14,9 +14,13 @@ public class Output {
 		this.out = out;
 	}
 	
-	public void sendMessage(int msg) {
+	public void sendMessage(String msg) {
 		try {
-			out.write(msg);
+			byte[] bytes = msg.getBytes();
+			int length = bytes.length;
+			System.out.println(msg);
+			out.write(length);
+			out.write(bytes);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
