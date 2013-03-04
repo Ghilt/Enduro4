@@ -14,13 +14,14 @@ public class Output {
 		this.out = out;
 	}
 	
-	public void sendMessage(int msg) {
-		try {
-			out.write(msg);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+	public void sendMessage(byte[] b) {
+//		try {
+			System.out.println(new String(b));
+//			out.write(b);
+//		} catch (IOException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
 	}
 
 }

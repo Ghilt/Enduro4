@@ -1,6 +1,11 @@
 package clientSPIKE;
 
 
+import gui.tools.GuiPrinter;
+import io.Formater;
+import io.reader.IntervalParser;
+import io.reader.IntervalParser.Interval;
+
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -12,6 +17,9 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
+import javax.xml.transform.Templates;
+
+import members.Time;
 
 
 @SuppressWarnings("serial")
@@ -35,11 +43,13 @@ public class Gui extends JFrame {
 	private boolean emptyEntry;
 
 	private Output out;
+	
+	private GuiPrinter printer;
 
 	/**
 	 * A simple frame for entering times of racers.
 	 */
-	public Gui(Output out) {
+	public Gui(Output out, String filePath) {
 		this.out = out;
 		
 		screenSize = Toolkit.getDefaultToolkit().getScreenSize();
@@ -52,14 +62,14 @@ public class Gui extends JFrame {
 		textCentralPanelSetUp();
 		setTitle("ENDURO");
 
-//		printer = new GuiPrinter(output);
-//		emptyEntry = !printer.lastRowHasNr();
-//		entryButton.setText(emptyEntry ? RegisterButton.REQUEST_ENTRY
-//				: RegisterButton.DEFAULT_TEXT);
-//		if (emptyEntry) {
-//			textArea.setText(printer.getLastRow());
-//			undoButton.setEnabled(true);
-//		}
+		printer = new GuiPrinter(filePath);
+		emptyEntry = !printer.lastRowHasNr();
+		entryButton.setText(emptyEntry ? RegisterButton.REQUEST_ENTRY
+				: RegisterButton.DEFAULT_TEXT);
+		if (emptyEntry) {
+			textArea.setText(printer.getLastRow());
+			undoButton.setEnabled(true);
+		}
 
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setResizable(false);
@@ -143,34 +153,41 @@ public class Gui extends JFrame {
 		textField.setText("");
 
 		// Format the new entry.
-//		Time t = Time.fromCurrentTime();
-//		String temp = Formater.formatColumns(entry, t);
-//		IntervalParser p = new IntervalParser(entry);
-//		
-		out.sendMessage(Integer.valueOf(entry));
-//		if (entry.isEmpty() || !p.isValid()) {
-//			entryButton.setText(RegisterButton.REQUEST_ENTRY);
-//			String textOutput = p.isValid() ? temp : Formater.formatColumns("",
-//					t);
-//
-//			updateTextArea(textOutput);
-//			if (!emptyEntry)
-//				printer.writeLines(false, textOutput);
-//
-//			emptyEntry = true;
-//		} else {
-//			if (emptyEntry) {
-//				printer.enterLateNumber(p);
-//				emptyEntry = false;
-//				entryButton.setText(RegisterButton.DEFAULT_TEXT);
-//				addToStartOfTextArea(entry);
-//			} else {
-//				printInterval(entry, p);
-//				updateTextArea(temp);
-//			}
-//		}
-		undoButton.setEnabled(emptyEntry);
+		Time t = Time.fromCurrentTime();
+		String temp = Formater.formatColumns(entry, t);
+		IntervalParser p = new IntervalParser(entry);
+		
+		if (entry.isEmpty() || !p.isValid()) {
+			entryButton.setText(RegisterButton.REQUEST_ENTRY);
+			String textOutput = p.isValid() ? temp : Formater.formatColumns("",
+					t);
 
+			updateTextArea(textOutput);
+			if (!emptyEntry)
+				printer.writeLines(false, textOutput);
+
+			emptyEntry = true;
+		} else {
+			if (emptyEntry) {
+				printer.enterLateNumber(p);
+				emptyEntry = false;
+				entryButton.setText(RegisterButton.DEFAULT_TEXT);
+				addToStartOfTextArea(entry);
+			} else {
+				printInterval(entry, p);
+				updateTextArea(temp);
+			}
+		}
+		int lengthOfArray = temp.getBytes().length;
+		byte[] b = new byte[lengthOfArray+1];
+		b[0] = Byte.parseByte(Integer.toString(lengthOfArray));
+		for(int i = 1; i <= temp.getBytes().length; i++) {
+			b[i] = temp.getBytes()[i-1] ;
+		}
+		undoButton.setEnabled(emptyEntry);
+		
+
+		out.sendMessage(b);
 		// Finishing updates
 		textField.requestFocus();
 		textArea.invalidate();
@@ -204,6 +221,40 @@ public class Gui extends JFrame {
 
 	public Font getBigFont() {
 		return bigFont;
+	}
+	
+	/**
+	 * Updates the TextArea with a new line. Valid or invalid.
+	 * 
+	 * @param temp
+	 * 
+	 */
+	private void updateTextArea(String temp) {
+		if (printer.lastRowHasNr()) {
+			String[] temprows = textArea.getText().split("\\n");
+			for (int i = 0; i < temprows.length && i + 1 < MAX_ENTRIES_SHOWN; i++) {
+				temp = temp + "\n" + temprows[i];
+
+			}
+			textArea.setText(temp);
+		}
+	}
+	
+	private void printIntervals(IntervalParser p, Time time) {
+		for (Interval c : p.getIntervals())
+			for (int i : c.getNumbers())
+				printer.writeLines(false, Formater.formatColumns(i, time));
+	}
+	
+	/**
+	 * Parses the string as an interval and prints one line for every number
+	 * contained.
+	 * 
+	 * @param entry
+	 */
+	private void printInterval(String entry, IntervalParser p) {
+		Time t = Time.fromCurrentTime();
+		printIntervals(p, t);
 	}
 
 }
