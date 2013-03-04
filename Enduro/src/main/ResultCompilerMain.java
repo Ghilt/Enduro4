@@ -81,6 +81,10 @@ public class ResultCompilerMain {
 
 			ArrayList<Competitor> list = new ArrayList<Competitor>(map.values());
 			printResults(prop, list);
+			JFrame frame = new JFrame();
+			JOptionPane.showMessageDialog(frame, "Programmet färdigt.", "Result",
+					JOptionPane.PLAIN_MESSAGE);
+			frame.dispose();
 		} catch (FileNotFoundException e) {
 			errorMessage(e.getMessage());
 			System.exit(-1);

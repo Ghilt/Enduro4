@@ -1,7 +1,7 @@
-package gui.register;
+package clientSPIKE;
+
 
 import gui.tools.GuiPrinter;
-import gui.tools.NumberEntryField;
 import io.Formater;
 import io.reader.IntervalParser;
 import io.reader.IntervalParser.Interval;
@@ -17,7 +17,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
-import client.Output;
+import javax.xml.transform.Templates;
 
 import members.Time;
 

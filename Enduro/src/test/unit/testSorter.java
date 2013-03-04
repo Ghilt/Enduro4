@@ -1,18 +1,16 @@
 package test.unit;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
 
-import io.Formater;
-import io.printer.BinaryLapPrinter;
-import io.printer.Printer;
 import members.Competitor;
-import members.NullTime;
 import members.Sorter;
 import members.Time;
 
-import org.junit.*;
+import org.junit.Before;
+import org.junit.Test;
 
 public class testSorter {
 	boolean sort;

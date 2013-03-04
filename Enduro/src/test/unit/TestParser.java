@@ -1,6 +1,5 @@
 package test.unit;
 
-import static org.junit.Assert.*;
 import static org.junit.Assert.assertEquals;
 import io.reader.Parser;
 import io.reader.ParserException;
