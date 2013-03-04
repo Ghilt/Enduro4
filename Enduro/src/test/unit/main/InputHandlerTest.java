@@ -6,10 +6,9 @@ import java.util.Map;
 import java.util.Properties;
 
 import main.InputFileHandler;
-import main.ResultCompilerMain;
 import members.Competitor;
 
-import org.junit.*;
+import org.junit.Test;
 
 import test.TestUtil;
 
@@ -21,6 +20,8 @@ public class InputHandlerTest {
 	private static final String CONFIG = "config.properties";
 	private InputFileHandler in;
 
+
+	
 	@Test
 	public void testStd() throws Exception {
 		String path = TEST_PATH + "std/";
@@ -106,19 +107,6 @@ public class InputHandlerTest {
 				+ "result.txt");
 		TestUtil.testResultFiles(EXPECTED_PATH + "lap_full_sort.txt", TEMP_PATH
 				+ "sortresult.txt");
-	}
-
-	@Ignore
-	public void testMainFails() throws Exception {
-		String[] args = {"docs/" };
-		ResultCompilerMain.main(args);
-	}
-
-	@Ignore
-	public void testMainNormal() throws Exception {
-		String[] args = {TEST_PATH
-				+ "binary/" };
-		ResultCompilerMain.main(args);
 	}
 
 }

@@ -79,6 +79,10 @@ public class Gui extends JFrame {
 		setIconImage(img.getImage());
 	}
 
+	public NumberEntryField getTextField() {
+		return textField;
+	}
+
 	/**
 	 * Sets up the upper bar and its formatting.
 	 */

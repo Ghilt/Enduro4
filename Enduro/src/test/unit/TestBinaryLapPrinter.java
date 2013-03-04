@@ -8,7 +8,8 @@ import members.Competitor;
 import members.NullTime;
 import members.Time;
 
-import org.junit.*;
+import org.junit.Before;
+import org.junit.Test;
 
 public class TestBinaryLapPrinter {
 	private Competitor c;
