@@ -12,7 +12,7 @@ import members.Time;
 import org.junit.Before;
 import org.junit.Test;
 
-public class testSorter {
+public class TestSorter {
 	boolean sort;
 	ArrayList<Competitor> list;
 	String racetype;

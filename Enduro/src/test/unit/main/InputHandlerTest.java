@@ -6,13 +6,14 @@ import java.util.Map;
 import java.util.Properties;
 
 import main.InputFileHandler;
+import main.ResultCompilerMain;
 import members.Competitor;
 
 import org.junit.*;
 
 import test.TestUtil;
 
-public class Acceptans {
+public class InputHandlerTest {
 
 	private static final String EXPECTED_PATH = "src/test/unit/main/";
 	private static final String TEST_PATH = "src/config_test_files_";
@@ -21,7 +22,24 @@ public class Acceptans {
 	private InputFileHandler in;
 
 	@Test
-	public void testStandard() throws Exception {
+	public void testStd() throws Exception {
+		String path = TEST_PATH + "std/";
+		in = new InputFileHandler(path);
+
+		Properties prop = new Properties();
+		prop.load(new FileInputStream(path + CONFIG));
+
+		Map<Integer, Competitor> map = null;
+		map = in.parseInputFiles(in.getInputFiles(prop), prop);
+		ArrayList<Competitor> list = new ArrayList<Competitor>(map.values());
+		new InputFileHandler(TEMP_PATH).printResults(prop, list);
+
+		TestUtil.testResultFiles(EXPECTED_PATH + "std.txt", TEMP_PATH
+				+ "result.txt");
+	}
+
+	@Test
+	public void testLap() throws Exception {
 		String path = TEST_PATH + "lap/";
 		in = new InputFileHandler(path);
 
@@ -67,7 +85,8 @@ public class Acceptans {
 		ArrayList<Competitor> list = new ArrayList<Competitor>(map.values());
 		new InputFileHandler(TEMP_PATH).printResults(prop, list);
 
-		TestUtil.testResultFiles(EXPECTED_PATH + "binary_full.txt", TEMP_PATH + "result.txt");
+		TestUtil.testResultFiles(EXPECTED_PATH + "binary_full.txt", TEMP_PATH
+				+ "result.txt");
 	}
 
 	@Test
@@ -83,8 +102,23 @@ public class Acceptans {
 		ArrayList<Competitor> list = new ArrayList<Competitor>(map.values());
 		new InputFileHandler(TEMP_PATH).printResults(prop, list);
 
-		TestUtil.testResultFiles(EXPECTED_PATH + "lap_full.txt", TEMP_PATH + "result.txt");
-		TestUtil.testResultFiles(EXPECTED_PATH + "lap_full_sort.txt", TEMP_PATH + "sortresult.txt");
+		TestUtil.testResultFiles(EXPECTED_PATH + "lap_full.txt", TEMP_PATH
+				+ "result.txt");
+		TestUtil.testResultFiles(EXPECTED_PATH + "lap_full_sort.txt", TEMP_PATH
+				+ "sortresult.txt");
+	}
+
+	@Ignore
+	public void testMainFails() throws Exception {
+		String[] args = {"docs/" };
+		ResultCompilerMain.main(args);
+	}
+
+	@Ignore
+	public void testMainNormal() throws Exception {
+		String[] args = {TEST_PATH
+				+ "binary/" };
+		ResultCompilerMain.main(args);
 	}
 
 }

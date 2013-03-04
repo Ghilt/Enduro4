@@ -2,6 +2,7 @@ package main;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.net.URISyntaxException;
 import java.security.CodeSource;
 import java.util.ArrayList;
 import java.util.Map;
@@ -32,7 +33,13 @@ public class ResultCompilerMain {
 	public static void main(String[] args) {
 
 		try {
-			compile();
+			String jarDir;
+			if (args.length > 0) {
+				jarDir = args[0];
+			} else {
+				jarDir = getDir();
+			}
+			compile(jarDir);
 			infoMessage(PROGRAM_DONE);
 		} catch (Exception e) {
 			errorMessage(e.getMessage());
@@ -40,12 +47,7 @@ public class ResultCompilerMain {
 		}
 	}
 
-	protected static void compile() throws Exception {
-		// Load the directory
-		CodeSource codeSource = ResultCompilerMain.class.getProtectionDomain()
-				.getCodeSource();
-		File jarFile = new File(codeSource.getLocation().toURI().getPath());
-		String jarDir = jarFile.getParentFile().getPath() + File.separator;
+	protected static void compile(String jarDir) throws Exception {
 
 		Properties prop = new Properties();
 		// load properties from config.properties
@@ -59,6 +61,15 @@ public class ResultCompilerMain {
 		in.printResults(prop, list);
 
 		// Profit!!!
+	}
+
+	protected static String getDir() throws URISyntaxException {
+		// Load the directory
+		CodeSource codeSource = ResultCompilerMain.class.getProtectionDomain()
+				.getCodeSource();
+		File jarFile = new File(codeSource.getLocation().toURI().getPath());
+		String jarDir = jarFile.getParentFile().getPath() + File.separator;
+		return jarDir;
 	}
 
 	private static void infoMessage(String e) {
