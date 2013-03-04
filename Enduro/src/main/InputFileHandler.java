@@ -226,7 +226,6 @@ public class InputFileHandler {
 
 		print(prop, CFG_SORTED, CFG_SORTEDRESULTFILE, competitors, sorter,
 				new NullConverter());
-		System.out.println("we have liftoff");
 		print(prop, CFG_HTML, CFG_HTMLRESULTFILE, competitors, sorter,
 				new HtmlConverter());
 	}
@@ -234,11 +233,9 @@ public class InputFileHandler {
 	private void print(Properties prop, String printType, String resultfile,
 			ArrayList<Competitor> competitors, Sorter sorter, Converter conv) {
 		Printer printer;
-		System.out.println("type="+printType+" YES?="+prop.get(printType).equals(YES)+" RESULT="+prop.containsKey(resultfile));
 		if (prop.containsKey(printType) && prop.get(printType).equals(YES)
 				&& prop.containsKey(resultfile)) {
 			String resultfilepath = jarDir + prop.getProperty(resultfile);
-			System.out.println("DERP + "+resultfilepath);
 			printer = getSortPrinter(prop);
 			sorter.sortList(true, competitors, prop.getProperty(CFG_RACETYPE));
 			printer.printResults(competitors, resultfilepath, conv);
