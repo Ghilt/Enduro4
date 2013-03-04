@@ -39,6 +39,7 @@ public class InputFileHandler {
 	private static final String CFG_HTML = "html";
 	private static final String CFG_SORTEDRESULTFILE = "sortedresultfile";
 	private static final String CFG_SORTED = "sorted";
+	public static final String CFG_NUMBER_BINARY = "antalstationer";
 
 	public final static String STARTTIMES = "start";
 	public final static String NAMEFILE = "namn";
@@ -51,7 +52,6 @@ public class InputFileHandler {
 	private final static String BINARY_LAPS = "etapprace";
 	public final static String YES = "yes";
 	public final static String NO = "no";
-	public static final String NUMBER_BINARY = "antalstationer";
 
 	private String jarDir;
 
@@ -75,7 +75,7 @@ public class InputFileHandler {
 		addInputFile(prop, CFG_NAMEFILES, inputFiles,
 				Parser.FileIdentifier.name_file, Competitor.NO_STATION);
 
-		if (prop.containsKey(NUMBER_BINARY)
+		if (prop.containsKey(CFG_NUMBER_BINARY)
 				&& prop.getProperty(CFG_RACETYPE).equalsIgnoreCase(BINARY_LAPS)) {
 			addBinaryLapInfo(prop, inputFiles);
 
@@ -123,7 +123,7 @@ public class InputFileHandler {
 			throws IOException {
 		try {
 			int e = 1;
-			e = Integer.parseInt(prop.getProperty(NUMBER_BINARY));
+			e = Integer.parseInt(prop.getProperty(CFG_NUMBER_BINARY));
 			for (int i = 1; i <= e; i++) {
 				addInputFile(prop, CFG_STARTFILES + "_" + i, inputFiles,
 						Parser.FileIdentifier.start_file, i);
@@ -248,7 +248,7 @@ public class InputFileHandler {
 	/**
 	 * A class for holding several variables for use in this class.
 	 */
-	private static class FileHeader {
+	public static class FileHeader {
 		@Override
 		public String toString() {
 			return "FileHeader [file=" + file + ", id=" + id + ", station="

@@ -18,6 +18,7 @@ import members.Competitor;
  */
 public class ResultCompilerMain {
 
+	private static final String CONFIG = "config.properties";
 	private static final String ERROR = "FEL";
 	private static final String RESULT = "SLUT";
 	public final static String PROGRAM_DONE = "Program klart";
@@ -39,7 +40,7 @@ public class ResultCompilerMain {
 		}
 	}
 
-	private static void compile() throws Exception {
+	protected static void compile() throws Exception {
 		// Load the directory
 		CodeSource codeSource = ResultCompilerMain.class.getProtectionDomain()
 				.getCodeSource();
@@ -48,7 +49,7 @@ public class ResultCompilerMain {
 
 		Properties prop = new Properties();
 		// load properties from config.properties
-		prop.load(new FileInputStream(jarDir + "config.properties"));
+		prop.load(new FileInputStream(jarDir + CONFIG));
 
 		// Perform program as instructed by config file
 		InputFileHandler in = new InputFileHandler(jarDir);
