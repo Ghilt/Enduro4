@@ -4,12 +4,16 @@ import static org.junit.Assert.assertTrue;
 import gui.register.Gui;
 import io.reader.CvsReader;
 
+import java.awt.event.KeyEvent;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 
 import org.junit.Before;
 import org.junit.Test;
+
+import test.TestUtil;
 
 public class TestGui {
 
@@ -61,6 +65,23 @@ public class TestGui {
 		ArrayList<ArrayList<String>> rows = parser.readAll();
 		assertTrue(rows.get(0).get(0).equalsIgnoreCase("1"));
 		assertTrue(rows.get(1).get(0).equalsIgnoreCase("3"));
+		// Will be true if the program does not crash!
+	}
+	
+	@Test
+	public void testWriteWithPreviousEmptyEntry() throws IOException {
+		String output = "src/test/unit/gui/empty.txt";
+		String dummy = TMP + "empty_test_gui.txt";
+		TestUtil.copyFile(new File(output), new File(dummy));
+		
+		Gui g = new Gui(dummy, "icon.png");
+		g.getTextField().setText("1");
+		g.register();
+		g.dispose();
+
+		CvsReader parser = new CvsReader(dummy);
+		ArrayList<ArrayList<String>> rows = parser.readAll();
+		assertTrue(rows.get(0).get(0).equalsIgnoreCase("1"));
 		// Will be true if the program does not crash!
 	}
 }

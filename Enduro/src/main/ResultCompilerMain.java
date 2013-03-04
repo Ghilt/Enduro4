@@ -83,5 +83,7 @@ public class ResultCompilerMain {
 				JOptionPane.ERROR_MESSAGE);
 		frame.dispose();
 	}
+	
+	
 
 }
