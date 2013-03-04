@@ -16,7 +16,6 @@ public class Output {
 	
 	public void sendMessage(byte[] b) {
 		try {
-			System.out.println(new String(b));
 			out.write(b);
 			
 

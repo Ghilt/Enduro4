@@ -14,19 +14,25 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 
+import client.Output;
+
 public class GuiPrinter {
 
 	private File file;
+	
+	private Output out;
 
 	/**
 	 * Starts a new GuiPrinter surrounding target file.
 	 * 
 	 * @param filelink
 	 *            The location of the file, including name, to write to.
+	 * @param out 
 	 */
-	public GuiPrinter(String filelink) {
+	public GuiPrinter(String filelink, Output out) {
 		super();
 		this.file = new File(filelink);
+		this.out = out;
 
 	}
 
@@ -110,6 +116,7 @@ public class GuiPrinter {
 		try {
 			writer = new BufferedWriter(new FileWriter(file, !overwrite));
 			writer.write(ret);
+//			send(ret);
 		} catch (IOException e) {
 		} finally {
 			try {
@@ -119,6 +126,23 @@ public class GuiPrinter {
 			}
 		}
 	}
+
+//	private void send(String ret) {
+//		String[] send = ret.split(Formater.COLUMN_SEPARATOR);
+//		int lengthOfArray;
+//		if(!send[0].isEmpty()){
+//			for (int i = 0; i < send.length; i++) {
+//				lengthOfArray = send[i].getBytes().length;
+//				byte[] b = new byte[lengthOfArray + 1];
+//				// b[0] = Byte.parseByte(Integer.toString(lengthOfArray));
+//				b[0] = (byte) lengthOfArray;
+//				for (int k = 1; k <= send[i].getBytes().length; k++) {
+//					b[k] = send[i].getBytes()[k - 1];
+//				}
+//				out.sendMessage(b);
+//			}
+//		}
+//	}
 
 	/**
 	 * Returns all lines in a document.
