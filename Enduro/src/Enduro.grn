@@ -1,0 +1,46 @@
+<uml>
+   <greenVersion="30500"/>
+   <type>
+      <name="=Enduro/src<server{Monitor.java[Monitor"/>
+      <height="-1"/>
+      <width="-1"/>
+      <x="0"/>
+      <y="0"/>
+   </type>
+   <type>
+      <name="=Enduro/src<server{Input.java[Input"/>
+      <height="-1"/>
+      <width="-1"/>
+      <x="22"/>
+      <y="210"/>
+   </type>
+   <type>
+      <name="=Enduro/src<server{ServerGui.java[ServerGui"/>
+      <height="-1"/>
+      <width="-1"/>
+      <x="257"/>
+      <y="1"/>
+   </type>
+   <type>
+      <name="=Enduro/src<server{Server.java[Server"/>
+      <height="-1"/>
+      <width="-1"/>
+      <x="267"/>
+      <y="170"/>
+   </type>
+   <relationship>
+      <class="edu.buffalo.cse.green.relationship.association.AssociationPart"/>
+      <sourceType="=Enduro/src<server{Input.java[Input"/>
+      <targetType="=Enduro/src<server{Monitor.java[Monitor"/>
+      <bendpoints>
+      </bendpoints>
+   </relationship>
+   <relationship>
+      <class="edu.buffalo.cse.green.relationship.dependency.DependencyLPart"/>
+      <sourceType="=Enduro/src<server{Server.java[Server"/>
+      <targetType="=Enduro/src<server{ServerGui.java[ServerGui"/>
+      <bendpoints>
+      </bendpoints>
+   </relationship>
+</uml>
+

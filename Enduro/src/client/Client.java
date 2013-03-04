@@ -21,7 +21,7 @@ public class Client {
 		Socket socket = null;
 
 		String socketAddress = "localhost";
-		int socketPort = 27015;
+		int socketPort = 27016;
 
 		try {
 			socket = new Socket(socketAddress, socketPort);

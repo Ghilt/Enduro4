@@ -15,7 +15,7 @@ public class Server {
 	private String namefilepath = "namnfil.txt";
 	
 	public static void main(String[] args) {
-		new Server().handleRequests(27015);
+		new Server().handleRequests(27016);
 	}
 
 	private void handleRequests(int srvPort) {
@@ -39,10 +39,8 @@ public class Server {
 				srvGui.setText("Waiting for client to connect...");
 				clientSocket = socket.accept();
 				srvGui.setText("Client connected.");
-
 				
 				in = new Input(clientSocket.getInputStream(), monitor);
-
 				in.start();
 				
 			} catch (IOException e) {

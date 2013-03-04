@@ -190,6 +190,7 @@ public class Gui extends JFrame {
 				for(int nbr : interval.getNumbers()) {
 					String line = nbr + "; " + t.toString();
 					send = line.split(Formater.COLUMN_SEPARATOR);
+					System.out.println(line);
 					for (int i = 0; i < send.length; i++) {
 						lengthOfArray = send[i].getBytes().length;
 						byte[] b = new byte[lengthOfArray + 1];
