@@ -1,5 +1,24 @@
-Teknisk dokumentation ligger i mappen Teknisk dokumentation. Filen är av filformat .html och öppnas med en webbläsare.
-
+Teknisk dokumentation ligger i mappen Teknisk dokumentation. Filen är
+av filformat .html och öppnas med en webbläsare.
 Register-programmets manual ligger i GUI-mappen (filen heter index.html)
-
 Resultat-programmets manual ligger i resultProgram-mappen (filen heter index.html)
+
+STARTA PROGRAMMET:
+Det finns två olika system:
+Det ena systemet ligger i mappen "Standard" och 
+hanterar maratonlopp, varvlopp och etapplopp (utan client/server-lösning).
+Här finns två körbara jar-filer: 
+Register.jar är registreringsprogrammet för start/måltider.
+Result.jar genererar en resultatlista.
+I config.properties kan man, se filen för mer information.
+
+  
+Det andra systemet ligger i mappen "ServerClient" och hanterar endast maratonlopp, men 
+med en client/server-lösning. Det här programmet genererar resultat on the go, vilket är smidigt
+om man tillexempel har bråttom att skriva ut en resultatlista.
+Här finns två körbara jar-filer:
+Kör först Server.jar, sedan X antal clients på samma dator.
+
+
+ 
+ 
