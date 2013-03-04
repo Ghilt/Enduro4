@@ -13,7 +13,7 @@ public class Client {
 		
 		Socket socket = null;
 
-		String socketAddress = "localhost";
+		String socketAddress = "weblogon:Henrik-Laptop";//"130.235.35.196/23";
 		int socketPort = 27015;
 
 		try {
