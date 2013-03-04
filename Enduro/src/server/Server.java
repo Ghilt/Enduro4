@@ -11,7 +11,8 @@ public class Server {
 	private Input in;
 	private Socket clientSocket;
 	private ServerSocket socket;
-	private int clientIdentifier;
+	private final String resultpath = "result.txt";
+	private final String timesFilepath = "times.txt";
 
 	public static void main(String[] args) {
 		new Server().handleRequests(27015);
@@ -22,7 +23,6 @@ public class Server {
 		monitor = null;
 		clientSocket = null;
 		socket = null;
-		clientIdentifier = 1;
 
 		while (true) {
 			try {
@@ -36,8 +36,8 @@ public class Server {
 				clientSocket = socket.accept();
 				System.out.println("Client connected");
 
-				monitor = new Monitor();
-				in = new Input(clientSocket.getInputStream(), monitor, clientIdentifier++);
+				monitor = new Monitor(resultpath, timesFilepath);
+				in = new Input(clientSocket.getInputStream(), monitor);
 
 				in.start();
 				
