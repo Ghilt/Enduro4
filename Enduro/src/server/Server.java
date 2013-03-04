@@ -11,19 +11,22 @@ public class Server {
 	private Input in;
 	private Socket clientSocket;
 	private ServerSocket socket;
-	private final String resultpath = "result.txt";
-	private final String timesFilepath = "times.txt";
-
+	private String resultpath = "result.txt";
+	private String namefilepath = "namnfil.txt";
+	
 	public static void main(String[] args) {
 		new Server().handleRequests(27015);
 	}
 
 	private void handleRequests(int srvPort) {
-		in = null;
+		ClassLoader classLoader = Server.class.getClassLoader();
+		String currentFilePath = classLoader.getResource("").getPath();
+		resultpath = currentFilePath + "/" + resultpath;
+		namefilepath = currentFilePath + "/" + namefilepath;
 		monitor = null;
 		clientSocket = null;
 		socket = null;
-		monitor = new Monitor(resultpath, timesFilepath);
+		monitor = new Monitor(resultpath, namefilepath);
 		ServerGui srvGui = new ServerGui();
 		while (true) {
 			try {

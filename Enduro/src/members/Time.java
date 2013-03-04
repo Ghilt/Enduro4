@@ -81,7 +81,7 @@ public class Time implements Comparable<Time> {
 	public Time difference(Time t) {
 		long diff = t.cal.getTime().getTime() - cal.getTime().getTime();
 
-		return new Time((int) diff / 1000);
+		return new Time((int) Math.abs(diff) / 1000);
 	}
 
 	/**
@@ -168,7 +168,8 @@ public class Time implements Comparable<Time> {
 		if (time instanceof NullTime)
 			return -1;
 
-		return (int) (cal.getTime().getTime() - time.cal.getTime().getTime());
+//		return (int) (cal.getTime().getTime() - time.cal.getTime().getTime());
+		return (int) (cal.compareTo(time.cal));
 	}
 
 	/**

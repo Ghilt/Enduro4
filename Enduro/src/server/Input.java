@@ -22,7 +22,9 @@ public class Input extends Thread {
 				byte[] startNbr = readInput();
 				byte[] msg = readInput();
 				
-				monitor.register(startNbr, msg);
+				if(startNbr.length != 0 && msg.length != 0) {
+					monitor.register(startNbr, msg);
+				}
 				
 				sleep(10);
 			} catch (InterruptedException e) {

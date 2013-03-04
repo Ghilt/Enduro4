@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import members.Competitor;
+import members.NullTime;
 import members.Time;
 
 /**
@@ -25,7 +26,8 @@ public abstract class Printer {
 	public static final String MULTIPLE_ENDS_CLEAN = "Flera sluttider";
 	public static final String IMPOSSIBLE_TOTAL_TIME = "Omöjlig Totaltid?";
 	public static final String IMPOSSIBLE_LAP_TIME = "Omöjlig varvtid?";
-	public static final Time MINIMUM_TOTAL_TIME = Time.parse("00.15.00");
+//	public static final Time MINIMUM_TOTAL_TIME = Time.parse("00:00:01");
+	public static final Time MINIMUM_TOTAL_TIME = new NullTime();
 
 	/**
 	 * Returns a row by Competitor.

@@ -1,6 +1,7 @@
 package server;
 
 import java.io.BufferedWriter;
+import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -11,6 +12,9 @@ import java.util.Map;
 
 import io.printer.Printer;
 import io.printer.StdPrinter;
+import io.reader.CvsReader;
+import io.reader.Parser;
+import io.reader.ParserException;
 import members.Competitor;
 import members.Sorter;
 import members.Time;
@@ -19,61 +23,66 @@ public class Monitor {
 	private Printer printer;
 	private Map<Integer, Competitor> competitors;
 	private String resultpath;
-	private String timesFilepath;
-	private BufferedWriter timeWriter;
 	private Sorter sorter;
-	
-	public Monitor(String resultpath, String timesFilepath) {
+
+	public Monitor(String resultpath, String namefilepath) {
 		this.resultpath = resultpath;
-		this.timesFilepath = timesFilepath;
 		printer = new StdPrinter();
-		competitors = new HashMap<Integer, Competitor>();
+		readNameFile(namefilepath);
 		sorter = new Sorter();
-		timeWriter = null;
-		try {
-			timeWriter = new BufferedWriter(new FileWriter(timesFilepath));
-		} catch (IOException e) {
-		} 
 	}
 
-	public synchronized void register(byte[] startNbr,
-			byte[] msg) {
-		String temp = new String(startNbr);
-		int startNr = Integer.parseInt(temp);
+	private void readNameFile(String namefilepath) {
+//		competitors = new HashMap<Integer, Competitor>();
+		Parser parser = new Parser();
+		CvsReader reader = new CvsReader(namefilepath);
+		try {
+			competitors = parser.parse(reader.readAll(), Parser.FileIdentifier.name_file);
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ParserException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 
+	public synchronized void register(byte[] startNbr, byte[] msg) {
+		String temp = new String(startNbr);
+		String[] interval = temp.split("-");
+		int firstNbr;
+		int lastNbr;
+		if (interval.length > 1) {
+			firstNbr = Integer.valueOf(interval[0]);
+			lastNbr = Integer.valueOf(interval[1]);
+		} else {
+			firstNbr = lastNbr = Integer.valueOf(interval[0]);
+		}
 		String s = new String(msg);
-		// System.out.println("MESSAGE RECIEVED FROM " + clientIdentifier + ": "
-		// +s);
+
 		Time time = Time.parse(s);
-		
-		registerCompetitor(startNr, time);
-		printTime(startNr, time);
-		ArrayList<Competitor> list = new ArrayList<Competitor>(competitors.values());
+		for (int startNr = firstNbr; startNr <= lastNbr; startNr++) {
+			registerCompetitor(startNr, time);
+		}
+
+		ArrayList<Competitor> list = new ArrayList<Competitor>(
+				competitors.values());
 		sorter.sortList(true, list, "standard");
 		printer.printResults(list, resultpath);
 	}
-	
-	private void printTime(int startNr, Time time) {
-//		try {
-//			timeWriter.write(startNr + "; " + time.toString());
-//		} catch (IOException e) {
-//			e.printStackTrace();
-//		}
-	}
-	
+
 	private void registerCompetitor(int startNr, Time time) {
 		System.out.println(startNr + " " + time.toString());
 		Competitor comp = competitors.get(startNr);
-		if(comp == null) {
+		if (comp == null) {
 			comp = new Competitor(startNr);
 		}
-		if(comp.getStartTimes().isEmpty()) {
+		if (comp.getStartTimes().isEmpty()) {
 			comp.addStartTime(time);
 		} else {
 			comp.addFinishTime(time);
 		}
 		competitors.put(startNr, comp);
 	}
-
 
 }
