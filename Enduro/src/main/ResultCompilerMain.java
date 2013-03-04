@@ -31,14 +31,8 @@ public class ResultCompilerMain {
 	 * 
 	 */
 	public static void main(String[] args) {
-
 		try {
-			String jarDir;
-			if (args.length > 0) {
-				jarDir = args[0];
-			} else {
-				jarDir = getDir();
-			}
+			String jarDir = getDir();
 			compile(jarDir);
 			infoMessage(PROGRAM_DONE);
 		} catch (Exception e) {
@@ -47,7 +41,7 @@ public class ResultCompilerMain {
 		}
 	}
 
-	protected static void compile(String jarDir) throws Exception {
+	public static void compile(String jarDir) throws Exception {
 
 		Properties prop = new Properties();
 		// load properties from config.properties
@@ -62,7 +56,6 @@ public class ResultCompilerMain {
 
 		// Profit!!!
 	}
-
 	protected static String getDir() throws URISyntaxException {
 		// Load the directory
 		CodeSource codeSource = ResultCompilerMain.class.getProtectionDomain()
