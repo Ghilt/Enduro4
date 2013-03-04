@@ -23,7 +23,8 @@ public class Server {
 		monitor = null;
 		clientSocket = null;
 		socket = null;
-
+		monitor = new Monitor(resultpath, timesFilepath);
+		ServerGui srvGui = new ServerGui();
 		while (true) {
 			try {
 				try {
@@ -32,11 +33,11 @@ public class Server {
 				}
 				// The 'accept' method waits for a client to connect, then
 				// returns a socket connected to that client.
-				System.out.println("Waiting for client to connect...");
+				srvGui.setText("Waiting for client to connect...");
 				clientSocket = socket.accept();
-				System.out.println("Client connected");
+				srvGui.setText("Client connected.");
 
-				monitor = new Monitor(resultpath, timesFilepath);
+				
 				in = new Input(clientSocket.getInputStream(), monitor);
 
 				in.start();

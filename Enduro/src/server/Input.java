@@ -39,9 +39,10 @@ public class Input extends Thread {
 			int size = in.read();
 			if (size == -1) {
 				close();
+			} else {
+				bytes = new byte[size];
+				in.read(bytes, 0, size);
 			}
-			bytes = new byte[size];
-			in.read(bytes, 0, size);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

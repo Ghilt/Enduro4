@@ -4,6 +4,7 @@ import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -11,6 +12,7 @@ import java.util.Map;
 import io.printer.Printer;
 import io.printer.StdPrinter;
 import members.Competitor;
+import members.Sorter;
 import members.Time;
 
 public class Monitor {
@@ -19,13 +21,14 @@ public class Monitor {
 	private String resultpath;
 	private String timesFilepath;
 	private BufferedWriter timeWriter;
+	private Sorter sorter;
 	
 	public Monitor(String resultpath, String timesFilepath) {
 		this.resultpath = resultpath;
 		this.timesFilepath = timesFilepath;
 		printer = new StdPrinter();
 		competitors = new HashMap<Integer, Competitor>();
-		
+		sorter = new Sorter();
 		timeWriter = null;
 		try {
 			timeWriter = new BufferedWriter(new FileWriter(timesFilepath));
@@ -46,19 +49,20 @@ public class Monitor {
 		registerCompetitor(startNr, time);
 		printTime(startNr, time);
 		ArrayList<Competitor> list = new ArrayList<Competitor>(competitors.values());
+		sorter.sortList(true, list, "standard");
 		printer.printResults(list, resultpath);
 	}
 	
 	private void printTime(int startNr, Time time) {
-		try {
-			timeWriter.write(startNr + "; " + time.toString());
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+//		try {
+//			timeWriter.write(startNr + "; " + time.toString());
+//		} catch (IOException e) {
+//			e.printStackTrace();
+//		}
 	}
 	
 	private void registerCompetitor(int startNr, Time time) {
+		System.out.println(startNr + " " + time.toString());
 		Competitor comp = competitors.get(startNr);
 		if(comp == null) {
 			comp = new Competitor(startNr);
