@@ -9,7 +9,6 @@ import java.util.Map;
 
 import members.Competitor;
 import members.Lap;
-import members.NullTime;
 import members.Station;
 
 public class BinaryLapPrinter extends Printer {

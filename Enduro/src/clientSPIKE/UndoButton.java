@@ -10,7 +10,7 @@ import javax.swing.JButton;
 public class UndoButton extends JButton implements ActionListener {
 
 	public static final String DEFAULT_TEXT = "ÅNGRA";
-	private Gui frame;
+	//private Gui frame;
 
 	/**
 	 * A button that triggers undo() within a target frame.
@@ -24,7 +24,7 @@ public class UndoButton extends JButton implements ActionListener {
 	public UndoButton(Gui frame, Dimension dim) {
 		setPreferredSize(dim);
 		setFont(frame.getSmallFont());
-		this.frame = frame;
+		//this.frame = frame;
 		addActionListener(this);
 	}
 
